@@ -35,6 +35,7 @@ import {
   updateQuestion,
   deleteQuestion,
   getAllAttempts,
+  fetchAttemptsFromSupabase,
 } from '../../lib/storage';
 import { extractTextFromPdf, parseMcqsFromText, parseAnswerKeySource, applyAnswerKeyMapping } from '../../lib/pdfParser';
 
@@ -76,6 +77,12 @@ export const AdminDashboard: React.FC<AdminDashboardProps> = ({
   const [draftQuestions, setDraftQuestions] = useState<ExtractedQuestionDraft[]>([]);
   const [workingCourse, setWorkingCourse] = useState<Course | null>(null);
 
+  // Bulk Week Assignment State
+  const [selectedQuestionIndices, setSelectedQuestionIndices] = useState<number[]>([]);
+  const [bulkTargetWeek, setBulkTargetWeek] = useState<number>(1);
+  const [rangeStart, setRangeStart] = useState<number>(1);
+  const [rangeEnd, setRangeEnd] = useState<number>(15);
+
   // Answer Key input state
   const [answerKeyInputType, setAnswerKeyInputType] = useState<'text' | 'document'>('text');
   const [answerKeyText, setAnswerKeyText] = useState('');
@@ -90,7 +97,7 @@ export const AdminDashboard: React.FC<AdminDashboardProps> = ({
 
   useEffect(() => {
     if (activeTab === 'attempts') {
-      setAllAttempts(getAllAttempts());
+      fetchAttemptsFromSupabase().then((atts) => setAllAttempts(atts));
     }
   }, [activeTab]);
 
@@ -251,22 +258,73 @@ export const AdminDashboard: React.FC<AdminDashboardProps> = ({
 
   const handleDeleteDraftQuestion = (idx: number) => {
     setDraftQuestions((prev) => prev.filter((_, i) => i !== idx));
+    setSelectedQuestionIndices((prev) => prev.filter((i) => i !== idx).map((i) => (i > idx ? i - 1 : i)));
+  };
+
+  // ----------------- Bulk Week Assignment Handlers -----------------
+  const handleToggleSelectQuestion = (idx: number) => {
+    setSelectedQuestionIndices((prev) =>
+      prev.includes(idx) ? prev.filter((i) => i !== idx) : [...prev, idx]
+    );
+  };
+
+  const handleSelectAllDrafts = () => {
+    setSelectedQuestionIndices(draftQuestions.map((_, i) => i));
+  };
+
+  const handleDeselectAllDrafts = () => {
+    setSelectedQuestionIndices([]);
+  };
+
+  const handleSelectRangeDrafts = () => {
+    const start = Math.max(1, rangeStart) - 1;
+    const end = Math.min(draftQuestions.length, rangeEnd) - 1;
+    if (start > end) {
+      setErrorMessage('Invalid range: start must be less than or equal to end.');
+      return;
+    }
+    const indices: number[] = [];
+    for (let i = start; i <= end; i++) {
+      indices.push(i);
+    }
+    setSelectedQuestionIndices(indices);
+    showToast(`Selected Questions ${start + 1} to ${end + 1}.`);
+  };
+
+  const handleApplyBulkWeek = () => {
+    if (selectedQuestionIndices.length === 0) {
+      setErrorMessage('Please select at least one question to assign.');
+      return;
+    }
+    setDraftQuestions((prev) =>
+      prev.map((q, idx) => {
+        if (selectedQuestionIndices.includes(idx)) {
+          return { ...q, weekNumber: bulkTargetWeek };
+        }
+        return q;
+      })
+    );
+    showToast(`Assigned ${selectedQuestionIndices.length} questions to Week ${bulkTargetWeek}.`);
+    setSelectedQuestionIndices([]);
   };
 
   // ----------------- Save & Publish -----------------
   const handleSaveAsDraft = () => {
     if (!workingCourse || draftQuestions.length === 0) return;
 
+    const uniqueWeeks = Array.from(new Set(draftQuestions.map((q) => q.weekNumber || 1))).sort((a, b) => a - b);
+
     saveCourse({
       ...workingCourse,
       totalQuestions: draftQuestions.length,
+      weeks: uniqueWeeks,
       status: 'draft',
     });
 
     const questionsToSave: Question[] = draftQuestions.map((dq, i) => ({
       id: `q-${workingCourse.id}-${i + 1}`,
       courseId: workingCourse.id,
-      weekNumber: 1,
+      weekNumber: dq.weekNumber || 1,
       questionText: dq.questionText,
       options: dq.options,
       correctAnswerIndex: dq.correctAnswerIndex,
@@ -280,7 +338,7 @@ export const AdminDashboard: React.FC<AdminDashboardProps> = ({
     saveQuestions(questionsToSave);
     refreshCourses();
     setActiveTab('tests');
-    showToast(`Saved "${workingCourse.name}" as Draft.`);
+    showToast(`Saved "${workingCourse.name}" as Draft with ${uniqueWeeks.length} weeks.`);
   };
 
   const handlePublishFromReview = () => {
@@ -290,15 +348,18 @@ export const AdminDashboard: React.FC<AdminDashboardProps> = ({
     const unverified = draftQuestions.filter((q) => q.correctAnswerIndex === null || !q.isApproved);
     if (unverified.length > 0) {
       setErrorMessage(
-        `Some questions do not have verified answers. (${unverified.length} questions unverified or unapproved). Resolve before publishing.`
+        `Some questions do not have verified answers (${unverified.length} questions unverified or unapproved). Resolve before publishing.`
       );
       return;
     }
+
+    const uniqueWeeks = Array.from(new Set(draftQuestions.map((q) => q.weekNumber || 1))).sort((a, b) => a - b);
 
     // Save course as published
     saveCourse({
       ...workingCourse,
       totalQuestions: draftQuestions.length,
+      weeks: uniqueWeeks,
       status: 'published',
       publishedAt: new Date().toISOString(),
     });
@@ -306,7 +367,7 @@ export const AdminDashboard: React.FC<AdminDashboardProps> = ({
     const questionsToSave: Question[] = draftQuestions.map((dq, i) => ({
       id: `q-${workingCourse.id}-${i + 1}`,
       courseId: workingCourse.id,
-      weekNumber: 1,
+      weekNumber: dq.weekNumber || 1,
       questionText: dq.questionText,
       options: dq.options,
       correctAnswerIndex: dq.correctAnswerIndex,
@@ -320,8 +381,9 @@ export const AdminDashboard: React.FC<AdminDashboardProps> = ({
     saveQuestions(questionsToSave);
     refreshCourses();
     setActiveTab('tests');
-    showToast(`Test "${workingCourse.name}" published successfully! Students can now access it.`);
+    showToast(`Test "${workingCourse.name}" published with ${uniqueWeeks.length} weeks! Students can now access it.`);
   };
+
 
   // ----------------- Existing Tests Actions -----------------
   const handlePublishExistingTest = (courseId: string) => {
@@ -790,10 +852,100 @@ export const AdminDashboard: React.FC<AdminDashboardProps> = ({
                   </div>
                 </div>
 
+                {/* Bulk Week Assignment Toolbar */}
+                <div className="p-5 rounded-2xl bg-[#EFF8FF]/70 border border-[#DCEAF5] space-y-3">
+                  <div className="flex flex-col md:flex-row items-start md:items-center justify-between gap-3">
+                    <div>
+                      <span className="text-xs font-bold uppercase tracking-wider text-[#0284C7] font-mono">
+                        Bulk Week Assignment
+                      </span>
+                      <p className="text-[11px] text-[#64748B] font-mono mt-0.5">
+                        SELECT QUESTIONS AND ASSIGN THEIR MODULE / WEEK IN BULK
+                      </p>
+                    </div>
+
+                    <div className="flex items-center gap-2 text-xs font-mono">
+                      <button
+                        type="button"
+                        onClick={handleSelectAllDrafts}
+                        className="px-3 py-1 rounded-lg bg-white border border-[#DCEAF5] text-[#0284C7] hover:bg-sky-50 transition-colors"
+                      >
+                        Select All
+                      </button>
+                      <button
+                        type="button"
+                        onClick={handleDeselectAllDrafts}
+                        className="px-3 py-1 rounded-lg bg-white border border-[#DCEAF5] text-[#64748B] hover:bg-slate-50 transition-colors"
+                      >
+                        Deselect
+                      </button>
+                      <span className="text-[#64748B] ml-2">
+                        {selectedQuestionIndices.length} Selected
+                      </span>
+                    </div>
+                  </div>
+
+                  {/* Range selection and Week Assignment Actions */}
+                  <div className="pt-2 border-t border-[#DCEAF5] flex flex-wrap items-center justify-between gap-3">
+                    <div className="flex items-center gap-2 text-xs font-mono">
+                      <span className="text-[#64748B]">Select Range:</span>
+                      <span className="text-[#64748B]">Q</span>
+                      <input
+                        type="number"
+                        min={1}
+                        max={draftQuestions.length}
+                        value={rangeStart}
+                        onChange={(e) => setRangeStart(parseInt(e.target.value, 10) || 1)}
+                        className="w-14 px-2 py-1 rounded bg-white border border-[#DCEAF5] text-center font-mono text-xs"
+                      />
+                      <span className="text-[#64748B]">to Q</span>
+                      <input
+                        type="number"
+                        min={1}
+                        max={draftQuestions.length}
+                        value={rangeEnd}
+                        onChange={(e) => setRangeEnd(parseInt(e.target.value, 10) || 1)}
+                        className="w-14 px-2 py-1 rounded bg-white border border-[#DCEAF5] text-center font-mono text-xs"
+                      />
+                      <button
+                        type="button"
+                        onClick={handleSelectRangeDrafts}
+                        className="px-3 py-1 rounded bg-white border border-[#DCEAF5] text-[#0284C7] font-semibold hover:bg-sky-50 text-xs"
+                      >
+                        Select
+                      </button>
+                    </div>
+
+                    <div className="flex items-center gap-2 text-xs font-mono">
+                      <span className="text-[#64748B]">Assign Selected to:</span>
+                      <select
+                        value={bulkTargetWeek}
+                        onChange={(e) => setBulkTargetWeek(parseInt(e.target.value, 10) || 1)}
+                        className="px-3 py-1 rounded bg-white border border-[#DCEAF5] text-xs font-semibold text-[#0F172A]"
+                      >
+                        {[1, 2, 3, 4, 5, 6, 7, 8, 9, 10, 11, 12].map((w) => (
+                          <option key={w} value={w}>
+                            Week {w}
+                          </option>
+                        ))}
+                      </select>
+                      <button
+                        type="button"
+                        onClick={handleApplyBulkWeek}
+                        disabled={selectedQuestionIndices.length === 0}
+                        className="px-4 py-1.5 rounded-full bg-[#0284C7] text-white font-bold hover:bg-[#0369a1] disabled:opacity-40 text-xs shadow-sm transition-all"
+                      >
+                        Assign Week
+                      </button>
+                    </div>
+                  </div>
+                </div>
+
                 {/* Questions List */}
                 <div className="space-y-4">
                   {draftQuestions.map((q, idx) => {
                     const isMissingAnswer = q.correctAnswerIndex === null;
+                    const isSelectedForBulk = selectedQuestionIndices.includes(idx);
 
                     return (
                       <div
@@ -804,13 +956,42 @@ export const AdminDashboard: React.FC<AdminDashboardProps> = ({
                             : isMissingAnswer
                             ? 'border-rose-300 shadow-[0_0_0_1px_rgba(244,63,94,0.1)]'
                             : 'border-[#DCEAF5]'
-                        }`}
+                        } ${isSelectedForBulk ? 'ring-2 ring-[#0284C7]/30 bg-sky-50/20' : ''}`}
                       >
                         <div className="flex items-start justify-between gap-4 mb-3">
-                          <div className="flex items-center gap-2">
+                          <div className="flex flex-wrap items-center gap-2">
+                            {/* Selection Checkbox */}
+                            <input
+                              type="checkbox"
+                              checked={isSelectedForBulk}
+                              onChange={() => handleToggleSelectQuestion(idx)}
+                              className="w-4 h-4 rounded text-[#0284C7] border-[#DCEAF5] cursor-pointer"
+                            />
+
                             <span className="w-7 h-7 rounded-full bg-[#EFF8FF] border border-[#DCEAF5] text-xs font-mono font-bold text-[#0284C7] flex items-center justify-center">
                               {q.originalQuestionNumber || idx + 1}
                             </span>
+
+                            {/* Week Badge / Selector */}
+                            <div className="flex items-center gap-1 px-2.5 py-0.5 rounded-full bg-[#EFF8FF] border border-[#DCEAF5] text-[11px] font-mono text-[#0284C7]">
+                              <span className="font-semibold">WEEK</span>
+                              <select
+                                value={q.weekNumber || 1}
+                                onChange={(e) =>
+                                  handleUpdateDraftQuestion(idx, {
+                                    weekNumber: parseInt(e.target.value, 10) || 1,
+                                  })
+                                }
+                                className="bg-transparent font-bold text-[#0284C7] outline-none cursor-pointer"
+                              >
+                                {[1, 2, 3, 4, 5, 6, 7, 8, 9, 10, 11, 12].map((w) => (
+                                  <option key={w} value={w}>
+                                    {w}
+                                  </option>
+                                ))}
+                              </select>
+                            </div>
+
                             <span
                               className={`px-2.5 py-0.5 rounded-full text-[10px] font-mono font-semibold uppercase tracking-wider ${
                                 q.answerSource === 'Answer Key'
@@ -864,11 +1045,22 @@ export const AdminDashboard: React.FC<AdminDashboardProps> = ({
                         <div className="space-y-2">
                           <div className="text-[11px] font-semibold uppercase tracking-wider text-[#64748B] flex items-center justify-between">
                             <span>Select Correct Answer (Authoritative)</span>
-                            {isMissingAnswer && (
-                              <span className="text-rose-600 font-mono text-[10px]">
-                                ANSWER NOT PROVIDED
-                              </span>
-                            )}
+                            <div className="flex items-center gap-2">
+                              {q.correctAnswerIndex !== null && (
+                                <button
+                                  type="button"
+                                  onClick={() => handleSelectCorrectOption(idx, null)}
+                                  className="text-[10px] font-mono text-rose-500 hover:underline"
+                                >
+                                  Clear Answer
+                                </button>
+                              )}
+                              {isMissingAnswer && (
+                                <span className="text-rose-600 font-mono text-[10px]">
+                                  ANSWER NOT PROVIDED
+                                </span>
+                              )}
+                            </div>
                           </div>
 
                           <div className="grid grid-cols-1 sm:grid-cols-2 gap-3">

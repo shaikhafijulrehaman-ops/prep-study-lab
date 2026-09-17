@@ -11,7 +11,6 @@ interface NavigationProps {
   currentUser: User | null;
   onOpenAuth: () => void;
   onLogout: () => void;
-  onOpenAdmin?: () => void;
 }
 
 export const Navigation: React.FC<NavigationProps> = ({
@@ -20,7 +19,6 @@ export const Navigation: React.FC<NavigationProps> = ({
   currentUser,
   onOpenAuth,
   onLogout,
-  onOpenAdmin,
 }) => {
   const navItems: { id: NavTab; label: string; icon: React.ComponentType<{ className?: string }> }[] = [
     { id: 'home', label: 'Home', icon: Home },
@@ -72,19 +70,9 @@ export const Navigation: React.FC<NavigationProps> = ({
         <div className="flex items-center pr-1">
           {currentUser ? (
             <div className="flex items-center gap-1.5">
-              <span className="text-xs font-mono text-[#0F172A] px-2.5 py-1 rounded-full bg-[#EFF8FF] border border-[#DCEAF5] truncate max-w-[110px]">
+              <span className="text-xs font-mono text-[#0F172A] px-2.5 py-1 rounded-full bg-[#EFF8FF] border border-[#DCEAF5] truncate max-w-[120px]">
                 {currentUser.name}
               </span>
-              {currentUser.role === 'admin' && onOpenAdmin && (
-                <button
-                  onClick={onOpenAdmin}
-                  title="Administrator Portal"
-                  aria-label="Administrator Portal"
-                  className="p-2 rounded-full text-[#0284C7] hover:bg-[#EFF8FF] transition-colors"
-                >
-                  <ShieldCheck className="w-3.5 h-3.5" />
-                </button>
-              )}
               <button
                 onClick={onLogout}
                 title="Sign out"

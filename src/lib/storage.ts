@@ -160,7 +160,7 @@ export function deleteTest(courseId: string): void {
 
 export function getQuestions(
   courseId?: string,
-  weekNumber?: number | 'all',
+  weekSelection?: number[] | number | 'all',
   approvedOnly: boolean = false
 ): Question[] {
   let all: Question[] = [];
@@ -179,7 +179,13 @@ export function getQuestions(
 
   return all.filter((q) => {
     if (courseId && q.courseId !== courseId) return false;
-    if (weekNumber !== undefined && weekNumber !== 'all' && q.weekNumber !== weekNumber) return false;
+    if (weekSelection !== undefined && weekSelection !== 'all') {
+      if (Array.isArray(weekSelection)) {
+        if (weekSelection.length > 0 && !weekSelection.includes(q.weekNumber)) return false;
+      } else if (typeof weekSelection === 'number') {
+        if (q.weekNumber !== weekSelection) return false;
+      }
+    }
     if (approvedOnly && (!q.isApproved || q.correctAnswerIndex === null)) return false;
     return true;
   });
@@ -279,7 +285,14 @@ export interface ActiveTestSession {
  * 3. Exact tracking of displayed options and mapped correct option index
  */
 export function initializeMockSession(config: MockConfig): ActiveTestSession {
-  const allCourseQuestions = getQuestions(config.courseId, config.weekNumber);
+  // Resolve weeks filter
+  const targetWeeks = config.selectedWeeks && config.selectedWeeks.length > 0
+    ? config.selectedWeeks
+    : config.weekNumber !== undefined && config.weekNumber !== 'all'
+    ? [config.weekNumber]
+    : 'all';
+
+  const allCourseQuestions = getQuestions(config.courseId, targetWeeks, true);
   const attempts = getAttempts();
 
   // Determine attempted / wrong question IDs for this course
@@ -315,14 +328,7 @@ export function initializeMockSession(config: MockConfig): ActiveTestSession {
       break;
   }
 
-  // If pool is still empty (e.g. course has no questions under week or courseId was new), fallback to any questions
-  if (pool.length === 0) {
-    const allAvailable = getQuestions();
-    const matchCourse = allAvailable.filter((q) => q.courseId === config.courseId);
-    pool = matchCourse.length > 0 ? matchCourse : allAvailable;
-  }
-
-  // Shuffle question pool to ensure unique random order
+  // Shuffle question pool to ensure unique random order without duplicate questions
   const shuffledPool = shuffleArray(pool);
 
   // Determine final count
@@ -442,6 +448,72 @@ export function getAllAttempts(): MockAttempt[] {
     return list.sort((a, b) => new Date(b.completedAt).getTime() - new Date(a.completedAt).getTime());
   } catch {
     return [];
+  }
+}
+
+/**
+ * Loads attempts directly from Supabase to guarantee cross-session persistence.
+ */
+export async function fetchAttemptsFromSupabase(userId?: string): Promise<MockAttempt[]> {
+  const supabase = getSupabaseClient();
+  if (!supabase) return userId ? getAttempts(userId) : getAllAttempts();
+
+  try {
+    let query = supabase
+      .from('mock_attempts')
+      .select('*, attempt_items(*)')
+      .order('completed_at', { ascending: false });
+
+    if (userId) {
+      query = query.eq('user_id', userId);
+    }
+
+    const { data, error } = await query;
+    if (error || !data) return userId ? getAttempts(userId) : getAllAttempts();
+
+    const mapped: MockAttempt[] = data.map((row: any) => ({
+      id: row.id,
+      userId: row.user_id,
+      studentName: row.student_name || 'Student',
+      courseId: row.course_id,
+      courseName: row.course_name,
+      mode: row.mode,
+      totalQuestions: row.total_questions,
+      score: row.score,
+      percentage: Number(row.percentage) || 0,
+      correctCount: row.correct_count,
+      wrongCount: row.wrong_count,
+      unansweredCount: row.unanswered_count,
+      timeTakenSeconds: row.time_taken_seconds,
+      timeLimitSeconds: row.time_limit_seconds,
+      createdAt: row.created_at,
+      completedAt: row.completed_at,
+      items: Array.isArray(row.attempt_items)
+        ? row.attempt_items
+            .sort((a: any, b: any) => a.question_index - b.question_index)
+            .map((it: any) => ({
+              questionId: it.question_id,
+              questionIndex: it.question_index,
+              questionText: it.question_text,
+              displayedOptions: it.displayed_options,
+              selectedOptionIndex: it.selected_option_index,
+              correctOptionIndex: it.correct_option_index,
+              isMarkedForReview: it.is_marked_for_review,
+              timeSpentSeconds: it.time_spent_seconds || 0,
+            }))
+        : [],
+    }));
+
+    if (mapped.length > 0) {
+      const local = getAttempts();
+      const mergedMap = new Map<string, MockAttempt>();
+      local.forEach((a) => mergedMap.set(a.id, a));
+      mapped.forEach((a) => mergedMap.set(a.id, a));
+      localStorage.setItem(KEYS.ATTEMPTS, JSON.stringify(Array.from(mergedMap.values())));
+    }
+    return mapped;
+  } catch {
+    return userId ? getAttempts(userId) : getAllAttempts();
   }
 }
 
@@ -664,6 +736,7 @@ export function createRetryWrongSession(previousAttempt: MockAttempt): ActiveTes
     config: {
       courseId: previousAttempt.courseId,
       courseName: previousAttempt.courseName,
+      selectedWeeks: [],
       questionCount: retryItems.length,
       selectionType: 'wrong',
       mode: previousAttempt.mode,

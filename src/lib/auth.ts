@@ -70,20 +70,27 @@ export function isAdmin(): boolean {
 }
 
 /**
- * Normal Student Sign Up.
- * Role is strictly 'user'.
+ * Unified Student Registration.
+ * Role is strictly and immutably assigned to 'student'.
+ * A newly registered user can NEVER choose or receive an admin role.
  */
 export async function createAccount(
   name: string,
+  email: string,
   password: string,
   confirmPassword: string
 ): Promise<{ success: boolean; user?: User; error?: string }> {
   const cleanName = name.trim();
+  const cleanEmail = email.trim().toLowerCase();
+
   if (!cleanName) {
-    return { success: false, error: 'Please enter your name.' };
+    return { success: false, error: 'Please enter your full name.' };
   }
   if (cleanName.length < 2) {
     return { success: false, error: 'Name must be at least 2 characters.' };
+  }
+  if (!cleanEmail || !cleanEmail.includes('@')) {
+    return { success: false, error: 'Please provide a valid email address.' };
   }
   if (!password || password.length < 6) {
     return { success: false, error: 'Password must be at least 6 characters.' };
@@ -93,37 +100,45 @@ export async function createAccount(
   }
 
   const localUsers = getStoredLocalUsers();
-  const existing = localUsers.find((u) => u.name.toLowerCase() === cleanName.toLowerCase());
+  const existing = localUsers.find(
+    (u) =>
+      (u.email && u.email.toLowerCase() === cleanEmail) ||
+      u.name.toLowerCase() === cleanName.toLowerCase()
+  );
   if (existing) {
-    return { success: false, error: 'An account with this name already exists. Please log in.' };
+    return { success: false, error: 'An account with this email or name already exists. Please sign in.' };
   }
 
   const salt = generateSalt();
   const passwordHash = await hashPassword(password, salt);
-  const userId = `usr_${Date.now()}_${Math.random().toString(36).substring(2, 9)}`;
+  const userId = `std_${Date.now()}_${Math.random().toString(36).substring(2, 9)}`;
 
   const newUser: User = {
     id: userId,
     name: cleanName,
-    role: 'user',
+    email: cleanEmail,
+    role: 'student',
     createdAt: new Date().toISOString(),
   };
 
   // Supabase Auth Integration
   const supabase = getSupabaseClient();
   if (supabase) {
-    const sanitizedEmail = `${cleanName.toLowerCase().replace(/[^a-z0-9]/g, '')}_${userId.slice(-6)}@prepstudylab.local`;
     try {
       const { data, error: supaErr } = await supabase.auth.signUp({
-        email: sanitizedEmail,
+        email: cleanEmail,
         password,
         options: {
-          data: { name: cleanName, role: 'user' },
+          data: { name: cleanName, role: 'student' },
         },
       });
       if (data?.user?.id) {
         newUser.id = data.user.id;
-        newUser.email = sanitizedEmail;
+        // Insert into user_roles table
+        await supabase
+          .from('user_roles')
+          .insert({ user_id: data.user.id, role: 'student' })
+          .then(() => {}, () => {});
       } else if (supaErr) {
         console.warn('Auth notice:', supaErr.message);
       }
@@ -135,8 +150,8 @@ export async function createAccount(
   localUsers.push({
     id: newUser.id,
     name: cleanName,
-    email: newUser.email,
-    role: 'user',
+    email: cleanEmail,
+    role: 'student',
     passwordHash,
     salt,
     createdAt: newUser.createdAt,
@@ -148,7 +163,8 @@ export async function createAccount(
 }
 
 /**
- * Student Login.
+ * Unified Login for both Students and Administrators.
+ * Authenticates user, silently checks their authoritative role, and returns user object.
  */
 export async function login(
   nameOrEmail: string,
@@ -156,7 +172,7 @@ export async function login(
 ): Promise<{ success: boolean; user?: User; error?: string }> {
   const cleanInput = nameOrEmail.trim();
   if (!cleanInput || !password) {
-    return { success: false, error: 'Please provide both credentials.' };
+    return { success: false, error: 'Please enter your credentials.' };
   }
 
   // 1. Try Supabase Auth first if configured
@@ -174,7 +190,26 @@ export async function login(
       });
 
       if (data?.user && !error) {
-        const role = (data.user.user_metadata?.role || data.user.app_metadata?.role || 'user') as UserRole;
+        // Query authoritative role from user_roles or metadata
+        let role: UserRole = 'student';
+        try {
+          const { data: roleRow } = await supabase
+            .from('user_roles')
+            .select('role')
+            .eq('user_id', data.user.id)
+            .single();
+
+          if (roleRow?.role === 'admin') {
+            role = 'admin';
+          } else if (data.user.user_metadata?.role === 'admin' || data.user.app_metadata?.role === 'admin') {
+            role = 'admin';
+          }
+        } catch {
+          if (data.user.user_metadata?.role === 'admin' || data.user.app_metadata?.role === 'admin') {
+            role = 'admin';
+          }
+        }
+
         const authUser: User = {
           id: data.user.id,
           name: data.user.user_metadata?.name || cleanInput,
@@ -211,13 +246,14 @@ export async function login(
     id: match.id,
     name: match.name,
     email: match.email,
-    role: match.role || 'user',
+    role: match.role === 'admin' ? 'admin' : 'student',
     createdAt: match.createdAt,
   };
 
   setCurrentUser(user);
   return { success: true, user };
 }
+
 
 /**
  * Dedicated Protected Administrator Login.

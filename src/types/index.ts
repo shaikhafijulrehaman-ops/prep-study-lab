@@ -2,7 +2,7 @@ export type TestMode = 'practice' | 'exam';
 
 export type QuestionSelection = 'random' | 'unattempted' | 'wrong' | 'all';
 
-export type UserRole = 'admin' | 'user';
+export type UserRole = 'admin' | 'student';
 
 export type TestLifecycleStatus = 'draft' | 'review' | 'published';
 
@@ -50,7 +50,8 @@ export interface Question {
 export interface MockConfig {
   courseId: string;
   courseName: string;
-  weekNumber?: number | 'all'; // specific week or all weeks
+  selectedWeeks: number[]; // Explicit list of selected weeks e.g. [1, 3, 5]
+  weekNumber?: number | 'all'; // compatibility helper
   questionCount: number | 'all';
   selectionType: QuestionSelection;
   mode: TestMode;

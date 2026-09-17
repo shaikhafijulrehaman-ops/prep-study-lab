@@ -5,7 +5,7 @@
 -- 1. User Roles Table (Admin vs Student)
 CREATE TABLE IF NOT EXISTS public.user_roles (
     user_id UUID PRIMARY KEY REFERENCES auth.users(id) ON DELETE CASCADE,
-    role TEXT NOT NULL DEFAULT 'user' CHECK (role IN ('admin', 'user')),
+    role TEXT NOT NULL DEFAULT 'student' CHECK (role IN ('admin', 'student')),
     created_at TIMESTAMPTZ DEFAULT now() NOT NULL
 );
 

@@ -18,7 +18,7 @@ import {
   Sparkles,
 } from 'lucide-react';
 import { MockAttempt, User } from '../types';
-import { getAttempts, getActiveSession, getUserProgress, ActiveTestSession } from '../lib/storage';
+import { getAttempts, getActiveSession, getUserProgress, ActiveTestSession, fetchAttemptsFromSupabase } from '../lib/storage';
 
 interface TestsViewProps {
   currentUser?: User | null;
@@ -41,6 +41,11 @@ export const TestsView: React.FC<TestsViewProps> = ({
 
   useEffect(() => {
     setAttempts(getAttempts(currentUser?.id));
+    if (currentUser?.id) {
+      fetchAttemptsFromSupabase(currentUser.id).then((fresh) => {
+        setAttempts(fresh);
+      });
+    }
   }, [currentUser]);
 
   const formatDuration = (secs: number) => {

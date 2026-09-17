@@ -173,6 +173,19 @@ export function parseMcqsFromText(rawText: string, defaultWeek = 1): ExtractedQu
     optDContent: string;
   }
 
+  // Explicit Week Header Detector: Matches "Week 1", "Week 02", "WEEK 3"
+  // STRICT: Does NOT match "Assignment", "Module", "Unit", etc.
+  function detectExplicitWeekHeading(lineText: string): number | null {
+    const trimmed = lineText.trim();
+    const cleanHeader = trimmed.replace(/^---\s*page\s*\d+\s*---\s*/i, '');
+    const m = cleanHeader.match(/^(?:week|wk)\s*0*([1-9]\d?)(?:[\s:\-–—].*)?$/i);
+    if (m) {
+      const num = parseInt(m[1], 10);
+      if (num > 0 && num <= 52) return num;
+    }
+    return null;
+  }
+
   const candidateOptionGroups: OptionCandidate[] = [];
 
   for (let i = 0; i < lines.length; i++) {
@@ -228,7 +241,6 @@ export function parseMcqsFromText(rawText: string, defaultWeek = 1): ExtractedQu
     const letter = akMatch[2].toUpperCase();
     const charIdx = letter.charCodeAt(0) - 65;
     if (!isNaN(qNum) && charIdx >= 0 && charIdx <= 3) {
-      // Only record if it appears in an answer-key section or repeated list
       globalAnswerKeyMap.set(qNum, charIdx);
     }
   }
@@ -236,6 +248,8 @@ export function parseMcqsFromText(rawText: string, defaultWeek = 1): ExtractedQu
   // If candidate option groups are detected, assemble the questions
   if (candidateOptionGroups.length > 0) {
     const rawResults: ExtractedQuestionDraft[] = [];
+    let currentDetectedWeek = defaultWeek;
+    let lastCheckedWeekLine = 0;
 
     for (let k = 0; k < candidateOptionGroups.length; k++) {
       const current = candidateOptionGroups[k];
@@ -243,6 +257,15 @@ export function parseMcqsFromText(rawText: string, defaultWeek = 1): ExtractedQu
 
       const qStartLine = prev && prev.dEnd !== undefined ? prev.dEnd : 0;
       const qLines: string[] = [];
+
+      // Scan all intermediate lines up to this question for explicit "Week X" headers
+      for (let l = lastCheckedWeekLine; l < current.lineA; l++) {
+        const detected = detectExplicitWeekHeading(lines[l]);
+        if (detected !== null) {
+          currentDetectedWeek = detected;
+        }
+      }
+      lastCheckedWeekLine = current.lineA;
 
       for (let l = qStartLine; l < current.lineA; l++) {
         const trimmed = lines[l].trim();
@@ -371,7 +394,7 @@ export function parseMcqsFromText(rawText: string, defaultWeek = 1): ExtractedQu
           answerSource: hasFoundAnswer ? ('PDF' as const) : ('Not Available' as const),
           isApproved: false,
           explanation: explanation || undefined,
-          weekNumber: defaultWeek,
+          weekNumber: currentDetectedWeek,
           isValid,
           needsReview,
           reviewReason: hasFoundAnswer ? reviewReason : 'ANSWER NOT PROVIDED',
@@ -401,12 +424,24 @@ export function parseMcqsFromText(rawText: string, defaultWeek = 1): ExtractedQu
   const results: ExtractedQuestionDraft[] = [];
 
   if (matches.length > 0) {
+    let strat2Week = defaultWeek;
+    let lastScanIdx = 0;
+
     for (let i = 0; i < matches.length; i++) {
       const start = matches[i].index;
       const end = i + 1 < matches.length ? matches[i + 1].index : cleanText.length;
-      const block = cleanText.substring(start, end).trim();
+      
+      // Check intermediate text for explicit week headings
+      const interim = cleanText.substring(lastScanIdx, start);
+      const weekMatch = interim.match(/(?:^|\n)\s*(?:week|wk)\s*0*([1-9]\d?)(?:[\s:\-–—].*)?(?:\n|$)/i);
+      if (weekMatch) {
+        const num = parseInt(weekMatch[1], 10);
+        if (num > 0 && num <= 52) strat2Week = num;
+      }
+      lastScanIdx = start;
 
-      const parsed = parseSingleQuestionBlock(block, matches[i].qNum, defaultWeek, globalAnswerKeyMap);
+      const block = cleanText.substring(start, end).trim();
+      const parsed = parseSingleQuestionBlock(block, matches[i].qNum, strat2Week, globalAnswerKeyMap);
       if (parsed) {
         results.push(parsed);
       }

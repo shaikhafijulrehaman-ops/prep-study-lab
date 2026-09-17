@@ -9,7 +9,6 @@ import { MockTestView } from './components/MockTestView';
 import { TestResultView } from './components/TestResultView';
 import { AuthModal } from './components/AuthModal';
 import { AdminDashboard } from './components/admin/AdminDashboard';
-import { AdminLoginView } from './components/admin/AdminLoginView';
 import {
   ActiveTestSession,
   getCourses,
@@ -25,25 +24,7 @@ export const App: React.FC = () => {
   const [activeTab, setActiveTab] = useState<NavTab>('home');
   const [activeSession, setActiveSession] = useState<ActiveTestSession | null>(null);
   const [viewingResultAttempt, setViewingResultAttempt] = useState<MockAttempt | null>(null);
-
-  // Routing State for Admin Portal
-  const [isAdminRoute, setIsAdminRoute] = useState<boolean>(
-    window.location.hash.startsWith('#/admin') || window.location.pathname.startsWith('/admin')
-  );
-
-  useEffect(() => {
-    const handleLocationChange = () => {
-      setIsAdminRoute(
-        window.location.hash.startsWith('#/admin') || window.location.pathname.startsWith('/admin')
-      );
-    };
-    window.addEventListener('hashchange', handleLocationChange);
-    window.addEventListener('popstate', handleLocationChange);
-    return () => {
-      window.removeEventListener('hashchange', handleLocationChange);
-      window.removeEventListener('popstate', handleLocationChange);
-    };
-  }, []);
+  const [previewAsStudent, setPreviewAsStudent] = useState(false);
 
   // Authentication State
   const [currentUser, setCurrentUser] = useState<User | null>(null);
@@ -71,6 +52,14 @@ export const App: React.FC = () => {
     const user = getCurrentUser();
     setCurrentUser(user);
     refreshCounts();
+
+    // Check if user directly bookmarked #/admin without being logged in
+    if (window.location.hash.startsWith('#/admin') || window.location.pathname.startsWith('/admin')) {
+      if (!user) {
+        setAuthReason('Please sign in to access the platform.');
+        setIsAuthModalOpen(true);
+      }
+    }
   }, []);
 
   const refreshCounts = () => {
@@ -81,6 +70,8 @@ export const App: React.FC = () => {
   const handleLogout = () => {
     logout();
     setCurrentUser(null);
+    setPreviewAsStudent(false);
+    window.location.hash = '';
     showToast('Signed out successfully');
   };
 
@@ -96,8 +87,10 @@ export const App: React.FC = () => {
 
   const handleAuthenticated = (user: User) => {
     setCurrentUser(user);
-    showToast(`Welcome back, ${user.name}`);
-    if (pendingTestAction) {
+    showToast(`Welcome, ${user.name}`);
+    if (user.role === 'admin') {
+      setPreviewAsStudent(false);
+    } else if (pendingTestAction) {
       const action = pendingTestAction;
       setPendingTestAction(null);
       setTimeout(() => action(), 150);
@@ -141,30 +134,15 @@ export const App: React.FC = () => {
     });
   };
 
-  // ===================== ADMIN VIEW ROUTING =====================
-  if (isAdminRoute) {
-    if (currentUser && currentUser.role === 'admin') {
-      return (
-        <AdminDashboard
-          currentUser={currentUser}
-          onLogout={handleLogout}
-          onSwitchToStudentView={() => {
-            window.location.hash = '';
-            setIsAdminRoute(false);
-            refreshCounts();
-          }}
-        />
-      );
-    }
-
+  // ===================== AUTOMATIC ROLE-BASED VIEW ROUTING =====================
+  // When authenticated as admin and not explicitly in student preview mode:
+  if (currentUser && currentUser.role === 'admin' && !previewAsStudent) {
     return (
-      <AdminLoginView
-        onAdminAuthenticated={(adminUser) => {
-          setCurrentUser(adminUser);
-        }}
-        onExitAdmin={() => {
-          window.location.hash = '';
-          setIsAdminRoute(false);
+      <AdminDashboard
+        currentUser={currentUser}
+        onLogout={handleLogout}
+        onSwitchToStudentView={() => {
+          setPreviewAsStudent(true);
           refreshCounts();
         }}
       />
@@ -178,6 +156,19 @@ export const App: React.FC = () => {
       {toastMessage && (
         <div className="fixed bottom-6 right-6 z-50 px-4 py-2.5 rounded-2xl glass-dock border border-[#38BDF8]/40 text-[#0284C7] text-xs font-mono shadow-[0_8px_30px_rgba(2,132,199,0.15)] animate-bounce">
           {toastMessage}
+        </div>
+      )}
+
+      {/* Admin Preview Mode Top Banner */}
+      {currentUser && currentUser.role === 'admin' && previewAsStudent && (
+        <div className="bg-[#EFF8FF] border-b border-[#38BDF8]/40 px-4 py-2 text-center text-xs font-mono text-[#0284C7] flex items-center justify-center gap-3">
+          <span>Viewing Student Platform as Administrator Preview</span>
+          <button
+            onClick={() => setPreviewAsStudent(false)}
+            className="px-3 py-1 rounded-full bg-[#0284C7] text-white font-bold hover:bg-[#0369a1] transition-all text-[11px]"
+          >
+            Return to Admin Dashboard
+          </button>
         </div>
       )}
 
@@ -209,10 +200,6 @@ export const App: React.FC = () => {
               setIsAuthModalOpen(true);
             }}
             onLogout={handleLogout}
-            onOpenAdmin={() => {
-              window.location.hash = '#/admin';
-              setIsAdminRoute(true);
-            }}
           />
 
           {/* Main Tab Content */}

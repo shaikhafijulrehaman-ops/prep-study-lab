@@ -4,7 +4,7 @@ import { Check } from 'lucide-react';
 interface OrbitalInputFieldProps {
   id: string;
   name: string;
-  type: 'text' | 'password';
+  type: 'text' | 'password' | 'email';
   label: string;
   value: string;
   onChange: (val: string) => void;
