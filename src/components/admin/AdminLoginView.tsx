@@ -1,8 +1,8 @@
 import React, { useState } from 'react';
 import { motion } from 'framer-motion';
-import { ShieldCheck, ArrowRight, ArrowLeft } from 'lucide-react';
+import { ShieldCheck, ArrowRight, ArrowLeft, KeyRound, UserPlus } from 'lucide-react';
 import { User as UserIcon, Lock } from 'lucide-react';
-import { adminLogin } from '../../lib/auth';
+import { adminLogin, createAdminAccount } from '../../lib/auth';
 import { User } from '../../types';
 import { OrbitalInputField } from '../OrbitalInputField';
 
@@ -15,8 +15,10 @@ export const AdminLoginView: React.FC<AdminLoginViewProps> = ({
   onAdminAuthenticated,
   onExitAdmin,
 }) => {
+  const [mode, setMode] = useState<'signin' | 'setup'>('signin');
   const [identifier, setIdentifier] = useState('');
   const [password, setPassword] = useState('');
+  const [confirmPassword, setConfirmPassword] = useState('');
   const [error, setError] = useState<string | null>(null);
   const [loading, setLoading] = useState(false);
   const [isUnlocked, setIsUnlocked] = useState(false);
@@ -28,14 +30,36 @@ export const AdminLoginView: React.FC<AdminLoginViewProps> = ({
     setLoading(true);
 
     try {
-      const res = await adminLogin(identifier, password);
-      if (res.success && res.user) {
-        setIsSuccess(true);
-        setTimeout(() => {
-          onAdminAuthenticated(res.user!);
-        }, 600);
+      if (mode === 'signin') {
+        const res = await adminLogin(identifier, password);
+        if (res.success && res.user) {
+          setIsSuccess(true);
+          setTimeout(() => {
+            onAdminAuthenticated(res.user!);
+          }, 600);
+        } else {
+          setError(res.error || 'Administrator credentials invalid.');
+        }
       } else {
-        setError(res.error || 'Administrator credentials invalid.');
+        if (!identifier.trim() || !password) {
+          setError('Please fill in all required fields.');
+          setLoading(false);
+          return;
+        }
+        if (password !== confirmPassword) {
+          setError('Passwords do not match.');
+          setLoading(false);
+          return;
+        }
+        const res = await createAdminAccount(identifier, password, confirmPassword);
+        if (res.success && res.user) {
+          setIsSuccess(true);
+          setTimeout(() => {
+            onAdminAuthenticated(res.user!);
+          }, 600);
+        } else {
+          setError(res.error || 'Could not create administrator account.');
+        }
       }
     } catch (err: any) {
       setError(err?.message || 'Administrator authentication failed.');
@@ -80,6 +104,40 @@ export const AdminLoginView: React.FC<AdminLoginViewProps> = ({
           <p className="text-xs text-[#64748B] font-mono tracking-wide mt-1.5">
             AUTHORIZED COURSE AND TEST MANAGEMENT ONLY
           </p>
+
+          {/* Mode Switcher Tabs */}
+          <div className="mt-6 flex rounded-xl bg-sky-100/50 p-1 border border-[#DCEAF5]">
+            <button
+              type="button"
+              onClick={() => {
+                setMode('signin');
+                setError(null);
+              }}
+              className={`flex-1 py-2 text-xs font-semibold rounded-lg transition-all flex items-center justify-center gap-1.5 ${
+                mode === 'signin'
+                  ? 'bg-white text-[#0284C7] shadow-sm'
+                  : 'text-[#64748B] hover:text-[#0F172A]'
+              }`}
+            >
+              <KeyRound className="w-3.5 h-3.5" />
+              <span>Admin Sign In</span>
+            </button>
+            <button
+              type="button"
+              onClick={() => {
+                setMode('setup');
+                setError(null);
+              }}
+              className={`flex-1 py-2 text-xs font-semibold rounded-lg transition-all flex items-center justify-center gap-1.5 ${
+                mode === 'setup'
+                  ? 'bg-white text-[#0284C7] shadow-sm'
+                  : 'text-[#64748B] hover:text-[#0F172A]'
+              }`}
+            >
+              <UserPlus className="w-3.5 h-3.5" />
+              <span>Setup / Create Admin</span>
+            </button>
+          </div>
         </div>
 
         {/* Form Body */}
@@ -100,10 +158,10 @@ export const AdminLoginView: React.FC<AdminLoginViewProps> = ({
             id="admin_username"
             name="admin_username"
             type="text"
-            label="Administrator Identifier"
+            label={mode === 'signin' ? 'Administrator Identifier' : 'New Admin Identifier / Name'}
             value={identifier}
             onChange={(val) => setIdentifier(val)}
-            placeholder="Enter admin name or email"
+            placeholder={mode === 'signin' ? 'Enter admin username or email' : 'e.g. admin or professor'}
             icon={UserIcon}
             isUnlocked={isUnlocked}
             onUnlock={() => setIsUnlocked(true)}
@@ -128,19 +186,47 @@ export const AdminLoginView: React.FC<AdminLoginViewProps> = ({
             autoComplete="new-password"
           />
 
+          {mode === 'setup' && (
+            <OrbitalInputField
+              id="admin_confirm_password"
+              name="admin_confirm_password"
+              type="password"
+              label="Confirm Password"
+              value={confirmPassword}
+              onChange={(val) => setConfirmPassword(val)}
+              placeholder="Re-enter password to confirm"
+              icon={Lock}
+              isUnlocked={isUnlocked}
+              onUnlock={() => setIsUnlocked(true)}
+              isError={Boolean(error)}
+              isSuccess={isSuccess}
+              autoComplete="new-password"
+            />
+          )}
+
           <div className="pt-2">
             <button
               type="submit"
               disabled={loading || isSuccess}
               className="w-full py-3.5 rounded-full bg-[#0284C7] hover:bg-[#0369a1] text-white text-xs font-bold uppercase tracking-wider transition-all shadow-[0_4px_16px_rgba(2,132,199,0.25)] flex items-center justify-center gap-2 disabled:opacity-50 hover:scale-[1.01] active:scale-[0.99]"
             >
-              <span>{isSuccess ? 'Authorized' : loading ? 'Authenticating...' : 'Sign In to Portal'}</span>
+              <span>
+                {isSuccess
+                  ? 'Authorized'
+                  : loading
+                  ? 'Authenticating...'
+                  : mode === 'signin'
+                  ? 'Sign In to Portal'
+                  : 'Register Administrator Account'}
+              </span>
               <ArrowRight className="w-3.5 h-3.5" />
             </button>
           </div>
 
           <p className="text-[11px] text-center text-[#94A3B8] font-mono">
-            Protected with Supabase Auth role-based authorization
+            {mode === 'signin'
+              ? 'Protected with Supabase Auth role-based authorization'
+              : 'Credentials are encrypted with salted SHA-256 and synced to Supabase'}
           </p>
         </form>
       </motion.div>

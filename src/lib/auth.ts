@@ -317,6 +317,86 @@ export async function adminLogin(
   return { success: true, user: adminUser };
 }
 
+/**
+ * Register / Initialize an Administrator Account.
+ * Used for first-time administrator initialization without hardcoding secrets.
+ */
+export async function createAdminAccount(
+  name: string,
+  password: string,
+  confirmPassword?: string
+): Promise<{ success: boolean; user?: User; error?: string }> {
+  const cleanName = name.trim();
+  if (!cleanName) {
+    return { success: false, error: 'Administrator identifier or name is required.' };
+  }
+  if (!password || password.length < 6) {
+    return { success: false, error: 'Password must be at least 6 characters.' };
+  }
+  if (confirmPassword !== undefined && password !== confirmPassword) {
+    return { success: false, error: 'Passwords do not match.' };
+  }
+
+  const localUsers = getStoredLocalUsers();
+  const existing = localUsers.find(
+    (u) => u.name.toLowerCase() === cleanName.toLowerCase()
+  );
+  if (existing && existing.role === 'admin') {
+    return { success: false, error: 'An administrator account with this identifier already exists.' };
+  }
+
+  const salt = generateSalt();
+  const passwordHash = await hashPassword(password, salt);
+  const adminId = `adm_${Date.now()}_${Math.random().toString(36).substring(2, 9)}`;
+
+  const newAdmin: User = {
+    id: adminId,
+    name: cleanName,
+    role: 'admin',
+    createdAt: new Date().toISOString(),
+  };
+
+  const supabase = getSupabaseClient();
+  if (supabase) {
+    const sanitizedEmail = cleanName.includes('@')
+      ? cleanName
+      : `${cleanName.toLowerCase().replace(/[^a-z0-9]/g, '')}@prepstudylab.local`;
+    try {
+      const { data, error: supaErr } = await supabase.auth.signUp({
+        email: sanitizedEmail,
+        password,
+        options: {
+          data: { name: cleanName, role: 'admin' },
+        },
+      });
+      if (data?.user?.id) {
+        newAdmin.id = data.user.id;
+        newAdmin.email = sanitizedEmail;
+      } else if (supaErr) {
+        console.warn('Supabase admin registration notice:', supaErr.message);
+      }
+    } catch (err) {
+      console.warn('Supabase admin registration exception:', err);
+    }
+  }
+
+  // Update or insert into local users
+  const filteredUsers = localUsers.filter((u) => u.name.toLowerCase() !== cleanName.toLowerCase());
+  filteredUsers.push({
+    id: newAdmin.id,
+    name: cleanName,
+    email: newAdmin.email,
+    role: 'admin',
+    passwordHash,
+    salt,
+    createdAt: newAdmin.createdAt,
+  });
+  saveStoredLocalUsers(filteredUsers);
+  setCurrentUser(newAdmin);
+
+  return { success: true, user: newAdmin };
+}
+
 export function logout(): void {
   const supabase = getSupabaseClient();
   if (supabase) {
