@@ -1,0 +1,277 @@
+import React, { useState, useEffect } from 'react';
+import { Navigation, NavTab } from './components/Navigation';
+import { Hero } from './components/Hero';
+import { TestsView } from './components/TestsView';
+import { CoursesView } from './components/CoursesView';
+import { ProgressView } from './components/ProgressView';
+import { MockConfigModal } from './components/MockConfigModal';
+import { PdfUploadModal } from './components/PdfUploadModal';
+import { MockTestView } from './components/MockTestView';
+import { TestResultView } from './components/TestResultView';
+import { AuthModal } from './components/AuthModal';
+import {
+  ActiveTestSession,
+  getCourses,
+  getQuestions,
+  getActiveSession,
+  initializeMockSession,
+  createRetryWrongSession,
+} from './lib/storage';
+import { getCurrentUser, logout } from './lib/auth';
+import { MockAttempt, MockConfig, User } from './types';
+
+export const App: React.FC = () => {
+  const [activeTab, setActiveTab] = useState<NavTab>('home');
+  const [activeSession, setActiveSession] = useState<ActiveTestSession | null>(null);
+  const [viewingResultAttempt, setViewingResultAttempt] = useState<MockAttempt | null>(null);
+
+  // Authentication State
+  const [currentUser, setCurrentUser] = useState<User | null>(null);
+  const [isAuthModalOpen, setIsAuthModalOpen] = useState(false);
+  const [authReason, setAuthReason] = useState<string>('Please sign in or create an account to start your mock test.');
+  const [pendingTestAction, setPendingTestAction] = useState<(() => void) | null>(null);
+
+  // Modals
+  const [isConfigModalOpen, setIsConfigModalOpen] = useState(false);
+  const [preselectedCourseId, setPreselectedCourseId] = useState<string | undefined>(undefined);
+  const [isPdfUploadModalOpen, setIsPdfUploadModalOpen] = useState(false);
+
+  // Live count trackers
+  const [coursesCount, setCoursesCount] = useState(getCourses().length);
+  const [questionsCount, setQuestionsCount] = useState(getQuestions().length);
+
+  // Toast notifications
+  const [toastMessage, setToastMessage] = useState<string | null>(null);
+
+  const showToast = (msg: string) => {
+    setToastMessage(msg);
+    setTimeout(() => setToastMessage(null), 3500);
+  };
+
+  useEffect(() => {
+    const user = getCurrentUser();
+    setCurrentUser(user);
+  }, []);
+
+  const refreshCounts = () => {
+    setCoursesCount(getCourses().length);
+    setQuestionsCount(getQuestions().length);
+  };
+
+  const handleLogout = () => {
+    logout();
+    setCurrentUser(null);
+    showToast('Signed out successfully');
+  };
+
+  const requireAuth = (onSuccess: () => void, reason = 'Authentication is required before starting any test.') => {
+    if (currentUser) {
+      onSuccess();
+    } else {
+      setAuthReason(reason);
+      setPendingTestAction(() => onSuccess);
+      setIsAuthModalOpen(true);
+    }
+  };
+
+  const handleAuthenticated = (user: User) => {
+    setCurrentUser(user);
+    showToast(`Welcome back, ${user.name}`);
+    if (pendingTestAction) {
+      const action = pendingTestAction;
+      setPendingTestAction(null);
+      setTimeout(() => action(), 150);
+    }
+  };
+
+  // Launch fresh mock test from config with auth guard
+  const handleStartTest = (config: MockConfig) => {
+    requireAuth(() => {
+      const newSession = initializeMockSession(config);
+      setViewingResultAttempt(null);
+      setActiveSession(newSession);
+    }, 'Authentication is required before starting any test.');
+  };
+
+  // Finish and show results
+  const handleFinishTest = (attempt: MockAttempt) => {
+    setActiveSession(null);
+    setViewingResultAttempt(attempt);
+    refreshCounts();
+  };
+
+  // Retry only wrong questions
+  const handleRetryWrong = (attempt: MockAttempt) => {
+    requireAuth(() => {
+      const retrySession = createRetryWrongSession(attempt);
+      if (!retrySession) {
+        showToast('No incorrect questions to re-attempt in this test.');
+        return;
+      }
+      setViewingResultAttempt(null);
+      setActiveSession(retrySession);
+    });
+  };
+
+  // Resume uncompleted test
+  const handleResumeTest = (session: ActiveTestSession) => {
+    requireAuth(() => {
+      setViewingResultAttempt(null);
+      setActiveSession(session);
+    });
+  };
+
+  return (
+    <div className="min-h-screen bg-[#F8FBFF] text-[#0F172A] flex flex-col selection:bg-sky-500/20 selection:text-sky-900 font-sans">
+      {/* Toast Notification */}
+      {toastMessage && (
+        <div className="fixed bottom-6 right-6 z-50 px-4 py-2.5 rounded-2xl glass-dock border border-[#38BDF8]/40 text-[#0284C7] text-xs font-mono shadow-[0_8px_30px_rgba(2,132,199,0.15)] animate-bounce">
+          {toastMessage}
+        </div>
+      )}
+
+      {/* When active test is running: Full examination mode */}
+      {activeSession ? (
+        <MockTestView
+          session={activeSession}
+          currentUser={currentUser}
+          onFinishTest={handleFinishTest}
+          onExitTest={() => setActiveSession(null)}
+        />
+      ) : viewingResultAttempt ? (
+        /* Result Page with exact option order playback */
+        <TestResultView
+          attempt={viewingResultAttempt}
+          onRetryWrong={handleRetryWrong}
+          onBackToDashboard={() => setViewingResultAttempt(null)}
+        />
+      ) : (
+        /* Normal Application Shell */
+        <>
+          {/* Floating Glass Navigation Dock */}
+          <Navigation
+            activeTab={activeTab}
+            onTabChange={(tab) => setActiveTab(tab)}
+            currentUser={currentUser}
+            onOpenAuth={() => {
+              setAuthReason('Sign in or create an account to track your progress and tests.');
+              setIsAuthModalOpen(true);
+            }}
+            onLogout={handleLogout}
+          />
+
+          {/* Main Tab Content */}
+          <main className="flex-1">
+            {activeTab === 'home' && (
+              <Hero
+                onStartPracticing={() => {
+                  requireAuth(() => {
+                    setPreselectedCourseId(undefined);
+                    setIsConfigModalOpen(true);
+                  });
+                }}
+                onUploadPdf={() => setIsPdfUploadModalOpen(true)}
+                totalCourses={coursesCount}
+                totalQuestions={questionsCount}
+              />
+            )}
+
+            {activeTab === 'tests' && (
+              <TestsView
+                currentUser={currentUser}
+                onOpenConfig={() => {
+                  requireAuth(() => {
+                    setPreselectedCourseId(undefined);
+                    setIsConfigModalOpen(true);
+                  });
+                }}
+                onResumeTest={handleResumeTest}
+                onViewAttemptResult={(att) => setViewingResultAttempt(att)}
+                onRetryAttemptWrong={handleRetryWrong}
+              />
+            )}
+
+            {activeTab === 'courses' && (
+              <CoursesView
+                onStartCourseTest={(cId) => {
+                  requireAuth(() => {
+                    setPreselectedCourseId(cId);
+                    setIsConfigModalOpen(true);
+                  });
+                }}
+                onUploadForCourse={() => setIsPdfUploadModalOpen(true)}
+              />
+            )}
+
+            {activeTab === 'progress' && (
+              <ProgressView
+                currentUser={currentUser}
+                onStartPracticing={() => {
+                  requireAuth(() => {
+                    setPreselectedCourseId(undefined);
+                    setIsConfigModalOpen(true);
+                  });
+                }}
+              />
+            )}
+          </main>
+        </>
+      )}
+
+      {/* Modals */}
+      <MockConfigModal
+        isOpen={isConfigModalOpen}
+        onClose={() => setIsConfigModalOpen(false)}
+        onStartTest={handleStartTest}
+        preselectedCourseId={preselectedCourseId}
+      />
+
+      <PdfUploadModal
+        isOpen={isPdfUploadModalOpen}
+        onClose={() => setIsPdfUploadModalOpen(false)}
+        onQuestionsSaved={(count) => {
+          refreshCounts();
+          showToast(`${count} questions saved to your library`);
+        }}
+        onStartTestDirectly={(courseId) => {
+          refreshCounts();
+          requireAuth(() => {
+            const courseQuestions = getQuestions(courseId);
+            const allCourses = getCourses();
+            const targetCourse = allCourses.find((c) => c.id === courseId);
+            if (courseQuestions.length > 0 && targetCourse) {
+              const directConfig: MockConfig = {
+                courseId,
+                courseName: `${targetCourse.code} - ${targetCourse.name}`,
+                weekNumber: 'all',
+                questionCount: 'all',
+                selectionType: 'all',
+                mode: 'practice',
+                timeLimitMinutes: 0,
+              };
+              const newSession = initializeMockSession(directConfig);
+              setViewingResultAttempt(null);
+              setActiveSession(newSession);
+            } else {
+              setPreselectedCourseId(courseId);
+              setIsConfigModalOpen(true);
+            }
+          });
+        }}
+      />
+
+      <AuthModal
+        isOpen={isAuthModalOpen}
+        onClose={() => {
+          setIsAuthModalOpen(false);
+          setPendingTestAction(null);
+        }}
+        onAuthenticated={handleAuthenticated}
+        reasonMessage={authReason}
+      />
+
+
+    </div>
+  );
+};
+export default App;
