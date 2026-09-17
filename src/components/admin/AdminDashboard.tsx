@@ -36,7 +36,8 @@ import {
   getAllAttempts,
   fetchAttemptsFromSupabase,
 } from '../../lib/storage';
-import { extractTextFromPdf, parseMcqsFromText, parseAnswerKeySource, applyAnswerKeyMapping } from '../../lib/pdfParser';
+import { processFullPdf, HybridExtractionResult, extractTextFromPdf, parseMcqsFromText, parseAnswerKeySource, applyAnswerKeyMapping } from '../../lib/pdfParser';
+import { getSupabaseClient } from '../../lib/supabase';
 
 interface AdminDashboardProps {
   currentUser: User;
@@ -88,6 +89,11 @@ export const AdminDashboard: React.FC<AdminDashboardProps> = ({
   const [isProcessingAnswerKey, setIsProcessingAnswerKey] = useState(false);
   const [mappedCount, setMappedCount] = useState<number>(0);
 
+  // Extraction progress state
+  const [extractionProgress, setExtractionProgress] = useState<{ current: number; total: number; status: string }>({ current: 0, total: 0, status: '' });
+  const [extractionStats, setExtractionStats] = useState<HybridExtractionResult | null>(null);
+  const [reviewFilter, setReviewFilter] = useState<'all' | 'verified' | 'needs_review'>('all');
+
   // Active question under edit during review
   const [editingQuestionId, setEditingQuestionId] = useState<string | null>(null);
 
@@ -103,28 +109,39 @@ export const AdminDashboard: React.FC<AdminDashboardProps> = ({
   const pdfInputRef = useRef<HTMLInputElement>(null);
   const answerKeyDocRef = useRef<HTMLInputElement>(null);
 
-  // ----------------- PDF Upload & Parsing -----------------
+  // ----------------- PDF Upload & Hybrid Extraction Pipeline -----------------
   const handlePdfSelected = async (file: File) => {
     if (!file) return;
     setIsProcessingPdf(true);
     setErrorMessage(null);
     setUploadedPdfName(file.name);
+    setExtractionProgress({ current: 0, total: 0, status: 'Loading document...' });
+    setExtractionStats(null);
 
     try {
       const buffer = await file.arrayBuffer();
-      const { text, isScannedOrImagePdf } = await extractTextFromPdf(buffer);
+      const supabase = getSupabaseClient();
 
-      if (!text || text.trim().length < 50) {
-        if (isScannedOrImagePdf) {
-          setErrorMessage('The uploaded PDF appears to be a scanned image without machine-readable text.');
-        } else {
-          setErrorMessage('Could not extract text from this PDF file. Please ensure it contains readable text.');
+      // Use the hybrid pipeline: text for text-based pages, vision for image-based pages
+      const result = await processFullPdf(
+        buffer,
+        supabase,
+        file.name,
+        (currentPage, totalPages, status) => {
+          setExtractionProgress({ current: currentPage, total: totalPages, status });
         }
+      );
+
+      if (result.questions.length === 0) {
+        setErrorMessage(
+          'No multiple-choice questions were detected in this document. ' +
+          'Ensure the PDF contains visible questions with options (A, B, C, D).'
+        );
         setIsProcessingPdf(false);
         return;
       }
 
-      // Automatically generate course code and title from filename without pestering admin
+      // Automatically generate course code and title from filename
       const cleanTitle = file.name.replace(/\.pdf$/i, '').replace(/[-_]/g, ' ');
       const autoCode = `TEST-${Math.floor(100 + Math.random() * 900)}`;
 
@@ -135,24 +152,37 @@ export const AdminDashboard: React.FC<AdminDashboardProps> = ({
         description: `Imported from ${file.name}`,
         status: 'draft',
         sourcePdfName: file.name,
+        weeks: result.weeksDetected,
         createdAt: new Date().toISOString(),
       };
 
-      const extracted = parseMcqsFromText(text, 1);
-      if (extracted.length === 0) {
-        setErrorMessage('No multiple-choice questions with options were detected in this document.');
-        setIsProcessingPdf(false);
-        return;
-      }
-
-      setDraftQuestions(extracted);
+      setDraftQuestions(result.questions);
       setWorkingCourse(newCourse);
-      setUploadStep('answer_key');
-      showToast(`Extracted ${extracted.length} questions. Now provide the authoritative answer key.`);
-    } catch (err: any) {
-      setErrorMessage(err?.message || 'Failed to process question PDF.');
+      setExtractionStats(result);
+
+      // Check if answers were already extracted from PDF (e.g. "Accepted Answer" printed in the document)
+      const questionsWithAnswers = result.questions.filter((q) => q.correctAnswerIndex !== null).length;
+      if (questionsWithAnswers > result.questions.length * 0.5) {
+        // Most questions already have answers from the PDF — go straight to review
+        setUploadStep('review');
+        showToast(
+          `Extracted ${result.questions.length} questions from ${result.pageCount} pages. ` +
+          `${questionsWithAnswers} answers detected from document.`
+        );
+      } else {
+        // Few answers found — offer the answer key step
+        setUploadStep('answer_key');
+        showToast(
+          `Extracted ${result.questions.length} questions from ${result.pageCount} pages. ` +
+          `Provide the authoritative answer key.`
+        );
+      }
+    } catch (err: unknown) {
+      const message = err instanceof Error ? err.message : 'Failed to process question PDF.';
+      setErrorMessage(message);
     } finally {
       setIsProcessingPdf(false);
+      setExtractionProgress({ current: 0, total: 0, status: '' });
     }
   };
 
@@ -665,30 +695,59 @@ export const AdminDashboard: React.FC<AdminDashboardProps> = ({
                   </p>
                 </div>
 
-                <div
-                  onClick={() => pdfInputRef.current?.click()}
-                  className="border-2 border-dashed border-[#DCEAF5] hover:border-[#38BDF8] rounded-3xl p-12 flex flex-col items-center justify-center cursor-pointer bg-[#F8FBFF] hover:bg-[#EFF8FF]/50 transition-all group"
-                >
-                  <input
-                    ref={pdfInputRef}
-                    type="file"
-                    accept=".pdf,application/pdf"
-                    className="hidden"
-                    onChange={(e) => {
-                      const file = e.target.files?.[0];
-                      if (file) handlePdfSelected(file);
-                    }}
-                  />
-                  <div className="p-4 rounded-2xl bg-white border border-[#DCEAF5] text-[#0284C7] mb-4 group-hover:scale-105 transition-transform shadow-sm">
-                    <Upload className="w-8 h-8" />
+                {isProcessingPdf ? (
+                  /* Progress Indicator */
+                  <div className="p-8 rounded-3xl bg-[#F8FBFF] border border-[#DCEAF5] space-y-4">
+                    <div className="p-4 rounded-2xl bg-white border border-[#DCEAF5] text-[#0284C7] mx-auto w-fit shadow-sm">
+                      <Layers className="w-8 h-8 animate-pulse" />
+                    </div>
+                    <p className="text-sm font-semibold text-[#0F172A]">
+                      {extractionProgress.status || 'Reading document...'}
+                    </p>
+                    {extractionProgress.total > 0 && (
+                      <div className="space-y-2 max-w-md mx-auto">
+                        <div className="w-full h-2 bg-[#DCEAF5] rounded-full overflow-hidden">
+                          <div
+                            className="h-full bg-[#0284C7] rounded-full transition-all duration-300 ease-out"
+                            style={{ width: `${Math.round((extractionProgress.current / extractionProgress.total) * 100)}%` }}
+                          />
+                        </div>
+                        <p className="text-[11px] text-[#64748B] font-mono">
+                          Page {extractionProgress.current} of {extractionProgress.total}
+                        </p>
+                      </div>
+                    )}
+                    <p className="text-xs text-[#64748B] font-mono">
+                      {uploadedPdfName}
+                    </p>
                   </div>
-                  <p className="text-sm font-semibold text-[#0F172A]">
-                    {isProcessingPdf ? 'Extracting questions from PDF...' : 'Select or drop Question PDF here'}
-                  </p>
-                  <p className="text-xs text-[#64748B] mt-1 font-mono">
-                    Course and week metadata are completely optional and automatically derived.
-                  </p>
-                </div>
+                ) : (
+                  /* Drop Zone */
+                  <div
+                    onClick={() => pdfInputRef.current?.click()}
+                    className="border-2 border-dashed border-[#DCEAF5] hover:border-[#38BDF8] rounded-3xl p-12 flex flex-col items-center justify-center cursor-pointer bg-[#F8FBFF] hover:bg-[#EFF8FF]/50 transition-all group"
+                  >
+                    <input
+                      ref={pdfInputRef}
+                      type="file"
+                      accept=".pdf,application/pdf"
+                      className="hidden"
+                      onChange={(e) => {
+                        const file = e.target.files?.[0];
+                        if (file) handlePdfSelected(file);
+                      }}
+                    />
+                    <div className="p-4 rounded-2xl bg-white border border-[#DCEAF5] text-[#0284C7] mb-4 group-hover:scale-105 transition-transform shadow-sm">
+                      <Upload className="w-8 h-8" />
+                    </div>
+                    <p className="text-sm font-semibold text-[#0F172A]">
+                      Select or drop Question PDF here
+                    </p>
+                    <p className="text-xs text-[#64748B] mt-1 font-mono">
+                      Supports text-based and image-based PDFs. Week metadata is automatically detected.
+                    </p>
+                  </div>
+                )}
               </div>
             )}
 
@@ -791,53 +850,85 @@ export const AdminDashboard: React.FC<AdminDashboardProps> = ({
             {uploadStep === 'review' && (
               <div className="space-y-6">
                 {/* Header Summary & Actions Bar */}
-                <div className="p-6 rounded-3xl bg-white border border-[#DCEAF5] shadow-sm flex flex-col lg:flex-row items-start lg:items-center justify-between gap-4">
-                  <div>
-                    <div className="text-[11px] font-mono tracking-[0.25em] text-[#0284C7] uppercase font-semibold">
-                      STEP 3 OF 3 · ADMINISTRATOR REVIEW & APPROVAL
+                <div className="p-6 rounded-3xl bg-white border border-[#DCEAF5] shadow-sm space-y-4">
+                  <div className="flex flex-col lg:flex-row items-start lg:items-center justify-between gap-4">
+                    <div>
+                      <div className="text-[11px] font-mono tracking-[0.25em] text-[#0284C7] uppercase font-semibold">
+                        STEP 3 OF 3 · ADMINISTRATOR REVIEW & APPROVAL
+                      </div>
+                      <h2 className="font-serif text-2xl text-[#0F172A] uppercase tracking-tight mt-1">
+                        {workingCourse?.name || 'Review Extracted Questions'}
+                      </h2>
                     </div>
-                    <h2 className="font-serif text-2xl text-[#0F172A] uppercase tracking-tight mt-1">
-                      {workingCourse?.name || 'Review Extracted Questions'}
-                    </h2>
-                    <div className="flex items-center gap-4 mt-2 text-xs font-mono text-[#64748B]">
-                      <span>{draftQuestions.length} Questions</span>
-                      <span>·</span>
-                      <span className="text-emerald-700 font-semibold">
-                        {draftQuestions.filter((q) => q.isApproved).length} Approved
-                      </span>
-                      <span>·</span>
-                      <span
-                        className={
-                          draftQuestions.some((q) => q.correctAnswerIndex === null)
-                            ? 'text-rose-600 font-semibold'
-                            : 'text-emerald-600 font-semibold'
-                        }
+
+                    <div className="flex items-center gap-2.5 w-full lg:w-auto">
+                      <button
+                        onClick={handleApproveAllVerified}
+                        className="px-4 py-2.5 rounded-full bg-white hover:bg-[#EFF8FF] text-[#0284C7] border border-[#DCEAF5] text-xs font-semibold uppercase tracking-wider transition-all"
                       >
-                        {draftQuestions.filter((q) => q.correctAnswerIndex === null).length} Missing Answer
-                      </span>
+                        Approve All Verified
+                      </button>
+                      <button
+                        onClick={handleSaveAsDraft}
+                        className="px-4 py-2.5 rounded-full bg-slate-100 hover:bg-slate-200 text-slate-800 text-xs font-semibold uppercase tracking-wider transition-all"
+                      >
+                        Save Draft
+                      </button>
+                      <button
+                        onClick={handlePublishFromReview}
+                        className="px-6 py-2.5 rounded-full bg-[#0284C7] hover:bg-[#0369a1] text-white text-xs font-bold uppercase tracking-wider transition-all flex items-center gap-1.5 shadow-sm"
+                      >
+                        <span>Publish to Students</span>
+                        <Globe className="w-3.5 h-3.5" />
+                      </button>
                     </div>
                   </div>
 
-                  <div className="flex items-center gap-2.5 w-full lg:w-auto">
-                    <button
-                      onClick={handleApproveAllVerified}
-                      className="px-4 py-2.5 rounded-full bg-white hover:bg-[#EFF8FF] text-[#0284C7] border border-[#DCEAF5] text-xs font-semibold uppercase tracking-wider transition-all"
+                  {/* Extraction Summary Stats */}
+                  <div className="flex flex-wrap items-center gap-x-5 gap-y-2 text-xs font-mono text-[#64748B] border-t border-[#DCEAF5] pt-3">
+                    {extractionStats && (
+                      <span>Total Pages: {extractionStats.pageCount}</span>
+                    )}
+                    <span>{draftQuestions.length} Questions</span>
+                    <span className="text-emerald-700 font-semibold">
+                      {draftQuestions.filter((q) => q.isApproved).length} Approved
+                    </span>
+                    <span className="text-sky-700 font-semibold">
+                      {draftQuestions.filter((q) => q.correctAnswerIndex !== null).length} Verified Answers
+                    </span>
+                    <span
+                      className={
+                        draftQuestions.some((q) => q.correctAnswerIndex === null)
+                          ? 'text-rose-600 font-semibold'
+                          : 'text-emerald-600 font-semibold'
+                      }
                     >
-                      Approve All Verified
-                    </button>
-                    <button
-                      onClick={handleSaveAsDraft}
-                      className="px-4 py-2.5 rounded-full bg-slate-100 hover:bg-slate-200 text-slate-800 text-xs font-semibold uppercase tracking-wider transition-all"
-                    >
-                      Save Draft
-                    </button>
-                    <button
-                      onClick={handlePublishFromReview}
-                      className="px-6 py-2.5 rounded-full bg-[#0284C7] hover:bg-[#0369a1] text-white text-xs font-bold uppercase tracking-wider transition-all flex items-center gap-1.5 shadow-sm"
-                    >
-                      <span>Publish to Students</span>
-                      <Globe className="w-3.5 h-3.5" />
-                    </button>
+                      {draftQuestions.filter((q) => q.correctAnswerIndex === null).length} Missing Answer
+                    </span>
+                    {extractionStats && extractionStats.weeksDetected.length > 0 && (
+                      <span>
+                        Weeks: {extractionStats.weeksDetected.map((w) => `Week ${w}`).join(', ')}
+                      </span>
+                    )}
+                  </div>
+
+                  {/* Review Filter Controls */}
+                  <div className="flex items-center gap-2">
+                    {(['all', 'verified', 'needs_review'] as const).map((f) => (
+                      <button
+                        key={f}
+                        onClick={() => setReviewFilter(f)}
+                        className={`px-3 py-1.5 rounded-lg text-[11px] font-semibold uppercase tracking-wider transition-all ${
+                          reviewFilter === f
+                            ? 'bg-[#0284C7] text-white'
+                            : 'bg-[#EFF8FF] text-[#64748B] hover:text-[#0F172A] border border-[#DCEAF5]'
+                        }`}
+                      >
+                        {f === 'all' ? `All (${draftQuestions.length})` :
+                         f === 'verified' ? `Verified (${draftQuestions.filter((q) => q.correctAnswerIndex !== null && !q.needsReview).length})` :
+                         `Needs Review (${draftQuestions.filter((q) => q.needsReview || q.correctAnswerIndex === null).length})`}
+                      </button>
+                    ))}
                   </div>
                 </div>
 
@@ -933,6 +1024,14 @@ export const AdminDashboard: React.FC<AdminDashboardProps> = ({
                 {/* Questions List */}
                 <div className="space-y-4">
                   {draftQuestions.map((q, idx) => {
+                    // Apply review filter
+                    if (reviewFilter === 'verified' && (q.correctAnswerIndex === null || q.needsReview)) {
+                      return null;
+                    }
+                    if (reviewFilter === 'needs_review' && q.correctAnswerIndex !== null && !q.needsReview) {
+                      return null;
+                    }
+
                     const isMissingAnswer = q.correctAnswerIndex === null;
                     const isSelectedForBulk = selectedQuestionIndices.includes(idx);
 
@@ -960,6 +1059,13 @@ export const AdminDashboard: React.FC<AdminDashboardProps> = ({
                             <span className="w-7 h-7 rounded-full bg-[#EFF8FF] border border-[#DCEAF5] text-xs font-mono font-bold text-[#0284C7] flex items-center justify-center">
                               {q.originalQuestionNumber || idx + 1}
                             </span>
+
+                            {/* Source Page Badge */}
+                            {q.sourcePageNumber && (
+                              <span className="px-2.5 py-0.5 rounded-full bg-slate-100 border border-slate-200 text-[10px] font-mono text-[#64748B]">
+                                Page {q.sourcePageNumber}
+                              </span>
+                            )}
 
                             {/* Week Badge / Selector */}
                             <div className="flex items-center gap-1 px-2.5 py-0.5 rounded-full bg-[#EFF8FF] border border-[#DCEAF5] text-[11px] font-mono text-[#0284C7]">
@@ -994,6 +1100,20 @@ export const AdminDashboard: React.FC<AdminDashboardProps> = ({
                             >
                               Source: {q.answerSource}
                             </span>
+
+                            {/* Accepted Answer Badge if printed in document */}
+                            {q.acceptedAnswerText && (
+                              <span className="px-2.5 py-0.5 rounded-full bg-indigo-50 border border-indigo-200 text-[10px] font-mono text-indigo-700 font-semibold truncate max-w-[200px]" title={`Printed Accepted Answer: ${q.acceptedAnswerText}`}>
+                                Printed Ans: {q.acceptedAnswerText}
+                              </span>
+                            )}
+
+                            {/* Needs Review reason badge */}
+                            {q.needsReview && q.reviewReason && (
+                              <span className="px-2 py-0.5 rounded-full bg-amber-50 border border-amber-200 text-[10px] font-mono text-amber-700">
+                                {q.reviewReason}
+                              </span>
+                            )}
                           </div>
 
                           <div className="flex items-center gap-2">

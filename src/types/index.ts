@@ -116,6 +116,7 @@ export interface ExtractedQuestionDraft {
   options: [string, string, string, string];
   correctAnswerIndex: number | null; // null if unverified
   hasExplicitAnswer?: boolean;
+  acceptedAnswerText?: string | null; // Raw printed accepted answer text from PDF
   answerSource: AnswerSource;
   isApproved: boolean;
   explanation?: string;
@@ -123,4 +124,31 @@ export interface ExtractedQuestionDraft {
   isValid: boolean;
   needsReview?: boolean;
   reviewReason?: string;
+  extractionMethod?: 'text' | 'vision'; // How this question was extracted
 }
+
+/** Result from vision extraction of a single PDF page */
+export interface VisionPageResult {
+  pageNumber: number;
+  weekHeading: string | null;
+  questions: VisionExtractedQuestion[];
+}
+
+export interface VisionExtractedQuestion {
+  question_number: number | null;
+  question_text: string;
+  option_a: string | null;
+  option_b: string | null;
+  option_c: string | null;
+  option_d: string | null;
+  accepted_answer_text: string | null;
+  is_partial: boolean;
+  partial_position: 'start' | 'end' | null;
+}
+
+/** Progress callback for PDF processing pipeline */
+export type ExtractionProgressCallback = (
+  currentPage: number,
+  totalPages: number,
+  status: string
+) => void;
