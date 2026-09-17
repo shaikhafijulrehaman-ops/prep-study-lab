@@ -24,7 +24,9 @@ export const App: React.FC = () => {
   const [activeTab, setActiveTab] = useState<NavTab>('home');
   const [activeSession, setActiveSession] = useState<ActiveTestSession | null>(null);
   const [viewingResultAttempt, setViewingResultAttempt] = useState<MockAttempt | null>(null);
-  const [previewAsStudent, setPreviewAsStudent] = useState(false);
+
+  // Whether the admin dashboard is currently shown (toggled by clicking name in nav)
+  const [showAdminDashboard, setShowAdminDashboard] = useState(false);
 
   // Authentication State
   const [currentUser, setCurrentUser] = useState<User | null>(null);
@@ -53,12 +55,9 @@ export const App: React.FC = () => {
     setCurrentUser(user);
     refreshCounts();
 
-    // Check if user directly bookmarked #/admin without being logged in
-    if (window.location.hash.startsWith('#/admin') || window.location.pathname.startsWith('/admin')) {
-      if (!user) {
-        setAuthReason('Please sign in to access the platform.');
-        setIsAuthModalOpen(true);
-      }
+    // If admin logs in, default to admin dashboard
+    if (user && user.role === 'admin') {
+      setShowAdminDashboard(true);
     }
   }, []);
 
@@ -70,7 +69,7 @@ export const App: React.FC = () => {
   const handleLogout = () => {
     logout();
     setCurrentUser(null);
-    setPreviewAsStudent(false);
+    setShowAdminDashboard(false);
     window.location.hash = '';
     showToast('Signed out successfully');
   };
@@ -89,11 +88,22 @@ export const App: React.FC = () => {
     setCurrentUser(user);
     showToast(`Welcome, ${user.name}`);
     if (user.role === 'admin') {
-      setPreviewAsStudent(false);
+      setShowAdminDashboard(true);
     } else if (pendingTestAction) {
       const action = pendingTestAction;
       setPendingTestAction(null);
       setTimeout(() => action(), 150);
+    }
+  };
+
+  // Name click handler: admin -> toggle admin dashboard, student -> go to progress/profile
+  const handleNameClick = () => {
+    if (!currentUser) return;
+    if (currentUser.role === 'admin') {
+      setShowAdminDashboard((prev) => !prev);
+      refreshCounts();
+    } else {
+      setActiveTab('progress');
     }
   };
 
@@ -134,41 +144,27 @@ export const App: React.FC = () => {
     });
   };
 
-  // ===================== AUTOMATIC ROLE-BASED VIEW ROUTING =====================
-  // When authenticated as admin and not explicitly in student preview mode:
-  if (currentUser && currentUser.role === 'admin' && !previewAsStudent) {
+  // ===================== ADMIN DASHBOARD VIEW =====================
+  if (currentUser && currentUser.role === 'admin' && showAdminDashboard) {
     return (
       <AdminDashboard
         currentUser={currentUser}
         onLogout={handleLogout}
-        onSwitchToStudentView={() => {
-          setPreviewAsStudent(true);
+        onNavigateToStudentPlatform={() => {
+          setShowAdminDashboard(false);
           refreshCounts();
         }}
       />
     );
   }
 
-  // ===================== STUDENT / NORMAL USER APPLICATION =====================
+  // ===================== NORMAL APPLICATION (Student or Admin browsing student platform) =====================
   return (
     <div className="min-h-screen bg-[#F8FBFF] text-[#0F172A] flex flex-col selection:bg-sky-500/20 selection:text-sky-900 font-sans">
       {/* Toast Notification */}
       {toastMessage && (
         <div className="fixed bottom-6 right-6 z-50 px-4 py-2.5 rounded-2xl glass-dock border border-[#38BDF8]/40 text-[#0284C7] text-xs font-mono shadow-[0_8px_30px_rgba(2,132,199,0.15)] animate-bounce">
           {toastMessage}
-        </div>
-      )}
-
-      {/* Admin Preview Mode Top Banner */}
-      {currentUser && currentUser.role === 'admin' && previewAsStudent && (
-        <div className="bg-[#EFF8FF] border-b border-[#38BDF8]/40 px-4 py-2 text-center text-xs font-mono text-[#0284C7] flex items-center justify-center gap-3">
-          <span>Viewing Student Platform as Administrator Preview</span>
-          <button
-            onClick={() => setPreviewAsStudent(false)}
-            className="px-3 py-1 rounded-full bg-[#0284C7] text-white font-bold hover:bg-[#0369a1] transition-all text-[11px]"
-          >
-            Return to Admin Dashboard
-          </button>
         </div>
       )}
 
@@ -200,6 +196,7 @@ export const App: React.FC = () => {
               setIsAuthModalOpen(true);
             }}
             onLogout={handleLogout}
+            onNameClick={handleNameClick}
           />
 
           {/* Main Tab Content */}

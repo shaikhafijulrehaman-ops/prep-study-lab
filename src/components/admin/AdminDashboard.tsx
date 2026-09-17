@@ -11,7 +11,6 @@ import {
   Lock,
   ArrowRight,
   LogOut,
-  ExternalLink,
   BookOpen,
   Plus,
   Layers,
@@ -42,7 +41,7 @@ import { extractTextFromPdf, parseMcqsFromText, parseAnswerKeySource, applyAnswe
 interface AdminDashboardProps {
   currentUser: User;
   onLogout: () => void;
-  onSwitchToStudentView: () => void;
+  onNavigateToStudentPlatform: () => void;
 }
 
 type AdminTab = 'tests' | 'upload' | 'attempts';
@@ -50,7 +49,7 @@ type AdminTab = 'tests' | 'upload' | 'attempts';
 export const AdminDashboard: React.FC<AdminDashboardProps> = ({
   currentUser,
   onLogout,
-  onSwitchToStudentView,
+  onNavigateToStudentPlatform,
 }) => {
   const [activeTab, setActiveTab] = useState<AdminTab>('tests');
   const [courses, setCourses] = useState<Course[]>(getCourses(false));
@@ -436,28 +435,18 @@ export const AdminDashboard: React.FC<AdminDashboardProps> = ({
           <div className="p-2 rounded-xl bg-sky-500/10 border border-sky-500/20 text-[#0284C7]">
             <BookOpen className="w-5 h-5" />
           </div>
-          <div>
-            <div className="flex items-center gap-2">
-              <span className="font-serif text-lg font-bold tracking-tight text-[#0F172A] uppercase">
-                Prep Study Lab
-              </span>
-              <span className="px-2 py-0.5 rounded-md bg-[#EFF8FF] border border-[#DCEAF5] text-[10px] font-mono text-[#0284C7] uppercase font-semibold">
-                Administrator
-              </span>
-            </div>
-            <p className="text-[11px] text-[#64748B] font-mono">
-              Signed in as {currentUser.name}
-            </p>
-          </div>
+          <span className="font-serif text-lg font-bold tracking-tight text-[#0F172A] uppercase">
+            Prep Study Lab
+          </span>
         </div>
 
-        <div className="flex items-center gap-3">
+        <div className="flex items-center gap-2">
           <button
-            onClick={onSwitchToStudentView}
-            className="px-4 py-2 rounded-full bg-white hover:bg-[#EFF8FF] text-[#0284C7] border border-[#DCEAF5] text-xs font-semibold uppercase tracking-wider transition-all flex items-center gap-1.5 shadow-sm"
+            onClick={onNavigateToStudentPlatform}
+            title="Browse Student Platform"
+            className="text-xs font-mono text-[#0F172A] px-3 py-1.5 rounded-full bg-[#EFF8FF] border border-[#DCEAF5] truncate max-w-[140px] cursor-pointer hover:bg-[#DCEAF5] hover:border-[#38BDF8]/50 transition-all"
           >
-            <span>Student View</span>
-            <ExternalLink className="w-3.5 h-3.5" />
+            {currentUser.name}
           </button>
           <button
             onClick={onLogout}

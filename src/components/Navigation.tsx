@@ -1,6 +1,6 @@
 import React from 'react';
 import { motion } from 'framer-motion';
-import { Home, FileText, BookOpen, BarChart3, User as UserIcon, LogOut, ShieldCheck } from 'lucide-react';
+import { Home, FileText, BookOpen, BarChart3, User as UserIcon, LogOut } from 'lucide-react';
 import { User } from '../types';
 
 export type NavTab = 'home' | 'tests' | 'courses' | 'progress';
@@ -11,6 +11,7 @@ interface NavigationProps {
   currentUser: User | null;
   onOpenAuth: () => void;
   onLogout: () => void;
+  onNameClick?: () => void;
 }
 
 export const Navigation: React.FC<NavigationProps> = ({
@@ -19,6 +20,7 @@ export const Navigation: React.FC<NavigationProps> = ({
   currentUser,
   onOpenAuth,
   onLogout,
+  onNameClick,
 }) => {
   const navItems: { id: NavTab; label: string; icon: React.ComponentType<{ className?: string }> }[] = [
     { id: 'home', label: 'Home', icon: Home },
@@ -65,14 +67,17 @@ export const Navigation: React.FC<NavigationProps> = ({
         {/* Divider */}
         <div className="h-4 w-[1px] bg-[#DCEAF5] my-auto" />
 
-
         {/* User Account / Auth Trigger */}
         <div className="flex items-center pr-1">
           {currentUser ? (
             <div className="flex items-center gap-1.5">
-              <span className="text-xs font-mono text-[#0F172A] px-2.5 py-1 rounded-full bg-[#EFF8FF] border border-[#DCEAF5] truncate max-w-[120px]">
+              <button
+                onClick={onNameClick}
+                title={currentUser.role === 'admin' ? 'Open Admin Dashboard' : 'View Profile'}
+                className="text-xs font-mono text-[#0F172A] px-2.5 py-1 rounded-full bg-[#EFF8FF] border border-[#DCEAF5] truncate max-w-[120px] cursor-pointer hover:bg-[#DCEAF5] hover:border-[#38BDF8]/50 transition-all"
+              >
                 {currentUser.name}
-              </span>
+              </button>
               <button
                 onClick={onLogout}
                 title="Sign out"
