@@ -5,10 +5,11 @@ import { TestsView } from './components/TestsView';
 import { CoursesView } from './components/CoursesView';
 import { ProgressView } from './components/ProgressView';
 import { MockConfigModal } from './components/MockConfigModal';
-import { PdfUploadModal } from './components/PdfUploadModal';
 import { MockTestView } from './components/MockTestView';
 import { TestResultView } from './components/TestResultView';
 import { AuthModal } from './components/AuthModal';
+import { AdminDashboard } from './components/admin/AdminDashboard';
+import { AdminLoginView } from './components/admin/AdminLoginView';
 import {
   ActiveTestSession,
   getCourses,
@@ -25,6 +26,25 @@ export const App: React.FC = () => {
   const [activeSession, setActiveSession] = useState<ActiveTestSession | null>(null);
   const [viewingResultAttempt, setViewingResultAttempt] = useState<MockAttempt | null>(null);
 
+  // Routing State for Admin Portal
+  const [isAdminRoute, setIsAdminRoute] = useState<boolean>(
+    window.location.hash.startsWith('#/admin') || window.location.pathname.startsWith('/admin')
+  );
+
+  useEffect(() => {
+    const handleLocationChange = () => {
+      setIsAdminRoute(
+        window.location.hash.startsWith('#/admin') || window.location.pathname.startsWith('/admin')
+      );
+    };
+    window.addEventListener('hashchange', handleLocationChange);
+    window.addEventListener('popstate', handleLocationChange);
+    return () => {
+      window.removeEventListener('hashchange', handleLocationChange);
+      window.removeEventListener('popstate', handleLocationChange);
+    };
+  }, []);
+
   // Authentication State
   const [currentUser, setCurrentUser] = useState<User | null>(null);
   const [isAuthModalOpen, setIsAuthModalOpen] = useState(false);
@@ -34,11 +54,10 @@ export const App: React.FC = () => {
   // Modals
   const [isConfigModalOpen, setIsConfigModalOpen] = useState(false);
   const [preselectedCourseId, setPreselectedCourseId] = useState<string | undefined>(undefined);
-  const [isPdfUploadModalOpen, setIsPdfUploadModalOpen] = useState(false);
 
-  // Live count trackers
-  const [coursesCount, setCoursesCount] = useState(getCourses().length);
-  const [questionsCount, setQuestionsCount] = useState(getQuestions().length);
+  // Live count trackers (Published tests only for student view)
+  const [coursesCount, setCoursesCount] = useState(getCourses(true).length);
+  const [questionsCount, setQuestionsCount] = useState(getQuestions(undefined, 'all', true).length);
 
   // Toast notifications
   const [toastMessage, setToastMessage] = useState<string | null>(null);
@@ -51,11 +70,12 @@ export const App: React.FC = () => {
   useEffect(() => {
     const user = getCurrentUser();
     setCurrentUser(user);
+    refreshCounts();
   }, []);
 
   const refreshCounts = () => {
-    setCoursesCount(getCourses().length);
-    setQuestionsCount(getQuestions().length);
+    setCoursesCount(getCourses(true).length);
+    setQuestionsCount(getQuestions(undefined, 'all', true).length);
   };
 
   const handleLogout = () => {
@@ -121,6 +141,37 @@ export const App: React.FC = () => {
     });
   };
 
+  // ===================== ADMIN VIEW ROUTING =====================
+  if (isAdminRoute) {
+    if (currentUser && currentUser.role === 'admin') {
+      return (
+        <AdminDashboard
+          currentUser={currentUser}
+          onLogout={handleLogout}
+          onSwitchToStudentView={() => {
+            window.location.hash = '';
+            setIsAdminRoute(false);
+            refreshCounts();
+          }}
+        />
+      );
+    }
+
+    return (
+      <AdminLoginView
+        onAdminAuthenticated={(adminUser) => {
+          setCurrentUser(adminUser);
+        }}
+        onExitAdmin={() => {
+          window.location.hash = '';
+          setIsAdminRoute(false);
+          refreshCounts();
+        }}
+      />
+    );
+  }
+
+  // ===================== STUDENT / NORMAL USER APPLICATION =====================
   return (
     <div className="min-h-screen bg-[#F8FBFF] text-[#0F172A] flex flex-col selection:bg-sky-500/20 selection:text-sky-900 font-sans">
       {/* Toast Notification */}
@@ -158,6 +209,10 @@ export const App: React.FC = () => {
               setIsAuthModalOpen(true);
             }}
             onLogout={handleLogout}
+            onOpenAdmin={() => {
+              window.location.hash = '#/admin';
+              setIsAdminRoute(true);
+            }}
           />
 
           {/* Main Tab Content */}
@@ -170,7 +225,7 @@ export const App: React.FC = () => {
                     setIsConfigModalOpen(true);
                   });
                 }}
-                onUploadPdf={() => setIsPdfUploadModalOpen(true)}
+                onViewTests={() => setActiveTab('tests')}
                 totalCourses={coursesCount}
                 totalQuestions={questionsCount}
               />
@@ -199,7 +254,6 @@ export const App: React.FC = () => {
                     setIsConfigModalOpen(true);
                   });
                 }}
-                onUploadForCourse={() => setIsPdfUploadModalOpen(true)}
               />
             )}
 
@@ -226,40 +280,6 @@ export const App: React.FC = () => {
         preselectedCourseId={preselectedCourseId}
       />
 
-      <PdfUploadModal
-        isOpen={isPdfUploadModalOpen}
-        onClose={() => setIsPdfUploadModalOpen(false)}
-        onQuestionsSaved={(count) => {
-          refreshCounts();
-          showToast(`${count} questions saved to your library`);
-        }}
-        onStartTestDirectly={(courseId) => {
-          refreshCounts();
-          requireAuth(() => {
-            const courseQuestions = getQuestions(courseId);
-            const allCourses = getCourses();
-            const targetCourse = allCourses.find((c) => c.id === courseId);
-            if (courseQuestions.length > 0 && targetCourse) {
-              const directConfig: MockConfig = {
-                courseId,
-                courseName: `${targetCourse.code} - ${targetCourse.name}`,
-                weekNumber: 'all',
-                questionCount: 'all',
-                selectionType: 'all',
-                mode: 'practice',
-                timeLimitMinutes: 0,
-              };
-              const newSession = initializeMockSession(directConfig);
-              setViewingResultAttempt(null);
-              setActiveSession(newSession);
-            } else {
-              setPreselectedCourseId(courseId);
-              setIsConfigModalOpen(true);
-            }
-          });
-        }}
-      />
-
       <AuthModal
         isOpen={isAuthModalOpen}
         onClose={() => {
@@ -269,8 +289,6 @@ export const App: React.FC = () => {
         onAuthenticated={handleAuthenticated}
         reasonMessage={authReason}
       />
-
-
     </div>
   );
 };

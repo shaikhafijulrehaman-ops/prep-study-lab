@@ -99,14 +99,14 @@ export const MockTestView: React.FC<MockTestViewProps> = ({
 
   const handleAutoSubmit = async (finalState: ActiveTestSession) => {
     if (timerRef.current) clearInterval(timerRef.current);
-    const result = await finalizeAndSaveAttempt(finalState, currentUser?.id);
+    const result = await finalizeAndSaveAttempt(finalState, currentUser?.id, currentUser?.name);
     onFinishTest(result);
   };
 
   const handleManualSubmit = async () => {
     if (timerRef.current) clearInterval(timerRef.current);
     setIsSubmitConfirmOpen(false);
-    const result = await finalizeAndSaveAttempt(session, currentUser?.id);
+    const result = await finalizeAndSaveAttempt(session, currentUser?.id, currentUser?.name);
     onFinishTest(result);
   };
 

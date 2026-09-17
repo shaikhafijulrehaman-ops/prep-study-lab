@@ -2,6 +2,12 @@ export type TestMode = 'practice' | 'exam';
 
 export type QuestionSelection = 'random' | 'unattempted' | 'wrong' | 'all';
 
+export type UserRole = 'admin' | 'user';
+
+export type TestLifecycleStatus = 'draft' | 'review' | 'published';
+
+export type AnswerSource = 'Answer Key' | 'PDF' | 'Manually Verified' | 'Not Available';
+
 export interface Course {
   id: string;
   code: string;
@@ -9,13 +15,17 @@ export interface Course {
   description?: string;
   totalQuestions?: number;
   weeks?: number[];
+  status: TestLifecycleStatus; // 'draft' | 'review' | 'published'
   createdAt?: string;
+  publishedAt?: string;
+  sourcePdfName?: string;
 }
 
 export interface User {
   id: string;
   name: string;
   email?: string;
+  role: UserRole;
   createdAt: string;
 }
 
@@ -29,7 +39,9 @@ export interface Question {
   originalQuestionNumber?: number;
   questionText: string;
   options: [string, string, string, string]; // exactly 4 options
-  correctAnswerIndex: number; // 0, 1, 2, 3
+  correctAnswerIndex: number | null; // 0, 1, 2, 3, or null if unverified
+  answerSource: AnswerSource;
+  isApproved: boolean; // Must be approved by administrator before publishing
   explanation?: string;
   extractionStatus?: 'valid' | 'needs_review';
   createdAt?: string;
@@ -51,7 +63,7 @@ export interface AttemptQuestionItem {
   questionText: string;
   displayedOptions: [string, string, string, string]; // randomized option order for this attempt
   selectedOptionIndex: number | null; // index inside displayedOptions
-  correctOptionIndex: number; // index inside displayedOptions
+  correctOptionIndex: number | null; // index inside displayedOptions, or null if question had no answer
   isMarkedForReview: boolean;
   timeSpentSeconds: number;
   explanation?: string;
@@ -60,6 +72,7 @@ export interface AttemptQuestionItem {
 export interface MockAttempt {
   id: string;
   userId?: string;
+  studentName?: string;
   courseId: string;
   courseName: string;
   mode: TestMode;
@@ -73,7 +86,7 @@ export interface MockAttempt {
   timeLimitSeconds: number | null;
   createdAt: string;
   completedAt: string;
-  items: AttemptQuestionItem[]; // faithful playback data
+  items: AttemptQuestionItem[]; // faithful immutable playback snapshot
 }
 
 export interface UserProgress {
@@ -100,8 +113,10 @@ export interface ExtractedQuestionDraft {
   sourcePageNumber?: number;
   questionText: string;
   options: [string, string, string, string];
-  correctAnswerIndex: number; // 0-3, default 0
+  correctAnswerIndex: number | null; // null if unverified
   hasExplicitAnswer?: boolean;
+  answerSource: AnswerSource;
+  isApproved: boolean;
   explanation?: string;
   weekNumber: number;
   isValid: boolean;

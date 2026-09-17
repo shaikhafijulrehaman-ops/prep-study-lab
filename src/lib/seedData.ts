@@ -8,7 +8,9 @@ export const INITIAL_COURSES: Course[] = [
     description: 'Foundations of virtualization, distributed storage, consensus protocols, and elasticity.',
     totalQuestions: 15,
     weeks: [1, 2, 3],
+    status: 'published',
     createdAt: '2026-01-10T00:00:00.000Z',
+    publishedAt: '2026-01-10T00:00:00.000Z',
   },
   {
     id: 'course-dl-02',
@@ -17,7 +19,9 @@ export const INITIAL_COURSES: Course[] = [
     description: 'Backpropagation dynamics, convolutional networks, attention mechanisms, and optimization.',
     totalQuestions: 15,
     weeks: [1, 2, 3],
+    status: 'published',
     createdAt: '2026-01-12T00:00:00.000Z',
+    publishedAt: '2026-01-12T00:00:00.000Z',
   },
   {
     id: 'course-algo-03',
@@ -26,11 +30,13 @@ export const INITIAL_COURSES: Course[] = [
     description: 'Amortized analysis, graph algorithms, dynamic programming, and complexity classes.',
     totalQuestions: 15,
     weeks: [1, 2, 3],
+    status: 'published',
     createdAt: '2026-01-15T00:00:00.000Z',
+    publishedAt: '2026-01-15T00:00:00.000Z',
   },
 ];
 
-export const INITIAL_QUESTIONS: Question[] = [
+const RAW_QUESTIONS: Omit<Question, 'answerSource' | 'isApproved'>[] = [
   // Distributed Cloud Systems - Week 1
   {
     id: 'q-cloud-w1-01',
@@ -281,3 +287,10 @@ export const INITIAL_QUESTIONS: Question[] = [
     createdAt: '2026-01-18T00:00:00.000Z',
   }
 ];
+
+export const INITIAL_QUESTIONS: Question[] = RAW_QUESTIONS.map((q) => ({
+  ...q,
+  answerSource: 'Answer Key',
+  isApproved: true,
+}));
+

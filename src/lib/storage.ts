@@ -21,29 +21,48 @@ export function shuffleArray<T>(array: T[]): T[] {
 
 // ----------------- Courses & Questions -----------------
 
-export function getCourses(): Course[] {
+export function getCourses(publishedOnly: boolean = false): Course[] {
   try {
     const raw = localStorage.getItem(KEYS.COURSES);
+    let courses: Course[] = [];
     if (!raw) {
       localStorage.setItem(KEYS.COURSES, JSON.stringify(INITIAL_COURSES));
-      return INITIAL_COURSES;
+      courses = INITIAL_COURSES;
+    } else {
+      const parsed = JSON.parse(raw);
+      courses = Array.isArray(parsed) && parsed.length > 0 ? parsed : INITIAL_COURSES;
     }
-    const parsed = JSON.parse(raw);
-    return Array.isArray(parsed) && parsed.length > 0 ? parsed : INITIAL_COURSES;
+
+    // Default legacy courses to published if status is not explicitly set
+    courses = courses.map((c) => ({
+      ...c,
+      status: c.status || 'published',
+    }));
+
+    if (publishedOnly) {
+      return courses.filter((c) => c.status === 'published');
+    }
+    return courses;
   } catch {
-    return INITIAL_COURSES;
+    return publishedOnly ? INITIAL_COURSES.filter((c) => c.status === 'published') : INITIAL_COURSES;
   }
 }
 
 export function saveCourse(course: Course): Course {
-  const current = getCourses();
+  const current = getCourses(false);
   const index = current.findIndex((c) => c.id === course.id);
+  const courseWithDefaults: Course = {
+    ...course,
+    status: course.status || 'draft',
+    createdAt: course.createdAt || new Date().toISOString(),
+  };
+
   let updated: Course[];
   if (index >= 0) {
     updated = [...current];
-    updated[index] = course;
+    updated[index] = courseWithDefaults;
   } else {
-    updated = [course, ...current];
+    updated = [courseWithDefaults, ...current];
   }
   localStorage.setItem(KEYS.COURSES, JSON.stringify(updated));
 
@@ -53,10 +72,12 @@ export function saveCourse(course: Course): Course {
     supabase
       .from('courses')
       .upsert({
-        id: course.id,
-        code: course.code,
-        name: course.name,
-        description: course.description || '',
+        id: courseWithDefaults.id,
+        code: courseWithDefaults.code,
+        name: courseWithDefaults.name,
+        description: courseWithDefaults.description || '',
+        status: courseWithDefaults.status,
+        published_at: courseWithDefaults.publishedAt || null,
       })
       .then(
         ({ error }) => {
@@ -66,10 +87,82 @@ export function saveCourse(course: Course): Course {
       );
   }
 
-  return course;
+  return courseWithDefaults;
 }
 
-export function getQuestions(courseId?: string, weekNumber?: number | 'all'): Question[] {
+/**
+ * Publishes a test to students.
+ * STRICT VALIDATION: Blocks publishing if any question does not have a verified answer or is unapproved.
+ */
+export function publishTest(courseId: string): { success: boolean; error?: string; unverifiedCount?: number } {
+  const questions = getQuestions(courseId, 'all', false);
+  if (questions.length === 0) {
+    return { success: false, error: 'Cannot publish a test with 0 questions.' };
+  }
+
+  const unverified = questions.filter((q) => q.correctAnswerIndex === null || !q.isApproved);
+  if (unverified.length > 0) {
+    return {
+      success: false,
+      error: 'Some questions do not have verified answers.',
+      unverifiedCount: unverified.length,
+    };
+  }
+
+  const allCourses = getCourses(false);
+  const target = allCourses.find((c) => c.id === courseId);
+  if (!target) {
+    return { success: false, error: 'Test record not found.' };
+  }
+
+  target.status = 'published';
+  target.publishedAt = new Date().toISOString();
+  target.totalQuestions = questions.length;
+  saveCourse(target);
+
+  return { success: true };
+}
+
+/**
+ * Reverts a published test back to draft status.
+ */
+export function unpublishTest(courseId: string): void {
+  const allCourses = getCourses(false);
+  const target = allCourses.find((c) => c.id === courseId);
+  if (target) {
+    target.status = 'draft';
+    saveCourse(target);
+  }
+}
+
+/**
+ * Deletes a test and its questions.
+ * IMMUTABLE SNAPSHOT GUARANTEE: Does NOT delete or corrupt past student MockAttempt snapshots.
+ */
+export function deleteTest(courseId: string): void {
+  // 1. Remove course
+  const currentCourses = getCourses(false);
+  const filteredCourses = currentCourses.filter((c) => c.id !== courseId);
+  localStorage.setItem(KEYS.COURSES, JSON.stringify(filteredCourses));
+
+  // 2. Remove questions belonging to this course
+  const currentQuestions = getQuestions();
+  const filteredQuestions = currentQuestions.filter((q) => q.courseId !== courseId);
+  localStorage.setItem(KEYS.QUESTIONS, JSON.stringify(filteredQuestions));
+
+  // 3. Supabase cleanup
+  const supabase = getSupabaseClient();
+  if (supabase) {
+    supabase.from('questions').delete().eq('course_id', courseId).then(() => {});
+    supabase.from('courses').delete().eq('id', courseId).then(() => {});
+  }
+}
+
+export function getQuestions(
+  courseId?: string,
+  weekNumber?: number | 'all',
+  approvedOnly: boolean = false
+): Question[] {
   let all: Question[] = [];
   try {
     const raw = localStorage.getItem(KEYS.QUESTIONS);
@@ -87,6 +180,7 @@ export function getQuestions(courseId?: string, weekNumber?: number | 'all'): Qu
   return all.filter((q) => {
     if (courseId && q.courseId !== courseId) return false;
     if (weekNumber !== undefined && weekNumber !== 'all' && q.weekNumber !== weekNumber) return false;
+    if (approvedOnly && (!q.isApproved || q.correctAnswerIndex === null)) return false;
     return true;
   });
 }
@@ -110,6 +204,8 @@ export function saveQuestions(newQuestions: Question[]): void {
       question_text: q.questionText,
       options: q.options,
       correct_answer_index: q.correctAnswerIndex,
+      answer_source: q.answerSource || 'Not Available',
+      is_approved: q.isApproved ?? false,
       explanation: q.explanation || '',
     }));
     supabase
@@ -121,6 +217,45 @@ export function saveQuestions(newQuestions: Question[]): void {
         },
         () => {}
       );
+  }
+}
+
+export function updateQuestion(question: Question): void {
+  const current = getQuestions();
+  const index = current.findIndex((q) => q.id === question.id);
+  if (index >= 0) {
+    current[index] = question;
+    localStorage.setItem(KEYS.QUESTIONS, JSON.stringify(current));
+
+    const supabase = getSupabaseClient();
+    if (supabase) {
+      supabase
+        .from('questions')
+        .upsert({
+          id: question.id,
+          course_id: question.courseId,
+          week_number: question.weekNumber,
+          source_pdf_name: question.sourcePdfName || '',
+          question_text: question.questionText,
+          options: question.options,
+          correct_answer_index: question.correctAnswerIndex,
+          answer_source: question.answerSource,
+          is_approved: question.isApproved,
+          explanation: question.explanation || '',
+        })
+        .then(() => {});
+    }
+  }
+}
+
+export function deleteQuestion(questionId: string): void {
+  const current = getQuestions();
+  const updated = current.filter((q) => q.id !== questionId);
+  localStorage.setItem(KEYS.QUESTIONS, JSON.stringify(updated));
+
+  const supabase = getSupabaseClient();
+  if (supabase) {
+    supabase.from('questions').delete().eq('id', questionId).then(() => {});
   }
 }
 
@@ -298,9 +433,22 @@ export function getAttemptById(attemptId: string, userId?: string): MockAttempt 
 /**
  * Saves completed test attempt with faithful reproduction data to local storage and Supabase.
  */
+export function getAllAttempts(): MockAttempt[] {
+  try {
+    const raw = localStorage.getItem(KEYS.ATTEMPTS);
+    if (!raw) return [];
+    const parsed = JSON.parse(raw);
+    const list: MockAttempt[] = Array.isArray(parsed) ? parsed : [];
+    return list.sort((a, b) => new Date(b.completedAt).getTime() - new Date(a.completedAt).getTime());
+  } catch {
+    return [];
+  }
+}
+
 export async function finalizeAndSaveAttempt(
   session: ActiveTestSession,
-  userId?: string
+  userId?: string,
+  studentName?: string
 ): Promise<MockAttempt> {
   const totalQuestions = session.items.length;
   let correctCount = 0;
@@ -323,6 +471,7 @@ export async function finalizeAndSaveAttempt(
   const attempt: MockAttempt = {
     id: session.attemptId,
     userId,
+    studentName: studentName || 'Student',
     courseId: session.config.courseId,
     courseName: session.config.courseName,
     mode: session.config.mode,
@@ -486,10 +635,11 @@ export function createRetryWrongSession(previousAttempt: MockAttempt): ActiveTes
 
   // Reshuffle options independently for retry attempt
   const retryItems: AttemptQuestionItem[] = wrongItems.map((item, index) => {
-    const originalCorrectText = item.displayedOptions[item.correctOptionIndex];
+    const originalCorrectText =
+      item.correctOptionIndex !== null ? item.displayedOptions[item.correctOptionIndex] : null;
     const optionsWithCorrect = item.displayedOptions.map((optText) => ({
       text: optText,
-      isCorrect: optText === originalCorrectText,
+      isCorrect: Boolean(originalCorrectText && optText === originalCorrectText),
     }));
 
     const reshuffled = shuffleArray(optionsWithCorrect);
@@ -502,7 +652,7 @@ export function createRetryWrongSession(previousAttempt: MockAttempt): ActiveTes
       questionText: item.questionText,
       displayedOptions: newDisplayed,
       selectedOptionIndex: null,
-      correctOptionIndex: newCorrectIdx >= 0 ? newCorrectIdx : 0,
+      correctOptionIndex: newCorrectIdx >= 0 ? newCorrectIdx : null,
       isMarkedForReview: false,
       timeSpentSeconds: 0,
       explanation: item.explanation,

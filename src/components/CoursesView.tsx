@@ -6,22 +6,20 @@ import { getCourses, getQuestions } from '../lib/storage';
 
 interface CoursesViewProps {
   onStartCourseTest: (courseId: string) => void;
-  onUploadForCourse: () => void;
 }
 
 export const CoursesView: React.FC<CoursesViewProps> = ({
   onStartCourseTest,
-  onUploadForCourse,
 }) => {
-  const [courses, setCourses] = useState<Course[]>(getCourses());
+  const [courses] = useState<Course[]>(getCourses(true));
   const [selectedCourseId, setSelectedCourseId] = useState<string>(courses[0]?.id || '');
   const [activeWeekTab, setActiveWeekTab] = useState<number | 'all'>('all');
 
   const selectedCourse = courses.find((c) => c.id === selectedCourseId) || courses[0];
-  const courseQuestions = selectedCourse ? getQuestions(selectedCourse.id, activeWeekTab) : [];
+  const courseQuestions = selectedCourse ? getQuestions(selectedCourse.id, activeWeekTab, true) : [];
 
   // Group questions by week
-  const allCourseQuestions = selectedCourse ? getQuestions(selectedCourse.id) : [];
+  const allCourseQuestions = selectedCourse ? getQuestions(selectedCourse.id, 'all', true) : [];
   const weeksAvailable = Array.from(new Set(allCourseQuestions.map((q) => q.weekNumber))).sort(
     (a, b) => a - b
   );
@@ -35,20 +33,12 @@ export const CoursesView: React.FC<CoursesViewProps> = ({
             ACADEMIC CURRICULUM
           </div>
           <h1 className="font-serif text-3xl sm:text-4xl text-[#0F172A] uppercase tracking-tight">
-            Enrolled Courses
+            Published Courses & Tests
           </h1>
           <p className="text-xs sm:text-sm text-[#64748B] font-mono tracking-wide mt-1">
-            STRUCTURED QUESTION ARCHIVES ORGANIZED BY COURSE MODULE AND WEEK
+            VERIFIED QUESTION ARCHIVES AVAILABLE FOR SIMULATION
           </p>
         </div>
-
-        <button
-          onClick={onUploadForCourse}
-          className="inline-flex items-center gap-2 px-5 py-2.5 rounded-full bg-white hover:bg-[#EFF8FF] text-[#0284C7] border border-[#DCEAF5] text-xs font-semibold tracking-wider uppercase transition-all shadow-sm"
-        >
-          <UploadCloud className="w-4 h-4" />
-          <span>Upload PDF</span>
-        </button>
       </div>
 
       {/* Main Course Explorer */}

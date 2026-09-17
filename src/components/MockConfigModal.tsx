@@ -17,7 +17,7 @@ export const MockConfigModal: React.FC<MockConfigModalProps> = ({
   onStartTest,
   preselectedCourseId,
 }) => {
-  const [courses, setCourses] = useState<Course[]>(getCourses());
+  const [courses, setCourses] = useState<Course[]>(getCourses(true));
   const [selectedCourseId, setSelectedCourseId] = useState<string>(
     preselectedCourseId || courses[0]?.id || ''
   );
@@ -30,7 +30,7 @@ export const MockConfigModal: React.FC<MockConfigModalProps> = ({
 
   useEffect(() => {
     if (isOpen) {
-      const freshCourses = getCourses();
+      const freshCourses = getCourses(true);
       setCourses(freshCourses);
       if (preselectedCourseId) {
         setSelectedCourseId(preselectedCourseId);
@@ -43,7 +43,7 @@ export const MockConfigModal: React.FC<MockConfigModalProps> = ({
   if (!isOpen) return null;
 
   const currentCourse = courses.find((c) => c.id === selectedCourseId) || courses[0];
-  const availableQuestions = getQuestions(selectedCourseId, selectedWeek);
+  const availableQuestions = getQuestions(selectedCourseId, selectedWeek, true);
   const maxAvailable = availableQuestions.length;
 
   const handleLaunch = () => {

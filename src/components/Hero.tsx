@@ -4,14 +4,14 @@ import { ArrowUpRight, UploadCloud, BookOpen } from 'lucide-react';
 
 interface HeroProps {
   onStartPracticing: () => void;
-  onUploadPdf: () => void;
+  onViewTests: () => void;
   totalQuestions: number;
   totalCourses: number;
 }
 
 export const Hero: React.FC<HeroProps> = ({
   onStartPracticing,
-  onUploadPdf,
+  onViewTests,
   totalQuestions,
   totalCourses,
 }) => {
@@ -61,7 +61,7 @@ export const Hero: React.FC<HeroProps> = ({
           transition={{ duration: 0.8, delay: 0.3, ease: [0.16, 1, 0.3, 1] }}
           className="mt-8 max-w-xl text-base sm:text-lg text-[#64748B] font-light leading-relaxed"
         >
-          Practice the questions you already know. Test yourself under real exam conditions.
+          Practice verified academic test questions. Test your understanding under strict simulated exam conditions.
         </motion.p>
 
         {/* CTAs */}
@@ -80,13 +80,13 @@ export const Hero: React.FC<HeroProps> = ({
             <ArrowUpRight className="w-3.5 h-3.5 transition-transform duration-300 group-hover:translate-x-0.5 group-hover:-translate-y-0.5" />
           </button>
 
-          {/* Secondary CTA */}
+          {/* Secondary CTA: Browse Tests */}
           <button
-            onClick={onUploadPdf}
+            onClick={onViewTests}
             className="group w-full sm:w-auto inline-flex items-center justify-center gap-2 px-8 py-3.5 rounded-full bg-white text-[#0F172A] text-xs font-semibold tracking-[0.16em] uppercase border border-[#DCEAF5] hover:bg-[#EFF8FF] hover:border-[#38BDF8] hover:text-[#0284C7] transition-all duration-300 shadow-[0_4px_16px_rgba(2,132,199,0.06)] hover:scale-[1.02] active:scale-[0.98]"
           >
-            <UploadCloud className="w-3.5 h-3.5 text-[#64748B] group-hover:text-[#0284C7] transition-colors" />
-            <span>UPLOAD PDF</span>
+            <BookOpen className="w-3.5 h-3.5 text-[#64748B] group-hover:text-[#0284C7] transition-colors" />
+            <span>BROWSE TESTS</span>
           </button>
         </motion.div>
 

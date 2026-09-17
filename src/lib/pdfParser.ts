@@ -1,5 +1,5 @@
 import * as pdfjsLib from 'pdfjs-dist';
-import { ExtractedQuestionDraft } from '../types';
+import { ExtractedQuestionDraft, AnswerSource } from '../types';
 
 // Configure pdfjs worker
 try {
@@ -366,13 +366,15 @@ export function parseMcqsFromText(rawText: string, defaultWeek = 1): ExtractedQu
           originalQuestionNumber,
           questionText,
           options: [optA, optB, optC || 'Option C', optD || 'Option D'],
-          correctAnswerIndex: answerIndex,
+          correctAnswerIndex: hasFoundAnswer ? answerIndex : null,
           hasExplicitAnswer: hasFoundAnswer,
+          answerSource: hasFoundAnswer ? ('PDF' as const) : ('Not Available' as const),
+          isApproved: false,
           explanation: explanation || undefined,
           weekNumber: defaultWeek,
           isValid,
           needsReview,
-          reviewReason,
+          reviewReason: hasFoundAnswer ? reviewReason : 'ANSWER NOT PROVIDED',
         });
       }
     }
@@ -449,7 +451,8 @@ function parseSingleQuestionBlock(
   globalAnswerKeyMap?: Map<number, number>
 ): ExtractedQuestionDraft | null {
   let explanation = '';
-  let answerIndex = 0;
+  let answerIndex: number | null = null;
+  let answerSource: AnswerSource = 'Not Available';
   let hasFoundAnswer = false;
 
   const answerMatch = block.match(/(?:Accepted Answers?|Correct Answer|Answer|Key|Ans)\s*[:\-]?\s*([A-Da-d0-4]|\([A-Da-d]\)|\[[A-Da-d]\]|[^\n]+)/i);
@@ -458,19 +461,24 @@ function parseSingleQuestionBlock(
     if (rawAns.includes('a') || rawAns === '0' || rawAns === '1' || rawAns.startsWith('(a)') || rawAns.startsWith('[a]')) {
       answerIndex = 0;
       hasFoundAnswer = true;
+      answerSource = 'PDF';
     } else if (rawAns.includes('b') || rawAns === '2' || rawAns.startsWith('(b)') || rawAns.startsWith('[b]')) {
       answerIndex = 1;
       hasFoundAnswer = true;
+      answerSource = 'PDF';
     } else if (rawAns.includes('c') || rawAns === '3' || rawAns.startsWith('(c)') || rawAns.startsWith('[c]')) {
       answerIndex = 2;
       hasFoundAnswer = true;
+      answerSource = 'PDF';
     } else if (rawAns.includes('d') || rawAns === '4' || rawAns.startsWith('(d)') || rawAns.startsWith('[d]')) {
       answerIndex = 3;
       hasFoundAnswer = true;
+      answerSource = 'PDF';
     }
   } else if (globalAnswerKeyMap && globalAnswerKeyMap.has(questionNumber)) {
     answerIndex = globalAnswerKeyMap.get(questionNumber)!;
     hasFoundAnswer = true;
+    answerSource = 'PDF';
   }
 
   const solutionMatch = block.match(/(?:Detailed Solution|Solution|Explanation)\s*[:\-]?\s*([\s\S]+)$/i);
@@ -548,7 +556,7 @@ function parseSingleQuestionBlock(
   );
 
   const needsReview = !hasFoundAnswer || !isValid;
-  const reviewReason = !hasFoundAnswer ? 'Answer key not explicitly detected' : undefined;
+  const reviewReason = !hasFoundAnswer ? 'ANSWER NOT PROVIDED' : undefined;
 
   return {
     id: `extracted-${questionNumber}-${Date.now()}-${Math.random().toString(36).substring(2, 7)}`,
@@ -556,7 +564,8 @@ function parseSingleQuestionBlock(
     questionText,
     options: finalOptions,
     correctAnswerIndex: answerIndex,
-    hasExplicitAnswer: hasFoundAnswer,
+    answerSource,
+    isApproved: false,
     explanation: explanation || undefined,
     weekNumber,
     isValid,
@@ -564,3 +573,83 @@ function parseSingleQuestionBlock(
     reviewReason,
   };
 }
+
+/**
+ * Parses authoritative answer keys from text, supporting formats:
+ * - 1 - C
+ * - 1: C
+ * - Q1: C
+ * - Q1 - C
+ * - 1. C
+ * - 1) C
+ * - 1 C
+ * - Q.1 = C
+ * Also supports multi-column text like "1-C 2-A 3-D 4-B"
+ */
+export function parseAnswerKeySource(text: string): Map<number, { index: number; letter: string }> {
+  const map = new Map<number, { index: number; letter: string }>();
+  if (!text) return map;
+
+  const patterns = [
+    /(?:Q(?:uestion)?\s*[:.]?\s*)?(\d+)\s*[\-:.)=–—]\s*(?:\(?([A-Da-d1-4])\)?)/gi,
+    /(?:^|\s)(\d+)\s+([A-Da-d])(?:\s|$)/g,
+  ];
+
+  for (const pattern of patterns) {
+    let match: RegExpExecArray | null;
+    while ((match = pattern.exec(text)) !== null) {
+      const qNum = parseInt(match[1], 10);
+      let rawLetter = match[2].toUpperCase();
+      let optIndex = -1;
+      if (rawLetter === 'A' || rawLetter === '1') optIndex = 0;
+      else if (rawLetter === 'B' || rawLetter === '2') optIndex = 1;
+      else if (rawLetter === 'C' || rawLetter === '3') optIndex = 2;
+      else if (rawLetter === 'D' || rawLetter === '4') optIndex = 3;
+
+      if (qNum > 0 && optIndex >= 0 && !map.has(qNum)) {
+        map.set(qNum, { index: optIndex, letter: String.fromCharCode(65 + optIndex) });
+      }
+    }
+  }
+
+  return map;
+}
+
+/**
+ * Applies authoritative answer key mapping onto extracted questions.
+ * The administrator answer key is the ONLY authoritative source:
+ * - If question matches key map: correctAnswerIndex = key.index, answerSource = 'Answer Key'
+ * - If not in key map, but already had explicit PDF answer: stays PDF answer
+ * - Otherwise: correctAnswerIndex = null, answerSource = 'Not Available'
+ */
+export function applyAnswerKeyMapping(
+  questions: ExtractedQuestionDraft[],
+  keyMap: Map<number, { index: number; letter: string }>
+): ExtractedQuestionDraft[] {
+  return questions.map((q, idx) => {
+    const qNum = q.originalQuestionNumber || idx + 1;
+    if (keyMap.has(qNum)) {
+      const mapped = keyMap.get(qNum)!;
+      return {
+        ...q,
+        correctAnswerIndex: mapped.index,
+        answerSource: 'Answer Key' as const,
+        hasExplicitAnswer: true,
+        needsReview: false,
+        reviewReason: undefined,
+      };
+    }
+    if (q.answerSource === 'PDF' && q.correctAnswerIndex !== null) {
+      return q;
+    }
+    return {
+      ...q,
+      correctAnswerIndex: null,
+      answerSource: 'Not Available' as const,
+      hasExplicitAnswer: false,
+      needsReview: true,
+      reviewReason: 'ANSWER NOT PROVIDED',
+    };
+  });
+}
+
