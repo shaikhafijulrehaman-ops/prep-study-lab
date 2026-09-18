@@ -54,9 +54,9 @@ export const Hero: React.FC<HeroProps> = ({
           initial={{ opacity: 0, y: 20 }}
           animate={{ opacity: 1, y: 0 }}
           transition={{ duration: 0.9, delay: 0.15, ease: [0.16, 1, 0.3, 1] }}
-          className="font-serif w-full max-w-full font-normal tracking-tight text-[#0F172A] leading-[1.08] uppercase text-balance"
+          className="font-serif w-full max-w-full font-normal tracking-tight text-[#0F172A] leading-[1.08] uppercase text-balance px-2 sm:px-0"
           style={{
-            fontSize: 'clamp(2.4rem, 11vw, 5.5rem)',
+            fontSize: 'clamp(1.85rem, 8.5vw, 5.2rem)',
             overflowWrap: 'normal',
           }}
         >
@@ -138,35 +138,35 @@ export const Hero: React.FC<HeroProps> = ({
           <div className="flex flex-col sm:flex-row items-center gap-1 sm:gap-2">
             <span className="font-semibold text-[#0F172A]">PREP STUDY LAB</span>
             <span className="hidden sm:inline text-[#94A3B8]">•</span>
-            <span className="text-[#64748B]">ACADEMIC PERFORMANCE SUITE</span>
+            <span className="text-[#64748B]">Academic Performance Suite</span>
           </div>
 
-          <div className="flex items-center gap-3 sm:gap-4 text-[#64748B]">
-            <span>PRACTICE SUITE</span>
-            <span className="text-[#94A3B8]">•</span>
-            <span>EXAM SIMULATION</span>
+          <div className="flex flex-col sm:flex-row items-center gap-1.5 sm:gap-4 text-[#64748B]">
+            <span>Practice Suite</span>
+            <span className="hidden sm:inline text-[#94A3B8]">•</span>
+            <span>Exam Simulation</span>
           </div>
         </div>
 
-        {/* Creator Credit Inside Premium Glass Badge — STRICTLY THE FINAL VISUAL ELEMENT */}
+        {/* Creator Signature Inside Premium Glass Badge — STRICTLY THE FINAL VISUAL ELEMENT */}
         <div className="w-full flex justify-center pt-1 sm:pt-2">
-          <div className="relative overflow-hidden inline-flex items-center gap-2.5 sm:gap-3 px-5 sm:px-6 py-2 rounded-full bg-white/90 backdrop-blur-md border border-[#BAE6FD]/80 shadow-[0_4px_20px_rgba(56,189,248,0.12),inset_0_1px_1px_rgba(255,255,255,0.95)] max-w-[calc(100vw-32px)]">
+          <div className="relative overflow-hidden inline-flex items-center justify-center px-6 sm:px-8 py-3 sm:py-3.5 rounded-2xl sm:rounded-full bg-white/90 backdrop-blur-md border border-[#BAE6FD]/80 shadow-[0_4px_24px_rgba(56,189,248,0.12),inset_0_1px_1px_rgba(255,255,255,0.95)] max-w-[calc(100vw-32px)]">
             {/* Subtle Animated Glass Light Reflection Sweep */}
-            <span className="creator-badge-shine absolute inset-0 w-1/3 h-full bg-gradient-to-r from-transparent via-white/80 to-transparent pointer-events-none" />
+            <span className="creator-badge-shine absolute inset-0 w-1/3 h-full pointer-events-none" />
 
-            {/* DESIGNED & BUILT BY */}
-            <span className="relative z-10 font-sans uppercase font-medium text-[9.5px] sm:text-[10.5px] tracking-[0.14em] text-[#527E9F] whitespace-nowrap">
-              DESIGNED &amp; BUILT BY
-            </span>
+            {/* Centered Creator Signature */}
+            <div className="relative z-10 flex flex-col items-center gap-1">
+              <span className="font-sans uppercase font-medium text-[9px] sm:text-[10px] tracking-[0.22em] text-[#7DD3FC] whitespace-nowrap">
+                BUILD AND DEVELOPED BY
+              </span>
+              <span className="font-creator uppercase text-base sm:text-lg text-[#7DD3FC] tracking-wider leading-none whitespace-nowrap">
+                HAFI & SANIA
+              </span>
+            </div>
 
-            {/* Hafi & Sania strictly in Bonheur Royale */}
-            <span className="relative z-10 font-script text-2xl sm:text-3xl text-[#38BDF8] tracking-normal leading-none font-normal whitespace-nowrap">
-              Hafi &amp; Sania
-            </span>
-
-            {/* Tiny Four-Point Sparkle */}
+            {/* Tiny Four-Point Sparkle at far right */}
             <svg
-              className="relative z-10 w-2.5 h-2.5 text-[#38BDF8] creator-sparkle shrink-0"
+              className="relative z-10 w-2 h-2 text-[#BAE6FD] creator-sparkle shrink-0 ml-2.5 self-center"
               viewBox="0 0 24 24"
               fill="currentColor"
               aria-hidden="true"
