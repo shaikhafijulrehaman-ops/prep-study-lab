@@ -556,11 +556,71 @@ export async function fetchAttemptsFromSupabase(userId?: string): Promise<MockAt
   }
 }
 
+/**
+ * Loads recent attempts directly from Supabase for administrator inspection across all students.
+ */
+export async function fetchAdminRecentAttemptsFromSupabase(): Promise<MockAttempt[]> {
+  const supabase = getSupabaseClient();
+  if (!supabase) return getAllAttempts();
+
+  try {
+    const { data, error } = await supabase
+      .from('mock_attempts')
+      .select('*, attempt_items(*)')
+      .order('completed_at', { ascending: false })
+      .limit(100);
+
+    if (error || !data) {
+      console.warn('Error fetching admin recent attempts:', error?.message);
+      return getAllAttempts();
+    }
+
+    const mapped: MockAttempt[] = data.map((row: any) => ({
+      id: row.id,
+      userId: row.user_id,
+      studentName: row.student_name || 'Student',
+      regNumber: row.reg_number || row.student_name,
+      courseId: row.course_id,
+      courseName: row.course_name,
+      mode: row.mode,
+      totalQuestions: row.total_questions,
+      score: row.score,
+      percentage: Number(row.percentage) || 0,
+      correctCount: row.correct_count,
+      wrongCount: row.wrong_count,
+      unansweredCount: row.unanswered_count,
+      timeTakenSeconds: row.time_taken_seconds,
+      timeLimitSeconds: row.time_limit_seconds,
+      createdAt: row.created_at,
+      completedAt: row.completed_at,
+      items: Array.isArray(row.attempt_items)
+        ? row.attempt_items
+            .sort((a: any, b: any) => a.question_index - b.question_index)
+            .map((it: any) => ({
+              questionId: it.question_id,
+              questionIndex: it.question_index,
+              questionText: it.question_text,
+              displayedOptions: it.displayed_options,
+              selectedOptionIndex: it.selected_option_index,
+              correctOptionIndex: it.correctOptionIndex ?? it.correct_option_index,
+              isMarkedForReview: it.is_marked_for_review,
+              timeSpentSeconds: it.time_spent_seconds || 0,
+            }))
+        : [],
+    }));
+
+    return mapped;
+  } catch (err) {
+    console.warn('Exception fetching admin recent attempts:', err);
+    return getAllAttempts();
+  }
+}
+
 export async function finalizeAndSaveAttempt(
   session: ActiveTestSession,
   userId?: string,
   studentName?: string
-): Promise<MockAttempt> {
+): Promise<{ success: boolean; attempt?: MockAttempt; error?: string }> {
   const totalQuestions = session.items.length;
   let correctCount = 0;
   let wrongCount = 0;
@@ -600,21 +660,35 @@ export async function finalizeAndSaveAttempt(
     items: session.items, // Exact question and option order preserved
   };
 
-  // 1. Save locally
-  const currentAttempts = getAllAttempts();
-  const updatedAttempts = [attempt, ...currentAttempts.filter((a) => a.id !== attempt.id)];
-  localStorage.setItem(KEYS.ATTEMPTS, JSON.stringify(updatedAttempts));
-
-  // Clear active session
-  saveActiveSession(null, userId);
-
-  // 2. Save to Supabase
   const supabase = getSupabaseClient();
+
   if (supabase) {
     try {
+      // 1. Resolve authoritative Supabase user if available
+      let authUserId = userId;
+      const { data: sessionData } = await supabase.auth.getSession();
+      if (sessionData?.session?.user) {
+        authUserId = sessionData.session.user.id;
+        attempt.userId = authUserId;
+      }
+
+      // 2. Idempotency Check: check if this attempt is already saved
+      const { data: existingAttempt } = await supabase
+        .from('mock_attempts')
+        .select('id')
+        .eq('id', attempt.id)
+        .maybeSingle();
+
+      if (existingAttempt) {
+        // Already recorded; clear session and return success
+        saveActiveSession(null, authUserId);
+        return { success: true, attempt };
+      }
+
+      // 3. Write attempt header to Supabase
       const { error: attemptErr } = await supabase.from('mock_attempts').insert({
         id: attempt.id,
-        user_id: userId || null,
+        user_id: authUserId || null,
         course_id: attempt.courseId,
         course_name: attempt.courseName,
         mode: attempt.mode,
@@ -628,32 +702,63 @@ export async function finalizeAndSaveAttempt(
         time_limit_seconds: attempt.timeLimitSeconds,
         is_completed: true,
         student_name: studentName || 'Student',
-        completed_at: attempt.completedAt,
-        created_at: attempt.createdAt,
+        reg_number: studentName || (authUserId ? 'STUDENT' : undefined),
+        selected_weeks: session.config.selectedWeeks || [],
+        started_at: session.startedAt,
+        submitted_at: completedAt,
+        completed_at: completedAt,
+        created_at: session.startedAt,
       });
 
-      if (!attemptErr) {
-        // Save items
-        const itemRows = attempt.items.map((it) => ({
-          attempt_id: attempt.id,
-          question_id: it.questionId,
-          question_index: it.questionIndex,
-          question_text: it.questionText,
-          displayed_options: it.displayedOptions,
-          selected_option_index: it.selectedOptionIndex,
-          correct_option_index: it.correctOptionIndex,
-          is_marked_for_review: it.isMarkedForReview,
-          time_spent_seconds: it.timeSpentSeconds,
-        }));
-
-        await supabase.from('attempt_items').insert(itemRows);
+      if (attemptErr) {
+        console.error('Failed to insert mock_attempts in Supabase:', attemptErr);
+        return {
+          success: false,
+          error: `Failed to save attempt: ${attemptErr.message}. Your in-progress session has been preserved. Please try again.`,
+        };
       }
-    } catch (err) {
-      console.warn('Could not sync attempt to Supabase:', err);
+
+      // 4. Write attempt items to Supabase
+      const itemRows = attempt.items.map((it) => ({
+        attempt_id: attempt.id,
+        question_id: it.questionId,
+        question_index: it.questionIndex,
+        question_text: it.questionText,
+        displayed_options: it.displayedOptions,
+        selected_option_index: it.selectedOptionIndex,
+        correct_option_index: it.correctOptionIndex,
+        is_correct: it.selectedOptionIndex !== null && it.selectedOptionIndex === it.correctOptionIndex,
+        is_marked_for_review: it.isMarkedForReview,
+        time_spent_seconds: it.timeSpentSeconds,
+      }));
+
+      const { error: itemsErr } = await supabase.from('attempt_items').insert(itemRows);
+
+      if (itemsErr) {
+        console.error('Failed to insert attempt_items in Supabase:', itemsErr);
+        return {
+          success: false,
+          error: `Failed to save question responses: ${itemsErr.message}. Please retry saving.`,
+        };
+      }
+
+      // Write verified successfully!
+    } catch (err: any) {
+      console.error('Supabase write exception:', err);
+      return {
+        success: false,
+        error: `Database connection error: ${err?.message || 'Network failure'}. Please retry saving.`,
+      };
     }
   }
 
-  return attempt;
+  // 5. Save locally and clear active session ONLY upon verified success
+  const currentAttempts = getAllAttempts();
+  const updatedAttempts = [attempt, ...currentAttempts.filter((a) => a.id !== attempt.id)];
+  localStorage.setItem(KEYS.ATTEMPTS, JSON.stringify(updatedAttempts));
+  saveActiveSession(null, attempt.userId || userId);
+
+  return { success: true, attempt };
 }
 
 // ----------------- Progress Calculation -----------------

@@ -40,7 +40,7 @@ const DEFAULT_ADMIN: StoredLocalUser = {
   id: 'adm_primary_root',
   name: 'admin',
   regNumber: 'ADMIN',
-  email: 'admin@prepstudylab.local',
+  email: 'admin@prepstudylab.com',
   role: 'admin',
   status: 'active',
   passwordHash: 'd64f04256129ce02f876ad088fc3571f23743fe4786d06979d9f91cbf5360d7a',
@@ -105,7 +105,10 @@ export async function initAuthSession(): Promise<User | null> {
   const supabase = getSupabaseClient();
   if (supabase) {
     try {
-      const { data } = await supabase.auth.getSession();
+      const { data, error } = await supabase.auth.getSession();
+      if (error) {
+        console.warn('Supabase getSession notice:', error.message);
+      }
       if (data?.session?.user) {
         const user = data.session.user;
         let role: UserRole = 'student';
@@ -114,7 +117,7 @@ export async function initAuthSession(): Promise<User | null> {
             .from('user_roles')
             .select('role')
             .eq('user_id', user.id)
-            .single();
+            .maybeSingle();
           if (roleRow?.role === 'admin') {
             role = 'admin';
           } else if (user.user_metadata?.role === 'admin' || user.app_metadata?.role === 'admin') {
@@ -126,7 +129,7 @@ export async function initAuthSession(): Promise<User | null> {
           }
         }
 
-        const identifier = user.user_metadata?.regNumber || user.user_metadata?.name || 'Student';
+        const identifier = user.user_metadata?.regNumber || user.user_metadata?.name || (user.email ? user.email.split('@')[0] : 'Student');
         const authUser: User = {
           id: user.id,
           name: identifier,
@@ -139,16 +142,16 @@ export async function initAuthSession(): Promise<User | null> {
         setCurrentUser(authUser);
         return authUser;
       } else {
-        // No authenticated session -> clear cached user!
+        // No authenticated session in Supabase -> clear cached user!
         setCurrentUser(null);
         return null;
       }
-    } catch {
-      // Fallback
+    } catch (err) {
+      console.warn('Auth session check exception:', err);
     }
   }
 
-  // Fallback to local session only if local user matches
+  // Fallback to local session only if local user matches and no supabase
   const stored = getCurrentUser();
   if (!stored) return null;
   const localUsers = getStoredLocalUsers();
@@ -158,6 +161,63 @@ export async function initAuthSession(): Promise<User | null> {
     return null;
   }
   return stored;
+}
+
+/**
+ * Subscribes to Supabase auth state changes for real-time reactive session management.
+ */
+export function onAuthStateChanged(callback: (user: User | null) => void): () => void {
+  const supabase = getSupabaseClient();
+  if (!supabase) {
+    return () => {};
+  }
+
+  const { data: { subscription } } = supabase.auth.onAuthStateChange(async (event, session) => {
+    if (event === 'SIGNED_IN' || event === 'TOKEN_REFRESHED' || event === 'USER_UPDATED') {
+      if (session?.user) {
+        const user = session.user;
+        let role: UserRole = 'student';
+        try {
+          const { data: roleRow } = await supabase
+            .from('user_roles')
+            .select('role')
+            .eq('user_id', user.id)
+            .maybeSingle();
+          if (roleRow?.role === 'admin') {
+            role = 'admin';
+          } else if (user.user_metadata?.role === 'admin' || user.app_metadata?.role === 'admin') {
+            role = 'admin';
+          }
+        } catch {
+          if (user.user_metadata?.role === 'admin' || user.app_metadata?.role === 'admin') {
+            role = 'admin';
+          }
+        }
+
+        const identifier = user.user_metadata?.regNumber || user.user_metadata?.name || (user.email ? user.email.split('@')[0] : 'Student');
+        const authUser: User = {
+          id: user.id,
+          name: identifier,
+          regNumber: user.user_metadata?.regNumber || (role === 'student' ? identifier : undefined),
+          email: user.email,
+          role,
+          status: 'active',
+          createdAt: user.created_at || new Date().toISOString(),
+        };
+        setCurrentUser(authUser);
+        callback(authUser);
+        return;
+      }
+    } else if (event === 'SIGNED_OUT') {
+      setCurrentUser(null);
+      callback(null);
+      return;
+    }
+  });
+
+  return () => {
+    subscription.unsubscribe();
+  };
 }
 
 /**
@@ -200,7 +260,7 @@ export async function createAccount(
   const userId = `std_${Date.now()}_${Math.random().toString(36).substring(2, 9)}`;
 
   // Synthesize Supabase auth email from registration number
-  const sanitizedEmail = `${cleanReg.toLowerCase().replace(/[^a-z0-9]/g, '')}@prepstudylab.local`;
+  const sanitizedEmail = `${cleanReg.toLowerCase().replace(/[^a-z0-9]/g, '')}@prepstudylab.com`;
 
   // Public signup ALWAYS receives role = 'student'
   const newUser: User = {
@@ -229,7 +289,10 @@ export async function createAccount(
           .insert({ user_id: data.user.id, role: 'student' })
           .then(() => {}, () => {});
       } else if (supaErr) {
-        console.warn('Auth notice:', supaErr.message);
+        console.warn('Supabase signup notice:', supaErr.message);
+        if (supaErr.message.includes('User already registered')) {
+          return { success: false, error: 'An account with this registration number already exists. Please sign in.' };
+        }
       }
     } catch (err) {
       console.warn('Auth exception:', err);
@@ -271,9 +334,14 @@ export async function login(
   if (supabase) {
     try {
       const isEmail = cleanInput.includes('@');
-      const emailToUse = isEmail
-        ? cleanInput
-        : `${cleanInput.toLowerCase().replace(/[^a-z0-9]/g, '')}@prepstudylab.local`;
+      let emailToUse = '';
+      if (isEmail) {
+        emailToUse = cleanInput.toLowerCase();
+      } else if (cleanInput.toLowerCase() === 'admin') {
+        emailToUse = 'admin@prepstudylab.com';
+      } else {
+        emailToUse = `${cleanInput.toLowerCase().replace(/[^a-z0-9]/g, '')}@prepstudylab.com`;
+      }
 
       const { data, error } = await supabase.auth.signInWithPassword({
         email: emailToUse,
@@ -288,7 +356,7 @@ export async function login(
             .from('user_roles')
             .select('role')
             .eq('user_id', data.user.id)
-            .single();
+            .maybeSingle();
 
           if (roleRow?.role === 'admin') {
             role = 'admin';

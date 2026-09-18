@@ -47,6 +47,7 @@ import {
   deleteQuestion,
   getAllAttempts,
   fetchAttemptsFromSupabase,
+  fetchAdminRecentAttemptsFromSupabase,
 } from '../../lib/storage';
 import { processFullPdf, HybridExtractionResult, extractTextFromPdf, parseMcqsFromText, parseAnswerKeySource, applyAnswerKeyMapping } from '../../lib/pdfParser';
 import { uploadPdfDocument } from '../../lib/pdfStorage';
@@ -240,7 +241,7 @@ export const AdminDashboard: React.FC<AdminDashboardProps> = ({
 
   useEffect(() => {
     if (activeTab === 'attempts') {
-      fetchAttemptsFromSupabase().then((atts) => setAllAttempts(atts));
+      fetchAdminRecentAttemptsFromSupabase().then((atts) => setAllAttempts(atts));
     }
   }, [activeTab]);
 

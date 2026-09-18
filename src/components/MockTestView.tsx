@@ -52,6 +52,9 @@ export const MockTestView: React.FC<MockTestViewProps> = ({
     saveActiveSession(session, currentUser?.id);
   }, [session, currentUser]);
 
+  const [isSubmitting, setIsSubmitting] = useState(false);
+  const [submitError, setSubmitError] = useState<string | null>(null);
+
   // Main countdown / elapsed timer loop
   useEffect(() => {
     timerRef.current = setInterval(() => {
@@ -98,16 +101,42 @@ export const MockTestView: React.FC<MockTestViewProps> = ({
   }, []);
 
   const handleAutoSubmit = async (finalState: ActiveTestSession) => {
-    if (timerRef.current) clearInterval(timerRef.current);
-    const result = await finalizeAndSaveAttempt(finalState, currentUser?.id, currentUser?.name);
-    onFinishTest(result);
+    setIsSubmitting(true);
+    setSubmitError(null);
+    try {
+      const res = await finalizeAndSaveAttempt(finalState, currentUser?.id, currentUser?.name);
+      if (res.success && res.attempt) {
+        if (timerRef.current) clearInterval(timerRef.current);
+        onFinishTest(res.attempt);
+      } else {
+        setSubmitError(res.error || 'Your attempt could not be saved to the database. Please retry.');
+        setIsSubmitConfirmOpen(true);
+        setIsSubmitting(false);
+      }
+    } catch (err: any) {
+      setSubmitError(err?.message || 'Network error while finalizing attempt.');
+      setIsSubmitConfirmOpen(true);
+      setIsSubmitting(false);
+    }
   };
 
   const handleManualSubmit = async () => {
-    if (timerRef.current) clearInterval(timerRef.current);
-    setIsSubmitConfirmOpen(false);
-    const result = await finalizeAndSaveAttempt(session, currentUser?.id, currentUser?.name);
-    onFinishTest(result);
+    setIsSubmitting(true);
+    setSubmitError(null);
+    try {
+      const res = await finalizeAndSaveAttempt(session, currentUser?.id, currentUser?.name);
+      if (res.success && res.attempt) {
+        if (timerRef.current) clearInterval(timerRef.current);
+        setIsSubmitConfirmOpen(false);
+        onFinishTest(res.attempt);
+      } else {
+        setSubmitError(res.error || 'Your attempt could not be saved to the database. Please retry.');
+        setIsSubmitting(false);
+      }
+    } catch (err: any) {
+      setSubmitError(err?.message || 'Network error while finalizing attempt.');
+      setIsSubmitting(false);
+    }
   };
 
   // Select option for current question
@@ -593,19 +622,43 @@ export const MockTestView: React.FC<MockTestViewProps> = ({
                 </div>
               </div>
 
+              {/* Error Notification */}
+              {submitError && (
+                <div className="p-3.5 rounded-xl bg-rose-50 border border-rose-200 text-rose-800 text-xs flex items-start gap-2.5">
+                  <AlertCircle className="w-4 h-4 text-rose-600 shrink-0 mt-0.5" />
+                  <div className="space-y-1">
+                    <p className="font-semibold">Submission Incomplete</p>
+                    <p className="text-[11px] leading-relaxed">{submitError}</p>
+                  </div>
+                </div>
+              )}
+
               {/* Actions */}
               <div className="flex items-center gap-3 pt-2">
                 <button
+                  type="button"
+                  disabled={isSubmitting}
                   onClick={() => setIsSubmitConfirmOpen(false)}
-                  className="flex-1 py-2.5 rounded-full border border-[#DCEAF5] text-xs font-semibold text-[#64748B] hover:text-[#0F172A] hover:bg-[#F8FBFF] transition-colors uppercase tracking-wider"
+                  className="flex-1 py-2.5 rounded-full border border-[#DCEAF5] text-xs font-semibold text-[#64748B] hover:text-[#0F172A] hover:bg-[#F8FBFF] disabled:opacity-50 transition-colors uppercase tracking-wider"
                 >
                   Return to Test
                 </button>
                 <button
+                  type="button"
+                  disabled={isSubmitting}
                   onClick={handleManualSubmit}
-                  className="flex-1 py-2.5 rounded-full bg-[#0284C7] hover:bg-[#0369a1] text-white text-xs font-bold uppercase tracking-wider transition-all shadow-[0_4px_16px_rgba(2,132,199,0.25)]"
+                  className="flex-1 py-2.5 rounded-full bg-[#0284C7] hover:bg-[#0369a1] disabled:opacity-60 text-white text-xs font-bold uppercase tracking-wider transition-all shadow-[0_4px_16px_rgba(2,132,199,0.25)] flex items-center justify-center gap-2"
                 >
-                  Confirm & Grade
+                  {isSubmitting ? (
+                    <>
+                      <div className="w-3.5 h-3.5 border-2 border-white border-t-transparent rounded-full animate-spin" />
+                      <span>Saving & Grading...</span>
+                    </>
+                  ) : submitError ? (
+                    <span>Retry Save</span>
+                  ) : (
+                    <span>Confirm & Grade</span>
+                  )}
                 </button>
               </div>
             </motion.div>

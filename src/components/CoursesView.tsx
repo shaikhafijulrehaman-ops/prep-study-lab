@@ -41,13 +41,28 @@ export const CoursesView: React.FC<CoursesViewProps> = ({
         </div>
       </div>
 
-      {/* Main Course Explorer */}
-      <div className="grid grid-cols-1 lg:grid-cols-12 gap-8">
-        {/* Left: Courses List */}
-        <div className="lg:col-span-4 space-y-3">
-          <div className="text-[11px] font-semibold uppercase tracking-[0.2em] text-[#64748B] mb-2">
-            Available Disciplines ({courses.length})
+      {/* Main Course Explorer or Empty State */}
+      {courses.length === 0 ? (
+        <div className="glass-panel p-12 sm:p-16 rounded-3xl border border-[#DCEAF5] text-center space-y-4 max-w-lg mx-auto bg-white/80 shadow-sm">
+          <div className="w-12 h-12 rounded-2xl bg-[#EFF8FF] border border-[#DCEAF5] text-[#0284C7] flex items-center justify-center mx-auto">
+            <BookOpen className="w-6 h-6" />
           </div>
+          <div className="space-y-1.5">
+            <h3 className="font-serif text-xl sm:text-2xl text-[#0F172A] uppercase tracking-tight">
+              No tests available yet
+            </h3>
+            <p className="text-xs text-[#64748B] font-mono leading-relaxed">
+              New simulated question banks and course examinations will appear here once published by an administrator.
+            </p>
+          </div>
+        </div>
+      ) : (
+        <div className="grid grid-cols-1 lg:grid-cols-12 gap-8">
+          {/* Left: Courses List */}
+          <div className="lg:col-span-4 space-y-3">
+            <div className="text-[11px] font-semibold uppercase tracking-[0.2em] text-[#64748B] mb-2">
+              Available Disciplines ({courses.length})
+            </div>
 
           {courses.map((course) => {
             const count = getQuestions(course.id).length;
@@ -190,6 +205,7 @@ export const CoursesView: React.FC<CoursesViewProps> = ({
           </div>
         )}
       </div>
+      )}
     </div>
   );
 };

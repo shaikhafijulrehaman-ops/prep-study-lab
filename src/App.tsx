@@ -1,4 +1,5 @@
 import React, { useState, useEffect } from 'react';
+import { Sparkles } from 'lucide-react';
 import { Navigation, NavTab } from './components/Navigation';
 import { Hero } from './components/Hero';
 import { TestsView } from './components/TestsView';
@@ -17,7 +18,7 @@ import {
   initializeMockSession,
   createRetryWrongSession,
 } from './lib/storage';
-import { getCurrentUser, initAuthSession, logout } from './lib/auth';
+import { getCurrentUser, initAuthSession, onAuthStateChanged, logout } from './lib/auth';
 import { MockAttempt, MockConfig, User } from './types';
 
 export const App: React.FC = () => {
@@ -25,11 +26,12 @@ export const App: React.FC = () => {
   const [activeSession, setActiveSession] = useState<ActiveTestSession | null>(null);
   const [viewingResultAttempt, setViewingResultAttempt] = useState<MockAttempt | null>(null);
 
-  // Whether the admin dashboard is currently shown (toggled by clicking name in nav)
-  const [showAdminDashboard, setShowAdminDashboard] = useState(false);
-
   // Authentication State
   const [currentUser, setCurrentUser] = useState<User | null>(null);
+  const [authLoading, setAuthLoading] = useState(true);
+
+  // Whether the admin dashboard is currently shown
+  const [showAdminDashboard, setShowAdminDashboard] = useState(false);
   const [isAuthModalOpen, setIsAuthModalOpen] = useState(false);
   const [authReason, setAuthReason] = useState<string>('Please sign in or create an account to start your mock test.');
   const [pendingTestAction, setPendingTestAction] = useState<(() => void) | null>(null);
@@ -51,16 +53,39 @@ export const App: React.FC = () => {
   };
 
   useEffect(() => {
-    initAuthSession().then((user) => {
-      setCurrentUser(user);
-      if (user?.role === 'admin') {
-        const isHashAdmin = window.location.hash.includes('admin') || window.location.pathname.includes('/admin');
-        if (isHashAdmin) {
+    let isMounted = true;
+
+    async function loadAuth() {
+      try {
+        const user = await initAuthSession();
+        if (isMounted) {
+          setCurrentUser(user);
+          if (user?.role === 'admin') {
+            setShowAdminDashboard(true);
+          }
+        }
+      } catch (err) {
+        console.warn('Session init notice:', err);
+      } finally {
+        if (isMounted) {
+          setAuthLoading(false);
+        }
+      }
+    }
+
+    loadAuth();
+    refreshCounts();
+
+    const unsubscribe = onAuthStateChanged((user) => {
+      if (isMounted) {
+        setCurrentUser(user);
+        if (user?.role === 'admin') {
           setShowAdminDashboard(true);
+        } else if (!user) {
+          setShowAdminDashboard(false);
         }
       }
     });
-    refreshCounts();
 
     const checkHash = () => {
       const isHashAdmin = window.location.hash.includes('admin') || window.location.pathname.includes('/admin');
@@ -79,7 +104,11 @@ export const App: React.FC = () => {
 
     checkHash();
     window.addEventListener('hashchange', checkHash);
-    return () => window.removeEventListener('hashchange', checkHash);
+    return () => {
+      isMounted = false;
+      unsubscribe();
+      window.removeEventListener('hashchange', checkHash);
+    };
   }, []);
 
   const refreshCounts = () => {
@@ -176,6 +205,21 @@ export const App: React.FC = () => {
       setActiveSession(session);
     });
   };
+
+  // ===================== AUTH LOADING SCREEN =====================
+  if (authLoading) {
+    return (
+      <div className="min-h-screen bg-[#F8FBFF] flex flex-col items-center justify-center p-6 text-center select-none font-sans">
+        <div className="relative mb-5">
+          <div className="w-16 h-16 rounded-2xl bg-gradient-to-tr from-sky-500 to-blue-600 flex items-center justify-center shadow-[0_8px_30px_rgba(2,132,199,0.25)] animate-pulse">
+            <Sparkles className="w-8 h-8 text-white" />
+          </div>
+        </div>
+        <p className="text-xs font-mono uppercase tracking-[0.25em] text-[#0284C7] font-semibold">PREP STUDY LAB</p>
+        <p className="text-xs text-[#64748B] font-mono mt-1 tracking-wider">RESTORING VERIFIED SESSION...</p>
+      </div>
+    );
+  }
 
   // ===================== ADMIN DASHBOARD VIEW =====================
   if (currentUser && currentUser.role === 'admin' && showAdminDashboard) {
