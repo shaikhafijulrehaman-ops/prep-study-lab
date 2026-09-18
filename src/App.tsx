@@ -17,7 +17,7 @@ import {
   initializeMockSession,
   createRetryWrongSession,
 } from './lib/storage';
-import { getCurrentUser, logout } from './lib/auth';
+import { getCurrentUser, initAuthSession, logout } from './lib/auth';
 import { MockAttempt, MockConfig, User } from './types';
 
 export const App: React.FC = () => {
@@ -51,14 +51,35 @@ export const App: React.FC = () => {
   };
 
   useEffect(() => {
-    const user = getCurrentUser();
-    setCurrentUser(user);
+    initAuthSession().then((user) => {
+      setCurrentUser(user);
+      if (user?.role === 'admin') {
+        const isHashAdmin = window.location.hash.includes('admin') || window.location.pathname.includes('/admin');
+        if (isHashAdmin) {
+          setShowAdminDashboard(true);
+        }
+      }
+    });
     refreshCounts();
 
-    // If admin logs in, default to admin dashboard
-    if (user && user.role === 'admin') {
-      setShowAdminDashboard(true);
-    }
+    const checkHash = () => {
+      const isHashAdmin = window.location.hash.includes('admin') || window.location.pathname.includes('/admin');
+      const u = getCurrentUser();
+      if (isHashAdmin) {
+        if (u && u.role === 'admin') {
+          setShowAdminDashboard(true);
+        } else {
+          setAuthReason('Please sign in to continue.');
+          setIsAuthModalOpen(true);
+        }
+      } else if (u && u.role === 'admin') {
+        setShowAdminDashboard(true);
+      }
+    };
+
+    checkHash();
+    window.addEventListener('hashchange', checkHash);
+    return () => window.removeEventListener('hashchange', checkHash);
   }, []);
 
   const refreshCounts = () => {
@@ -70,8 +91,20 @@ export const App: React.FC = () => {
     logout();
     setCurrentUser(null);
     setShowAdminDashboard(false);
+    setActiveSession(null);
+    setViewingResultAttempt(null);
+    setActiveTab('home');
     window.location.hash = '';
     showToast('Signed out successfully');
+  };
+
+  const handleTabChange = (tab: NavTab) => {
+    if ((tab === 'tests' || tab === 'progress') && !currentUser) {
+      setAuthReason('Sign in with your Registration Number to access your tests and progress tracking.');
+      setIsAuthModalOpen(true);
+      return;
+    }
+    setActiveTab(tab);
   };
 
   const requireAuth = (onSuccess: () => void, reason = 'Authentication is required before starting any test.') => {
@@ -189,7 +222,7 @@ export const App: React.FC = () => {
           {/* Floating Glass Navigation Dock */}
           <Navigation
             activeTab={activeTab}
-            onTabChange={(tab) => setActiveTab(tab)}
+            onTabChange={handleTabChange}
             currentUser={currentUser}
             onOpenAuth={() => {
               setAuthReason('Sign in or create an account to track your progress and tests.');
@@ -209,7 +242,7 @@ export const App: React.FC = () => {
                     setIsConfigModalOpen(true);
                   });
                 }}
-                onViewTests={() => setActiveTab('tests')}
+                onViewTests={() => handleTabChange('tests')}
                 totalCourses={coursesCount}
                 totalQuestions={questionsCount}
               />
@@ -227,6 +260,10 @@ export const App: React.FC = () => {
                 onResumeTest={handleResumeTest}
                 onViewAttemptResult={(att) => setViewingResultAttempt(att)}
                 onRetryAttemptWrong={handleRetryWrong}
+                onOpenAuth={() => {
+                  setAuthReason('Sign in with your Registration Number to access your test dashboard.');
+                  setIsAuthModalOpen(true);
+                }}
               />
             )}
 
@@ -249,6 +286,10 @@ export const App: React.FC = () => {
                     setPreselectedCourseId(undefined);
                     setIsConfigModalOpen(true);
                   });
+                }}
+                onOpenAuth={() => {
+                  setAuthReason('Sign in with your Registration Number to view your progress analytics.');
+                  setIsAuthModalOpen(true);
                 }}
               />
             )}

@@ -26,6 +26,7 @@ interface TestsViewProps {
   onResumeTest: (session: ActiveTestSession) => void;
   onViewAttemptResult: (attempt: MockAttempt) => void;
   onRetryAttemptWrong: (attempt: MockAttempt) => void;
+  onOpenAuth?: () => void;
 }
 
 export const TestsView: React.FC<TestsViewProps> = ({
@@ -34,6 +35,7 @@ export const TestsView: React.FC<TestsViewProps> = ({
   onResumeTest,
   onViewAttemptResult,
   onRetryAttemptWrong,
+  onOpenAuth,
 }) => {
   const [attempts, setAttempts] = useState<MockAttempt[]>(getAttempts(currentUser?.id));
   const activeSession = getActiveSession(currentUser?.id);
@@ -47,6 +49,35 @@ export const TestsView: React.FC<TestsViewProps> = ({
       });
     }
   }, [currentUser]);
+
+  if (!currentUser) {
+    return (
+      <div className="min-h-screen pt-36 pb-20 px-4 max-w-lg mx-auto flex flex-col items-center justify-center text-center space-y-6 select-none font-sans">
+        <div className="p-4 rounded-3xl bg-[#EFF8FF] border border-[#DCEAF5] text-[#0284C7] shadow-sm">
+          <FileText className="w-8 h-8 text-[#0284C7]" />
+        </div>
+        <div className="space-y-2">
+          <div className="text-[11px] font-mono tracking-[0.25em] text-[#0284C7] uppercase font-semibold">
+            AUTHENTICATION REQUIRED
+          </div>
+          <h1 className="font-serif text-3xl sm:text-4xl text-[#0F172A] uppercase tracking-tight">
+            Personal Dashboard
+          </h1>
+          <p className="text-xs sm:text-sm text-[#64748B] font-mono tracking-wide max-w-md mx-auto">
+            Please sign in with your Registration Number to access your test history, review past attempts, and monitor individual accuracy metrics.
+          </p>
+        </div>
+        {onOpenAuth && (
+          <button
+            onClick={onOpenAuth}
+            className="px-6 py-3 rounded-full bg-[#0284C7] text-white font-bold text-xs tracking-wider uppercase hover:bg-[#0369a1] transition-all shadow-[0_4px_16px_rgba(2,132,199,0.25)] hover:scale-[1.02] active:scale-[0.98]"
+          >
+            Sign In with Registration Number
+          </button>
+        )}
+      </div>
+    );
+  }
 
   const formatDuration = (secs: number) => {
     const m = Math.floor(secs / 60);

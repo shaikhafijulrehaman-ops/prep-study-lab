@@ -19,25 +19,41 @@ export function shuffleArray<T>(array: T[]): T[] {
   return arr;
 }
 
+const REMOVED_LEGACY_COURSE_IDS = new Set(['course-cloud-01', 'course-dl-02', 'course-algo-03']);
+const DELETED_COURSES_KEY = 'prep_studylab_deleted_courses_v1';
+
 // ----------------- Courses & Questions -----------------
 
 export function getCourses(publishedOnly: boolean = false): Course[] {
   try {
     const raw = localStorage.getItem(KEYS.COURSES);
-    let courses: Course[] = [];
-    if (!raw) {
-      localStorage.setItem(KEYS.COURSES, JSON.stringify(INITIAL_COURSES));
-      courses = INITIAL_COURSES;
-    } else {
+    let deletedList: string[] = [];
+    try {
+      const dRaw = localStorage.getItem(DELETED_COURSES_KEY);
+      if (dRaw) deletedList = JSON.parse(dRaw);
+    } catch {}
+    const deletedSet = new Set([...REMOVED_LEGACY_COURSE_IDS, ...deletedList]);
+
+    const courseMap = new Map<string, Course>();
+    INITIAL_COURSES.forEach((c) => {
+      if (!deletedSet.has(c.id)) {
+        courseMap.set(c.id, c);
+      }
+    });
+
+    if (raw) {
       const parsed = JSON.parse(raw);
-      courses = Array.isArray(parsed) && parsed.length > 0 ? parsed : INITIAL_COURSES;
+      if (Array.isArray(parsed)) {
+        parsed.forEach((c) => {
+          if (c && c.id && !deletedSet.has(c.id)) {
+            courseMap.set(c.id, { ...c, status: c.status || 'published' });
+          }
+        });
+      }
     }
 
-    // Default legacy courses to published if status is not explicitly set
-    courses = courses.map((c) => ({
-      ...c,
-      status: c.status || 'published',
-    }));
+    let courses = Array.from(courseMap.values());
+    localStorage.setItem(KEYS.COURSES, JSON.stringify(courses));
 
     if (publishedOnly) {
       return courses.filter((c) => c.status === 'published');
@@ -140,7 +156,17 @@ export function unpublishTest(courseId: string): void {
  * IMMUTABLE SNAPSHOT GUARANTEE: Does NOT delete or corrupt past student MockAttempt snapshots.
  */
 export function deleteTest(courseId: string): void {
-  // 1. Remove course
+  // 1. Remember deleted course so it is never re-seeded
+  try {
+    const dRaw = localStorage.getItem(DELETED_COURSES_KEY);
+    const dList: string[] = dRaw ? JSON.parse(dRaw) : [];
+    if (!dList.includes(courseId)) {
+      dList.push(courseId);
+      localStorage.setItem(DELETED_COURSES_KEY, JSON.stringify(dList));
+    }
+  } catch {}
+
+  // 2. Remove course
   const currentCourses = getCourses(false);
   const filteredCourses = currentCourses.filter((c) => c.id !== courseId);
   localStorage.setItem(KEYS.COURSES, JSON.stringify(filteredCourses));
@@ -166,13 +192,20 @@ export function getQuestions(
   let all: Question[] = [];
   try {
     const raw = localStorage.getItem(KEYS.QUESTIONS);
-    if (!raw) {
-      localStorage.setItem(KEYS.QUESTIONS, JSON.stringify(INITIAL_QUESTIONS));
-      all = INITIAL_QUESTIONS;
-    } else {
+    const qMap = new Map<string, Question>();
+    INITIAL_QUESTIONS.forEach((q) => qMap.set(q.id, q));
+
+    if (raw) {
       const parsed = JSON.parse(raw);
-      all = Array.isArray(parsed) && parsed.length > 0 ? parsed : INITIAL_QUESTIONS;
+      if (Array.isArray(parsed)) {
+        parsed.forEach((q) => {
+          if (q && q.id) qMap.set(q.id, q);
+        });
+      }
     }
+
+    all = Array.from(qMap.values());
+    localStorage.setItem(KEYS.QUESTIONS, JSON.stringify(all));
   } catch {
     all = INITIAL_QUESTIONS;
   }
@@ -390,7 +423,13 @@ export function initializeMockSession(config: MockConfig): ActiveTestSession {
 }
 
 export function saveActiveSession(session: ActiveTestSession | null, userId?: string): void {
-  const currentKey = userId ? `${KEYS.ACTIVE_TEST}_${userId}` : KEYS.ACTIVE_TEST;
+  if (!userId) {
+    try {
+      localStorage.removeItem(KEYS.ACTIVE_TEST);
+    } catch {}
+    return;
+  }
+  const currentKey = `${KEYS.ACTIVE_TEST}_${userId}`;
   if (!session || session.isCompleted) {
     localStorage.removeItem(currentKey);
     localStorage.removeItem(KEYS.ACTIVE_TEST);
@@ -400,12 +439,10 @@ export function saveActiveSession(session: ActiveTestSession | null, userId?: st
 }
 
 export function getActiveSession(userId?: string): ActiveTestSession | null {
+  if (!userId) return null;
   try {
-    const currentKey = userId ? `${KEYS.ACTIVE_TEST}_${userId}` : KEYS.ACTIVE_TEST;
-    let raw = localStorage.getItem(currentKey);
-    if (!raw && userId) {
-      raw = localStorage.getItem(KEYS.ACTIVE_TEST);
-    }
+    const currentKey = `${KEYS.ACTIVE_TEST}_${userId}`;
+    const raw = localStorage.getItem(currentKey);
     if (!raw) return null;
     const session = JSON.parse(raw) as ActiveTestSession;
     return session && !session.isCompleted ? session : null;
@@ -417,21 +454,24 @@ export function getActiveSession(userId?: string): ActiveTestSession | null {
 // ----------------- Attempts & Historical Playback -----------------
 
 export function getAttempts(userId?: string): MockAttempt[] {
+  // CRITICAL SECURITY RULE: Logged-out users MUST NEVER receive private attempt records
+  if (!userId) {
+    return [];
+  }
   try {
     const raw = localStorage.getItem(KEYS.ATTEMPTS);
     if (!raw) return [];
     const parsed = JSON.parse(raw);
     const list: MockAttempt[] = Array.isArray(parsed) ? parsed : [];
-    if (userId) {
-      return list.filter((a) => !a.userId || a.userId === userId);
-    }
-    return list;
+    // Strictly isolate data to this authenticated user only
+    return list.filter((a) => a.userId === userId);
   } catch {
     return [];
   }
 }
 
 export function getAttemptById(attemptId: string, userId?: string): MockAttempt | null {
+  if (!userId) return null;
   const attempts = getAttempts(userId);
   return attempts.find((a) => a.id === attemptId) || null;
 }
@@ -453,28 +493,27 @@ export function getAllAttempts(): MockAttempt[] {
 
 /**
  * Loads attempts directly from Supabase to guarantee cross-session persistence.
+ * Strictly requires an authenticated user ID for student records.
  */
 export async function fetchAttemptsFromSupabase(userId?: string): Promise<MockAttempt[]> {
+  if (!userId) return [];
   const supabase = getSupabaseClient();
-  if (!supabase) return userId ? getAttempts(userId) : getAllAttempts();
+  if (!supabase) return getAttempts(userId);
 
   try {
-    let query = supabase
+    const { data, error } = await supabase
       .from('mock_attempts')
       .select('*, attempt_items(*)')
+      .eq('user_id', userId)
       .order('completed_at', { ascending: false });
 
-    if (userId) {
-      query = query.eq('user_id', userId);
-    }
-
-    const { data, error } = await query;
-    if (error || !data) return userId ? getAttempts(userId) : getAllAttempts();
+    if (error || !data) return getAttempts(userId);
 
     const mapped: MockAttempt[] = data.map((row: any) => ({
       id: row.id,
       userId: row.user_id,
       studentName: row.student_name || 'Student',
+      regNumber: row.student_name,
       courseId: row.course_id,
       courseName: row.course_name,
       mode: row.mode,
@@ -505,7 +544,7 @@ export async function fetchAttemptsFromSupabase(userId?: string): Promise<MockAt
     }));
 
     if (mapped.length > 0) {
-      const local = getAttempts();
+      const local = getAttempts(userId);
       const mergedMap = new Map<string, MockAttempt>();
       local.forEach((a) => mergedMap.set(a.id, a));
       mapped.forEach((a) => mergedMap.set(a.id, a));
@@ -513,7 +552,7 @@ export async function fetchAttemptsFromSupabase(userId?: string): Promise<MockAt
     }
     return mapped;
   } catch {
-    return userId ? getAttempts(userId) : getAllAttempts();
+    return getAttempts(userId);
   }
 }
 
@@ -544,6 +583,7 @@ export async function finalizeAndSaveAttempt(
     id: session.attemptId,
     userId,
     studentName: studentName || 'Student',
+    regNumber: studentName,
     courseId: session.config.courseId,
     courseName: session.config.courseName,
     mode: session.config.mode,
@@ -561,7 +601,7 @@ export async function finalizeAndSaveAttempt(
   };
 
   // 1. Save locally
-  const currentAttempts = getAttempts();
+  const currentAttempts = getAllAttempts();
   const updatedAttempts = [attempt, ...currentAttempts.filter((a) => a.id !== attempt.id)];
   localStorage.setItem(KEYS.ATTEMPTS, JSON.stringify(updatedAttempts));
 
@@ -587,28 +627,29 @@ export async function finalizeAndSaveAttempt(
         time_taken_seconds: attempt.timeTakenSeconds,
         time_limit_seconds: attempt.timeLimitSeconds,
         is_completed: true,
-        created_at: attempt.createdAt,
+        student_name: studentName || 'Student',
         completed_at: attempt.completedAt,
+        created_at: attempt.createdAt,
       });
 
       if (!attemptErr) {
-        const itemRows = attempt.items.map((item) => ({
+        // Save items
+        const itemRows = attempt.items.map((it) => ({
           attempt_id: attempt.id,
-          question_id: item.questionId,
-          question_index: item.questionIndex,
-          question_text: item.questionText,
-          displayed_options: item.displayedOptions,
-          selected_option_index: item.selectedOptionIndex,
-          correct_option_index: item.correctOptionIndex,
-          is_correct: item.selectedOptionIndex === item.correctOptionIndex,
-          is_marked_for_review: item.isMarkedForReview,
-          time_spent_seconds: item.timeSpentSeconds,
+          question_id: it.questionId,
+          question_index: it.questionIndex,
+          question_text: it.questionText,
+          displayed_options: it.displayedOptions,
+          selected_option_index: it.selectedOptionIndex,
+          correct_option_index: it.correctOptionIndex,
+          is_marked_for_review: it.isMarkedForReview,
+          time_spent_seconds: it.timeSpentSeconds,
         }));
 
         await supabase.from('attempt_items').insert(itemRows);
       }
     } catch (err) {
-      console.warn('Supabase attempt persistence notice:', err);
+      console.warn('Could not sync attempt to Supabase:', err);
     }
   }
 
@@ -618,6 +659,19 @@ export async function finalizeAndSaveAttempt(
 // ----------------- Progress Calculation -----------------
 
 export function getUserProgress(userId?: string): UserProgress {
+  if (!userId) {
+    return {
+      totalAttempted: 0,
+      totalCorrect: 0,
+      accuracy: 0,
+      bestScore: 0,
+      testsCompleted: 0,
+      practiceCompleted: 0,
+      examCompleted: 0,
+      weekWise: [],
+    };
+  }
+
   const attempts = getAttempts(userId);
   const courses = getCourses();
 

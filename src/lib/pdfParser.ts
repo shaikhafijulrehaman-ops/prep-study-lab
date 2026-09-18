@@ -7,7 +7,7 @@ import {
   VisionExtractedQuestion,
   ExtractionProgressCallback,
 } from '../types';
-import { extractPageViaVision, clearExtractionCache } from './visionExtractor';
+import { extractPageViaVision, extractBatchViaVision, clearExtractionCache, PageImageBatchItem } from './visionExtractor';
 
 // Configure pdfjs worker
 try {
@@ -128,21 +128,23 @@ export async function extractTextFromPdf(dataBuffer: ArrayBuffer): Promise<{
 // ======================================================================
 
 /**
- * Renders a single PDF page to a high-resolution PNG image (base64).
- * Uses the HTML Canvas API via pdfjs.
+ * Renders a single PDF page to an optimized base64 image (JPEG).
+ * Uses the HTML Canvas API via pdfjs with memory release immediately after toDataURL.
  */
 async function renderPageToImage(
   pdf: pdfjsLib.PDFDocumentProxy,
   pageNumber: number,
-  scale: number = 2.0
-): Promise<string> {
+  scale: number = 1.5,
+  mimeType: string = 'image/jpeg',
+  quality: number = 0.85
+): Promise<{ base64: string; mimeType: string }> {
   const page = await pdf.getPage(pageNumber);
   const viewport = page.getViewport({ scale });
 
   // Create an offscreen canvas
   const canvas = document.createElement('canvas');
-  canvas.width = viewport.width;
-  canvas.height = viewport.height;
+  canvas.width = Math.floor(viewport.width);
+  canvas.height = Math.floor(viewport.height);
   const ctx = canvas.getContext('2d');
   if (!ctx) throw new Error('Canvas 2D context not available');
 
@@ -152,25 +154,52 @@ async function renderPageToImage(
     canvas,
   }).promise;
 
-  // Convert to base64 PNG (strip the data:image/png;base64, prefix)
-  const dataUrl = canvas.toDataURL('image/png');
+  // Convert to base64 JPEG (strip the data:image/jpeg;base64, prefix)
+  const dataUrl = canvas.toDataURL(mimeType, quality);
   const base64 = dataUrl.split(',')[1] || '';
 
-  // Cleanup
+  // Free canvas memory immediately
   canvas.width = 0;
   canvas.height = 0;
 
-  return base64;
+  return { base64, mimeType };
+}
+
+/**
+ * Concurrency limiter that processes tasks in parallel with a fixed maximum pool size.
+ * Safe for API rate limits and preventing memory exhaustion.
+ */
+async function runWithConcurrencyLimit<T>(
+  tasks: (() => Promise<T>)[],
+  maxConcurrency: number = 3
+): Promise<T[]> {
+  const results: T[] = new Array(tasks.length);
+  let currentIndex = 0;
+
+  async function worker(): Promise<void> {
+    while (currentIndex < tasks.length) {
+      const idx = currentIndex++;
+      results[idx] = await tasks[idx]();
+    }
+  }
+
+  const workers = Array.from(
+    { length: Math.min(maxConcurrency, tasks.length) },
+    () => worker()
+  );
+
+  await Promise.all(workers);
+  return results;
 }
 
 // ======================================================================
-// HYBRID PDF PROCESSING PIPELINE
+// HYBRID PDF PROCESSING PIPELINE (BATCHED & PARALLEL)
 // ======================================================================
 
 /**
  * Main hybrid extraction pipeline.
- * Processes every page of the PDF using text extraction where possible,
- * and vision extraction (via Supabase Edge Function) for image-based pages.
+ * Processes pages in parallel batches (8 pages/batch, concurrency 3) to minimize latency
+ * while strictly adhering to API rate limits, memory constraints, and answer verification rules.
  */
 export async function processFullPdf(
   dataBuffer: ArrayBuffer,
@@ -181,7 +210,11 @@ export async function processFullPdf(
   // Clear previous extraction cache for fresh processing
   clearExtractionCache();
 
-  onProgress?.(0, 0, 'Loading document...');
+  onProgress?.(0, 0, 'Loading document...', {
+    currentPage: 0,
+    totalPages: 0,
+    status: 'Loading document...',
+  });
 
   const loadingTask = pdfjsLib.getDocument({
     data: new Uint8Array(dataBuffer),
@@ -190,7 +223,11 @@ export async function processFullPdf(
   const pdf = await loadingTask.promise;
   const totalPages = pdf.numPages;
 
-  onProgress?.(0, totalPages, 'Analyzing pages...');
+  onProgress?.(0, totalPages, 'Analyzing pages...', {
+    currentPage: 0,
+    totalPages,
+    status: 'Analyzing pages...',
+  });
 
   // Phase 1: Analyze each page — determine if text-based or image-based
   const pageAnalysis: { pageNum: number; text: string; isImageBased: boolean }[] = [];
@@ -239,129 +276,248 @@ export async function processFullPdf(
 
   const imagePageCount = pageAnalysis.filter((p) => p.isImageBased).length;
   const textPageCount = pageAnalysis.filter((p) => !p.isImageBased).length;
-  const useVisionForAll = imagePageCount > totalPages * 0.5; // If most pages are image-based
+  const useVisionForAll = imagePageCount > totalPages * 0.5;
 
-  // Phase 2: Extract questions from each page
-  const allVisionResults: VisionPageResult[] = [];
+  // Phase 2: Batched Parallel Extraction
+  const BATCH_SIZE = 2;
+  const MAX_CONCURRENCY = 3;
+
+  // Divide pages into batches of at most BATCH_SIZE
+  const batches: (typeof pageAnalysis)[] = [];
+  for (let i = 0; i < pageAnalysis.length; i += BATCH_SIZE) {
+    batches.push(pageAnalysis.slice(i, i + BATCH_SIZE));
+  }
+
+  const totalBatches = batches.length;
+  let completedBatches = 0;
+  let pagesProcessedCount = 0;
+  let activeBatches = 0;
+  const allPageResultsMap = new Map<number, VisionPageResult>();
   let textPagesProcessed = 0;
   let visionPagesProcessed = 0;
 
-  if (useVisionForAll && supabaseClient) {
-    // Primarily image-based PDF — use vision for every page
-    for (let i = 0; i < pageAnalysis.length; i++) {
-      const pa = pageAnalysis[i];
-      onProgress?.(pa.pageNum, totalPages, `Processing page ${pa.pageNum} of ${totalPages}...`);
+  const batchTasks = batches.map((batch, batchIndex) => async () => {
+    activeBatches++;
+    const batchStartPage = batch[0].pageNum;
+    const batchEndPage = batch[batch.length - 1].pageNum;
 
-      try {
-        const imageBase64 = await renderPageToImage(pdf, pa.pageNum, 2.0);
-        const result = await extractPageViaVision(
+    onProgress?.(
+      pagesProcessedCount,
+      totalPages,
+      `Processing batch ${batchIndex + 1} of ${totalBatches} (pages ${batchStartPage}–${batchEndPage})...`,
+      {
+        currentPage: pagesProcessedCount,
+        totalPages,
+        status: `Processing batch ${batchIndex + 1} of ${totalBatches}...`,
+        questionsDetected: Array.from(allPageResultsMap.values()).reduce((sum, p) => sum + p.questions.length, 0),
+        weeksDetected: new Set(
+          Array.from(allPageResultsMap.values())
+            .map((p) => p.weekHeading && parseWeekFromHeading(p.weekHeading))
+            .filter(Boolean)
+        ).size,
+        activeBatches,
+        totalBatches,
+        completedBatches,
+      }
+    );
+
+    try {
+      if (useVisionForAll && supabaseClient) {
+        // Render only the pages needed for this batch on-demand
+        const pageItems: PageImageBatchItem[] = [];
+        for (const pa of batch) {
+          try {
+            const { base64, mimeType } = await renderPageToImage(pdf, pa.pageNum, 1.5, 'image/jpeg', 0.85);
+            pageItems.push({
+              pageNumber: pa.pageNum,
+              imageBase64: base64,
+              mimeType,
+            });
+          } catch (renderErr) {
+            console.warn(`Render error on page ${pa.pageNum}:`, renderErr);
+          }
+        }
+
+        // Call the Edge Function batch extraction
+        const batchResults = await extractBatchViaVision(
           supabaseClient,
-          imageBase64,
-          pa.pageNum,
+          pageItems,
           totalPages,
           pdfName
         );
-        allVisionResults.push(result);
-        visionPagesProcessed++;
-      } catch (err) {
-        console.warn(`Vision extraction failed for page ${pa.pageNum}:`, err);
-        // Fallback: try text extraction for this page
-        if (pa.text.length > 30) {
-          const textQuestions = parseMcqsFromSinglePageText(pa.text, pa.pageNum, 1);
-          allVisionResults.push({
-            pageNumber: pa.pageNum,
-            weekHeading: detectExplicitWeekHeading(pa.text),
-            questions: textQuestions.map((q) => ({
-              question_number: q.originalQuestionNumber || null,
-              question_text: q.questionText,
-              option_a: q.options[0],
-              option_b: q.options[1],
-              option_c: q.options[2],
-              option_d: q.options[3],
-              accepted_answer_text: q.acceptedAnswerText || null,
-              is_partial: false,
-              partial_position: null,
-            })),
-          });
-          textPagesProcessed++;
-        } else {
-          allVisionResults.push({ pageNumber: pa.pageNum, weekHeading: null, questions: [] });
-        }
-      }
-    }
-  } else if (!useVisionForAll) {
-    // Primarily text-based PDF — use text extraction for text pages, vision for image pages
-    for (let i = 0; i < pageAnalysis.length; i++) {
-      const pa = pageAnalysis[i];
-      onProgress?.(pa.pageNum, totalPages, `Processing page ${pa.pageNum} of ${totalPages}...`);
 
-      if (!pa.isImageBased) {
-        // Text extraction
-        const textQuestions = parseMcqsFromSinglePageText(pa.text, pa.pageNum, 1);
-        allVisionResults.push({
-          pageNumber: pa.pageNum,
-          weekHeading: detectExplicitWeekHeading(pa.text),
-          questions: textQuestions.map((q) => ({
-            question_number: q.originalQuestionNumber || null,
-            question_text: q.questionText,
-            option_a: q.options[0],
-            option_b: q.options[1],
-            option_c: q.options[2],
-            option_d: q.options[3],
-            accepted_answer_text: q.acceptedAnswerText || null,
-            is_partial: false,
-            partial_position: null,
-          })),
-        });
-        textPagesProcessed++;
-      } else if (supabaseClient) {
-        // Vision extraction for image-based pages
-        try {
-          const imageBase64 = await renderPageToImage(pdf, pa.pageNum, 2.0);
-          const result = await extractPageViaVision(
+        // Immediately release the base64 page images from memory
+        pageItems.length = 0;
+
+        for (const res of batchResults) {
+          allPageResultsMap.set(res.pageNumber, res);
+          visionPagesProcessed++;
+        }
+      } else if (!useVisionForAll) {
+        // Hybrid: text pages extract directly, image pages extract via vision batch
+        const imagePagesInBatch: (typeof batch)[0][] = [];
+        for (const pa of batch) {
+          if (!pa.isImageBased) {
+            const textQuestions = parseMcqsFromSinglePageText(pa.text, pa.pageNum, 1);
+            allPageResultsMap.set(pa.pageNum, {
+              pageNumber: pa.pageNum,
+              weekHeading: detectExplicitWeekHeading(pa.text),
+              questions: textQuestions.map((q) => ({
+                question_number: q.originalQuestionNumber || null,
+                question_text: q.questionText,
+                option_a: q.options[0],
+                option_b: q.options[1],
+                option_c: q.options[2],
+                option_d: q.options[3],
+                accepted_answer_text: q.acceptedAnswerText || null,
+                is_partial: false,
+                partial_position: null,
+              })),
+            });
+            textPagesProcessed++;
+          } else {
+            imagePagesInBatch.push(pa);
+          }
+        }
+
+        if (imagePagesInBatch.length > 0 && supabaseClient) {
+          const pageItems: PageImageBatchItem[] = [];
+          for (const pa of imagePagesInBatch) {
+            try {
+              const { base64, mimeType } = await renderPageToImage(pdf, pa.pageNum, 1.5, 'image/jpeg', 0.85);
+              pageItems.push({
+                pageNumber: pa.pageNum,
+                imageBase64: base64,
+                mimeType,
+              });
+            } catch (renderErr) {
+              console.warn(`Render error on page ${pa.pageNum}:`, renderErr);
+            }
+          }
+
+          const batchResults = await extractBatchViaVision(
             supabaseClient,
-            imageBase64,
-            pa.pageNum,
+            pageItems,
             totalPages,
             pdfName
           );
-          allVisionResults.push(result);
-          visionPagesProcessed++;
-        } catch (err) {
-          console.warn(`Vision extraction failed for page ${pa.pageNum}:`, err);
-          allVisionResults.push({ pageNumber: pa.pageNum, weekHeading: null, questions: [] });
+          pageItems.length = 0;
+
+          for (const res of batchResults) {
+            allPageResultsMap.set(res.pageNumber, res);
+            visionPagesProcessed++;
+          }
+        } else {
+          for (const pa of imagePagesInBatch) {
+            allPageResultsMap.set(pa.pageNum, { pageNumber: pa.pageNum, weekHeading: null, questions: [] });
+          }
         }
       } else {
-        // No Supabase — skip image-based pages
-        allVisionResults.push({ pageNumber: pa.pageNum, weekHeading: null, questions: [] });
+        // No Supabase fallback
+        for (const pa of batch) {
+          allPageResultsMap.set(pa.pageNum, { pageNumber: pa.pageNum, weekHeading: null, questions: [] });
+        }
       }
+    } catch (err) {
+      console.error(`Batch ${batchIndex + 1} extraction error:`, err);
+      for (const pa of batch) {
+        if (!allPageResultsMap.has(pa.pageNum)) {
+          allPageResultsMap.set(pa.pageNum, { pageNumber: pa.pageNum, weekHeading: null, questions: [] });
+        }
+      }
+    } finally {
+      activeBatches--;
+      completedBatches++;
+      pagesProcessedCount = Math.min(totalPages, pagesProcessedCount + batch.length);
+
+      const questionsDetectedSoFar = Array.from(allPageResultsMap.values()).reduce(
+        (sum, p) => sum + p.questions.length,
+        0
+      );
+      const weeksDetectedSoFar = new Set(
+        Array.from(allPageResultsMap.values())
+          .map((p) => p.weekHeading && parseWeekFromHeading(p.weekHeading))
+          .filter(Boolean)
+      ).size;
+
+      onProgress?.(
+        pagesProcessedCount,
+        totalPages,
+        `Pages processed: ${pagesProcessedCount} / ${totalPages}`,
+        {
+          currentPage: pagesProcessedCount,
+          totalPages,
+          status: `Pages processed: ${pagesProcessedCount} / ${totalPages}`,
+          questionsDetected: questionsDetectedSoFar,
+          weeksDetected: weeksDetectedSoFar,
+          activeBatches,
+          totalBatches,
+          completedBatches,
+        }
+      );
     }
-  } else {
-    // Image-based PDF but no Supabase — try text extraction anyway
-    const fullText = pageAnalysis.map((p) => `--- PAGE ${p.pageNum} ---\n${p.text}`).join('\n');
-    const fallbackQuestions = parseMcqsFromText(fullText, 1);
-    return {
-      questions: fallbackQuestions,
-      pageCount: totalPages,
-      weeksDetected: [...new Set(fallbackQuestions.map((q) => q.weekNumber))].sort((a, b) => a - b),
-      pagesWithTextExtraction: textPageCount,
-      pagesWithVisionExtraction: 0,
-      totalQuestionsExtracted: fallbackQuestions.length,
+  });
+
+  // Execute with maximum concurrency 3
+  await runWithConcurrencyLimit(batchTasks, MAX_CONCURRENCY);
+
+  // Reassemble pages in strictly ascending order 1..totalPages
+  const allVisionResults: VisionPageResult[] = [];
+  for (let pageNum = 1; pageNum <= totalPages; pageNum++) {
+    const pageRes = allPageResultsMap.get(pageNum) || {
+      pageNumber: pageNum,
+      weekHeading: null,
+      questions: [],
     };
+    allVisionResults.push(pageRes);
   }
 
-  onProgress?.(totalPages, totalPages, 'Mapping answers...');
+  // Phase 3: Deterministic Week Context Carryover across pages & batches
+  let currentActiveWeek = 1;
+  for (const page of allVisionResults) {
+    if (page.weekHeading) {
+      const parsedWeek = parseWeekFromHeading(page.weekHeading);
+      if (parsedWeek) {
+        currentActiveWeek = parsedWeek;
+      }
+    }
+    (page as any).activeWeek = currentActiveWeek;
+  }
 
-  // Phase 3: Merge cross-page questions
+  onProgress?.(totalPages, totalPages, 'Merging cross-page questions and mapping answers...', {
+    currentPage: totalPages,
+    totalPages,
+    status: 'Merging cross-page questions and mapping answers...',
+    questionsDetected: Array.from(allPageResultsMap.values()).reduce((sum, p) => sum + p.questions.length, 0),
+    weeksDetected: new Set(
+      Array.from(allPageResultsMap.values())
+        .map((p) => p.weekHeading && parseWeekFromHeading(p.weekHeading))
+        .filter(Boolean)
+    ).size,
+    activeBatches: 0,
+    totalBatches,
+    completedBatches,
+  });
+
+  // Phase 4: Merge cross-page questions deterministically
   const mergedResults = mergeCrossPageQuestions(allVisionResults);
 
-  // Phase 4: Convert to ExtractedQuestionDraft[] with answer mapping
+  // Phase 5: Convert to ExtractedQuestionDraft[] with strict exact answer mapping
   const questions = convertVisionResultsToDrafts(mergedResults, useVisionForAll);
 
-  // Phase 5: Detect weeks
+  // Phase 6: Detect weeks
   const weeksDetected = [...new Set(questions.map((q) => q.weekNumber))].sort((a, b) => a - b);
 
-  onProgress?.(totalPages, totalPages, 'Preparing review...');
+  onProgress?.(totalPages, totalPages, 'Ready for review.', {
+    currentPage: totalPages,
+    totalPages,
+    status: 'Ready for review.',
+    questionsDetected: questions.length,
+    weeksDetected: weeksDetected.length,
+    activeBatches: 0,
+    totalBatches,
+    completedBatches,
+  });
 
   return {
     questions,
@@ -453,79 +609,106 @@ function mergeCrossPageQuestions(pages: VisionPageResult[]): VisionPageResult[] 
  *   "MQ-5" → fuzzy matches against options → finds match
  *   "B" → letter only → index 1
  */
+/**
+ * Normalizes harmless formatting differences for comparison:
+ * - lowercase
+ * - collapse multiple whitespace to single space
+ * - strip surrounding quotes / brackets
+ * - strip harmless trailing punctuation (. , ;)
+ */
+export function normalizeFormatting(text: string): string {
+  if (!text) return '';
+  return text
+    .toLowerCase()
+    .replace(/^["'“”‘’\(\[\{]+|["'“”‘’\)\]\}]+$/g, '')
+    .replace(/[.,;:]+$/g, '')
+    .replace(/\s+/g, ' ')
+    .trim();
+}
+
+/**
+ * Strips leading option prefix from text e.g. "A. BPSK" -> "BPSK", "(B) MQ-5" -> "MQ-5"
+ */
+export function stripOptionPrefix(text: string): string {
+  if (!text) return '';
+  return text.replace(/^(?:Option\s+)?\(?[A-Da-d]\)?[\s.):,\-–—]+/i, '').trim();
+}
+
+/**
+ * Maps a printed accepted answer text strictly and exactly to one of the four options.
+ *
+ * STRICT RULE (NO FUZZY MATCHING):
+ * 1. Normalize harmless formatting differences (trimming, whitespace, lowercasing, quotes).
+ * 2. Try exact semantic/text correspondence only.
+ * 3. If exact mapping succeeds: returns { index: number; exact: true }.
+ * 4. If exact mapping fails: returns null (sets correctAnswerIndex = null, needsReview = true).
+ * 5. NEVER select an option using fuzzy similarity or word overlap automatically.
+ */
 export function mapAcceptedAnswerToOption(
   acceptedText: string | null | undefined,
   options: [string, string, string, string]
-): { index: number; confidence: 'high' | 'medium' | 'low' } | null {
+): { index: number; exact: true } | null {
   if (!acceptedText || acceptedText.trim().length === 0) return null;
 
   const text = acceptedText.trim();
   const letters = ['A', 'B', 'C', 'D'];
 
-  // Strategy 1: Extract option letter from the accepted answer text
-  // Patterns: "B. MQ-5", "B) MQ-5", "(B) MQ-5", "b. MQ-5", just "B"
-  const letterMatch = text.match(/^(?:\(?([A-Da-d])\)?[\s.):,\-]*)(.*)?$/);
+  // Case 1: Formats with leading option letter e.g.:
+  // "B. MQ-5", "B) MQ-5", "(B) MQ-5", "B: MQ-5", "B - MQ-5", "b. MQ-5", or just "B", "(B)", "Option B"
+  const letterMatch = text.match(/^(?:Option\s+)?\(?([A-Da-d])\)?(?:[\s.):,\-–—]+(.*))?$/i);
   if (letterMatch) {
     const letter = letterMatch[1].toUpperCase();
     const idx = letters.indexOf(letter);
     if (idx >= 0) {
-      // If there's text after the letter, verify it matches the option
       const afterLetter = (letterMatch[2] || '').trim();
       if (afterLetter.length > 0) {
-        const optionText = normalizeForComparison(options[idx]);
-        const answerBody = normalizeForComparison(afterLetter);
-        if (optionText.includes(answerBody) || answerBody.includes(optionText)) {
-          return { index: idx, confidence: 'high' };
+        // If text is printed after the letter, verify exact text match with that option
+        const optRawNorm = normalizeFormatting(options[idx]);
+        const optStrippedNorm = normalizeFormatting(stripOptionPrefix(options[idx]));
+        const ansRawNorm = normalizeFormatting(text);
+        const ansStrippedNorm = normalizeFormatting(afterLetter);
+
+        if (
+          optStrippedNorm === ansStrippedNorm ||
+          optRawNorm === ansRawNorm ||
+          optRawNorm === ansStrippedNorm
+        ) {
+          return { index: idx, exact: true };
         }
-        // Letter + text doesn't match the option — still trust the letter
-        return { index: idx, confidence: 'medium' };
+        // If text was printed after letter and does NOT match option text (e.g. OCR mismatch: MQ-5 vs MQS),
+        // STRICT RULE: DO NOT guess. Fail exact mapping so it becomes Needs Review.
+        return null;
       }
-      // Just a letter with no additional text
-      return { index: idx, confidence: 'high' };
+      // Explicit option letter only (e.g. "B", "(B)", "Option B")
+      return { index: idx, exact: true };
     }
   }
 
-  // Strategy 2: Direct text match against each option
-  const normalizedAnswer = normalizeForComparison(text);
-  for (let i = 0; i < 4; i++) {
-    const normalizedOption = normalizeForComparison(options[i]);
-    if (normalizedOption.length > 2 && normalizedAnswer.length > 2) {
-      if (normalizedOption === normalizedAnswer) {
-        return { index: i, confidence: 'high' };
-      }
-      if (normalizedOption.includes(normalizedAnswer) || normalizedAnswer.includes(normalizedOption)) {
-        return { index: i, confidence: 'medium' };
-      }
-    }
-  }
-
-  // Strategy 3: Word overlap matching (for partial matches)
-  const answerWords = normalizedAnswer.split(/\s+/).filter((w) => w.length > 2);
-  if (answerWords.length > 0) {
-    let bestIdx = -1;
-    let bestOverlap = 0;
+  // Case 2: Exact text match against the four options (e.g. "MQ-5" matching option B "MQ-5")
+  const normalizedAnswer = normalizeFormatting(text);
+  const normalizedAnswerStripped = normalizeFormatting(stripOptionPrefix(text));
+  if (normalizedAnswer.length > 0) {
+    const matchingIndices: number[] = [];
     for (let i = 0; i < 4; i++) {
-      const optionWords = normalizeForComparison(options[i]).split(/\s+/).filter((w) => w.length > 2);
-      const overlap = answerWords.filter((w) => optionWords.includes(w)).length;
-      if (overlap > bestOverlap) {
-        bestOverlap = overlap;
-        bestIdx = i;
+      const optNorm = normalizeFormatting(options[i]);
+      const optStrippedNorm = normalizeFormatting(stripOptionPrefix(options[i]));
+      if (
+        optNorm === normalizedAnswer ||
+        optStrippedNorm === normalizedAnswer ||
+        optStrippedNorm === normalizedAnswerStripped
+      ) {
+        matchingIndices.push(i);
       }
     }
-    if (bestIdx >= 0 && bestOverlap >= answerWords.length * 0.5) {
-      return { index: bestIdx, confidence: 'low' };
+
+    // Must be uniquely and strictly exact
+    if (matchingIndices.length === 1) {
+      return { index: matchingIndices[0], exact: true };
     }
   }
 
+  // Strictly no fuzzy similarity, no word overlap, no substring guessing
   return null;
-}
-
-function normalizeForComparison(text: string): string {
-  return text
-    .toLowerCase()
-    .replace(/[^a-z0-9\s]/g, '')
-    .replace(/\s+/g, ' ')
-    .trim();
 }
 
 // ======================================================================
@@ -545,10 +728,12 @@ function convertVisionResultsToDrafts(
   let globalQIndex = 0;
 
   for (const page of pages) {
-    // Update week from page heading
+    // Update week from page heading or activeWeek carryover
     if (page.weekHeading) {
       const weekNum = parseWeekFromHeading(page.weekHeading);
       if (weekNum) currentWeek = weekNum;
+    } else if ((page as any).activeWeek) {
+      currentWeek = (page as any).activeWeek;
     }
 
     for (const q of page.questions) {
@@ -574,19 +759,17 @@ function convertVisionResultsToDrafts(
         correctAnswerIndex = answerMapping.index;
         answerSource = 'PDF';
         hasExplicitAnswer = true;
-        if (answerMapping.confidence === 'high') {
-          needsReview = false;
-        } else {
-          needsReview = true;
-          reviewReason = answerMapping.confidence === 'medium'
-            ? 'Answer letter matched but option text mismatch'
-            : 'Answer matched by word overlap (low confidence)';
-        }
+        needsReview = false;
       } else if (q.accepted_answer_text) {
-        // Had accepted answer text but could not map to an option
+        // Had accepted answer text but could not map exactly to any option
+        correctAnswerIndex = null;
+        hasExplicitAnswer = false;
         needsReview = true;
-        reviewReason = `Could not map accepted answer "${q.accepted_answer_text}" to any option`;
+        reviewReason = `Could not match accepted answer "${q.accepted_answer_text}" exactly to any option`;
       } else {
+        correctAnswerIndex = null;
+        hasExplicitAnswer = false;
+        needsReview = true;
         reviewReason = 'No accepted answer found';
       }
 
@@ -848,6 +1031,13 @@ export function parseMcqsFromText(
         ? candidateGroups[gi + 1].lineA
         : Math.min(cg.lineD + 8, lines.length);
 
+      const options: [string, string, string, string] = [
+        cg.optA || 'Option A',
+        cg.optB || 'Option B',
+        cg.optC || 'Option C',
+        cg.optD || 'Option D',
+      ];
+
       let answerIndex: number | null = null;
       let answerSource: AnswerSource = 'Not Available';
       let hasExplicitAnswer = false;
@@ -860,15 +1050,16 @@ export function parseMcqsFromText(
         );
         if (ansMatch) {
           acceptedAnswerText = ansMatch[1].trim();
-          const letterPart = acceptedAnswerText.match(/^(?:\(?([A-Da-d])\)?)/);
-          if (letterPart) {
-            answerIndex = 'ABCD'.indexOf(letterPart[1].toUpperCase());
-            if (answerIndex >= 0) {
-              answerSource = 'PDF';
-              hasExplicitAnswer = true;
-            }
-          }
           break;
+        }
+      }
+
+      if (acceptedAnswerText) {
+        const mapping = mapAcceptedAnswerToOption(acceptedAnswerText, options);
+        if (mapping) {
+          answerIndex = mapping.index;
+          answerSource = 'PDF';
+          hasExplicitAnswer = true;
         }
       }
 
@@ -878,13 +1069,6 @@ export function parseMcqsFromText(
         answerSource = 'PDF';
         hasExplicitAnswer = true;
       }
-
-      const options: [string, string, string, string] = [
-        cg.optA || 'Option A',
-        cg.optB || 'Option B',
-        cg.optC || 'Option C',
-        cg.optD || 'Option D',
-      ];
 
       questions.push({
         id: `draft-${qCounter}-${Date.now().toString(36)}`,
@@ -1036,13 +1220,11 @@ function parseSingleQuestionBlock(
   );
   if (ansMatch) {
     acceptedAnswerText = ansMatch[1].trim();
-    const letterPart = acceptedAnswerText.match(/^(?:\(?([A-Da-d])\)?)/);
-    if (letterPart) {
-      answerIndex = 'ABCD'.indexOf(letterPart[1].toUpperCase());
-      if (answerIndex >= 0) {
-        answerSource = 'PDF';
-        hasExplicitAnswer = true;
-      }
+    const mapping = mapAcceptedAnswerToOption(acceptedAnswerText, options);
+    if (mapping) {
+      answerIndex = mapping.index;
+      answerSource = 'PDF';
+      hasExplicitAnswer = true;
     }
   }
 

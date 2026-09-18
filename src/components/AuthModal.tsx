@@ -1,6 +1,6 @@
 import React, { useState, useEffect } from 'react';
 import { motion } from 'framer-motion';
-import { X, Lock, User as UserIcon, Mail, ArrowRight, ShieldCheck } from 'lucide-react';
+import { X, Lock, User as UserIcon, ArrowRight } from 'lucide-react';
 import { User } from '../types';
 import { login, createAccount } from '../lib/auth';
 import { OrbitalInputField } from './OrbitalInputField';
@@ -16,11 +16,10 @@ export const AuthModal: React.FC<AuthModalProps> = ({
   isOpen,
   onClose,
   onAuthenticated,
-  reasonMessage = 'Please create an account or sign in to launch your test simulation.',
+  reasonMessage,
 }) => {
-  const [mode, setMode] = useState<'login' | 'signup'>('signup');
-  const [name, setName] = useState('');
-  const [email, setEmail] = useState('');
+  const [mode, setMode] = useState<'login' | 'signup'>('login');
+  const [regNumber, setRegNumber] = useState('');
   const [password, setPassword] = useState('');
   const [confirmPassword, setConfirmPassword] = useState('');
   const [error, setError] = useState<string | null>(null);
@@ -31,8 +30,7 @@ export const AuthModal: React.FC<AuthModalProps> = ({
   // Always reset fields when opening modal or switching state
   useEffect(() => {
     if (isOpen) {
-      setName('');
-      setEmail('');
+      setRegNumber('');
       setPassword('');
       setConfirmPassword('');
       setError(null);
@@ -50,7 +48,7 @@ export const AuthModal: React.FC<AuthModalProps> = ({
 
     try {
       if (mode === 'signup') {
-        const res = await createAccount(name, email, password, confirmPassword);
+        const res = await createAccount(regNumber, password, confirmPassword);
         if (res.success && res.user) {
           setIsSuccess(true);
           setTimeout(() => {
@@ -62,7 +60,7 @@ export const AuthModal: React.FC<AuthModalProps> = ({
           setError(res.error || 'Failed to create account.');
         }
       } else {
-        const res = await login(name, password);
+        const res = await login(regNumber, password);
         if (res.success && res.user) {
           setIsSuccess(true);
           setTimeout(() => {
@@ -71,11 +69,11 @@ export const AuthModal: React.FC<AuthModalProps> = ({
             setIsSuccess(false);
           }, 650);
         } else {
-          setError(res.error || 'Failed to sign in. Please verify your credentials.');
+          setError(res.error || 'Invalid registration number or password.');
         }
       }
     } catch (err: any) {
-      setError(err?.message || 'Authentication error occurred.');
+      setError(err?.message || 'An error occurred during authentication.');
     } finally {
       setLoading(false);
     }
@@ -83,8 +81,7 @@ export const AuthModal: React.FC<AuthModalProps> = ({
 
   const handleSwitchMode = (newMode: 'login' | 'signup') => {
     setMode(newMode);
-    setName('');
-    setEmail('');
+    setRegNumber('');
     setPassword('');
     setConfirmPassword('');
     setError(null);
@@ -114,27 +111,30 @@ export const AuthModal: React.FC<AuthModalProps> = ({
         {/* Header */}
         <div className="px-6 py-5 border-b border-[#DCEAF5] bg-[#EFF8FF]/50 flex items-center justify-between">
           <div className="flex items-center gap-3">
-            <div className="p-2 rounded-xl bg-sky-500/10 border border-sky-500/20 text-sky-600">
-              <ShieldCheck className="w-5 h-5 text-[#0284C7]" />
+            <div className="p-2 rounded-xl bg-sky-500/10 border border-sky-500/20 text-[#0284C7]">
+              {mode === 'login' ? <Lock className="w-5 h-5" /> : <UserIcon className="w-5 h-5" />}
             </div>
             <div>
               <h2 className="text-sm font-semibold tracking-wider uppercase text-[#0F172A] font-sans">
                 {mode === 'signup' ? 'Create Account' : 'Sign In'}
               </h2>
-              <p className="text-[11px] text-[#64748B] font-mono tracking-wide">
-                SECURE AUTHENTICATION SYSTEM
+              <p className="text-[11px] text-[#64748B] font-sans">
+                {mode === 'signup'
+                  ? 'Enter your registration number and password to register'
+                  : 'Enter your registration number and password to continue'}
               </p>
             </div>
           </div>
           <button
             onClick={onClose}
+            aria-label="Close"
             className="p-2 rounded-full text-[#64748B] hover:text-[#0F172A] hover:bg-slate-100 transition-colors"
           >
             <X className="w-4 h-4" />
           </button>
         </div>
 
-        {/* Reason notice */}
+        {/* Reason notice (if specified) */}
         {reasonMessage && (
           <div className="px-6 pt-4">
             <div className="p-3 rounded-2xl bg-[#EFF8FF] border border-[#DCEAF5] text-xs text-[#0284C7] font-medium leading-relaxed">
@@ -174,15 +174,15 @@ export const AuthModal: React.FC<AuthModalProps> = ({
             </div>
           )}
 
-          {/* Name / Identifier Field */}
+          {/* Registration Number Field */}
           <OrbitalInputField
-            id="candidate_profile_name"
-            name="candidate_profile_name"
+            id="candidate_reg_number"
+            name="candidate_reg_number"
             type="text"
-            label={mode === 'signup' ? 'Full Name' : 'Email or Username'}
-            value={name}
-            onChange={(val) => setName(val)}
-            placeholder={mode === 'signup' ? 'Enter your full name' : 'Enter email or username'}
+            label="Registration Number"
+            value={regNumber}
+            onChange={(val) => setRegNumber(val.toUpperCase())}
+            placeholder={mode === 'signup' ? 'Enter your registration number' : 'Enter registration number'}
             icon={UserIcon}
             isUnlocked={isUnlocked}
             onUnlock={() => setIsUnlocked(true)}
@@ -191,52 +191,33 @@ export const AuthModal: React.FC<AuthModalProps> = ({
             autoComplete="off"
           />
 
-          {/* Email Field (Signup only) */}
-          {mode === 'signup' && (
-            <OrbitalInputField
-              id="candidate_profile_email"
-              name="candidate_profile_email"
-              type="email"
-              label="Email Address"
-              value={email}
-              onChange={(val) => setEmail(val)}
-              placeholder="Enter your email address"
-              icon={Mail}
-              isUnlocked={isUnlocked}
-              onUnlock={() => setIsUnlocked(true)}
-              isError={Boolean(error)}
-              isSuccess={isSuccess}
-              autoComplete="off"
-            />
-          )}
-
           {/* Password Field */}
           <OrbitalInputField
-            id="candidate_session_token"
-            name="candidate_session_token"
+            id={mode === 'signup' ? 'candidate_new_password' : 'candidate_password'}
+            name={mode === 'signup' ? 'candidate_new_password' : 'candidate_password'}
             type="password"
-            label="Password"
+            label={mode === 'signup' ? 'New Password' : 'Password'}
             value={password}
             onChange={(val) => setPassword(val)}
-            placeholder={mode === 'signup' ? 'Create a secure password (min 6 chars)' : 'Enter password'}
+            placeholder={mode === 'signup' ? 'Create password' : 'Enter password'}
             icon={Lock}
             isUnlocked={isUnlocked}
             onUnlock={() => setIsUnlocked(true)}
             isError={Boolean(error)}
             isSuccess={isSuccess}
-            autoComplete="new-password"
+            autoComplete={mode === 'signup' ? 'new-password' : 'current-password'}
           />
 
           {/* Confirm Password Field (Signup only) */}
           {mode === 'signup' && (
             <OrbitalInputField
-              id="candidate_session_token_confirm"
-              name="candidate_session_token_confirm"
+              id="candidate_confirm_password"
+              name="candidate_confirm_password"
               type="password"
               label="Confirm Password"
               value={confirmPassword}
               onChange={(val) => setConfirmPassword(val)}
-              placeholder="Re-enter password to confirm"
+              placeholder="Re-enter password"
               icon={Lock}
               isUnlocked={isUnlocked}
               onUnlock={() => setIsUnlocked(true)}
@@ -258,13 +239,12 @@ export const AuthModal: React.FC<AuthModalProps> = ({
                   : loading
                   ? 'Processing...'
                   : mode === 'signup'
-                  ? 'Create Account & Continue'
-                  : 'Sign In & Continue'}
+                  ? 'CREATE ACCOUNT'
+                  : 'SIGN IN & CONTINUE'}
               </span>
               <ArrowRight className="w-3.5 h-3.5" />
             </button>
           </div>
-
 
           {/* Toggle between Login and Signup */}
           <div className="pt-2 text-center text-xs text-[#64748B]">

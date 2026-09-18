@@ -19,13 +19,17 @@ export interface Course {
   createdAt?: string;
   publishedAt?: string;
   sourcePdfName?: string;
+  storagePath?: string;
+  fileSizeBytes?: number;
 }
 
 export interface User {
   id: string;
-  name: string;
+  name: string; // Registration number for student, identifier for admin
+  regNumber?: string;
   email?: string;
   role: UserRole;
+  status?: 'active' | 'deactivated';
   createdAt: string;
 }
 
@@ -74,6 +78,7 @@ export interface MockAttempt {
   id: string;
   userId?: string;
   studentName?: string;
+  regNumber?: string;
   courseId: string;
   courseName: string;
   mode: TestMode;
@@ -146,9 +151,21 @@ export interface VisionExtractedQuestion {
   partial_position: 'start' | 'end' | null;
 }
 
+export interface ExtractionProgressInfo {
+  currentPage: number;
+  totalPages: number;
+  status: string;
+  questionsDetected?: number;
+  weeksDetected?: number;
+  activeBatches?: number;
+  totalBatches?: number;
+  completedBatches?: number;
+}
+
 /** Progress callback for PDF processing pipeline */
 export type ExtractionProgressCallback = (
   currentPage: number,
   totalPages: number,
-  status: string
+  status: string,
+  extra?: Partial<ExtractionProgressInfo>
 ) => void;

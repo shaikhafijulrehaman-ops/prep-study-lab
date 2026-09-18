@@ -7,10 +7,44 @@ import { User } from '../types';
 interface ProgressViewProps {
   currentUser?: User | null;
   onStartPracticing: () => void;
+  onOpenAuth?: () => void;
 }
 
-export const ProgressView: React.FC<ProgressViewProps> = ({ currentUser, onStartPracticing }) => {
+export const ProgressView: React.FC<ProgressViewProps> = ({
+  currentUser,
+  onStartPracticing,
+  onOpenAuth,
+}) => {
   const progress = getUserProgress(currentUser?.id);
+
+  if (!currentUser) {
+    return (
+      <div className="min-h-screen pt-36 pb-20 px-4 max-w-lg mx-auto flex flex-col items-center justify-center text-center space-y-6 select-none font-sans">
+        <div className="p-4 rounded-3xl bg-[#EFF8FF] border border-[#DCEAF5] text-[#0284C7] shadow-sm">
+          <BarChart3 className="w-8 h-8 text-[#0284C7]" />
+        </div>
+        <div className="space-y-2">
+          <div className="text-[11px] font-mono tracking-[0.25em] text-[#0284C7] uppercase font-semibold">
+            AUTHENTICATION REQUIRED
+          </div>
+          <h1 className="font-serif text-3xl sm:text-4xl text-[#0F172A] uppercase tracking-tight">
+            Performance Analytics
+          </h1>
+          <p className="text-xs sm:text-sm text-[#64748B] font-mono tracking-wide max-w-md mx-auto">
+            Please sign in with your Registration Number to view your module-by-module accuracy, longitudinal progress matrix, and performance insights.
+          </p>
+        </div>
+        {onOpenAuth && (
+          <button
+            onClick={onOpenAuth}
+            className="px-6 py-3 rounded-full bg-[#0284C7] text-white font-bold text-xs tracking-wider uppercase hover:bg-[#0369a1] transition-all shadow-[0_4px_16px_rgba(2,132,199,0.25)] hover:scale-[1.02] active:scale-[0.98]"
+          >
+            Sign In with Registration Number
+          </button>
+        )}
+      </div>
+    );
+  }
 
   return (
     <div className="min-h-screen pt-28 pb-20 px-4 sm:px-8 max-w-6xl mx-auto space-y-10 select-none font-sans">

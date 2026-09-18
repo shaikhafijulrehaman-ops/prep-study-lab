@@ -143,6 +143,142 @@ function parseVisionResponse(data: unknown, fallbackPageNumber: number): VisionP
   };
 }
 
+export interface PageImageBatchItem {
+  pageNumber: number;
+  imageBase64: string;
+  mimeType?: string;
+}
+
+/**
+ * Extract structured question data from a BATCH of PDF page images (e.g. 8 pages)
+ * in a single round-trip to the Supabase Edge Function.
+ *
+ * Includes retry logic (max 2 retries) with exponential backoff on transient errors/rate limits.
+ * Normalizes and validates each page's response into VisionPageResult.
+ */
+export async function extractBatchViaVision(
+  supabaseClient: SupabaseClient,
+  pages: PageImageBatchItem[],
+  totalPages: number,
+  pdfName: string
+): Promise<VisionPageResult[]> {
+  // Check which pages are already cached
+  const uncachedPages: PageImageBatchItem[] = [];
+  const resultsByPage = new Map<number, VisionPageResult>();
+
+  for (const page of pages) {
+    const key = cacheKey(pdfName, page.pageNumber);
+    const cached = pageCache.get(key);
+    if (cached) {
+      resultsByPage.set(page.pageNumber, cached);
+    } else {
+      uncachedPages.push(page);
+    }
+  }
+
+  // If all pages in this batch were cached, return them in order
+  if (uncachedPages.length === 0) {
+    return pages.map((p) => resultsByPage.get(p.pageNumber)!);
+  }
+
+  const maxRetries = 2;
+  let lastError: Error | null = null;
+
+  for (let attempt = 0; attempt <= maxRetries; attempt++) {
+    try {
+      const { data, error } = await supabaseClient.functions.invoke('extract-page', {
+        body: {
+          pages: uncachedPages.map((p) => ({
+            pageNumber: p.pageNumber,
+            imageBase64: p.imageBase64,
+            mimeType: p.mimeType || 'image/jpeg',
+          })),
+          totalPages,
+        },
+      });
+
+      if (error) {
+        throw new Error(error.message || 'Edge function returned an error');
+      }
+
+      if (!data) {
+        throw new Error('Empty response from document processor');
+      }
+
+      // Parse the response
+      const parsedBatchResults = parseVisionBatchResponse(data, uncachedPages.map((p) => p.pageNumber));
+
+      // Cache each successful page result
+      for (const res of parsedBatchResults) {
+        pageCache.set(cacheKey(pdfName, res.pageNumber), res);
+        resultsByPage.set(res.pageNumber, res);
+      }
+
+      // Return all pages in original order
+      return pages.map((p) => {
+        return resultsByPage.get(p.pageNumber) || {
+          pageNumber: p.pageNumber,
+          weekHeading: null,
+          questions: [],
+        };
+      });
+    } catch (err) {
+      lastError = err instanceof Error ? err : new Error(String(err));
+      console.warn(`Vision batch extraction attempt ${attempt + 1} failed:`, lastError.message);
+      if (attempt < maxRetries) {
+        // Exponential backoff: 2s, 4s
+        await new Promise((resolve) => setTimeout(resolve, (attempt + 1) * 2000));
+      }
+    }
+  }
+
+  // All retries failed for this batch — mark uncached pages as empty/needs review, don't fail entire document
+  console.error(`Vision batch extraction failed after ${maxRetries + 1} attempts:`, lastError);
+  for (const p of uncachedPages) {
+    resultsByPage.set(p.pageNumber, {
+      pageNumber: p.pageNumber,
+      weekHeading: null,
+      questions: [],
+    });
+  }
+
+  return pages.map((p) => resultsByPage.get(p.pageNumber)!);
+}
+
+/**
+ * Validates and normalizes the raw batch JSON response into an array of VisionPageResult.
+ */
+function parseVisionBatchResponse(data: unknown, fallbackPageNumbers: number[]): VisionPageResult[] {
+  let parsed: any;
+  if (typeof data === 'string') {
+    try {
+      parsed = JSON.parse(data);
+    } catch {
+      return fallbackPageNumbers.map((num) => ({ pageNumber: num, weekHeading: null, questions: [] }));
+    }
+  } else if (data && typeof data === 'object') {
+    parsed = data;
+  } else {
+    return fallbackPageNumbers.map((num) => ({ pageNumber: num, weekHeading: null, questions: [] }));
+  }
+
+  const rawPages: any[] = Array.isArray(parsed.pages) ? parsed.pages : [];
+  const resultMap = new Map<number, VisionPageResult>();
+
+  for (const pageObj of rawPages) {
+    if (!pageObj || typeof pageObj !== 'object') continue;
+    const pageNum = typeof pageObj.page_number === 'number' ? pageObj.page_number : 0;
+    const singleResult = parseVisionResponse(pageObj, pageNum);
+    if (pageNum > 0) {
+      resultMap.set(pageNum, singleResult);
+    }
+  }
+
+  return fallbackPageNumbers.map((num) => {
+    return resultMap.get(num) || { pageNumber: num, weekHeading: null, questions: [] };
+  });
+}
+
 /**
  * Check if the Supabase Edge Function is available and properly configured.
  * Returns true if the edge function responds, false otherwise.
@@ -166,3 +302,4 @@ export async function isVisionExtractionAvailable(
     return false;
   }
 }
+

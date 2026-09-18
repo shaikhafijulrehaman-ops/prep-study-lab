@@ -53,8 +53,11 @@ export const Navigation: React.FC<NavigationProps> = ({
                   <motion.div
                     layoutId="active-nav-glow"
                     transition={{ type: 'spring', stiffness: 380, damping: 30 }}
-                    className="absolute inset-0 rounded-full bg-[#EFF8FF] border border-[#38BDF8]/40 shadow-[0_2px_10px_rgba(56,189,248,0.2)]"
-                  />
+                    className="absolute inset-0 rounded-full bg-[#EFF8FF] border border-[#38BDF8]/40 shadow-[0_2px_10px_rgba(56,189,248,0.2)] overflow-hidden"
+                  >
+                    {/* Animated reflective highlight that moves slowly across active pill */}
+                    <span className="dock-active-pill-shine absolute inset-0 w-1/2 h-full bg-gradient-to-r from-transparent via-white/50 to-transparent pointer-events-none" />
+                  </motion.div>
                 )}
                 <span className="relative z-10 block">
                   <Icon className="w-4 h-4" />

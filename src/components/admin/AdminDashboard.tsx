@@ -21,8 +21,20 @@ import {
   FileCheck,
   ChevronRight,
   UserCheck,
+  Shield,
+  Key,
+  UserPlus,
+  Users,
+  UserX,
 } from 'lucide-react';
 import { Course, Question, ExtractedQuestionDraft, User, AnswerSource, MockAttempt } from '../../types';
+import {
+  getAdminUsers,
+  createAdminAccount,
+  updateAdminProfile,
+  toggleAdminStatus,
+  resetAdminPassword,
+} from '../../lib/auth';
 import {
   getCourses,
   saveCourse,
@@ -37,7 +49,79 @@ import {
   fetchAttemptsFromSupabase,
 } from '../../lib/storage';
 import { processFullPdf, HybridExtractionResult, extractTextFromPdf, parseMcqsFromText, parseAnswerKeySource, applyAnswerKeyMapping } from '../../lib/pdfParser';
+import { uploadPdfDocument } from '../../lib/pdfStorage';
 import { getSupabaseClient } from '../../lib/supabase';
+function parseBatchQuestionInput(text: string, defaultWeek: number): ExtractedQuestionDraft[] {
+  if (!text || text.trim().length === 0) return [];
+  const blocks = text.split(/(?:^|\n)(?=(?:Q(?:uestion)?\s*\d+|\d+[\.\)]\s+))/i);
+  const results: ExtractedQuestionDraft[] = [];
+
+  let qIndex = 0;
+  for (const block of blocks) {
+    const trimmed = block.trim();
+    if (trimmed.length < 5) continue;
+
+    const lines = trimmed.split('\n').map((l) => l.trim()).filter((l) => l.length > 0);
+    if (lines.length < 2) continue;
+
+    qIndex++;
+    const qNumMatch = lines[0].match(/^(?:(?:Question|Q)\s*[:.]?\s*(\d+)|\b(\d+)[\.\)]\s*)/i);
+    const qNum = qNumMatch ? parseInt(qNumMatch[1] || qNumMatch[2], 10) : qIndex;
+    const questionText = lines[0].replace(/^(?:(?:Question|Q)\s*[:.]?\s*\d+[\.\:\)\-]?|\b\d+[\.\)]\s*)/i, '').trim();
+
+    let optA = '', optB = '', optC = '', optD = '';
+    let answerLetter = '';
+
+    for (let i = 1; i < lines.length; i++) {
+      const l = lines[i];
+      const ansMatch = l.match(/^(?:Answer|Accepted Answer|Correct Answer|Ans)\s*[:\-]?\s*([A-Da-d])/i);
+      if (ansMatch) {
+        answerLetter = ansMatch[1].toUpperCase();
+        continue;
+      }
+      const optMatch = l.match(/^(?:\(?([A-Da-d])\)?[\s\.\:\)]+)(.*)/);
+      if (optMatch) {
+        const letter = optMatch[1].toUpperCase();
+        const content = optMatch[2].trim();
+        if (letter === 'A') optA = content;
+        else if (letter === 'B') optB = content;
+        else if (letter === 'C') optC = content;
+        else if (letter === 'D') optD = content;
+      }
+    }
+
+    const options: [string, string, string, string] = [
+      optA || 'Option A',
+      optB || 'Option B',
+      optC || 'Option C',
+      optD || 'Option D',
+    ];
+
+    let correctIdx: number | null = null;
+    if (answerLetter) {
+      correctIdx = 'ABCD'.indexOf(answerLetter);
+      if (correctIdx === -1) correctIdx = null;
+    }
+
+    results.push({
+      id: `manual-${qIndex}-${Date.now().toString(36)}`,
+      originalQuestionNumber: qNum,
+      questionText: questionText || lines[0],
+      options,
+      correctAnswerIndex: correctIdx,
+      hasExplicitAnswer: correctIdx !== null,
+      acceptedAnswerText: answerLetter ? `${answerLetter}` : null,
+      answerSource: correctIdx !== null ? 'Manually Verified' : 'Not Available',
+      isApproved: correctIdx !== null,
+      weekNumber: defaultWeek,
+      isValid: Boolean(questionText && (optA || optB)),
+      needsReview: correctIdx === null,
+      extractionMethod: 'text',
+    });
+  }
+
+  return results;
+}
 
 interface AdminDashboardProps {
   currentUser: User;
@@ -45,7 +129,7 @@ interface AdminDashboardProps {
   onNavigateToStudentPlatform: () => void;
 }
 
-type AdminTab = 'tests' | 'upload' | 'attempts';
+type AdminTab = 'tests' | 'upload' | 'manual' | 'attempts' | 'admins';
 
 export const AdminDashboard: React.FC<AdminDashboardProps> = ({
   currentUser,
@@ -56,6 +140,51 @@ export const AdminDashboard: React.FC<AdminDashboardProps> = ({
   const [courses, setCourses] = useState<Course[]>(getCourses(false));
   const [statusFilter, setStatusFilter] = useState<'all' | 'published' | 'draft'>('all');
   const [searchQuery, setSearchQuery] = useState('');
+
+  // ----------------- Admin Management State -----------------
+  const [adminUsers, setAdminUsers] = useState<User[]>(getAdminUsers());
+  const [showCreateAdminModal, setShowCreateAdminModal] = useState(false);
+  const [newAdminName, setNewAdminName] = useState('');
+  const [newAdminEmail, setNewAdminEmail] = useState('');
+  const [newAdminPassword, setNewAdminPassword] = useState('');
+  const [newAdminConfirm, setNewAdminConfirm] = useState('');
+  const [adminActionLoading, setAdminActionLoading] = useState(false);
+
+  // Edit Admin State
+  const [editingAdmin, setEditingAdmin] = useState<User | null>(null);
+  const [editAdminName, setEditAdminName] = useState('');
+  const [editAdminEmail, setEditAdminEmail] = useState('');
+
+  // Reset Password State
+  const [resettingAdmin, setResettingAdmin] = useState<User | null>(null);
+  const [resetAdminNewPass, setResetAdminNewPass] = useState('');
+  const [resetAdminConfirmPass, setResetAdminConfirmPass] = useState('');
+
+  // ----------------- Manual Question Entry State -----------------
+  const [manualCourseId, setManualCourseId] = useState<string>('');
+  const [manualWeek, setManualWeek] = useState<number>(1);
+  const [manualMode, setManualMode] = useState<'single' | 'batch'>('single');
+
+  // Single Question Entry Form
+  const [singleQText, setSingleQText] = useState('');
+  const [singleOptA, setSingleOptA] = useState('');
+  const [singleOptB, setSingleOptB] = useState('');
+  const [singleOptC, setSingleOptC] = useState('');
+  const [singleOptD, setSingleOptD] = useState('');
+  const [singleCorrectIndex, setSingleCorrectIndex] = useState<number | null>(null);
+
+  // Batch Question Entry Form
+  const [batchInputText, setBatchInputText] = useState('');
+  const [parsedBatchPreview, setParsedBatchPreview] = useState<ExtractedQuestionDraft[]>([]);
+
+  // Create New Test Bank Dialog
+  const [showNewBankModal, setShowNewBankModal] = useState(false);
+  const [newBankName, setNewBankName] = useState('');
+  const [newBankCode, setNewBankCode] = useState('');
+  const [newBankDesc, setNewBankDesc] = useState('');
+
+  // Course questions for manual view
+  const [manualCourseQuestions, setManualCourseQuestions] = useState<Question[]>([]);
 
   // Toast / alerts
   const [toastMessage, setToastMessage] = useState<string | null>(null);
@@ -90,7 +219,16 @@ export const AdminDashboard: React.FC<AdminDashboardProps> = ({
   const [mappedCount, setMappedCount] = useState<number>(0);
 
   // Extraction progress state
-  const [extractionProgress, setExtractionProgress] = useState<{ current: number; total: number; status: string }>({ current: 0, total: 0, status: '' });
+  const [extractionProgress, setExtractionProgress] = useState<{
+    current: number;
+    total: number;
+    status: string;
+    questionsDetected?: number;
+    weeksDetected?: number;
+    activeBatches?: number;
+    totalBatches?: number;
+    completedBatches?: number;
+  }>({ current: 0, total: 0, status: '' });
   const [extractionStats, setExtractionStats] = useState<HybridExtractionResult | null>(null);
   const [reviewFilter, setReviewFilter] = useState<'all' | 'verified' | 'needs_review'>('all');
 
@@ -106,6 +244,193 @@ export const AdminDashboard: React.FC<AdminDashboardProps> = ({
     }
   }, [activeTab]);
 
+  const refreshManualQuestions = (cId: string, wk?: number) => {
+    if (!cId) return;
+    const qs = getQuestions(cId, wk !== undefined ? wk : manualWeek, false);
+    setManualCourseQuestions(qs);
+  };
+
+  useEffect(() => {
+    if (activeTab === 'manual') {
+      const activeId = manualCourseId || courses[0]?.id || '';
+      if (!manualCourseId && activeId) setManualCourseId(activeId);
+      refreshManualQuestions(activeId, manualWeek);
+    }
+  }, [activeTab, manualCourseId, manualWeek, courses]);
+
+  const handleAddSingleQuestion = () => {
+    if (!manualCourseId) {
+      setErrorMessage('Please select or create a test bank first.');
+      return;
+    }
+    if (!singleQText.trim()) {
+      setErrorMessage('Question text is required.');
+      return;
+    }
+    if (!singleOptA.trim() || !singleOptB.trim()) {
+      setErrorMessage('At least Option A and Option B are required.');
+      return;
+    }
+    if (singleCorrectIndex === null) {
+      setErrorMessage('Please select the correct answer (A, B, C, or D).');
+      return;
+    }
+
+    const course = courses.find((c) => c.id === manualCourseId);
+    if (!course) return;
+
+    const existingQs = getQuestions(manualCourseId);
+    const newQuestion: Question = {
+      id: `q-manual-${manualCourseId}-${Date.now()}-${existingQs.length + 1}`,
+      courseId: manualCourseId,
+      weekNumber: manualWeek,
+      originalQuestionNumber: existingQs.length + 1,
+      questionText: singleQText.trim(),
+      options: [
+        singleOptA.trim(),
+        singleOptB.trim(),
+        singleOptC.trim() || 'Option C',
+        singleOptD.trim() || 'Option D',
+      ],
+      correctAnswerIndex: singleCorrectIndex,
+      answerSource: 'Manually Verified',
+      isApproved: true,
+      createdAt: new Date().toISOString(),
+    };
+
+    saveQuestions([newQuestion]);
+
+    const allWeeks = Array.from(new Set([...(course.weeks || [1]), manualWeek])).sort((a, b) => a - b);
+    saveCourse({
+      ...course,
+      weeks: allWeeks,
+      totalQuestions: existingQs.length + 1,
+    });
+
+    refreshCourses();
+    refreshManualQuestions(manualCourseId, manualWeek);
+
+    // Reset single question inputs for fast sequential entry
+    setSingleQText('');
+    setSingleOptA('');
+    setSingleOptB('');
+    setSingleOptC('');
+    setSingleOptD('');
+    setSingleCorrectIndex(null);
+
+    showToast(`Question added to Week ${manualWeek}!`);
+  };
+
+  const handleParseBatch = () => {
+    if (!batchInputText.trim()) {
+      setErrorMessage('Please paste structured question text to parse.');
+      return;
+    }
+    const drafts = parseBatchQuestionInput(batchInputText, manualWeek);
+    if (drafts.length === 0) {
+      setErrorMessage('Could not detect any questions matching the format. Expected: Q1. ... A. ... B. ... Answer: X');
+      return;
+    }
+    setParsedBatchPreview(drafts);
+    showToast(`Detected ${drafts.length} structured questions ready to save.`);
+  };
+
+  const handleSaveBatch = () => {
+    if (!manualCourseId) {
+      setErrorMessage('Please select or create a test bank first.');
+      return;
+    }
+    if (parsedBatchPreview.length === 0) {
+      setErrorMessage('No parsed questions to save.');
+      return;
+    }
+
+    const course = courses.find((c) => c.id === manualCourseId);
+    if (!course) return;
+
+    const existingQs = getQuestions(manualCourseId);
+    let startIdx = existingQs.length;
+
+    const newQuestions: Question[] = parsedBatchPreview.map((d, i) => ({
+      id: `q-manual-${manualCourseId}-${Date.now()}-${startIdx + i + 1}`,
+      courseId: manualCourseId,
+      weekNumber: manualWeek,
+      originalQuestionNumber: startIdx + i + 1,
+      questionText: d.questionText,
+      options: d.options,
+      correctAnswerIndex: d.correctAnswerIndex,
+      answerSource: 'Manually Verified' as const,
+      isApproved: d.correctAnswerIndex !== null,
+      createdAt: new Date().toISOString(),
+    }));
+
+    saveQuestions(newQuestions);
+
+    const allWeeks = Array.from(new Set([...(course.weeks || [1]), manualWeek])).sort((a, b) => a - b);
+    saveCourse({
+      ...course,
+      weeks: allWeeks,
+      totalQuestions: existingQs.length + newQuestions.length,
+    });
+
+    refreshCourses();
+    refreshManualQuestions(manualCourseId, manualWeek);
+    setBatchInputText('');
+    setParsedBatchPreview([]);
+    showToast(`Added ${newQuestions.length} questions to ${course.name} (Week ${manualWeek})!`);
+  };
+
+  const handleCreateNewBank = () => {
+    if (!newBankName.trim()) {
+      setErrorMessage('Test bank title is required.');
+      return;
+    }
+    const code = newBankCode.trim() || `TEST-${Math.floor(100 + Math.random() * 900)}`;
+    const newBank: Course = {
+      id: `course-${Date.now()}-${Math.random().toString(36).substring(2, 7)}`,
+      code,
+      name: newBankName.trim(),
+      description: newBankDesc.trim() || 'Custom Administrator Question Bank',
+      status: 'draft',
+      weeks: [1],
+      totalQuestions: 0,
+      createdAt: new Date().toISOString(),
+    };
+
+    saveCourse(newBank);
+    refreshCourses();
+    setManualCourseId(newBank.id);
+    setManualWeek(1);
+    setShowNewBankModal(false);
+    setNewBankName('');
+    setNewBankCode('');
+    setNewBankDesc('');
+    showToast(`Test Bank "${newBank.name}" created! Now add questions.`);
+  };
+
+  const handleDeleteManualQuestion = (questionId: string) => {
+    deleteQuestion(questionId);
+    const course = courses.find((c) => c.id === manualCourseId);
+    if (course) {
+      const remaining = getQuestions(manualCourseId);
+      saveCourse({
+        ...course,
+        totalQuestions: remaining.length,
+      });
+      refreshCourses();
+    }
+    refreshManualQuestions(manualCourseId, manualWeek);
+    showToast('Question deleted.');
+  };
+
+  const handleUpdateManualQuestion = (questionId: string, patch: Partial<Question>) => {
+    const q = manualCourseQuestions.find((item) => item.id === questionId);
+    if (q) {
+      updateQuestion({ ...q, ...patch });
+      refreshManualQuestions(manualCourseId, manualWeek);
+    }
+  };
+
   const pdfInputRef = useRef<HTMLInputElement>(null);
   const answerKeyDocRef = useRef<HTMLInputElement>(null);
 
@@ -119,6 +444,18 @@ export const AdminDashboard: React.FC<AdminDashboardProps> = ({
     setExtractionStats(null);
 
     try {
+      const courseId = `course-${Date.now()}`;
+      setExtractionProgress({ current: 0, total: 0, status: 'Storing PDF document...' });
+
+      // Upload actual binary PDF to Supabase Storage & local persistent IndexedDB
+      let storagePath = '';
+      try {
+        const storedMeta = await uploadPdfDocument(file, courseId, 1, 0);
+        storagePath = storedMeta.storagePath;
+      } catch (uploadErr) {
+        console.warn('PDF storage notice:', uploadErr);
+      }
+
       const buffer = await file.arrayBuffer();
       const supabase = getSupabaseClient();
 
@@ -127,8 +464,17 @@ export const AdminDashboard: React.FC<AdminDashboardProps> = ({
         buffer,
         supabase,
         file.name,
-        (currentPage, totalPages, status) => {
-          setExtractionProgress({ current: currentPage, total: totalPages, status });
+        (currentPage, totalPages, status, extra) => {
+          setExtractionProgress({
+            current: currentPage,
+            total: totalPages,
+            status,
+            questionsDetected: extra?.questionsDetected,
+            weeksDetected: extra?.weeksDetected,
+            activeBatches: extra?.activeBatches,
+            totalBatches: extra?.totalBatches,
+            completedBatches: extra?.completedBatches,
+          });
         }
       );
 
@@ -146,12 +492,14 @@ export const AdminDashboard: React.FC<AdminDashboardProps> = ({
       const autoCode = `TEST-${Math.floor(100 + Math.random() * 900)}`;
 
       const newCourse: Course = {
-        id: `course-${Date.now()}`,
+        id: courseId,
         code: autoCode,
         name: cleanTitle,
         description: `Imported from ${file.name}`,
         status: 'draft',
         sourcePdfName: file.name,
+        storagePath,
+        fileSizeBytes: file.size,
         weeks: result.weeksDetected,
         createdAt: new Date().toISOString(),
       };
@@ -439,6 +787,138 @@ export const AdminDashboard: React.FC<AdminDashboardProps> = ({
     }
   };
 
+  // ----------------- Admin Management Handlers -----------------
+  const refreshAdmins = () => {
+    setAdminUsers(getAdminUsers());
+  };
+
+  const handleCreateAdminSubmit = async (e: React.FormEvent) => {
+    e.preventDefault();
+    if (!newAdminName.trim()) {
+      setErrorMessage('Administrator name is required.');
+      return;
+    }
+    if (!newAdminEmail.trim() || !newAdminEmail.includes('@')) {
+      setErrorMessage('Valid administrator email address is required.');
+      return;
+    }
+    if (!newAdminPassword || newAdminPassword.length < 6) {
+      setErrorMessage('Password must be at least 6 characters.');
+      return;
+    }
+    if (newAdminPassword !== newAdminConfirm) {
+      setErrorMessage('Passwords do not match.');
+      return;
+    }
+
+    setAdminActionLoading(true);
+    setErrorMessage(null);
+    try {
+      const res = await createAdminAccount(newAdminName, newAdminEmail, newAdminPassword, newAdminConfirm);
+      if (res.success) {
+        showToast(`Administrator account "${newAdminName}" created successfully.`);
+        setShowCreateAdminModal(false);
+        setNewAdminName('');
+        setNewAdminEmail('');
+        setNewAdminPassword('');
+        setNewAdminConfirm('');
+        refreshAdmins();
+      } else {
+        setErrorMessage(res.error || 'Failed to create administrator account.');
+      }
+    } catch (err: any) {
+      setErrorMessage(err?.message || 'Error creating administrator account.');
+    } finally {
+      setAdminActionLoading(false);
+    }
+  };
+
+  const handleEditAdminSubmit = async (e: React.FormEvent) => {
+    e.preventDefault();
+    if (!editingAdmin) return;
+    if (!editAdminName.trim()) {
+      setErrorMessage('Administrator name is required.');
+      return;
+    }
+    if (!editAdminEmail.trim() || !editAdminEmail.includes('@')) {
+      setErrorMessage('Valid administrator email is required.');
+      return;
+    }
+
+    setAdminActionLoading(true);
+    setErrorMessage(null);
+    try {
+      const res = await updateAdminProfile(editingAdmin.id, editAdminName, editAdminEmail);
+      if (res.success) {
+        showToast('Administrator profile updated successfully.');
+        setEditingAdmin(null);
+        refreshAdmins();
+      } else {
+        setErrorMessage(res.error || 'Failed to update administrator profile.');
+      }
+    } catch (err: any) {
+      setErrorMessage(err?.message || 'Error updating administrator.');
+    } finally {
+      setAdminActionLoading(false);
+    }
+  };
+
+  const handleToggleAdminStatus = async (targetAdmin: User) => {
+    if (targetAdmin.id === currentUser.id) {
+      setErrorMessage('You cannot deactivate your own administrator account.');
+      return;
+    }
+    const newStatus = targetAdmin.status === 'deactivated' ? 'active' : 'deactivated';
+    const confirmMsg = newStatus === 'deactivated'
+      ? `Are you sure you want to deactivate administrator "${targetAdmin.name}"? They will lose dashboard access.`
+      : `Reactivate administrator "${targetAdmin.name}"?`;
+    if (!window.confirm(confirmMsg)) return;
+
+    try {
+      const res = await toggleAdminStatus(targetAdmin.id, newStatus);
+      if (res.success) {
+        showToast(`Administrator ${newStatus === 'deactivated' ? 'deactivated' : 'reactivated'}.`);
+        refreshAdmins();
+      } else {
+        setErrorMessage(res.error || 'Could not update administrator status.');
+      }
+    } catch (err: any) {
+      setErrorMessage(err?.message || 'Error updating status.');
+    }
+  };
+
+  const handleResetPasswordSubmit = async (e: React.FormEvent) => {
+    e.preventDefault();
+    if (!resettingAdmin) return;
+    if (!resetAdminNewPass || resetAdminNewPass.length < 6) {
+      setErrorMessage('New password must be at least 6 characters.');
+      return;
+    }
+    if (resetAdminNewPass !== resetAdminConfirmPass) {
+      setErrorMessage('Passwords do not match.');
+      return;
+    }
+
+    setAdminActionLoading(true);
+    setErrorMessage(null);
+    try {
+      const res = await resetAdminPassword(resettingAdmin.id, resetAdminNewPass);
+      if (res.success) {
+        showToast(`Password for "${resettingAdmin.name}" reset successfully.`);
+        setResettingAdmin(null);
+        setResetAdminNewPass('');
+        setResetAdminConfirmPass('');
+        refreshAdmins();
+      } else {
+        setErrorMessage(res.error || 'Failed to reset password.');
+      }
+    } catch (err: any) {
+      setErrorMessage(err?.message || 'Error resetting password.');
+    } finally {
+      setAdminActionLoading(false);
+    }
+  };
+
   // Filter courses
   const filteredCourses = courses.filter((c) => {
     if (statusFilter !== 'all' && c.status !== statusFilter) return false;
@@ -489,10 +969,10 @@ export const AdminDashboard: React.FC<AdminDashboardProps> = ({
       </header>
 
       {/* Admin Tab Switcher */}
-      <div className="bg-white border-b border-[#DCEAF5] px-6 py-2 flex items-center gap-2">
+      <div className="bg-white border-b border-[#DCEAF5] px-6 py-2 flex items-center gap-2 overflow-x-auto">
         <button
           onClick={() => setActiveTab('tests')}
-          className={`px-4 py-2 rounded-xl text-xs font-semibold tracking-wider uppercase transition-all ${
+          className={`px-4 py-2 rounded-xl text-xs font-semibold tracking-wider uppercase transition-all whitespace-nowrap ${
             activeTab === 'tests'
               ? 'bg-[#0284C7] text-white shadow-sm'
               : 'text-[#64748B] hover:bg-[#EFF8FF] hover:text-[#0F172A]'
@@ -506,24 +986,53 @@ export const AdminDashboard: React.FC<AdminDashboardProps> = ({
             setUploadStep('upload_pdf');
             setErrorMessage(null);
           }}
-          className={`px-4 py-2 rounded-xl text-xs font-semibold tracking-wider uppercase transition-all flex items-center gap-1.5 ${
+          className={`px-4 py-2 rounded-xl text-xs font-semibold tracking-wider uppercase transition-all flex items-center gap-1.5 whitespace-nowrap ${
             activeTab === 'upload'
               ? 'bg-[#0284C7] text-white shadow-sm'
               : 'text-[#64748B] hover:bg-[#EFF8FF] hover:text-[#0F172A]'
           }`}
         >
+          <Upload className="w-3.5 h-3.5" />
+          <span>Upload PDF</span>
+        </button>
+        <button
+          onClick={() => {
+            setActiveTab('manual');
+            setErrorMessage(null);
+          }}
+          className={`px-4 py-2 rounded-xl text-xs font-semibold tracking-wider uppercase transition-all flex items-center gap-1.5 whitespace-nowrap ${
+            activeTab === 'manual'
+              ? 'bg-[#0284C7] text-white shadow-sm'
+              : 'text-[#64748B] hover:bg-[#EFF8FF] hover:text-[#0F172A]'
+          }`}
+        >
           <Plus className="w-3.5 h-3.5" />
-          <span>Upload & Ingest Test</span>
+          <span>Manual Entry</span>
         </button>
         <button
           onClick={() => setActiveTab('attempts')}
-          className={`px-4 py-2 rounded-xl text-xs font-semibold tracking-wider uppercase transition-all ${
+          className={`px-4 py-2 rounded-xl text-xs font-semibold tracking-wider uppercase transition-all whitespace-nowrap ${
             activeTab === 'attempts'
               ? 'bg-[#0284C7] text-white shadow-sm'
               : 'text-[#64748B] hover:bg-[#EFF8FF] hover:text-[#0F172A]'
           }`}
         >
           Recent Attempts
+        </button>
+        <button
+          onClick={() => {
+            setActiveTab('admins');
+            setAdminUsers(getAdminUsers());
+            setErrorMessage(null);
+          }}
+          className={`px-4 py-2 rounded-xl text-xs font-semibold tracking-wider uppercase transition-all flex items-center gap-1.5 whitespace-nowrap ${
+            activeTab === 'admins'
+              ? 'bg-[#0284C7] text-white shadow-sm'
+              : 'text-[#64748B] hover:bg-[#EFF8FF] hover:text-[#0F172A]'
+          }`}
+        >
+          <Shield className="w-3.5 h-3.5" />
+          <span>Admin Management</span>
         </button>
       </div>
 
@@ -696,30 +1205,63 @@ export const AdminDashboard: React.FC<AdminDashboardProps> = ({
                 </div>
 
                 {isProcessingPdf ? (
-                  /* Progress Indicator */
-                  <div className="p-8 rounded-3xl bg-[#F8FBFF] border border-[#DCEAF5] space-y-4">
+                  /* Batch Progress Indicator */
+                  <div className="p-8 rounded-3xl bg-[#F8FBFF] border border-[#DCEAF5] space-y-5 text-center">
                     <div className="p-4 rounded-2xl bg-white border border-[#DCEAF5] text-[#0284C7] mx-auto w-fit shadow-sm">
                       <Layers className="w-8 h-8 animate-pulse" />
                     </div>
-                    <p className="text-sm font-semibold text-[#0F172A]">
-                      {extractionProgress.status || 'Reading document...'}
-                    </p>
+                    <div>
+                      <p className="text-sm font-semibold text-[#0F172A]">
+                        {extractionProgress.status || 'Analyzing document...'}
+                      </p>
+                      <p className="text-xs text-[#64748B] font-mono mt-0.5">
+                        {uploadedPdfName}
+                      </p>
+                    </div>
+
+                    {/* Dynamic Batch Progress Metrics Grid */}
+                    <div className="grid grid-cols-2 sm:grid-cols-4 gap-3 max-w-lg mx-auto text-left">
+                      <div className="p-3 rounded-2xl bg-white border border-[#DCEAF5] shadow-xs">
+                        <div className="text-[10px] uppercase font-mono tracking-wider text-[#64748B]">Pages Processed</div>
+                        <div className="text-base font-bold font-mono text-[#0F172A] mt-0.5">
+                          {extractionProgress.current} <span className="text-xs font-normal text-[#64748B]">/ {extractionProgress.total || 91}</span>
+                        </div>
+                      </div>
+                      <div className="p-3 rounded-2xl bg-white border border-[#DCEAF5] shadow-xs">
+                        <div className="text-[10px] uppercase font-mono tracking-wider text-[#64748B]">Questions Detected</div>
+                        <div className="text-base font-bold font-mono text-[#0284C7] mt-0.5">
+                          {extractionProgress.questionsDetected || 0}
+                        </div>
+                      </div>
+                      <div className="p-3 rounded-2xl bg-white border border-[#DCEAF5] shadow-xs">
+                        <div className="text-[10px] uppercase font-mono tracking-wider text-[#64748B]">Weeks Detected</div>
+                        <div className="text-base font-bold font-mono text-[#0EA5E9] mt-0.5">
+                          {extractionProgress.weeksDetected || 0}
+                        </div>
+                      </div>
+                      <div className="p-3 rounded-2xl bg-white border border-[#DCEAF5] shadow-xs">
+                        <div className="text-[10px] uppercase font-mono tracking-wider text-[#64748B]">Active Batches</div>
+                        <div className="text-base font-bold font-mono text-[#10B981] mt-0.5 flex items-center gap-1.5">
+                          <span className="w-2 h-2 rounded-full bg-[#10B981] animate-ping inline-block" />
+                          {extractionProgress.activeBatches || (extractionProgress.current > 0 && extractionProgress.current < (extractionProgress.total || 91) ? 3 : 0)}
+                        </div>
+                      </div>
+                    </div>
+
                     {extractionProgress.total > 0 && (
-                      <div className="space-y-2 max-w-md mx-auto">
-                        <div className="w-full h-2 bg-[#DCEAF5] rounded-full overflow-hidden">
+                      <div className="space-y-1.5 max-w-lg mx-auto">
+                        <div className="w-full h-2.5 bg-[#DCEAF5] rounded-full overflow-hidden">
                           <div
-                            className="h-full bg-[#0284C7] rounded-full transition-all duration-300 ease-out"
-                            style={{ width: `${Math.round((extractionProgress.current / extractionProgress.total) * 100)}%` }}
+                            className="h-full bg-gradient-to-r from-[#0284C7] to-[#38BDF8] rounded-full transition-all duration-300 ease-out"
+                            style={{ width: `${Math.min(100, Math.round((extractionProgress.current / extractionProgress.total) * 100))}%` }}
                           />
                         </div>
-                        <p className="text-[11px] text-[#64748B] font-mono">
-                          Page {extractionProgress.current} of {extractionProgress.total}
-                        </p>
+                        <div className="flex justify-between text-[11px] text-[#64748B] font-mono">
+                          <span>Batch Parallel Pipeline (Concurrency: 3)</span>
+                          <span>{Math.min(100, Math.round((extractionProgress.current / extractionProgress.total) * 100))}%</span>
+                        </div>
                       </div>
                     )}
-                    <p className="text-xs text-[#64748B] font-mono">
-                      {uploadedPdfName}
-                    </p>
                   </div>
                 ) : (
                   /* Drop Zone */
@@ -1221,6 +1763,435 @@ export const AdminDashboard: React.FC<AdminDashboardProps> = ({
           </div>
         )}
 
+        {/* ======================= TAB: MANUAL & BATCH QUESTION ENTRY ======================= */}
+        {activeTab === 'manual' && (
+          <div className="space-y-6">
+            {/* Top Bar: Test Bank & Week Selection */}
+            <div className="p-6 rounded-3xl bg-white border border-[#DCEAF5] shadow-sm space-y-4">
+              <div className="flex flex-col md:flex-row items-start md:items-center justify-between gap-4">
+                <div>
+                  <div className="text-[11px] font-mono tracking-[0.25em] text-[#0284C7] uppercase font-semibold">
+                    METHOD 2 · MANUAL & BATCH QUESTION CREATION
+                  </div>
+                  <h2 className="font-serif text-2xl text-[#0F172A] uppercase tracking-tight mt-1">
+                    Question Bank Authoring
+                  </h2>
+                </div>
+
+                <div className="flex items-center gap-2">
+                  <button
+                    type="button"
+                    onClick={() => setShowNewBankModal(true)}
+                    className="px-4 py-2 rounded-xl bg-white border border-[#38BDF8] text-[#0284C7] hover:bg-sky-50 text-xs font-semibold uppercase tracking-wider flex items-center gap-1.5 transition-all shadow-sm"
+                  >
+                    <Plus className="w-3.5 h-3.5" />
+                    <span>Create New Test Bank</span>
+                  </button>
+                </div>
+              </div>
+
+              {/* Course & Week Selectors */}
+              <div className="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-3 gap-4 pt-2 border-t border-[#DCEAF5]">
+                <div className="space-y-1.5">
+                  <label className="text-[11px] font-mono font-semibold uppercase text-[#64748B]">
+                    Target Test Bank
+                  </label>
+                  <select
+                    value={manualCourseId}
+                    onChange={(e) => {
+                      setManualCourseId(e.target.value);
+                      refreshManualQuestions(e.target.value, manualWeek);
+                    }}
+                    className="w-full px-3.5 py-2.5 rounded-xl bg-[#F8FBFF] border border-[#DCEAF5] text-xs font-semibold text-[#0F172A] outline-none focus:border-[#38BDF8]"
+                  >
+                    {courses.map((c) => (
+                      <option key={c.id} value={c.id}>
+                        {c.code} · {c.name} ({c.status.toUpperCase()})
+                      </option>
+                    ))}
+                  </select>
+                </div>
+
+                <div className="space-y-1.5 lg:col-span-2">
+                  <div className="flex items-center justify-between">
+                    <label className="text-[11px] font-mono font-semibold uppercase text-[#64748B]">
+                      Active Week / Module
+                    </label>
+                    <span className="text-[11px] font-mono text-[#0284C7]">
+                      {manualCourseQuestions.length} Questions in Week {manualWeek}
+                    </span>
+                  </div>
+                  <div className="flex flex-wrap items-center gap-1.5">
+                    {[1, 2, 3, 4, 5, 6, 7, 8, 9, 10, 11, 12].map((wk) => {
+                      const isSelected = manualWeek === wk;
+                      return (
+                        <button
+                          key={wk}
+                          type="button"
+                          onClick={() => {
+                            setManualWeek(wk);
+                            refreshManualQuestions(manualCourseId, wk);
+                          }}
+                          className={`px-3 py-1.5 rounded-lg text-xs font-mono font-bold transition-all ${
+                            isSelected
+                              ? 'bg-[#0284C7] text-white shadow-sm'
+                              : 'bg-[#F8FBFF] text-[#64748B] hover:text-[#0F172A] border border-[#DCEAF5]'
+                          }`}
+                        >
+                          Week {wk}
+                        </button>
+                      );
+                    })}
+                  </div>
+                </div>
+              </div>
+
+              {/* Mode Switcher */}
+              <div className="flex items-center gap-2 pt-2 border-t border-[#DCEAF5]">
+                <button
+                  type="button"
+                  onClick={() => setManualMode('single')}
+                  className={`px-4 py-2 rounded-xl text-xs font-semibold uppercase tracking-wider transition-all ${
+                    manualMode === 'single'
+                      ? 'bg-[#0284C7] text-white shadow-sm'
+                      : 'bg-[#F8FBFF] text-[#64748B] hover:text-[#0F172A] border border-[#DCEAF5]'
+                  }`}
+                >
+                  Single Question Entry
+                </button>
+                <button
+                  type="button"
+                  onClick={() => setManualMode('batch')}
+                  className={`px-4 py-2 rounded-xl text-xs font-semibold uppercase tracking-wider transition-all ${
+                    manualMode === 'batch'
+                      ? 'bg-[#0284C7] text-white shadow-sm'
+                      : 'bg-[#F8FBFF] text-[#64748B] hover:text-[#0F172A] border border-[#DCEAF5]'
+                  }`}
+                >
+                  Batch Question Entry (Paste)
+                </button>
+              </div>
+            </div>
+
+            {/* Mode 1: Single Question Entry Form */}
+            {manualMode === 'single' && (
+              <div className="p-8 rounded-3xl bg-white border border-[#DCEAF5] shadow-sm space-y-6">
+                <div>
+                  <div className="text-[11px] font-mono tracking-[0.25em] text-[#0284C7] uppercase font-semibold">
+                    WEEK {manualWeek} · ADD QUESTION
+                  </div>
+                  <h3 className="font-serif text-lg text-[#0F172A] uppercase tracking-tight mt-0.5">
+                    Repeatable Question Editor
+                  </h3>
+                </div>
+
+                <div className="space-y-4">
+                  <div className="space-y-1.5">
+                    <label className="text-[11px] font-mono font-semibold uppercase text-[#64748B]">
+                      Question Text
+                    </label>
+                    <textarea
+                      rows={3}
+                      value={singleQText}
+                      onChange={(e) => setSingleQText(e.target.value)}
+                      placeholder="Enter question text exactly as desired..."
+                      className="w-full p-3.5 rounded-2xl bg-[#F8FBFF] border border-[#DCEAF5] text-sm text-[#0F172A] font-medium outline-none focus:border-[#38BDF8] resize-none"
+                    />
+                  </div>
+
+                  <div className="grid grid-cols-1 sm:grid-cols-2 gap-4">
+                    {[
+                      { label: 'Option A', val: singleOptA, set: setSingleOptA, idx: 0 },
+                      { label: 'Option B', val: singleOptB, set: setSingleOptB, idx: 1 },
+                      { label: 'Option C', val: singleOptC, set: setSingleOptC, idx: 2 },
+                      { label: 'Option D', val: singleOptD, set: setSingleOptD, idx: 3 },
+                    ].map((opt) => (
+                      <div key={opt.label} className="space-y-1.5">
+                        <label className="text-[11px] font-mono font-semibold uppercase text-[#64748B]">
+                          {opt.label}
+                        </label>
+                        <input
+                          type="text"
+                          value={opt.val}
+                          onChange={(e) => opt.set(e.target.value)}
+                          placeholder={`Enter ${opt.label.toLowerCase()} text`}
+                          className="w-full px-3.5 py-2.5 rounded-xl bg-[#F8FBFF] border border-[#DCEAF5] text-xs text-[#0F172A] outline-none focus:border-[#38BDF8]"
+                        />
+                      </div>
+                    ))}
+                  </div>
+
+                  {/* Correct Answer Selection */}
+                  <div className="p-4 rounded-2xl bg-[#F8FBFF] border border-[#DCEAF5] flex flex-col sm:flex-row sm:items-center justify-between gap-3">
+                    <div>
+                      <span className="text-xs font-semibold text-[#0F172A] uppercase tracking-wider block">
+                        Correct Answer (Authoritative)
+                      </span>
+                      <span className="text-[11px] text-[#64748B] font-mono">
+                        Select the exact verified answer for this question
+                      </span>
+                    </div>
+
+                    <div className="flex items-center gap-2">
+                      {[0, 1, 2, 3].map((optIdx) => {
+                        const letter = String.fromCharCode(65 + optIdx);
+                        const isSelected = singleCorrectIndex === optIdx;
+                        return (
+                          <button
+                            key={letter}
+                            type="button"
+                            onClick={() => setSingleCorrectIndex(optIdx)}
+                            className={`w-9 h-9 rounded-xl font-mono font-bold text-xs transition-all ${
+                              isSelected
+                                ? 'bg-[#0284C7] text-white shadow-md scale-105'
+                                : 'bg-white border border-[#DCEAF5] text-[#64748B] hover:border-sky-300'
+                            }`}
+                          >
+                            {letter}
+                          </button>
+                        );
+                      })}
+                    </div>
+                  </div>
+
+                  <div className="flex justify-end pt-2">
+                    <button
+                      type="button"
+                      onClick={handleAddSingleQuestion}
+                      className="px-6 py-3 rounded-full bg-[#0284C7] hover:bg-[#0369a1] text-white text-xs font-bold uppercase tracking-wider transition-all flex items-center gap-2 shadow-sm"
+                    >
+                      <Plus className="w-4 h-4" />
+                      <span>Add Question to Week {manualWeek}</span>
+                    </button>
+                  </div>
+                </div>
+              </div>
+            )}
+
+            {/* Mode 2: Batch Question Entry Form */}
+            {manualMode === 'batch' && (
+              <div className="p-8 rounded-3xl bg-white border border-[#DCEAF5] shadow-sm space-y-6">
+                <div>
+                  <div className="text-[11px] font-mono tracking-[0.25em] text-[#0284C7] uppercase font-semibold">
+                    WEEK {manualWeek} · BATCH TEXT IMPORT
+                  </div>
+                  <h3 className="font-serif text-lg text-[#0F172A] uppercase tracking-tight mt-0.5">
+                    Paste Structured Questions
+                  </h3>
+                  <p className="text-xs text-[#64748B] font-mono mt-1">
+                    Paste multiple questions using standard Q1, Options A-D, and Answer: X format
+                  </p>
+                </div>
+
+                <div className="space-y-4">
+                  <textarea
+                    rows={12}
+                    value={batchInputText}
+                    onChange={(e) => setBatchInputText(e.target.value)}
+                    placeholder={`Q1. Which sensor can detect gases like LPG, CH4, and CO?\nA. DHT22\nB. MQ-5\nC. HC-SR04\nD. PIR\nAnswer: B\n\nQ2. Which modulation scheme does Zigbee use for the 2.4 GHz band?\nA. BPSK\nB. QPSK\nC. OQPSK\nD. FSK\nAnswer: C`}
+                    className="w-full p-4 rounded-2xl bg-[#F8FBFF] border border-[#DCEAF5] text-xs font-mono text-[#0F172A] outline-none focus:border-[#38BDF8] resize-none"
+                  />
+
+                  <div className="flex items-center justify-between pt-2">
+                    <button
+                      type="button"
+                      onClick={handleParseBatch}
+                      className="px-5 py-2.5 rounded-full bg-slate-100 hover:bg-slate-200 text-slate-800 text-xs font-semibold uppercase tracking-wider transition-all"
+                    >
+                      Parse Questions
+                    </button>
+
+                    {parsedBatchPreview.length > 0 && (
+                      <button
+                        type="button"
+                        onClick={handleSaveBatch}
+                        className="px-6 py-2.5 rounded-full bg-[#0284C7] hover:bg-[#0369a1] text-white text-xs font-bold uppercase tracking-wider transition-all flex items-center gap-1.5 shadow-sm"
+                      >
+                        <Check className="w-4 h-4" />
+                        <span>Save {parsedBatchPreview.length} Questions into Week {manualWeek}</span>
+                      </button>
+                    )}
+                  </div>
+
+                  {/* Parsed Preview Table */}
+                  {parsedBatchPreview.length > 0 && (
+                    <div className="p-4 rounded-2xl bg-[#EFF8FF] border border-[#DCEAF5] space-y-3">
+                      <span className="text-xs font-bold uppercase tracking-wider text-[#0284C7] font-mono">
+                        Parsed Preview ({parsedBatchPreview.length} questions detected)
+                      </span>
+                      <div className="space-y-2 max-h-64 overflow-y-auto pr-1">
+                        {parsedBatchPreview.map((p, idx) => (
+                          <div key={p.id} className="p-3 rounded-xl bg-white border border-[#DCEAF5] text-xs space-y-1">
+                            <div className="flex items-center justify-between">
+                              <span className="font-bold text-[#0F172A]">Q{idx + 1}. {p.questionText}</span>
+                              <span className="px-2 py-0.5 rounded bg-emerald-50 text-emerald-700 text-[10px] font-mono font-bold">
+                                Ans: {p.correctAnswerIndex !== null ? String.fromCharCode(65 + p.correctAnswerIndex) : 'None'}
+                              </span>
+                            </div>
+                            <div className="grid grid-cols-2 gap-1 text-[11px] text-[#64748B]">
+                              <span>A: {p.options[0]}</span>
+                              <span>B: {p.options[1]}</span>
+                              <span>C: {p.options[2]}</span>
+                              <span>D: {p.options[3]}</span>
+                            </div>
+                          </div>
+                        ))}
+                      </div>
+                    </div>
+                  )}
+                </div>
+              </div>
+            )}
+
+            {/* Current Test Bank Questions List */}
+            <div className="space-y-4">
+              <div className="flex items-center justify-between pb-2 border-b border-[#DCEAF5]">
+                <div>
+                  <h3 className="font-serif text-lg text-[#0F172A] uppercase tracking-tight">
+                    Questions in Week {manualWeek} ({manualCourseQuestions.length})
+                  </h3>
+                  <p className="text-xs text-[#64748B] font-mono">
+                    ALL QUESTIONS SAVED IN THIS MODULE ARE IMMEDIATELY ACCESSIBLE
+                  </p>
+                </div>
+              </div>
+
+              {manualCourseQuestions.length === 0 ? (
+                <div className="p-12 text-center rounded-3xl bg-white border border-[#DCEAF5] text-[#64748B] text-xs font-mono">
+                  No questions added to Week {manualWeek} yet. Use Single or Batch entry above to add questions.
+                </div>
+              ) : (
+                <div className="space-y-3">
+                  {manualCourseQuestions.map((q, idx) => (
+                    <div
+                      key={q.id}
+                      className="p-5 rounded-3xl bg-white border border-[#DCEAF5] shadow-sm space-y-3"
+                    >
+                      <div className="flex items-start justify-between gap-3">
+                        <div className="flex items-center gap-2">
+                          <span className="w-7 h-7 rounded-full bg-[#EFF8FF] border border-[#DCEAF5] text-xs font-mono font-bold text-[#0284C7] flex items-center justify-center">
+                            {idx + 1}
+                          </span>
+                          <span className="px-2.5 py-0.5 rounded-full bg-[#EFF8FF] border border-[#DCEAF5] text-[10px] font-mono text-[#0284C7] font-semibold">
+                            WEEK {q.weekNumber}
+                          </span>
+                          <span className="px-2.5 py-0.5 rounded-full bg-emerald-50 border border-emerald-200 text-[10px] font-mono text-emerald-700 font-semibold">
+                            Correct: {q.correctAnswerIndex !== null ? String.fromCharCode(65 + q.correctAnswerIndex) : 'None'}
+                          </span>
+                        </div>
+
+                        <button
+                          type="button"
+                          onClick={() => handleDeleteManualQuestion(q.id)}
+                          className="p-1.5 rounded-lg text-rose-400 hover:text-rose-600 hover:bg-rose-50 transition-colors"
+                          title="Delete Question"
+                        >
+                          <Trash2 className="w-4 h-4" />
+                        </button>
+                      </div>
+
+                      <div className="text-sm font-medium text-[#0F172A]">
+                        {q.questionText}
+                      </div>
+
+                      <div className="grid grid-cols-1 sm:grid-cols-2 gap-2">
+                        {q.options.map((opt, optIdx) => {
+                          const isCorrect = q.correctAnswerIndex === optIdx;
+                          const letter = String.fromCharCode(65 + optIdx);
+                          return (
+                            <div
+                              key={optIdx}
+                              onClick={() => handleUpdateManualQuestion(q.id, { correctAnswerIndex: optIdx, answerSource: 'Manually Verified', isApproved: true })}
+                              className={`p-2.5 rounded-xl border flex items-center gap-2.5 cursor-pointer text-xs transition-all ${
+                                isCorrect
+                                  ? 'bg-[#EFF8FF] border-[#0284C7] text-[#0284C7] font-semibold shadow-sm'
+                                  : 'bg-white border-[#DCEAF5] text-[#64748B] hover:border-sky-300'
+                              }`}
+                            >
+                              <span className={`w-5 h-5 rounded-full flex items-center justify-center text-[10px] font-mono font-bold ${
+                                isCorrect ? 'bg-[#0284C7] text-white' : 'bg-[#F8FBFF] border border-[#DCEAF5]'
+                              }`}>
+                                {letter}
+                              </span>
+                              <span>{opt}</span>
+                            </div>
+                          );
+                        })}
+                      </div>
+                    </div>
+                  ))}
+                </div>
+              )}
+            </div>
+
+            {/* Modal: Create New Test Bank */}
+            {showNewBankModal && (
+              <div className="fixed inset-0 z-50 bg-slate-900/40 backdrop-blur-sm flex items-center justify-center p-4">
+                <div className="max-w-md w-full p-6 rounded-3xl bg-white border border-[#DCEAF5] shadow-2xl space-y-4">
+                  <div className="flex items-center justify-between">
+                    <h3 className="font-serif text-lg text-[#0F172A] uppercase tracking-tight font-bold">
+                      Create New Test Bank
+                    </h3>
+                    <button onClick={() => setShowNewBankModal(false)} className="text-slate-400 hover:text-slate-700">
+                      <X className="w-5 h-5" />
+                    </button>
+                  </div>
+
+                  <div className="space-y-3">
+                    <div className="space-y-1">
+                      <label className="text-[11px] font-mono font-semibold uppercase text-[#64748B]">Title / Name</label>
+                      <input
+                        type="text"
+                        value={newBankName}
+                        onChange={(e) => setNewBankName(e.target.value)}
+                        placeholder="e.g. Advanced Embedded Systems"
+                        className="w-full px-3.5 py-2.5 rounded-xl bg-[#F8FBFF] border border-[#DCEAF5] text-xs text-[#0F172A] outline-none focus:border-[#38BDF8]"
+                      />
+                    </div>
+                    <div className="space-y-1">
+                      <label className="text-[11px] font-mono font-semibold uppercase text-[#64748B]">Course Code (Optional)</label>
+                      <input
+                        type="text"
+                        value={newBankCode}
+                        onChange={(e) => setNewBankCode(e.target.value)}
+                        placeholder="e.g. CS-804"
+                        className="w-full px-3.5 py-2.5 rounded-xl bg-[#F8FBFF] border border-[#DCEAF5] text-xs text-[#0F172A] outline-none focus:border-[#38BDF8]"
+                      />
+                    </div>
+                    <div className="space-y-1">
+                      <label className="text-[11px] font-mono font-semibold uppercase text-[#64748B]">Description</label>
+                      <textarea
+                        rows={2}
+                        value={newBankDesc}
+                        onChange={(e) => setNewBankDesc(e.target.value)}
+                        placeholder="Brief overview of modules and topics..."
+                        className="w-full p-3 rounded-xl bg-[#F8FBFF] border border-[#DCEAF5] text-xs text-[#0F172A] outline-none focus:border-[#38BDF8] resize-none"
+                      />
+                    </div>
+                  </div>
+
+                  <div className="flex justify-end gap-2 pt-2 border-t border-[#DCEAF5]">
+                    <button
+                      type="button"
+                      onClick={() => setShowNewBankModal(false)}
+                      className="px-4 py-2 rounded-xl border border-[#DCEAF5] text-xs font-semibold uppercase text-[#64748B]"
+                    >
+                      Cancel
+                    </button>
+                    <button
+                      type="button"
+                      onClick={handleCreateNewBank}
+                      className="px-5 py-2 rounded-xl bg-[#0284C7] text-white text-xs font-bold uppercase shadow-sm"
+                    >
+                      Create Bank
+                    </button>
+                  </div>
+                </div>
+              </div>
+            )}
+          </div>
+        )}
+
         {/* ======================= TAB 3: RECENT ATTEMPTS (COMPACT MONITOR) ======================= */}
         {activeTab === 'attempts' && (
           <div className="max-w-4xl mx-auto space-y-6">
@@ -1293,6 +2264,377 @@ export const AdminDashboard: React.FC<AdminDashboardProps> = ({
                   No student test attempts recorded yet.
                 </div>
               )}
+            </div>
+          </div>
+        )}
+
+        {/* ===================== TAB: ADMIN MANAGEMENT ===================== */}
+        {activeTab === 'admins' && (
+          <div className="space-y-6">
+            {/* Top Stats & Actions Bar */}
+            <div className="flex flex-col sm:flex-row items-start sm:items-center justify-between gap-4 p-6 rounded-3xl bg-white border border-[#DCEAF5] shadow-[0_4px_24px_rgba(2,132,199,0.04)]">
+              <div>
+                <div className="flex items-center gap-2">
+                  <Shield className="w-5 h-5 text-[#0284C7]" />
+                  <h2 className="font-serif text-xl text-[#0F172A] font-bold">
+                    Admin Management
+                  </h2>
+                </div>
+                <p className="text-xs text-[#64748B] mt-1 font-mono">
+                  AUTHORITATIVE ADMINISTRATOR ACCOUNTS &amp; ACCESS CONTROL ({adminUsers.length} ADMINISTRATORS)
+                </p>
+              </div>
+
+              <button
+                onClick={() => {
+                  setShowCreateAdminModal(true);
+                  setErrorMessage(null);
+                }}
+                className="px-5 py-2.5 rounded-full bg-[#0284C7] hover:bg-[#0369a1] text-white text-xs font-bold uppercase tracking-wider transition-all shadow-[0_4px_16px_rgba(2,132,199,0.25)] flex items-center gap-2"
+              >
+                <UserPlus className="w-4 h-4" />
+                <span>Create Admin</span>
+              </button>
+            </div>
+
+            {/* Administrators Table */}
+            <div className="rounded-3xl bg-white border border-[#DCEAF5] overflow-hidden shadow-[0_4px_24px_rgba(2,132,199,0.04)]">
+              <div className="px-6 py-4 border-b border-[#DCEAF5] bg-[#EFF8FF]/40 flex items-center justify-between">
+                <span className="text-xs font-bold uppercase tracking-wider text-[#0F172A] font-mono">
+                  Registered Administrators
+                </span>
+                <span className="text-xs text-[#64748B] font-mono">
+                  {adminUsers.filter((u) => u.status !== 'deactivated').length} Active
+                </span>
+              </div>
+
+              <div className="divide-y divide-[#DCEAF5]">
+                {adminUsers.map((admin) => {
+                  const isCurrent = admin.id === currentUser.id;
+                  const isDeactivated = admin.status === 'deactivated';
+
+                  return (
+                    <div
+                      key={admin.id}
+                      className={`p-6 flex flex-col sm:flex-row items-start sm:items-center justify-between gap-4 transition-colors ${
+                        isDeactivated ? 'bg-slate-50/70 opacity-70' : 'hover:bg-[#F8FBFF]'
+                      }`}
+                    >
+                      <div className="space-y-1">
+                        <div className="flex items-center gap-2">
+                          <span className="font-semibold text-sm text-[#0F172A]">
+                            {admin.name}
+                          </span>
+                          {isCurrent && (
+                            <span className="px-2 py-0.5 rounded-full bg-sky-100 text-[#0284C7] text-[10px] font-bold font-mono">
+                              YOU
+                            </span>
+                          )}
+                          <span
+                            className={`px-2 py-0.5 rounded-full text-[10px] font-bold font-mono uppercase ${
+                              isDeactivated
+                                ? 'bg-rose-100 text-rose-700'
+                                : 'bg-emerald-100 text-emerald-700'
+                            }`}
+                          >
+                            {isDeactivated ? 'Deactivated' : 'Active'}
+                          </span>
+                        </div>
+                        <div className="text-xs font-mono text-[#64748B] flex items-center gap-2">
+                          <span>{admin.email || 'No email assigned'}</span>
+                          <span>·</span>
+                          <span>Created {new Date(admin.createdAt).toLocaleDateString()}</span>
+                        </div>
+                      </div>
+
+                      {/* Action buttons */}
+                      <div className="flex items-center gap-2 self-end sm:self-center">
+                        <button
+                          onClick={() => {
+                            setEditingAdmin(admin);
+                            setEditAdminName(admin.name);
+                            setEditAdminEmail(admin.email || '');
+                            setErrorMessage(null);
+                          }}
+                          className="px-3 py-1.5 rounded-lg border border-[#DCEAF5] hover:border-[#38BDF8] hover:bg-[#EFF8FF] text-[#0F172A] text-xs font-medium transition-all flex items-center gap-1.5"
+                        >
+                          <Edit3 className="w-3.5 h-3.5 text-[#0284C7]" />
+                          <span>Edit</span>
+                        </button>
+                        <button
+                          onClick={() => {
+                            setResettingAdmin(admin);
+                            setResetAdminNewPass('');
+                            setResetAdminConfirmPass('');
+                            setErrorMessage(null);
+                          }}
+                          className="px-3 py-1.5 rounded-lg border border-[#DCEAF5] hover:border-[#38BDF8] hover:bg-[#EFF8FF] text-[#0F172A] text-xs font-medium transition-all flex items-center gap-1.5"
+                        >
+                          <Key className="w-3.5 h-3.5 text-[#0284C7]" />
+                          <span>Reset Password</span>
+                        </button>
+                        {!isCurrent && (
+                          <button
+                            onClick={() => handleToggleAdminStatus(admin)}
+                            className={`px-3 py-1.5 rounded-lg border text-xs font-medium transition-all flex items-center gap-1.5 ${
+                              isDeactivated
+                                ? 'border-emerald-200 text-emerald-700 hover:bg-emerald-50'
+                                : 'border-rose-200 text-rose-600 hover:bg-rose-50'
+                            }`}
+                          >
+                            {isDeactivated ? (
+                              <>
+                                <Check className="w-3.5 h-3.5" />
+                                <span>Reactivate</span>
+                              </>
+                            ) : (
+                              <>
+                                <UserX className="w-3.5 h-3.5" />
+                                <span>Deactivate</span>
+                              </>
+                            )}
+                          </button>
+                        )}
+                      </div>
+                    </div>
+                  );
+                })}
+
+                {adminUsers.length === 0 && (
+                  <div className="p-12 text-center text-[#64748B] text-xs font-mono">
+                    No administrator accounts registered yet.
+                  </div>
+                )}
+              </div>
+            </div>
+          </div>
+        )}
+
+        {/* Modal: Create Admin */}
+        {showCreateAdminModal && (
+          <div className="fixed inset-0 z-50 flex items-center justify-center p-4 bg-[#0F172A]/40 backdrop-blur-sm">
+            <div className="w-full max-w-md bg-white rounded-3xl border border-[#DCEAF5] shadow-2xl overflow-hidden p-6 space-y-4">
+              <div className="flex items-center justify-between pb-3 border-b border-[#DCEAF5]">
+                <div className="flex items-center gap-2">
+                  <UserPlus className="w-5 h-5 text-[#0284C7]" />
+                  <h3 className="font-serif text-lg font-bold text-[#0F172A]">Create Administrator</h3>
+                </div>
+                <button
+                  onClick={() => setShowCreateAdminModal(false)}
+                  className="p-1.5 rounded-full hover:bg-slate-100 text-[#64748B]"
+                >
+                  <X className="w-4 h-4" />
+                </button>
+              </div>
+
+              <form onSubmit={handleCreateAdminSubmit} className="space-y-3.5">
+                <div>
+                  <label className="block text-xs font-semibold uppercase tracking-wider text-[#64748B] mb-1">
+                    Full Name
+                  </label>
+                  <input
+                    type="text"
+                    value={newAdminName}
+                    onChange={(e) => setNewAdminName(e.target.value)}
+                    placeholder="e.g. Dr. Jane Smith"
+                    className="w-full px-3.5 py-2.5 rounded-xl border border-[#DCEAF5] text-xs focus:outline-none focus:border-[#0284C7] focus:ring-1 focus:ring-[#0284C7]"
+                    required
+                  />
+                </div>
+
+                <div>
+                  <label className="block text-xs font-semibold uppercase tracking-wider text-[#64748B] mb-1">
+                    Email Address
+                  </label>
+                  <input
+                    type="email"
+                    value={newAdminEmail}
+                    onChange={(e) => setNewAdminEmail(e.target.value)}
+                    placeholder="admin@institution.edu"
+                    className="w-full px-3.5 py-2.5 rounded-xl border border-[#DCEAF5] text-xs focus:outline-none focus:border-[#0284C7] focus:ring-1 focus:ring-[#0284C7]"
+                    required
+                  />
+                </div>
+
+                <div>
+                  <label className="block text-xs font-semibold uppercase tracking-wider text-[#64748B] mb-1">
+                    Initial Password
+                  </label>
+                  <input
+                    type="password"
+                    value={newAdminPassword}
+                    onChange={(e) => setNewAdminPassword(e.target.value)}
+                    placeholder="Minimum 6 characters"
+                    className="w-full px-3.5 py-2.5 rounded-xl border border-[#DCEAF5] text-xs focus:outline-none focus:border-[#0284C7] focus:ring-1 focus:ring-[#0284C7]"
+                    required
+                  />
+                </div>
+
+                <div>
+                  <label className="block text-xs font-semibold uppercase tracking-wider text-[#64748B] mb-1">
+                    Confirm Password
+                  </label>
+                  <input
+                    type="password"
+                    value={newAdminConfirm}
+                    onChange={(e) => setNewAdminConfirm(e.target.value)}
+                    placeholder="Re-enter password"
+                    className="w-full px-3.5 py-2.5 rounded-xl border border-[#DCEAF5] text-xs focus:outline-none focus:border-[#0284C7] focus:ring-1 focus:ring-[#0284C7]"
+                    required
+                  />
+                </div>
+
+                <div className="pt-2 flex items-center justify-end gap-2">
+                  <button
+                    type="button"
+                    onClick={() => setShowCreateAdminModal(false)}
+                    className="px-4 py-2 rounded-xl text-xs font-semibold text-[#64748B] hover:bg-slate-100"
+                  >
+                    Cancel
+                  </button>
+                  <button
+                    type="submit"
+                    disabled={adminActionLoading}
+                    className="px-5 py-2 rounded-xl bg-[#0284C7] hover:bg-[#0369a1] text-white text-xs font-bold uppercase tracking-wider disabled:opacity-50"
+                  >
+                    {adminActionLoading ? 'Creating...' : 'Create Admin'}
+                  </button>
+                </div>
+              </form>
+            </div>
+          </div>
+        )}
+
+        {/* Modal: Edit Admin Profile */}
+        {editingAdmin && (
+          <div className="fixed inset-0 z-50 flex items-center justify-center p-4 bg-[#0F172A]/40 backdrop-blur-sm">
+            <div className="w-full max-w-md bg-white rounded-3xl border border-[#DCEAF5] shadow-2xl overflow-hidden p-6 space-y-4">
+              <div className="flex items-center justify-between pb-3 border-b border-[#DCEAF5]">
+                <div className="flex items-center gap-2">
+                  <Edit3 className="w-5 h-5 text-[#0284C7]" />
+                  <h3 className="font-serif text-lg font-bold text-[#0F172A]">Edit Admin Profile</h3>
+                </div>
+                <button
+                  onClick={() => setEditingAdmin(null)}
+                  className="p-1.5 rounded-full hover:bg-slate-100 text-[#64748B]"
+                >
+                  <X className="w-4 h-4" />
+                </button>
+              </div>
+
+              <form onSubmit={handleEditAdminSubmit} className="space-y-3.5">
+                <div>
+                  <label className="block text-xs font-semibold uppercase tracking-wider text-[#64748B] mb-1">
+                    Administrator Name
+                  </label>
+                  <input
+                    type="text"
+                    value={editAdminName}
+                    onChange={(e) => setEditAdminName(e.target.value)}
+                    className="w-full px-3.5 py-2.5 rounded-xl border border-[#DCEAF5] text-xs focus:outline-none focus:border-[#0284C7] focus:ring-1 focus:ring-[#0284C7]"
+                    required
+                  />
+                </div>
+
+                <div>
+                  <label className="block text-xs font-semibold uppercase tracking-wider text-[#64748B] mb-1">
+                    Email Address
+                  </label>
+                  <input
+                    type="email"
+                    value={editAdminEmail}
+                    onChange={(e) => setEditAdminEmail(e.target.value)}
+                    className="w-full px-3.5 py-2.5 rounded-xl border border-[#DCEAF5] text-xs focus:outline-none focus:border-[#0284C7] focus:ring-1 focus:ring-[#0284C7]"
+                    required
+                  />
+                </div>
+
+                <div className="pt-2 flex items-center justify-end gap-2">
+                  <button
+                    type="button"
+                    onClick={() => setEditingAdmin(null)}
+                    className="px-4 py-2 rounded-xl text-xs font-semibold text-[#64748B] hover:bg-slate-100"
+                  >
+                    Cancel
+                  </button>
+                  <button
+                    type="submit"
+                    disabled={adminActionLoading}
+                    className="px-5 py-2 rounded-xl bg-[#0284C7] hover:bg-[#0369a1] text-white text-xs font-bold uppercase tracking-wider disabled:opacity-50"
+                  >
+                    {adminActionLoading ? 'Saving...' : 'Save Changes'}
+                  </button>
+                </div>
+              </form>
+            </div>
+          </div>
+        )}
+
+        {/* Modal: Reset Password */}
+        {resettingAdmin && (
+          <div className="fixed inset-0 z-50 flex items-center justify-center p-4 bg-[#0F172A]/40 backdrop-blur-sm">
+            <div className="w-full max-w-md bg-white rounded-3xl border border-[#DCEAF5] shadow-2xl overflow-hidden p-6 space-y-4">
+              <div className="flex items-center justify-between pb-3 border-b border-[#DCEAF5]">
+                <div className="flex items-center gap-2">
+                  <Key className="w-5 h-5 text-[#0284C7]" />
+                  <h3 className="font-serif text-lg font-bold text-[#0F172A]">
+                    Reset Password for {resettingAdmin.name}
+                  </h3>
+                </div>
+                <button
+                  onClick={() => setResettingAdmin(null)}
+                  className="p-1.5 rounded-full hover:bg-slate-100 text-[#64748B]"
+                >
+                  <X className="w-4 h-4" />
+                </button>
+              </div>
+
+              <form onSubmit={handleResetPasswordSubmit} className="space-y-3.5">
+                <div>
+                  <label className="block text-xs font-semibold uppercase tracking-wider text-[#64748B] mb-1">
+                    New Password (min 6 chars)
+                  </label>
+                  <input
+                    type="password"
+                    value={resetAdminNewPass}
+                    onChange={(e) => setResetAdminNewPass(e.target.value)}
+                    placeholder="Enter new password"
+                    className="w-full px-3.5 py-2.5 rounded-xl border border-[#DCEAF5] text-xs focus:outline-none focus:border-[#0284C7] focus:ring-1 focus:ring-[#0284C7]"
+                    required
+                  />
+                </div>
+
+                <div>
+                  <label className="block text-xs font-semibold uppercase tracking-wider text-[#64748B] mb-1">
+                    Confirm New Password
+                  </label>
+                  <input
+                    type="password"
+                    value={resetAdminConfirmPass}
+                    onChange={(e) => setResetAdminConfirmPass(e.target.value)}
+                    placeholder="Confirm new password"
+                    className="w-full px-3.5 py-2.5 rounded-xl border border-[#DCEAF5] text-xs focus:outline-none focus:border-[#0284C7] focus:ring-1 focus:ring-[#0284C7]"
+                    required
+                  />
+                </div>
+
+                <div className="pt-2 flex items-center justify-end gap-2">
+                  <button
+                    type="button"
+                    onClick={() => setResettingAdmin(null)}
+                    className="px-4 py-2 rounded-xl text-xs font-semibold text-[#64748B] hover:bg-slate-100"
+                  >
+                    Cancel
+                  </button>
+                  <button
+                    type="submit"
+                    disabled={adminActionLoading}
+                    className="px-5 py-2 rounded-xl bg-[#0284C7] hover:bg-[#0369a1] text-white text-xs font-bold uppercase tracking-wider disabled:opacity-50"
+                  >
+                    {adminActionLoading ? 'Resetting...' : 'Update Password'}
+                  </button>
+                </div>
+              </form>
             </div>
           </div>
         )}
