@@ -1736,7 +1736,7 @@ const IIOT_WEEKS_7_8_9_QUESTIONS: Question[] = [
     "weekNumber": 7,
     "originalQuestionNumber": 1,
     "sourcePageNumber": 95,
-    "sourcePdfName": "NPTEL Assignment 7",
+    "sourcePdfName": "Week 07 : Assignment 07",
     "questionText": "Which modulation technique is incorporated by LoRa technology?",
     "options": [
       "Frequency Shift Keying (FSK)",
@@ -1747,7 +1747,7 @@ const IIOT_WEEKS_7_8_9_QUESTIONS: Question[] = [
     "correctAnswerIndex": 2,
     "answerSource": "Manually Verified",
     "isApproved": true,
-    "explanation": "LoRa uses Chirp Spread Spectrum (CSS) modulation, maintaining low power characteristics while significantly increasing communication range and robustness against interference.",
+    "explanation": "LoRa incorporates Chirp Spread Spectrum (CSS) modulation, which uses wideband linear frequency modulated chirp pulses.",
     "createdAt": "2026-09-18T14:00:00.000Z"
   },
   {
@@ -1756,7 +1756,7 @@ const IIOT_WEEKS_7_8_9_QUESTIONS: Question[] = [
     "weekNumber": 7,
     "originalQuestionNumber": 2,
     "sourcePageNumber": 96,
-    "sourcePdfName": "NPTEL Assignment 7",
+    "sourcePdfName": "Week 07 : Assignment 07",
     "questionText": "What is the maximum wireless throughput achieved by the SIGFOX network?",
     "options": [
       "Up to 100 bits per second",
@@ -1767,7 +1767,7 @@ const IIOT_WEEKS_7_8_9_QUESTIONS: Question[] = [
     "correctAnswerIndex": 0,
     "answerSource": "Manually Verified",
     "isApproved": true,
-    "explanation": "SIGFOX achieves maximum wireless throughput of up to 100 bits per second (bps) using ultra-narrowband (UNB) technology.",
+    "explanation": "SIGFOX achieves maximum wireless throughput of up to 100 bits per second.",
     "createdAt": "2026-09-18T14:00:00.000Z"
   },
   {
@@ -1776,7 +1776,7 @@ const IIOT_WEEKS_7_8_9_QUESTIONS: Question[] = [
     "weekNumber": 7,
     "originalQuestionNumber": 3,
     "sourcePageNumber": 97,
-    "sourcePdfName": "NPTEL Assignment 7",
+    "sourcePdfName": "Week 07 : Assignment 07",
     "questionText": "Depending on the device variant, what is the typical communication range for a Zigbee network?",
     "options": [
       "1 to 5 meters",
@@ -1787,7 +1787,7 @@ const IIOT_WEEKS_7_8_9_QUESTIONS: Question[] = [
     "correctAnswerIndex": 1,
     "answerSource": "Manually Verified",
     "isApproved": true,
-    "explanation": "A Zigbee network typically covers a communication range of 10 to 100 meters depending on transmit power, device variant, and environmental obstacles.",
+    "explanation": "Zigbee networks typically operate over a communication range of 10 to 100 meters.",
     "createdAt": "2026-09-18T14:00:00.000Z"
   },
   {
@@ -1796,7 +1796,7 @@ const IIOT_WEEKS_7_8_9_QUESTIONS: Question[] = [
     "weekNumber": 7,
     "originalQuestionNumber": 4,
     "sourcePageNumber": 98,
-    "sourcePdfName": "NPTEL Assignment 7",
+    "sourcePdfName": "Week 07 : Assignment 07",
     "questionText": "In a Zigbee network, which device is specifically responsible for relaying information to other nodes and can also run small-scale applications?",
     "options": [
       "Coordinator",
@@ -1807,7 +1807,7 @@ const IIOT_WEEKS_7_8_9_QUESTIONS: Question[] = [
     "correctAnswerIndex": 3,
     "answerSource": "Manually Verified",
     "isApproved": true,
-    "explanation": "In Zigbee architectures, a Router relays data packets to other nodes in the mesh topology and can also execute localized small-scale applications.",
+    "explanation": "A Router relays information to other nodes and can run small-scale applications.",
     "createdAt": "2026-09-18T14:00:00.000Z"
   },
   {
@@ -1816,7 +1816,7 @@ const IIOT_WEEKS_7_8_9_QUESTIONS: Question[] = [
     "weekNumber": 7,
     "originalQuestionNumber": 5,
     "sourcePageNumber": 99,
-    "sourcePdfName": "NPTEL Assignment 7",
+    "sourcePdfName": "Week 07 : Assignment 07",
     "questionText": "Which software is used to discover and configure Xbee modules before utilizing them for communication?",
     "options": [
       "XCTU",
@@ -1827,7 +1827,7 @@ const IIOT_WEEKS_7_8_9_QUESTIONS: Question[] = [
     "correctAnswerIndex": 0,
     "answerSource": "Manually Verified",
     "isApproved": true,
-    "explanation": "Digi XCTU is the multi-platform configuration tool used to discover, configure, test, and update Digi XBee RF modules.",
+    "explanation": "XCTU is the configuration software used to discover and configure Xbee RF modules.",
     "createdAt": "2026-09-18T14:00:00.000Z"
   },
   {
@@ -1836,18 +1836,18 @@ const IIOT_WEEKS_7_8_9_QUESTIONS: Question[] = [
     "weekNumber": 7,
     "originalQuestionNumber": 6,
     "sourcePageNumber": 100,
-    "sourcePdfName": "NPTEL Assignment 7",
-    "questionText": "Which type of IIoT analytics primarily focuses on answering the questions \"What already happened?\" and \"What is currently happening?\"",
+    "sourcePdfName": "Week 07 : Assignment 07",
+    "questionText": "Which type of IIoT analytics primarily focuses on answering the questions \"What already happened and currently happening\" using dashboards and reports?",
     "options": [
-      "Diagnostic Analytics",
       "Predictive Analytics",
+      "Prescriptive Analytics",
       "Descriptive Analytics",
-      "Prescriptive Analytics"
+      "Diagnostic Analytics"
     ],
     "correctAnswerIndex": 2,
     "answerSource": "Manually Verified",
     "isApproved": true,
-    "explanation": "Descriptive analytics summarizes past historical performance and current real-time operations to answer what happened and what is happening now.",
+    "explanation": "Descriptive Analytics primarily focuses on answering \"What already happened and currently happening\" using dashboards and reports.",
     "createdAt": "2026-09-18T14:00:00.000Z"
   },
   {
@@ -1856,18 +1856,18 @@ const IIOT_WEEKS_7_8_9_QUESTIONS: Question[] = [
     "weekNumber": 7,
     "originalQuestionNumber": 7,
     "sourcePageNumber": 101,
-    "sourcePdfName": "NPTEL Assignment 7",
-    "questionText": "What is one of the most widely adopted middleware architectures in IIoT?",
+    "sourcePdfName": "Week 07 : Assignment 07",
+    "questionText": "Many middleware solutions in IIoT processing architectures are based on which of the following?",
     "options": [
       "Service-Oriented Architecture (SOA)",
+      "Microservices Architecture",
       "Monolithic Architecture",
-      "Peer-to-Peer Only Architecture",
-      "Point-to-Point Architecture"
+      "Layered Databus Architecture"
     ],
     "correctAnswerIndex": 0,
     "answerSource": "Manually Verified",
     "isApproved": true,
-    "explanation": "Service-Oriented Architecture (SOA) is widely adopted in IIoT middleware because it enables heterogeneous devices and protocols to interact through standard services.",
+    "explanation": "Many middleware solutions in IIoT processing architectures are based on Service-Oriented Architecture (SOA).",
     "createdAt": "2026-09-18T14:00:00.000Z"
   },
   {
@@ -1876,18 +1876,18 @@ const IIOT_WEEKS_7_8_9_QUESTIONS: Question[] = [
     "weekNumber": 7,
     "originalQuestionNumber": 8,
     "sourcePageNumber": 102,
-    "sourcePdfName": "NPTEL Assignment 7",
-    "questionText": "In the FarmBeats system, which component is primarily responsible for weather-aware duty cycling and UAV flight planning?",
+    "sourcePdfName": "Week 07 : Assignment 07",
+    "questionText": "In the FarmBeats architecture, which component incorporates weather-aware decisions and UAV flight planning?",
     "options": [
       "IoT Base Station",
-      "Cloud Processing Unit",
-      "Sensor Nodes",
-      "Farm Drones"
+      "Cloud-Services",
+      "Network of Soil Sensors",
+      "IoT Gateway"
     ],
-    "correctAnswerIndex": 0,
+    "correctAnswerIndex": 3,
     "answerSource": "Manually Verified",
     "isApproved": true,
-    "explanation": "In Microsoft FarmBeats, the local IoT Base Station performs weather-aware energy duty cycling and automates flight trajectory planning for unmanned aerial vehicles (UAVs).",
+    "explanation": "In the FarmBeats architecture, the IoT Gateway incorporates weather-aware decisions and UAV flight planning.",
     "createdAt": "2026-09-18T14:00:00.000Z"
   },
   {
@@ -1896,18 +1896,18 @@ const IIOT_WEEKS_7_8_9_QUESTIONS: Question[] = [
     "weekNumber": 7,
     "originalQuestionNumber": 9,
     "sourcePageNumber": 103,
-    "sourcePdfName": "NPTEL Assignment 7",
-    "questionText": "In the video module of AR Drones for Precision Agriculture, what is the primary purpose of processing aerial images?",
+    "sourcePdfName": "Week 07 : Assignment 07",
+    "questionText": "In the AR Drones-based Precision Agriculture system, what is the specific role of the video processing module deployed in the laptop?",
     "options": [
-      "Measure soil temperature",
-      "Detect weeds and generate coordinates",
-      "Spray pesticides directly",
-      "Monitor worker movement"
+      "To control the flight path of the UAV remotely",
+      "To detect the weeds and generate coordinates",
+      "To actuate the precision sprayer directly via Bluetooth",
+      "To capture GPS-tagged video directly from the field"
     ],
     "correctAnswerIndex": 1,
     "answerSource": "Manually Verified",
     "isApproved": true,
-    "explanation": "In precision agriculture AR drone video analytics, aerial imagery is analyzed to detect weed patches and generate precise GPS coordinates for targeted intervention.",
+    "explanation": "The video processing module deployed in the laptop detects weeds and generates coordinates.",
     "createdAt": "2026-09-18T14:00:00.000Z"
   },
   {
@@ -1916,18 +1916,18 @@ const IIOT_WEEKS_7_8_9_QUESTIONS: Question[] = [
     "weekNumber": 7,
     "originalQuestionNumber": 10,
     "sourcePageNumber": 104,
-    "sourcePdfName": "NPTEL Assignment 7",
-    "questionText": "In the iRobot-Factory architecture, which component uses artificial intelligence to perform predictive and operational analytics?",
+    "sourcePdfName": "Week 07 : Assignment 07",
+    "questionText": "In the iRobot-Factory architecture, which component is tasked with high-performance, long-term data analytics using artificial intelligence techniques?",
     "options": [
-      "Physical Robotic Arm",
-      "Industrial Sensor Node",
+      "Intelligent Terminal",
+      "Edge Computing Node",
       "Cognitive Engine",
-      "Network Gateway"
+      "Production Line Layer"
     ],
     "correctAnswerIndex": 2,
     "answerSource": "Manually Verified",
     "isApproved": true,
-    "explanation": "The Cognitive Engine in the iRobot-Factory framework applies artificial intelligence to deliver predictive operational analytics and automated decision making.",
+    "explanation": "The Cognitive Engine performs high-performance, long-term data analytics using artificial intelligence techniques.",
     "createdAt": "2026-09-18T14:00:00.000Z"
   },
   {
@@ -1936,18 +1936,18 @@ const IIOT_WEEKS_7_8_9_QUESTIONS: Question[] = [
     "weekNumber": 7,
     "originalQuestionNumber": 11,
     "sourcePageNumber": 105,
-    "sourcePdfName": "NPTEL Assignment 7",
-    "questionText": "According to the Big Data framework for Smart Manufacturing, what is the key focus of Phase 2?",
+    "sourcePdfName": "Week 07 : Assignment 07",
+    "questionText": "According to the phases of Big Data Driven Smart Manufacturing, what is the primary focus of \"Phase 2\"?",
     "options": [
-      "Data generation and collection from sensors",
-      "Physical storage of raw data files",
-      "Hardware decommissioning",
+      "Integration of data and contextual information",
+      "Innovation in process and production",
+      "Initial deployment of sensor nodes",
       "Synthesis and analysis to build knowledge for decision making"
     ],
     "correctAnswerIndex": 3,
     "answerSource": "Manually Verified",
     "isApproved": true,
-    "explanation": "Phase 2 focuses on data synthesis, correlation, and analysis to transform aggregated factory floor data into actionable manufacturing intelligence.",
+    "explanation": "Phase 2 focuses on synthesis and analysis to build knowledge for decision making.",
     "createdAt": "2026-09-18T14:00:00.000Z"
   },
   {
@@ -1956,18 +1956,18 @@ const IIOT_WEEKS_7_8_9_QUESTIONS: Question[] = [
     "weekNumber": 7,
     "originalQuestionNumber": 12,
     "sourcePageNumber": 106,
-    "sourcePdfName": "NPTEL Assignment 7",
-    "questionText": "In a Smart Warehousing system, which module is responsible for analyzing real-time events and historical data to make automated operational decisions?",
+    "sourcePdfName": "Week 07 : Assignment 07",
+    "questionText": "In a Smart Warehousing system, which module is specifically responsible for organizing and processing data, generating events in real-time, and history-based decision making?",
     "options": [
       "Administrative module",
-      "RFID Reader",
-      "Barcode Scanner",
-      "Conveyor Belt Sensor"
+      "Data collection module",
+      "RFID tag module",
+      "REST-based framework"
     ],
     "correctAnswerIndex": 0,
     "answerSource": "Manually Verified",
     "isApproved": true,
-    "explanation": "The Administrative module acts as the core controller, processing incoming telemetry alongside historical records to automate warehousing workflows.",
+    "explanation": "The Administrative module is responsible for organizing and processing data, generating events in real-time, and history-based decision making.",
     "createdAt": "2026-09-18T14:00:00.000Z"
   },
   {
@@ -1976,18 +1976,18 @@ const IIOT_WEEKS_7_8_9_QUESTIONS: Question[] = [
     "weekNumber": 7,
     "originalQuestionNumber": 13,
     "sourcePageNumber": 107,
-    "sourcePdfName": "NPTEL Assignment 7",
-    "questionText": "What does the term \"Set Point\" refer to in an Industrial Control System (ICS)?",
+    "sourcePdfName": "Week 07 : Assignment 07",
+    "questionText": "In the context of an Industrial Control System (ICS), what is a \"Set Point\"?",
     "options": [
-      "The point where the system shuts down permanently",
-      "Standard value of the process parameter for controlled operation",
-      "The highest error registered by a sensor",
-      "The physical location where the controller is mounted"
+      "The physical location where a sensor is deployed",
+      "The standard value of the process parameter for controlled operation",
+      "The value of a process parameter measured by a sensor",
+      "The actuator used to manipulate the process"
     ],
     "correctAnswerIndex": 1,
     "answerSource": "Manually Verified",
     "isApproved": true,
-    "explanation": "The Set Point (SP) is the desired or target reference value that a feedback control loop aims to maintain for a controlled industrial process variable.",
+    "explanation": "The Set Point is the standard value of the process parameter for controlled operation.",
     "createdAt": "2026-09-18T14:00:00.000Z"
   },
   {
@@ -1996,18 +1996,18 @@ const IIOT_WEEKS_7_8_9_QUESTIONS: Question[] = [
     "weekNumber": 7,
     "originalQuestionNumber": 14,
     "sourcePageNumber": 108,
-    "sourcePdfName": "NPTEL Assignment 7",
-    "questionText": "Which statement correctly describes an Open Loop Control System?",
+    "sourcePdfName": "Week 07 : Assignment 07",
+    "questionText": "Which type of control loop makes control decisions entirely independent of the measured process variable?",
     "options": [
-      "Control action depends entirely on the output measurement",
-      "Requires continuous feedback sensors to operate",
-      "Control action is completely independent of the output of the system",
-      "Automatically corrects disturbances in real time"
+      "Closed Loop Control",
+      "Feedback Control",
+      "Open Loop Control",
+      "Proportional Control"
     ],
     "correctAnswerIndex": 2,
     "answerSource": "Manually Verified",
     "isApproved": true,
-    "explanation": "An open-loop control system does not use feedback from the output to adjust control input; the control action operates completely independent of the system's output.",
+    "explanation": "Open Loop Control makes control decisions entirely independent of the measured process variable.",
     "createdAt": "2026-09-18T14:00:00.000Z"
   },
   {
@@ -2016,18 +2016,18 @@ const IIOT_WEEKS_7_8_9_QUESTIONS: Question[] = [
     "weekNumber": 7,
     "originalQuestionNumber": 15,
     "sourcePageNumber": 109,
-    "sourcePdfName": "NPTEL Assignment 7",
-    "questionText": "Which of the following is a primary component of a SCADA system responsible for interfacing directly with physical sensors and actuators?",
+    "sourcePdfName": "Week 07 : Assignment 07",
+    "questionText": "Which of the following is a primary component of a Supervisory Control and Data Acquisition (SCADA) system?",
     "options": [
-      "Enterprise Resource Planning (ERP) server",
-      "Human Machine Interface (HMI) screen",
-      "Database Historian",
+      "Complex Event Processor (CEP)",
+      "Centralized Cloud Services",
+      "Unmanned Aerial Vehicles (UAVs)",
       "Remote Telemetry Units (RTUs)"
     ],
     "correctAnswerIndex": 3,
     "answerSource": "Manually Verified",
     "isApproved": true,
-    "explanation": "Remote Telemetry Units (RTUs) connect directly to field instruments, converting physical analog/digital signals into network communications for the SCADA master station.",
+    "explanation": "Remote Telemetry Units (RTUs) are a primary component of a SCADA system interfacing with field devices.",
     "createdAt": "2026-09-18T14:00:00.000Z"
   },
   {
@@ -2036,10 +2036,10 @@ const IIOT_WEEKS_7_8_9_QUESTIONS: Question[] = [
     "weekNumber": 8,
     "originalQuestionNumber": 1,
     "sourcePageNumber": 110,
-    "sourcePdfName": "NPTEL Assignment 8",
-    "questionText": "Which type of analytics is used to calculate the Remaining Useful Life (RUL) of industrial machinery typically over an hours-based timescale?",
+    "sourcePdfName": "Week 08 : Assignment 08",
+    "questionText": "Which type of IIoT analytics is responsible for informing about the remaining useful life of an asset and typically operates on a timescale of hours?",
     "options": [
-      "Descriptive analytics",
+      "Baseline analytics",
       "Diagnostic analytics",
       "Prescriptive analytics",
       "Prognostic analytics"
@@ -2047,7 +2047,7 @@ const IIOT_WEEKS_7_8_9_QUESTIONS: Question[] = [
     "correctAnswerIndex": 3,
     "answerSource": "Manually Verified",
     "isApproved": true,
-    "explanation": "Prognostic analytics assesses equipment health indicators to forecast Remaining Useful Life (RUL) and anticipate failures before they occur.",
+    "explanation": "Prognostic analytics informs about remaining useful life and operates on a timescale of hours.",
     "createdAt": "2026-09-18T14:00:00.000Z"
   },
   {
@@ -2056,18 +2056,18 @@ const IIOT_WEEKS_7_8_9_QUESTIONS: Question[] = [
     "weekNumber": 8,
     "originalQuestionNumber": 2,
     "sourcePageNumber": 111,
-    "sourcePdfName": "NPTEL Assignment 8",
-    "questionText": "Which of the following big data technologies is specifically designed as a real-time distributed stream processing tool capable of Complex Event Processing (CEP)?",
+    "sourcePdfName": "Week 08 : Assignment 08",
+    "questionText": "Which of the following software tools is highlighted for its use in Complex Event Processing (CEP) during real-time stream analytics?",
     "options": [
       "Apache Hadoop",
-      "Apache Hive",
+      "Apache Spark",
       "Apache Storm",
-      "Apache Pig"
+      "Jupyter"
     ],
     "correctAnswerIndex": 2,
     "answerSource": "Manually Verified",
     "isApproved": true,
-    "explanation": "Apache Storm is a distributed real-time stream computation system designed for high-throughput stream processing and Complex Event Processing (CEP).",
+    "explanation": "Apache Storm is highlighted for Complex Event Processing (CEP) during real-time stream analytics.",
     "createdAt": "2026-09-18T14:00:00.000Z"
   },
   {
@@ -2076,18 +2076,18 @@ const IIOT_WEEKS_7_8_9_QUESTIONS: Question[] = [
     "weekNumber": 8,
     "originalQuestionNumber": 3,
     "sourcePageNumber": 112,
-    "sourcePdfName": "NPTEL Assignment 8",
-    "questionText": "What is the primary distinction between the Fuzzy C-Means (FCM) clustering algorithm and the K-Means clustering algorithm?",
+    "sourcePdfName": "Week 08 : Assignment 08",
+    "questionText": "In the context of unsupervised learning, what is a primary distinction of the Fuzzy c-Means (FCM) algorithm compared to K-Means?",
     "options": [
-      "FCM allows a data point to belong to more than one cluster with varying membership degrees",
-      "FCM works only with 1-dimensional categorical data",
-      "K-Means allows fuzzy probabilities while FCM enforces strict hard boundaries",
-      "FCM does not require specifying the number of clusters"
+      "FCM allows a data point to belong to more than one cluster",
+      "FCM is significantly slower than K-Means",
+      "FCM requires a labeled dataset to operate",
+      "FCM is categorized as Hard Clustering"
     ],
     "correctAnswerIndex": 0,
     "answerSource": "Manually Verified",
     "isApproved": true,
-    "explanation": "Fuzzy C-Means (FCM) assigns soft membership degrees between 0 and 1 allowing points to belong to multiple clusters, unlike K-Means which enforces hard, mutually exclusive partitioning.",
+    "explanation": "FCM allows a data point to belong to more than one cluster with varying degrees of membership.",
     "createdAt": "2026-09-18T14:00:00.000Z"
   },
   {
@@ -2096,18 +2096,18 @@ const IIOT_WEEKS_7_8_9_QUESTIONS: Question[] = [
     "weekNumber": 8,
     "originalQuestionNumber": 4,
     "sourcePageNumber": 113,
-    "sourcePdfName": "NPTEL Assignment 8",
-    "questionText": "Which machine learning approach is used when the output variable to be predicted is a continuous real-valued number (such as temperature or pressure)?",
+    "sourcePdfName": "Week 08 : Assignment 08",
+    "questionText": "Which supervised learning algorithm is specifically utilized when the output variable to be predicted is a real number (e.g., dollars or weight)?",
     "options": [
       "Classification",
       "Clustering",
-      "Association Rule Mining",
+      "Reinforcement Learning",
       "Regression"
     ],
     "correctAnswerIndex": 3,
     "answerSource": "Manually Verified",
     "isApproved": true,
-    "explanation": "Regression models predict continuous numerical quantities, whereas classification models predict discrete categorical labels.",
+    "explanation": "Regression is specifically utilized when the target output variable to be predicted is a real number.",
     "createdAt": "2026-09-18T14:00:00.000Z"
   },
   {
@@ -2116,18 +2116,18 @@ const IIOT_WEEKS_7_8_9_QUESTIONS: Question[] = [
     "weekNumber": 8,
     "originalQuestionNumber": 5,
     "sourcePageNumber": 114,
-    "sourcePdfName": "NPTEL Assignment 8",
-    "questionText": "How does Reinforcement Learning (RL) fundamentally differ from Supervised Learning?",
+    "sourcePdfName": "Week 08 : Assignment 08",
+    "questionText": "What is a key difference between Reinforcement Learning (RL) and Supervised Learning?",
     "options": [
-      "RL relies exclusively on pre-labeled ground truth datasets",
-      "RL utilizes a reward function that acts as feedback to the agent based on actions taken in an environment",
-      "RL does not interact with any environment or agent",
-      "RL only works with offline batch files"
+      "RL is guided by an external supervisor who knows the environment",
+      "RL utilizes a reward function that acts as feedback to the agent",
+      "RL maps inputs directly to outputs without an agent",
+      "Supervised learning models build knowledge graphs from actions"
     ],
     "correctAnswerIndex": 1,
     "answerSource": "Manually Verified",
     "isApproved": true,
-    "explanation": "Reinforcement Learning optimizes an agent's policy via feedback from a reward/penalty function interacting dynamically with an environment, without static pre-labeled supervisor targets.",
+    "explanation": "RL utilizes a reward function that acts as feedback to the agent based on actions taken.",
     "createdAt": "2026-09-18T14:00:00.000Z"
   },
   {
@@ -2136,18 +2136,18 @@ const IIOT_WEEKS_7_8_9_QUESTIONS: Question[] = [
     "weekNumber": 8,
     "originalQuestionNumber": 6,
     "sourcePageNumber": 115,
-    "sourcePdfName": "NPTEL Assignment 8",
-    "questionText": "What is the key advantage of Deep Learning over traditional Machine Learning in industrial feature extraction?",
+    "sourcePdfName": "Week 08 : Assignment 08",
+    "questionText": "Which of the following statements best describes why Deep Learning differs from traditional Machine Learning in industrial applications?",
     "options": [
-      "Deep learning requires manual handcrafted feature engineering by domain experts",
-      "Deep learning performs end-to-end learning by automatically extracting hierarchical features directly from raw data",
-      "Deep learning works only on small datasets with fewer than 10 rows",
-      "Deep learning never requires computational accelerators like GPUs"
+      "Deep learning performs significantly worse as the data volume increases",
+      "Deep learning is an \"end-to-end learning\" process that extracts features on its own",
+      "Deep learning requires features to be explicitly mentioned by domain experts",
+      "Deep learning requires very low computational power"
     ],
     "correctAnswerIndex": 1,
     "answerSource": "Manually Verified",
     "isApproved": true,
-    "explanation": "Deep learning eliminates tedious manual feature extraction by automatically learning hierarchical representations directly from raw multi-sensor telemetry.",
+    "explanation": "Deep learning is an \"end-to-end learning\" process that extracts hierarchical features directly from data without manual engineering.",
     "createdAt": "2026-09-18T14:00:00.000Z"
   },
   {
@@ -2156,18 +2156,18 @@ const IIOT_WEEKS_7_8_9_QUESTIONS: Question[] = [
     "weekNumber": 8,
     "originalQuestionNumber": 7,
     "sourcePageNumber": 116,
-    "sourcePdfName": "NPTEL Assignment 8",
-    "questionText": "Which company developed the Collaborative Distributed Deep Learning platform that allows multiple industrial participants to train neural networks without sharing private raw data?",
+    "sourcePdfName": "Week 08 : Assignment 08",
+    "questionText": "Which company utilizes Collaborative Distributed Deep Learning technology where the learning process is performed in the cloud while inference is conducted at the edge?",
     "options": [
+      "Zebra Medical Vision",
       "Intel",
-      "Cisco",
-      "Siemens",
+      "H2O",
       "TOSHIBA"
     ],
     "correctAnswerIndex": 3,
     "answerSource": "Manually Verified",
     "isApproved": true,
-    "explanation": "Toshiba developed a Collaborative Distributed Deep Learning framework that allows industrial enterprises to jointly train neural models without centralizing proprietary raw data.",
+    "explanation": "TOSHIBA utilizes Collaborative Distributed Deep Learning technology.",
     "createdAt": "2026-09-18T14:00:00.000Z"
   },
   {
@@ -2176,18 +2176,18 @@ const IIOT_WEEKS_7_8_9_QUESTIONS: Question[] = [
     "weekNumber": 8,
     "originalQuestionNumber": 8,
     "sourcePageNumber": 117,
-    "sourcePdfName": "NPTEL Assignment 8",
-    "questionText": "Which of the following is an example of an industrial Software as a Service (SaaS) application specifically used for machinery performance monitoring?",
+    "sourcePdfName": "Week 08 : Assignment 08",
+    "questionText": "Which of the following is an example of an industrial Software-as-a-Service (SaaS) application?",
     "options": [
       "Industrial Machinery Catalyst from Siemens",
-      "Amazon EC2 Virtual Machines",
-      "Google Compute Engine",
-      "Microsoft Azure Blob Storage"
+      "Microsoft Azure",
+      "GE Predix",
+      "Amazon Web Services (AWS)"
     ],
     "correctAnswerIndex": 0,
     "answerSource": "Manually Verified",
     "isApproved": true,
-    "explanation": "Industrial Machinery Catalyst by Siemens is an industrial SaaS application for equipment performance tracking and lifecycle analytics, whereas EC2 and Compute Engine are IaaS.",
+    "explanation": "Industrial Machinery Catalyst from Siemens is an industrial SaaS application.",
     "createdAt": "2026-09-18T14:00:00.000Z"
   },
   {
@@ -2196,18 +2196,18 @@ const IIOT_WEEKS_7_8_9_QUESTIONS: Question[] = [
     "weekNumber": 8,
     "originalQuestionNumber": 9,
     "sourcePageNumber": 118,
-    "sourcePdfName": "NPTEL Assignment 8",
-    "questionText": "Which cloud deployment model is characterized by combining two or more distinct cloud infrastructures (such as private and public) bound together by standardized technology?",
+    "sourcePdfName": "Week 08 : Assignment 08",
+    "questionText": "A cloud setup that is designed by combining two or more unique cloud infrastructures (public or private) to provide flexibility for data and application movement is called a:",
     "options": [
+      "Public Cloud",
       "Community Cloud",
-      "Private Cloud",
       "Hybrid Cloud",
-      "Public Cloud"
+      "Private Cloud"
     ],
     "correctAnswerIndex": 2,
     "answerSource": "Manually Verified",
     "isApproved": true,
-    "explanation": "A Hybrid Cloud composition combines distinct private and public cloud infrastructures connected via standardized data and application portability technologies.",
+    "explanation": "A hybrid cloud combines two or more unique cloud infrastructures (public or private).",
     "createdAt": "2026-09-18T14:00:00.000Z"
   },
   {
@@ -2216,18 +2216,18 @@ const IIOT_WEEKS_7_8_9_QUESTIONS: Question[] = [
     "weekNumber": 8,
     "originalQuestionNumber": 10,
     "sourcePageNumber": 119,
-    "sourcePdfName": "NPTEL Assignment 8",
-    "questionText": "Which industrial IoT platform, developed by General Electric, is specifically engineered to build and run industrial Digital Twin applications?",
+    "sourcePdfName": "Week 08 : Assignment 08",
+    "questionText": "Which industrial cloud platform utilizes \"Digital Twin Technology\" for learning, estimating, optimizing, and representing assets?",
     "options": [
-      "Apple HomeKit",
+      "Sentience (Honeywell)",
       "GE Predix",
-      "Android Things",
-      "Samsung SmartThings"
+      "Siemens MindSphere",
+      "Meshify"
     ],
     "correctAnswerIndex": 1,
     "answerSource": "Manually Verified",
     "isApproved": true,
-    "explanation": "GE Predix is the industrial IoT platform engineered by General Electric to construct, deploy, and maintain industrial analytics and Digital Twins for physical assets.",
+    "explanation": "GE Predix utilizes Digital Twin Technology for learning, estimating, optimizing, and representing assets.",
     "createdAt": "2026-09-18T14:00:00.000Z"
   },
   {
@@ -2236,18 +2236,18 @@ const IIOT_WEEKS_7_8_9_QUESTIONS: Question[] = [
     "weekNumber": 8,
     "originalQuestionNumber": 11,
     "sourcePageNumber": 120,
-    "sourcePdfName": "NPTEL Assignment 8",
-    "questionText": "In the C3 Data Lake architecture, how is unstructured or schema-less industrial data primarily stored?",
+    "sourcePdfName": "Week 08 : Assignment 08",
+    "questionText": "The C3 IoT platform provides a storage service for unstructured data known as the C3 Data Lake. In which format is this data primarily managed?",
     "options": [
-      "Relational tables with strict primary keys",
-      "CSV text files only",
+      "XML format",
+      "RESTful format",
       "Simple Object format",
-      "Magnetic tape drives"
+      "SQL Relational format"
     ],
     "correctAnswerIndex": 2,
     "answerSource": "Manually Verified",
     "isApproved": true,
-    "explanation": "In C3 Data Lake architectures, unstructured and multi-structured industrial streams are held in Simple Object storage formats for flexible analytical ingestion.",
+    "explanation": "C3 Data Lake manages unstructured data primarily in Simple Object format.",
     "createdAt": "2026-09-18T14:00:00.000Z"
   },
   {
@@ -2256,18 +2256,18 @@ const IIOT_WEEKS_7_8_9_QUESTIONS: Question[] = [
     "weekNumber": 8,
     "originalQuestionNumber": 12,
     "sourcePageNumber": 121,
-    "sourcePdfName": "NPTEL Assignment 8",
-    "questionText": "Which IIoT platform provides real-time tracking solutions through its 'Now' and 'Tracker' web and mobile application modules?",
+    "sourcePdfName": "Week 08 : Assignment 08",
+    "questionText": "Which of the following industrial IoT platforms specifically provides solutions like \"Now\" and \"Tracker\" for real-time asset tracking with geo-localized data?",
     "options": [
-      "ThingSpeak",
-      "Blynk",
+      "Uptake",
+      "C3 IoT",
       "Meshify",
-      "IFTTT"
+      "Honeywell"
     ],
     "correctAnswerIndex": 2,
     "answerSource": "Manually Verified",
     "isApproved": true,
-    "explanation": "Meshify provides industrial IoT asset monitoring using 'Now' for live device tracking and 'Tracker' for historical telemetry review.",
+    "explanation": "Meshify provides solutions like \"Now\" and \"Tracker\" for real-time asset tracking.",
     "createdAt": "2026-09-18T14:00:00.000Z"
   },
   {
@@ -2276,18 +2276,18 @@ const IIOT_WEEKS_7_8_9_QUESTIONS: Question[] = [
     "weekNumber": 8,
     "originalQuestionNumber": 13,
     "sourcePageNumber": 122,
-    "sourcePdfName": "NPTEL Assignment 8",
-    "questionText": "In the lifecycle management of industrial IoT devices, which feature is critical when a device is retired, compromised, or permanently removed from service?",
+    "sourcePdfName": "Week 08 : Assignment 08",
+    "questionText": "Which of the following is a crucial feature that an IIoT cloud platform provider should offer for effective device management?",
     "options": [
       "Device decommission",
-      "Firmware update loop",
-      "Automatic over-voltage surge",
-      "Permanent broadcasting mode"
+      "Physical hardware manufacturing",
+      "Manual data provisioning",
+      "Increasing network blind spots"
     ],
     "correctAnswerIndex": 0,
     "answerSource": "Manually Verified",
     "isApproved": true,
-    "explanation": "Device decommissioning is vital to safely deregister the asset, revoke authorization certificates, and prevent unauthorized network access when hardware is retired.",
+    "explanation": "Device decommission is a crucial device management feature for security and lifecycle termination.",
     "createdAt": "2026-09-18T14:00:00.000Z"
   },
   {
@@ -2296,18 +2296,18 @@ const IIOT_WEEKS_7_8_9_QUESTIONS: Question[] = [
     "weekNumber": 8,
     "originalQuestionNumber": 14,
     "sourcePageNumber": 123,
-    "sourcePdfName": "NPTEL Assignment 8",
-    "questionText": "According to Sturm et al., which characteristic is essential for a Service Level Agreement (SLA) metric to be meaningful and enforceable in industrial cloud services?",
+    "sourcePdfName": "Week 08 : Assignment 08",
+    "questionText": "According to Sturm et al., which of the following is one of the defined characteristics of a \"Meaningful SLA\" (Service Level Agreement)?",
     "options": [
       "Subjective",
-      "Informal",
+      "Uncontrollable",
       "Quantifiable",
-      "Ambiguous"
+      "Unachievable"
     ],
     "correctAnswerIndex": 2,
     "answerSource": "Manually Verified",
     "isApproved": true,
-    "explanation": "Sturm et al. state that SLA service parameters must be quantifiable so that service levels, availability, and compliance can be objectively evaluated.",
+    "explanation": "According to Sturm et al., a meaningful SLA must be quantifiable.",
     "createdAt": "2026-09-18T14:00:00.000Z"
   },
   {
@@ -2316,18 +2316,18 @@ const IIOT_WEEKS_7_8_9_QUESTIONS: Question[] = [
     "weekNumber": 8,
     "originalQuestionNumber": 15,
     "sourcePageNumber": 124,
-    "sourcePdfName": "NPTEL Assignment 8",
-    "questionText": "How does Fog Computing directly address the bandwidth and latency limitations of centralized Cloud Computing in large-scale IIoT?",
+    "sourcePdfName": "Week 08 : Assignment 08",
+    "questionText": "How does Fog Computing primarily address the limitations of a purely centralized cloud-based approach in IIoT?",
     "options": [
-      "By identifying useful data and reducing the amount of raw data transmitted over the wide area network to the cloud",
-      "By moving all cloud servers into mobile phone handsets",
-      "By replacing all wired fiber optics with 2G cellular",
-      "By completely eliminating the use of routers and switches"
+      "By identifying useful data and reducing the amount of raw data sent to the cloud",
+      "By completely replacing the cloud infrastructure",
+      "By increasing the latency of time-sensitive data",
+      "By restricting the mobility of edge devices"
     ],
     "correctAnswerIndex": 0,
     "answerSource": "Manually Verified",
     "isApproved": true,
-    "explanation": "Fog computing filters, aggregates, and analyzes telemetry close to edge devices, significantly reducing the volume of raw data that must traverse the WAN to the central cloud.",
+    "explanation": "Fog Computing identifies useful data and reduces the amount of raw data sent to the cloud.",
     "createdAt": "2026-09-18T14:00:00.000Z"
   },
   {
@@ -2336,18 +2336,18 @@ const IIOT_WEEKS_7_8_9_QUESTIONS: Question[] = [
     "weekNumber": 9,
     "originalQuestionNumber": 1,
     "sourcePageNumber": 125,
-    "sourcePdfName": "NPTEL Assignment 9",
-    "questionText": "In industrial environments, how does Fog Computing prevent 'noisy' big data from crowding the central cloud network?",
+    "sourcePdfName": "Week 09 : Assignment 09",
+    "questionText": "How does fog computing prevent unnecessary noisy big data from crowding the cloud?",
     "options": [
-      "By transmitting every raw sensor reading without inspection",
-      "Prior filtration and preprocessing of raw data at the edge/fog tier",
-      "Increasing the sampling frequency to gigahertz levels",
-      "Disconnecting all wireless nodes from the internet"
+      "By storing all raw data permanently in the cloud",
+      "By performing prior filtration at the edge",
+      "By disabling real-time control algorithms",
+      "By increasing the frequency of sensor transmission"
     ],
     "correctAnswerIndex": 1,
     "answerSource": "Manually Verified",
     "isApproved": true,
-    "explanation": "Fog computing applies prior filtration, anomaly scrubbing, and local preprocessing at edge nodes to prevent unrefined noisy streams from flooding the cloud.",
+    "explanation": "Fog computing performs prior filtration at the edge to prevent unnecessary noisy big data from crowding the cloud.",
     "createdAt": "2026-09-18T14:00:00.000Z"
   },
   {
@@ -2356,18 +2356,18 @@ const IIOT_WEEKS_7_8_9_QUESTIONS: Question[] = [
     "weekNumber": 9,
     "originalQuestionNumber": 2,
     "sourcePageNumber": 126,
-    "sourcePdfName": "NPTEL Assignment 9",
-    "questionText": "Which key capability does a Fog-based industrial computing platform offer that traditional remote cloud servers cannot guarantee for mission-critical manufacturing?",
+    "sourcePdfName": "Week 09 : Assignment 09",
+    "questionText": "Which capability is provided by the fog-based industrial platform?",
     "options": [
-      "Merging real-time and non-real-time workloads with deterministic low-latency execution",
-      "Infinite physical disk storage on a single microcontroller",
-      "Free unlimited cellular bandwidth worldwide",
-      "Immunity to physical power outages without batteries"
+      "Merging real-time and non-real-time workloads",
+      "Restricting the platform to non-real-time workloads",
+      "Transmitting all sensor data without processing",
+      "Eliminating control of IoT endpoints"
     ],
     "correctAnswerIndex": 0,
     "answerSource": "Manually Verified",
     "isApproved": true,
-    "explanation": "Fog platforms can co-locate deterministic real-time sub-millisecond control alongside soft real-time data aggregation, which remote cloud servers cannot guarantee over WAN links.",
+    "explanation": "Fog-based industrial platforms provide the capability of merging real-time and non-real-time workloads.",
     "createdAt": "2026-09-18T14:00:00.000Z"
   },
   {
@@ -2376,18 +2376,18 @@ const IIOT_WEEKS_7_8_9_QUESTIONS: Question[] = [
     "weekNumber": 9,
     "originalQuestionNumber": 3,
     "sourcePageNumber": 127,
-    "sourcePdfName": "NPTEL Assignment 9",
-    "questionText": "Which company provides an edge-node software solution designed to integrate heterogeneous industrial equipment, PLCs, and field protocols?",
+    "sourcePdfName": "Week 09 : Assignment 09",
+    "questionText": "Which fog-platform provider offers an edge-node software solution that supports any protocol, any PLC, and any hardware?",
     "options": [
-      "Uber Technologies",
-      "Netflix Media",
-      "Twitter Inc.",
+      "FogHorn",
+      "Sonm",
+      "Crosser",
       "Nebbiolo Technologies"
     ],
-    "correctAnswerIndex": 3,
+    "correctAnswerIndex": 2,
     "answerSource": "Manually Verified",
     "isApproved": true,
-    "explanation": "Nebbiolo Technologies specializes in edge and fog software nodes that bridge disparate industrial controllers, PLCs, and protocols into modern computing tiers.",
+    "explanation": "Crosser provides an edge-node software solution that supports any protocol, any PLC, and any hardware.",
     "createdAt": "2026-09-18T14:00:00.000Z"
   },
   {
@@ -2396,18 +2396,18 @@ const IIOT_WEEKS_7_8_9_QUESTIONS: Question[] = [
     "weekNumber": 9,
     "originalQuestionNumber": 4,
     "sourcePageNumber": 128,
-    "sourcePdfName": "NPTEL Assignment 9",
-    "questionText": "What is the purpose of the '%in%' operator in the R programming language when used for IIoT data analysis?",
+    "sourcePdfName": "Week 09 : Assignment 09",
+    "questionText": "What is the purpose of the %in% special operator in R?",
     "options": [
-      "To multiply two large matrices",
-      "To check whether elements of the first vector are contained within a second vector",
-      "To define an inline lambda function",
-      "To import a C++ library into the workspace"
+      "To create a series of numbers for a vector",
+      "To check whether an element belongs to a vector",
+      "To perform integer division",
+      "To assign a value globally"
     ],
     "correctAnswerIndex": 1,
     "answerSource": "Manually Verified",
     "isApproved": true,
-    "explanation": "In R, `%in%` is a vector matching operator that returns a boolean vector indicating whether each element of the left-hand operand is found in the right-hand operand.",
+    "explanation": "In R, %in% checks whether an element belongs to a vector.",
     "createdAt": "2026-09-18T14:00:00.000Z"
   },
   {
@@ -2416,18 +2416,18 @@ const IIOT_WEEKS_7_8_9_QUESTIONS: Question[] = [
     "weekNumber": 9,
     "originalQuestionNumber": 5,
     "sourcePageNumber": 129,
-    "sourcePdfName": "NPTEL Assignment 9",
-    "questionText": "Which validation method is commonly demonstrated in machine learning workflows using R to assess model generalization across industrial datasets?",
+    "sourcePdfName": "Week 09 : Assignment 09",
+    "questionText": "Which validation method is used in the demonstrated R machine-learning execution process to estimate model accuracy?",
     "options": [
-      "Zero-shot estimation without training data",
-      "Single-sample evaluation",
+      "Two-fold cross-validation",
+      "Leave-one-out validation",
       "Ten-fold cross-validation",
-      "Manual guess-and-check"
+      "Validation without data partitioning"
     ],
     "correctAnswerIndex": 2,
     "answerSource": "Manually Verified",
     "isApproved": true,
-    "explanation": "Ten-fold cross-validation is standard for evaluating predictive model generalization by repeatedly training on 90% and validating on 10% across 10 folds.",
+    "explanation": "Ten-fold cross-validation is used in the demonstrated R execution process.",
     "createdAt": "2026-09-18T14:00:00.000Z"
   },
   {
@@ -2436,18 +2436,18 @@ const IIOT_WEEKS_7_8_9_QUESTIONS: Question[] = [
     "weekNumber": 9,
     "originalQuestionNumber": 6,
     "sourcePageNumber": 130,
-    "sourcePdfName": "NPTEL Assignment 9",
-    "questionText": "In the Julia programming language, which function is used to create an associative collection of key-value pairs (hash map)?",
+    "sourcePdfName": "Week 09 : Assignment 09",
+    "questionText": "Which Julia function is used to create a dictionary?",
     "options": [
+      "Tuple()",
       "Array()",
-      "Set()",
-      "Dict()",
-      "Tuple()"
+      "Dictn()",
+      "Dict()"
     ],
-    "correctAnswerIndex": 2,
+    "correctAnswerIndex": 3,
     "answerSource": "Manually Verified",
     "isApproved": true,
-    "explanation": "In Julia, `Dict()` creates an associative dictionary collection storing key-value pairs.",
+    "explanation": "Dict() is the Julia function used to create a dictionary.",
     "createdAt": "2026-09-18T14:00:00.000Z"
   },
   {
@@ -2456,18 +2456,18 @@ const IIOT_WEEKS_7_8_9_QUESTIONS: Question[] = [
     "weekNumber": 9,
     "originalQuestionNumber": 7,
     "sourcePageNumber": 131,
-    "sourcePdfName": "NPTEL Assignment 9",
-    "questionText": "Which technique eliminates duplicated and repetitive sensor packets in IIoT networks through detection, filtering, and data compression?",
+    "sourcePdfName": "Week 09 : Assignment 09",
+    "questionText": "During data preprocessing, which operation eliminates repeated data through detection, filtering, and compression?",
     "options": [
-      "Data amplification",
-      "Packet duplication",
+      "Data integration",
+      "Data cleaning",
       "Redundancy mitigation",
-      "Unicast flooding"
+      "Data visualization"
     ],
     "correctAnswerIndex": 2,
     "answerSource": "Manually Verified",
     "isApproved": true,
-    "explanation": "Redundancy mitigation identifies, filters, and compresses duplicate telemetry data to prevent bandwidth waste in sensor networks.",
+    "explanation": "Redundancy mitigation eliminates repeated data through detection, filtering, and compression.",
     "createdAt": "2026-09-18T14:00:00.000Z"
   },
   {
@@ -2476,18 +2476,18 @@ const IIOT_WEEKS_7_8_9_QUESTIONS: Question[] = [
     "weekNumber": 9,
     "originalQuestionNumber": 8,
     "sourcePageNumber": 132,
-    "sourcePdfName": "NPTEL Assignment 9",
-    "questionText": "In the Apache Hadoop architecture, which core component manages computing resources (CPU, memory, storage) and schedules applications across the cluster?",
+    "sourcePdfName": "Week 09 : Assignment 09",
+    "questionText": "Which Hadoop component assigns CPU, memory, and storage resources to applications running on a Hadoop cluster?",
     "options": [
-      "Hadoop Distributed File System (HDFS)",
-      "MapReduce v1",
-      "Flume",
-      "Yet Another Resource Negotiator (YARN)"
+      "Hadoop Common",
+      "Hadoop Distributed File System",
+      "MapReduce",
+      "Yet Another Resource Negotiator"
     ],
     "correctAnswerIndex": 3,
     "answerSource": "Manually Verified",
     "isApproved": true,
-    "explanation": "YARN (Yet Another Resource Negotiator) manages cluster resources and schedules execution across distributed nodes in Apache Hadoop.",
+    "explanation": "Yet Another Resource Negotiator (YARN) assigns CPU, memory, and storage resources.",
     "createdAt": "2026-09-18T14:00:00.000Z"
   },
   {
@@ -2496,18 +2496,18 @@ const IIOT_WEEKS_7_8_9_QUESTIONS: Question[] = [
     "weekNumber": 9,
     "originalQuestionNumber": 9,
     "sourcePageNumber": 133,
-    "sourcePdfName": "NPTEL Assignment 9",
-    "questionText": "What is a major advantage of integrating MongoDB with Hadoop for industrial analytics?",
+    "sourcePdfName": "Week 09 : Assignment 09",
+    "questionText": "Which of the following is listed as an application of integrating MongoDB with Hadoop?",
     "options": [
-      "Batch aggregation and processing of large volumes of semi-structured document data",
-      "Completely replaces the need for network interface cards",
-      "Forces all data to be stored strictly in fixed-schema SQL tables",
-      "Eliminates the need for RAM in all computers"
+      "Batch aggregation",
+      "Physical network cabling",
+      "Sensor manufacturing",
+      "Firewall configuration"
     ],
     "correctAnswerIndex": 0,
     "answerSource": "Manually Verified",
     "isApproved": true,
-    "explanation": "Integrating MongoDB with Hadoop enables scalable MapReduce processing and batch aggregation over extensive collections of semi-structured JSON/BSON document data.",
+    "explanation": "Batch aggregation is listed as an application of integrating MongoDB with Hadoop.",
     "createdAt": "2026-09-18T14:00:00.000Z"
   },
   {
@@ -2516,18 +2516,18 @@ const IIOT_WEEKS_7_8_9_QUESTIONS: Question[] = [
     "weekNumber": 9,
     "originalQuestionNumber": 10,
     "sourcePageNumber": 134,
-    "sourcePdfName": "NPTEL Assignment 9",
-    "questionText": "In the BCube data-center network topology, which routing mechanism is utilized for efficient packet forwarding without intermediate routing tables?",
+    "sourcePdfName": "Week 09 : Assignment 09",
+    "questionText": "Which source-routing protocol is used by the BCube data-center network topology?",
     "options": [
-      "Open Shortest Path First (OSPF)",
-      "BCube Source Routing (BSR)",
-      "Border Gateway Protocol (BGP)",
-      "Spanning Tree Protocol (STP)"
+      "Border Gateway Protocol",
+      "BCube Source Routing",
+      "Open Shortest Path First",
+      "Spanning Tree Protocol"
     ],
     "correctAnswerIndex": 1,
     "answerSource": "Manually Verified",
     "isApproved": true,
-    "explanation": "BCube Source Routing (BSR) embeds the complete path in packet headers at the source host, eliminating routing state and complex lookup tables in switches.",
+    "explanation": "BCube Source Routing is used by the BCube data-center network topology.",
     "createdAt": "2026-09-18T14:00:00.000Z"
   },
   {
@@ -2536,18 +2536,18 @@ const IIOT_WEEKS_7_8_9_QUESTIONS: Question[] = [
     "weekNumber": 9,
     "originalQuestionNumber": 11,
     "sourcePageNumber": 135,
-    "sourcePdfName": "NPTEL Assignment 9",
-    "questionText": "Why does the inbound network bandwidth demand increase dramatically in an IIoT data center compared to traditional web data centers?",
+    "sourcePdfName": "Week 09 : Assignment 09",
+    "questionText": "Why may an IIoT-based data center require an increase in inbound network bandwidth?",
     "options": [
-      "Influx of high-frequency small telemetry messages continuously transmitted by millions of distributed sensors",
-      "Users downloading full-length 4K movies from sensors",
-      "Nodes requiring human captcha verification for every packet",
-      "Sensors requiring continuous video conference calls"
+      "IIoT devices generate a bulk amount of small messages containing sensor data",
+      "IIoT completely removes the need for data transmission",
+      "Sensor data is transmitted only once during deployment",
+      "Industrial devices communicate exclusively with one another without a data center"
     ],
     "correctAnswerIndex": 0,
     "answerSource": "Manually Verified",
     "isApproved": true,
-    "explanation": "IIoT data centers receive an enormous influx of continuous, high-frequency, small sensor telemetry packets from millions of connected field devices.",
+    "explanation": "Inbound bandwidth demand increases because IIoT devices generate a bulk amount of small messages containing sensor data.",
     "createdAt": "2026-09-18T14:00:00.000Z"
   },
   {
@@ -2556,18 +2556,18 @@ const IIOT_WEEKS_7_8_9_QUESTIONS: Question[] = [
     "weekNumber": 9,
     "originalQuestionNumber": 12,
     "sourcePageNumber": 136,
-    "sourcePdfName": "NPTEL Assignment 9",
-    "questionText": "What is the primary operational advantage of a Software-Defined Data Centre (SDDC) in smart industrial operations?",
+    "sourcePdfName": "Week 09 : Assignment 09",
+    "questionText": "Which of the following is an advantage of a Software-Defined Data Centre?",
     "options": [
-      "Hardware is glued together so it can never be altered",
-      "Physical cables must be manually rewired for every new job",
-      "Automated, programmable infrastructure and centralized workload management",
-      "Requires zero electricity to operate"
+      "Static workload management",
+      "Permanent coupling of software with hardware",
+      "Programmable infrastructure and workload management",
+      "Elimination of network virtualization"
     ],
     "correctAnswerIndex": 2,
     "answerSource": "Manually Verified",
     "isApproved": true,
-    "explanation": "SDDC abstracts networking, storage, and compute into fully programmable, policy-driven software resources that dynamically adjust to industrial application demands.",
+    "explanation": "Programmable infrastructure and workload management is an advantage of a Software-Defined Data Centre.",
     "createdAt": "2026-09-18T14:00:00.000Z"
   },
   {
@@ -2576,18 +2576,18 @@ const IIOT_WEEKS_7_8_9_QUESTIONS: Question[] = [
     "weekNumber": 9,
     "originalQuestionNumber": 13,
     "sourcePageNumber": 137,
-    "sourcePdfName": "NPTEL Assignment 9",
-    "questionText": "In Software-Defined Networking (SDN), how can flow table size be minimized when multiple forwarding rules share matching patterns?",
+    "sourcePdfName": "Week 09 : Assignment 09",
+    "questionText": "When an SDN forwarding device has insufficient rule capacity, how can two existing flow rules be converted into a single rule?",
     "options": [
-      "Wildcard-based rule combination",
-      "Duplicating every flow entry 100 times",
-      "Deleting all rules and shutting down ports",
-      "Hardcoding MAC addresses into hardware ASIC registers"
+      "By applying wildcard-based rule combination",
+      "By disconnecting the SDN controller",
+      "By disabling the forwarding device",
+      "By changing TCP into UDP"
     ],
     "correctAnswerIndex": 0,
     "answerSource": "Manually Verified",
     "isApproved": true,
-    "explanation": "Wildcard-based rule aggregation combines multiple specific flow entries sharing common bit patterns into a single TCAM rule using bitmasks.",
+    "explanation": "Applying wildcard-based rule combination converts multiple matching rules into a single rule.",
     "createdAt": "2026-09-18T14:00:00.000Z"
   },
   {
@@ -2596,18 +2596,18 @@ const IIOT_WEEKS_7_8_9_QUESTIONS: Question[] = [
     "weekNumber": 9,
     "originalQuestionNumber": 14,
     "sourcePageNumber": 138,
-    "sourcePdfName": "NPTEL Assignment 9",
-    "questionText": "In an SDN-enabled industrial network, which mechanism enables dynamic adaptation to changing traffic patterns and quality-of-service demands?",
+    "sourcePdfName": "Week 09 : Assignment 09",
+    "questionText": "How can SDN meet the dynamically changing forwarding requirements of IIoT sensor data?",
     "options": [
-      "Static DIP switches on physical routers",
-      "Centralized rule-based forwarding policies updated programmatically by the controller",
-      "Power cycling the network core every 5 minutes",
-      "Reverting to analog carrier frequencies"
+      "By assigning the same priority to every type of data permanently",
+      "By using rule-based forwarding policies",
+      "By preventing the controller from updating forwarding rules",
+      "By transmitting data without considering the real-time situation"
     ],
     "correctAnswerIndex": 1,
     "answerSource": "Manually Verified",
     "isApproved": true,
-    "explanation": "The centralized SDN controller programmatically installs and updates rule-based forwarding policies on OpenFlow switches in real time based on network conditions.",
+    "explanation": "SDN meets dynamic forwarding requirements by using rule-based forwarding policies.",
     "createdAt": "2026-09-18T14:00:00.000Z"
   },
   {
@@ -2616,18 +2616,18 @@ const IIOT_WEEKS_7_8_9_QUESTIONS: Question[] = [
     "weekNumber": 9,
     "originalQuestionNumber": 15,
     "sourcePageNumber": 139,
-    "sourcePdfName": "NPTEL Assignment 9",
-    "questionText": "What constitutes Software-Defined Automation (SDA) in modern Industry 4.0 factories?",
+    "sourcePdfName": "Week 09 : Assignment 09",
+    "questionText": "Which statement best describes Software-Defined Automation?",
     "options": [
-      "Replacing all software with manual hand cranks and levers",
-      "Disabling all digital computers in production lines",
-      "Decoupling automation control software from proprietary hardware into a virtualized, real-time software platform",
-      "Storing production orders exclusively on printed paper cards"
+      "It uses only manually controlled physical equipment",
+      "It eliminates real-time control from industrial systems",
+      "It uses a virtualized platform for dynamic, real-time system control",
+      "It restricts control operations to sensors at Level 0"
     ],
     "correctAnswerIndex": 2,
     "answerSource": "Manually Verified",
     "isApproved": true,
-    "explanation": "Software-Defined Automation decouples control logic and soft-PLCs from rigid, vendor-locked hardware, running industrial automation software on virtualized, flexible compute platforms.",
+    "explanation": "Software-Defined Automation uses a virtualized platform for dynamic, real-time system control.",
     "createdAt": "2026-09-18T14:00:00.000Z"
   }
 ];

@@ -532,12 +532,11 @@ export function initializeMockSession(config: MockConfig): ActiveTestSession {
     }
 
     const safeCorrectIdx = Math.max(0, Math.min(q.correctAnswerIndex ?? 0, rawOptions.length - 1));
-    const originalCorrectOption = rawOptions[safeCorrectIdx];
 
     // Create indexed options to track correct answer post-shuffle
     const indexedOptions = rawOptions.slice(0, 4).map((optText, origIdx) => ({
       text: optText || `Option ${String.fromCharCode(65 + origIdx)}`,
-      isCorrect: origIdx === safeCorrectIdx || optText === originalCorrectOption,
+      isCorrect: origIdx === safeCorrectIdx,
     }));
 
     const shuffledOptions = shuffleArray(indexedOptions);
