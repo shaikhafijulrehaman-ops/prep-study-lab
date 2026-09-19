@@ -10,6 +10,8 @@ import {
   Sparkles,
   ShieldAlert,
   AlertCircle,
+  CheckCircle2,
+  XCircle,
 } from 'lucide-react';
 import { ActiveTestSession, saveActiveSession, finalizeAndSaveAttempt } from '../lib/storage';
 import { MockAttempt, User } from '../types';
@@ -326,9 +328,21 @@ export const MockTestView: React.FC<MockTestViewProps> = ({
               QUESTION {currentIndex + 1} OF {totalQuestions}
             </span>
             {currentItem.selectedOptionIndex !== null && (
-              <span className="text-[10px] uppercase font-mono tracking-wider px-2 py-0.5 rounded-full bg-[#EFF8FF] text-[#0284C7] border border-[#DCEAF5]">
-                Answered
-              </span>
+              isExam ? (
+                <span className="text-[10px] uppercase font-mono tracking-wider px-2.5 py-0.5 rounded-full bg-[#EFF8FF] text-[#0284C7] border border-[#DCEAF5] font-semibold">
+                  Answered
+                </span>
+              ) : currentItem.selectedOptionIndex === currentItem.correctOptionIndex ? (
+                <span className="text-[10px] uppercase font-mono tracking-wider px-2.5 py-0.5 rounded-full bg-emerald-50 text-emerald-700 border border-emerald-300 font-semibold flex items-center gap-1">
+                  <CheckCircle2 className="w-3 h-3 text-emerald-600" />
+                  Correct
+                </span>
+              ) : (
+                <span className="text-[10px] uppercase font-mono tracking-wider px-2.5 py-0.5 rounded-full bg-rose-50 text-rose-700 border border-rose-300 font-semibold flex items-center gap-1">
+                  <XCircle className="w-3 h-3 text-rose-600" />
+                  Incorrect
+                </span>
+              )
             )}
           </div>
 
@@ -366,14 +380,52 @@ export const MockTestView: React.FC<MockTestViewProps> = ({
             {currentItem.displayedOptions.map((optionText, optIndex) => {
               const letter = String.fromCharCode(65 + optIndex);
               const isSelected = currentItem.selectedOptionIndex === optIndex;
+              const hasAnswered = currentItem.selectedOptionIndex !== null;
+              const isOptionCorrect = currentItem.correctOptionIndex === optIndex;
 
-              // Styles: only distinguish selected vs unselected — no correctness feedback during test
+              // STYLES: MODE-SPECIFIC FEEDBACK
               let containerStyle = 'bg-white border-[#DCEAF5] text-[#334155] hover:bg-[#EFF8FF]/50 hover:border-sky-200 shadow-sm';
               let badgeStyle = 'bg-[#F1F5F9] text-[#64748B] border-[#E2E8F0]';
+              let statusBadge: React.ReactNode = null;
 
-              if (isSelected) {
-                containerStyle = 'bg-[#EFF8FF] border-[#38BDF8] text-[#0F172A] shadow-[0_4px_16px_rgba(56,189,248,0.18)]';
-                badgeStyle = 'bg-[#0284C7] text-white font-bold border-[#0284C7]';
+              if (isExam) {
+                // EXAM MODE: Strictly neutral selection — zero correctness leaked before final submission
+                if (isSelected) {
+                  containerStyle = 'bg-[#EFF8FF] border-[#38BDF8] text-[#0F172A] shadow-[0_4px_16px_rgba(56,189,248,0.18)]';
+                  badgeStyle = 'bg-[#0284C7] text-white font-bold border-[#0284C7]';
+                }
+              } else {
+                // PRACTICE / SAMPLE MODE: Immediate correctness feedback upon selection
+                if (hasAnswered) {
+                  if (isOptionCorrect) {
+                    // This option is the correct answer
+                    containerStyle = 'bg-emerald-50/90 border-emerald-500 text-emerald-950 shadow-[0_4px_16px_rgba(16,185,129,0.18)] ring-1 ring-emerald-500/40';
+                    badgeStyle = 'bg-emerald-600 text-white font-bold border-emerald-600';
+                    statusBadge = (
+                      <span className="shrink-0 px-2.5 py-1 rounded-full text-xs font-semibold bg-emerald-100 text-emerald-800 border border-emerald-300 flex items-center gap-1.5 shadow-xs">
+                        <CheckCircle2 className="w-3.5 h-3.5 text-emerald-600" />
+                        <span>Correct Answer</span>
+                      </span>
+                    );
+                  } else if (isSelected) {
+                    // Student selected this option and it is wrong
+                    containerStyle = 'bg-rose-50/90 border-rose-500 text-rose-950 shadow-[0_4px_16px_rgba(244,63,94,0.18)] ring-1 ring-rose-500/40';
+                    badgeStyle = 'bg-rose-600 text-white font-bold border-rose-600';
+                    statusBadge = (
+                      <span className="shrink-0 px-2.5 py-1 rounded-full text-xs font-semibold bg-rose-100 text-rose-800 border border-rose-300 flex items-center gap-1.5 shadow-xs">
+                        <XCircle className="w-3.5 h-3.5 text-rose-600" />
+                        <span>Incorrect</span>
+                      </span>
+                    );
+                  } else {
+                    // Other unselected incorrect options
+                    containerStyle = 'bg-white/70 border-[#E2E8F0] text-[#94A3B8] opacity-60';
+                    badgeStyle = 'bg-[#F1F5F9] text-[#94A3B8] border-[#E2E8F0]';
+                  }
+                } else if (isSelected) {
+                  containerStyle = 'bg-[#EFF8FF] border-[#38BDF8] text-[#0F172A] shadow-sm';
+                  badgeStyle = 'bg-[#0284C7] text-white font-bold border-[#0284C7]';
+                }
               }
 
               return (
@@ -382,21 +434,71 @@ export const MockTestView: React.FC<MockTestViewProps> = ({
                   onClick={() => handleSelectOption(optIndex)}
                   className={`w-full p-4 rounded-2xl border text-left transition-all duration-200 flex items-center justify-between gap-4 group ${containerStyle}`}
                 >
-                  <div className="flex items-center gap-4">
+                  <div className="flex items-center gap-4 min-w-0">
                     <span
-                      className={`w-7 h-7 rounded-xl font-mono text-xs flex items-center justify-center border transition-all ${badgeStyle}`}
+                      className={`w-7 h-7 rounded-xl font-mono text-xs flex items-center justify-center border transition-all shrink-0 ${badgeStyle}`}
                     >
                       {letter}
                     </span>
-                    <span className="text-sm sm:text-base font-normal leading-relaxed">
+                    <span className="text-sm sm:text-base font-normal leading-relaxed break-words">
                       {optionText}
                     </span>
                   </div>
-
+                  {statusBadge}
                 </button>
               );
             })}
           </div>
+
+          {/* Practice / Sample Mode: Immediate Feedback Banner & Explanation */}
+          {!isExam && currentItem.selectedOptionIndex !== null && (
+            <motion.div
+              initial={{ opacity: 0, y: 8 }}
+              animate={{ opacity: 1, y: 0 }}
+              className={`p-4 rounded-2xl border mt-4 space-y-2 ${
+                currentItem.selectedOptionIndex === currentItem.correctOptionIndex
+                  ? 'bg-emerald-50/90 border-emerald-200 text-emerald-950 shadow-xs'
+                  : 'bg-rose-50/90 border-rose-200 text-rose-950 shadow-xs'
+              }`}
+            >
+              <div className="flex items-center gap-2 font-semibold text-sm">
+                {currentItem.selectedOptionIndex === currentItem.correctOptionIndex ? (
+                  <>
+                    <CheckCircle2 className="w-4 h-4 text-emerald-600 shrink-0" />
+                    <span className="text-emerald-800">Correct Answer! Great job.</span>
+                  </>
+                ) : (
+                  <>
+                    <XCircle className="w-4 h-4 text-rose-600 shrink-0" />
+                    <span className="text-rose-800">
+                      Incorrect.{' '}
+                      {currentItem.correctOptionIndex !== null && (
+                        <span>
+                          The correct answer is{' '}
+                          <strong className="underline underline-offset-2">
+                            Option {String.fromCharCode(65 + currentItem.correctOptionIndex)}: {currentItem.displayedOptions[currentItem.correctOptionIndex]}
+                          </strong>.
+                        </span>
+                      )}
+                    </span>
+                  </>
+                )}
+              </div>
+
+              {currentItem.explanation && (
+                <div
+                  className={`text-xs leading-relaxed pt-2 border-t font-normal ${
+                    currentItem.selectedOptionIndex === currentItem.correctOptionIndex
+                      ? 'border-emerald-200/80 text-emerald-850'
+                      : 'border-rose-200/80 text-rose-850'
+                  }`}
+                >
+                  <span className="font-semibold">Explanation: </span>
+                  {currentItem.explanation}
+                </div>
+              )}
+            </motion.div>
+          )}
         </div>
 
         {/* Bottom Navigation Controls */}
@@ -467,22 +569,49 @@ export const MockTestView: React.FC<MockTestViewProps> = ({
 
                 {/* Status Legend */}
                 <div className="grid grid-cols-2 gap-2 text-[10px] font-mono mb-6">
-                  <div className="flex items-center gap-2 text-[#64748B]">
-                    <span className="w-2.5 h-2.5 rounded bg-[#0284C7]" />
-                    <span>Answered ({answeredCount})</span>
-                  </div>
-                  <div className="flex items-center gap-2 text-[#64748B]">
-                    <span className="w-2.5 h-2.5 rounded bg-amber-500" />
-                    <span>Marked ({markedCount})</span>
-                  </div>
-                  <div className="flex items-center gap-2 text-[#64748B]">
-                    <span className="w-2.5 h-2.5 rounded bg-slate-200" />
-                    <span>Unanswered ({unansweredCount})</span>
-                  </div>
-                  <div className="flex items-center gap-2 text-[#64748B]">
-                    <span className="w-2.5 h-2.5 rounded border border-[#0284C7]" />
-                    <span>Current</span>
-                  </div>
+                  {isExam ? (
+                    <>
+                      <div className="flex items-center gap-2 text-[#64748B]">
+                        <span className="w-2.5 h-2.5 rounded bg-[#0284C7]" />
+                        <span>Answered ({answeredCount})</span>
+                      </div>
+                      <div className="flex items-center gap-2 text-[#64748B]">
+                        <span className="w-2.5 h-2.5 rounded bg-amber-500" />
+                        <span>Marked ({markedCount})</span>
+                      </div>
+                      <div className="flex items-center gap-2 text-[#64748B]">
+                        <span className="w-2.5 h-2.5 rounded bg-slate-200" />
+                        <span>Unanswered ({unansweredCount})</span>
+                      </div>
+                      <div className="flex items-center gap-2 text-[#64748B]">
+                        <span className="w-2.5 h-2.5 rounded border border-[#0284C7]" />
+                        <span>Current</span>
+                      </div>
+                    </>
+                  ) : (
+                    <>
+                      <div className="flex items-center gap-2 text-[#64748B]">
+                        <span className="w-2.5 h-2.5 rounded bg-emerald-600" />
+                        <span>
+                          Correct ({session.items.filter((i) => i.selectedOptionIndex !== null && i.selectedOptionIndex === i.correctOptionIndex).length})
+                        </span>
+                      </div>
+                      <div className="flex items-center gap-2 text-[#64748B]">
+                        <span className="w-2.5 h-2.5 rounded bg-rose-600" />
+                        <span>
+                          Incorrect ({session.items.filter((i) => i.selectedOptionIndex !== null && i.selectedOptionIndex !== i.correctOptionIndex).length})
+                        </span>
+                      </div>
+                      <div className="flex items-center gap-2 text-[#64748B]">
+                        <span className="w-2.5 h-2.5 rounded bg-amber-500" />
+                        <span>Marked ({markedCount})</span>
+                      </div>
+                      <div className="flex items-center gap-2 text-[#64748B]">
+                        <span className="w-2.5 h-2.5 rounded bg-slate-200" />
+                        <span>Unanswered ({unansweredCount})</span>
+                      </div>
+                    </>
+                  )}
                 </div>
 
                 {/* Questions Grid */}
@@ -494,7 +623,14 @@ export const MockTestView: React.FC<MockTestViewProps> = ({
 
                     let bg = 'bg-slate-50 text-[#64748B] border-slate-200';
                     if (isAnswered) {
-                      bg = 'bg-[#EFF8FF] text-[#0284C7] border-[#38BDF8] font-semibold';
+                      if (!isExam) {
+                        const isCorrect = item.selectedOptionIndex === item.correctOptionIndex;
+                        bg = isCorrect
+                          ? 'bg-emerald-50 text-emerald-700 border-emerald-300 font-semibold'
+                          : 'bg-rose-50 text-rose-700 border-rose-300 font-semibold';
+                      } else {
+                        bg = 'bg-[#EFF8FF] text-[#0284C7] border-[#38BDF8] font-semibold';
+                      }
                     }
                     if (isMarked) {
                       bg = 'bg-amber-50 text-amber-700 border-amber-300 font-semibold';
