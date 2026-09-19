@@ -1736,18 +1736,18 @@ const IIOT_WEEKS_7_8_9_QUESTIONS: Question[] = [
     "weekNumber": 7,
     "originalQuestionNumber": 1,
     "sourcePageNumber": 95,
-    "sourcePdfName": "nptl 6 weeks.pdf",
-    "questionText": "In the Industrial IoT edge-to-cloud hierarchy, what is the primary role of Fog Computing compared to Edge Computing?",
+    "sourcePdfName": "NPTEL Assignment 7",
+    "questionText": "Which modulation technique is incorporated by LoRa technology?",
     "options": [
-      "Fog computing operates exclusively on cloud data centers with no local processing",
-      "Fog computing acts as an intermediate decentralized layer that orchestrates and aggregates computation between edge devices and the central cloud",
-      "Fog computing replaces all industrial actuators with software simulators",
-      "Fog computing requires analog signal lines without IP connectivity"
+      "Frequency Shift Keying (FSK)",
+      "Phase Shift Keying (PSK)",
+      "Chirp Spread Spectrum (CSS)",
+      "Amplitude Shift Keying (ASK)"
     ],
-    "correctAnswerIndex": 1,
+    "correctAnswerIndex": 2,
     "answerSource": "Manually Verified",
     "isApproved": true,
-    "explanation": "Fog computing acts as an architectural layer distributing computing, networking, and storage resources closer to the edge, orchestrating data between local edge devices and the centralized cloud.",
+    "explanation": "LoRa uses Chirp Spread Spectrum (CSS) modulation, maintaining low power characteristics while significantly increasing communication range and robustness against interference.",
     "createdAt": "2026-09-18T14:00:00.000Z"
   },
   {
@@ -1756,18 +1756,18 @@ const IIOT_WEEKS_7_8_9_QUESTIONS: Question[] = [
     "weekNumber": 7,
     "originalQuestionNumber": 2,
     "sourcePageNumber": 96,
-    "sourcePdfName": "nptl 6 weeks.pdf",
-    "questionText": "Which latency threshold is typically mandated for hard real-time closed-loop motion control in Cyber-Physical Manufacturing systems?",
+    "sourcePdfName": "NPTEL Assignment 7",
+    "questionText": "What is the maximum wireless throughput achieved by the SIGFOX network?",
     "options": [
-      "100 milliseconds to 1 second",
-      "Sub-millisecond to a few milliseconds (< 1ms to 10ms)",
-      "10 seconds to 30 seconds",
-      "500 milliseconds to 2 seconds"
+      "Up to 100 bits per second",
+      "Up to 100 bytes per second",
+      "Up to 140 bits per second",
+      "Up to 1000 bits per second"
     ],
-    "correctAnswerIndex": 1,
+    "correctAnswerIndex": 0,
     "answerSource": "Manually Verified",
     "isApproved": true,
-    "explanation": "Hard real-time motion control and robotic actuation in CPS require deterministic cycle times typically ranging from sub-milliseconds up to 10 milliseconds.",
+    "explanation": "SIGFOX achieves maximum wireless throughput of up to 100 bits per second (bps) using ultra-narrowband (UNB) technology.",
     "createdAt": "2026-09-18T14:00:00.000Z"
   },
   {
@@ -1776,18 +1776,18 @@ const IIOT_WEEKS_7_8_9_QUESTIONS: Question[] = [
     "weekNumber": 7,
     "originalQuestionNumber": 3,
     "sourcePageNumber": 97,
-    "sourcePdfName": "nptl 6 weeks.pdf",
-    "questionText": "What is Complex Event Processing (CEP) primarily used for at the industrial edge?",
+    "sourcePdfName": "NPTEL Assignment 7",
+    "questionText": "Depending on the device variant, what is the typical communication range for a Zigbee network?",
     "options": [
-      "Formatting raw electrical voltages into AC waveforms",
-      "Analyzing multiple streaming sensor events in real time to detect operational anomalies or emergency conditions",
-      "Archiving petabytes of static historical cold data onto magnetic tape",
-      "Generating analog clock pulses for microcontrollers"
+      "1 to 5 meters",
+      "10 to 100 meters",
+      "500 to 1000 meters",
+      "1 to 10 kilometers"
     ],
     "correctAnswerIndex": 1,
     "answerSource": "Manually Verified",
     "isApproved": true,
-    "explanation": "CEP processes continuous real-time streams of events across multiple industrial sensors to identify patterns, correlations, and anomalies without waiting for cloud batch processing.",
+    "explanation": "A Zigbee network typically covers a communication range of 10 to 100 meters depending on transmit power, device variant, and environmental obstacles.",
     "createdAt": "2026-09-18T14:00:00.000Z"
   },
   {
@@ -1796,18 +1796,18 @@ const IIOT_WEEKS_7_8_9_QUESTIONS: Question[] = [
     "weekNumber": 7,
     "originalQuestionNumber": 4,
     "sourcePageNumber": 98,
-    "sourcePdfName": "nptl 6 weeks.pdf",
-    "questionText": "Why are lightweight containerization technologies (such as Docker) widely adopted in industrial edge computing?",
+    "sourcePdfName": "NPTEL Assignment 7",
+    "questionText": "In a Zigbee network, which device is specifically responsible for relaying information to other nodes and can also run small-scale applications?",
     "options": [
-      "Containers eliminate the need for an underlying CPU",
-      "Containers allow microservices and analytics to be packaged, isolated, deployed, and updated reliably across heterogeneous edge hardware",
-      "Containers convert all digital protocols to analog current loops (4-20 mA)",
-      "Containers completely prevent any physical device maintenance"
+      "Coordinator",
+      "End device",
+      "Gateway",
+      "Router"
     ],
-    "correctAnswerIndex": 1,
+    "correctAnswerIndex": 3,
     "answerSource": "Manually Verified",
     "isApproved": true,
-    "explanation": "Containers provide resource-efficient encapsulation, portability, and isolation, allowing edge analytic microservices to run consistently across diverse industrial IPCs and gateways.",
+    "explanation": "In Zigbee architectures, a Router relays data packets to other nodes in the mesh topology and can also execute localized small-scale applications.",
     "createdAt": "2026-09-18T14:00:00.000Z"
   },
   {
@@ -1816,18 +1816,18 @@ const IIOT_WEEKS_7_8_9_QUESTIONS: Question[] = [
     "weekNumber": 7,
     "originalQuestionNumber": 5,
     "sourcePageNumber": 99,
-    "sourcePdfName": "nptl 6 weeks.pdf",
-    "questionText": "Which major advantage does edge data filtering and deduplication offer to industrial enterprises?",
+    "sourcePdfName": "NPTEL Assignment 7",
+    "questionText": "Which software is used to discover and configure Xbee modules before utilizing them for communication?",
     "options": [
-      "Drastic reduction of uplink bandwidth consumption and cloud storage overheads",
-      "Elimination of all local physical sensor hardware",
-      "Forced requirement for satellite communications only",
-      "Lowering the electrical voltage required to power factory machines"
+      "XCTU",
+      "Arduino IDE",
+      "NodeMCU Flasher",
+      "PuTTY"
     ],
     "correctAnswerIndex": 0,
     "answerSource": "Manually Verified",
     "isApproved": true,
-    "explanation": "Filtering high-frequency raw telemetry at the edge transmits only meaningful deviations or aggregations to the cloud, conserving costly enterprise network bandwidth and cloud ingress fees.",
+    "explanation": "Digi XCTU is the multi-platform configuration tool used to discover, configure, test, and update Digi XBee RF modules.",
     "createdAt": "2026-09-18T14:00:00.000Z"
   },
   {
@@ -1836,18 +1836,18 @@ const IIOT_WEEKS_7_8_9_QUESTIONS: Question[] = [
     "weekNumber": 7,
     "originalQuestionNumber": 6,
     "sourcePageNumber": 100,
-    "sourcePdfName": "nptl 6 weeks.pdf",
-    "questionText": "In the event of a total WAN/Internet link disruption, an autonomous industrial edge controller should:",
+    "sourcePdfName": "NPTEL Assignment 7",
+    "questionText": "Which type of IIoT analytics primarily focuses on answering the questions \"What already happened?\" and \"What is currently happening?\"",
     "options": [
-      "Immediately shut down all plant operations and discard all local sensor data",
-      "Continue deterministic local control loops and cache telemetry locally until connectivity is restored",
-      "Erase its own firmware to prevent eavesdropping",
-      "Transmit unencrypted broadcast packets across public networks"
+      "Diagnostic Analytics",
+      "Predictive Analytics",
+      "Descriptive Analytics",
+      "Prescriptive Analytics"
     ],
-    "correctAnswerIndex": 1,
+    "correctAnswerIndex": 2,
     "answerSource": "Manually Verified",
     "isApproved": true,
-    "explanation": "Edge autonomy ensures local cyber-physical control loops continue uninterrupted during network outages, while local store-and-forward buffers protect telemetry data.",
+    "explanation": "Descriptive analytics summarizes past historical performance and current real-time operations to answer what happened and what is happening now.",
     "createdAt": "2026-09-18T14:00:00.000Z"
   },
   {
@@ -1856,18 +1856,18 @@ const IIOT_WEEKS_7_8_9_QUESTIONS: Question[] = [
     "weekNumber": 7,
     "originalQuestionNumber": 7,
     "sourcePageNumber": 101,
-    "sourcePdfName": "nptl 6 weeks.pdf",
-    "questionText": "Which security model dictates that every edge node, user, and device must be explicitly authenticated and authorized regardless of its network location?",
+    "sourcePdfName": "NPTEL Assignment 7",
+    "questionText": "What is one of the most widely adopted middleware architectures in IIoT?",
     "options": [
-      "Perimeter-only boundary defense",
-      "Zero Trust Architecture (ZTA)",
-      "Open Gateway Protocol (OGP)",
-      "Unrestricted Broadcast Architecture"
+      "Service-Oriented Architecture (SOA)",
+      "Monolithic Architecture",
+      "Peer-to-Peer Only Architecture",
+      "Point-to-Point Architecture"
     ],
-    "correctAnswerIndex": 1,
+    "correctAnswerIndex": 0,
     "answerSource": "Manually Verified",
     "isApproved": true,
-    "explanation": "Zero Trust Architecture operates on the principle of 'never trust, always verify', requiring continuous authentication and micro-segmentation for all industrial edge nodes.",
+    "explanation": "Service-Oriented Architecture (SOA) is widely adopted in IIoT middleware because it enables heterogeneous devices and protocols to interact through standard services.",
     "createdAt": "2026-09-18T14:00:00.000Z"
   },
   {
@@ -1876,18 +1876,18 @@ const IIOT_WEEKS_7_8_9_QUESTIONS: Question[] = [
     "weekNumber": 7,
     "originalQuestionNumber": 8,
     "sourcePageNumber": 102,
-    "sourcePdfName": "nptl 6 weeks.pdf",
-    "questionText": "When integrating brownfield legacy factory equipment into an IIoT architecture, an Edge Gateway is essential because it:",
+    "sourcePdfName": "NPTEL Assignment 7",
+    "questionText": "In the FarmBeats system, which component is primarily responsible for weather-aware duty cycling and UAV flight planning?",
     "options": [
-      "Translates legacy fieldbus protocols (Modbus, Profibus, CAN) into modern secure IP protocols (OPC UA, MQTT)",
-      "Converts physical machines into pure virtual simulation models without hardware",
-      "Replaces all copper wiring with wireless satellite dishes",
-      "Changes the physical dimensions of factory motors"
+      "IoT Base Station",
+      "Cloud Processing Unit",
+      "Sensor Nodes",
+      "Farm Drones"
     ],
     "correctAnswerIndex": 0,
     "answerSource": "Manually Verified",
     "isApproved": true,
-    "explanation": "Edge gateways bridge legacy industrial protocols (Modbus, CAN, Profibus) with modern IoT protocols (OPC UA, MQTT, HTTPS), enabling brownfield digitization without replacing legacy machines.",
+    "explanation": "In Microsoft FarmBeats, the local IoT Base Station performs weather-aware energy duty cycling and automates flight trajectory planning for unmanned aerial vehicles (UAVs).",
     "createdAt": "2026-09-18T14:00:00.000Z"
   },
   {
@@ -1896,18 +1896,18 @@ const IIOT_WEEKS_7_8_9_QUESTIONS: Question[] = [
     "weekNumber": 7,
     "originalQuestionNumber": 9,
     "sourcePageNumber": 103,
-    "sourcePdfName": "nptl 6 weeks.pdf",
-    "questionText": "Which operating system characteristics are required for hard real-time edge computing in CPS?",
+    "sourcePdfName": "NPTEL Assignment 7",
+    "questionText": "In the video module of AR Drones for Precision Agriculture, what is the primary purpose of processing aerial images?",
     "options": [
-      "Non-preemptive multitasking with unpredictable garbage collection pauses",
-      "Deterministic interrupt response time, preemptive kernel, and bounded task scheduling",
-      "Single-threaded execution with no hardware timer access",
-      "Mandatory graphical user interface rendering on all execution paths"
+      "Measure soil temperature",
+      "Detect weeds and generate coordinates",
+      "Spray pesticides directly",
+      "Monitor worker movement"
     ],
     "correctAnswerIndex": 1,
     "answerSource": "Manually Verified",
     "isApproved": true,
-    "explanation": "Real-Time Operating Systems (RTOS) like FreeRTOS, VxWorks, or Zephyr provide deterministic interrupt latencies and bounded scheduling guarantees critical for CPS.",
+    "explanation": "In precision agriculture AR drone video analytics, aerial imagery is analyzed to detect weed patches and generate precise GPS coordinates for targeted intervention.",
     "createdAt": "2026-09-18T14:00:00.000Z"
   },
   {
@@ -1916,18 +1916,18 @@ const IIOT_WEEKS_7_8_9_QUESTIONS: Question[] = [
     "weekNumber": 7,
     "originalQuestionNumber": 10,
     "sourcePageNumber": 104,
-    "sourcePdfName": "nptl 6 weeks.pdf",
-    "questionText": "Which cryptographic protocol is the standard for securing edge-to-cloud telemetry over TCP connections?",
+    "sourcePdfName": "NPTEL Assignment 7",
+    "questionText": "In the iRobot-Factory architecture, which component uses artificial intelligence to perform predictive and operational analytics?",
     "options": [
-      "Telnet with MD5 checksums",
-      "Transport Layer Security (TLS 1.3) with mutual authentication (mTLS)",
-      "Unencrypted HTTP with basic authentication",
-      "Rot13 symmetric substitution"
+      "Physical Robotic Arm",
+      "Industrial Sensor Node",
+      "Cognitive Engine",
+      "Network Gateway"
     ],
-    "correctAnswerIndex": 1,
+    "correctAnswerIndex": 2,
     "answerSource": "Manually Verified",
     "isApproved": true,
-    "explanation": "mTLS provides both encryption in transit and cryptographic proof of identity for both the edge device and cloud endpoint using X.509 digital certificates.",
+    "explanation": "The Cognitive Engine in the iRobot-Factory framework applies artificial intelligence to deliver predictive operational analytics and automated decision making.",
     "createdAt": "2026-09-18T14:00:00.000Z"
   },
   {
@@ -1936,18 +1936,18 @@ const IIOT_WEEKS_7_8_9_QUESTIONS: Question[] = [
     "weekNumber": 7,
     "originalQuestionNumber": 11,
     "sourcePageNumber": 105,
-    "sourcePdfName": "nptl 6 weeks.pdf",
-    "questionText": "According to the OpenFog Reference Architecture, which dimension describes the horizontal scalability of fog computing across distributed nodes?",
+    "sourcePdfName": "NPTEL Assignment 7",
+    "questionText": "According to the Big Data framework for Smart Manufacturing, what is the key focus of Phase 2?",
     "options": [
-      "Hierarchical cloud-only nesting",
-      "Peer-to-peer inter-fog collaboration and mesh communication",
-      "Single centralized mainframe control",
-      "Linear point-to-point unswitched copper link"
+      "Data generation and collection from sensors",
+      "Physical storage of raw data files",
+      "Hardware decommissioning",
+      "Synthesis and analysis to build knowledge for decision making"
     ],
-    "correctAnswerIndex": 1,
+    "correctAnswerIndex": 3,
     "answerSource": "Manually Verified",
     "isApproved": true,
-    "explanation": "OpenFog Architecture supports peer-to-peer inter-fog node collaboration along horizontal planes in addition to vertical hierarchy towards the cloud.",
+    "explanation": "Phase 2 focuses on data synthesis, correlation, and analysis to transform aggregated factory floor data into actionable manufacturing intelligence.",
     "createdAt": "2026-09-18T14:00:00.000Z"
   },
   {
@@ -1956,18 +1956,18 @@ const IIOT_WEEKS_7_8_9_QUESTIONS: Question[] = [
     "weekNumber": 7,
     "originalQuestionNumber": 12,
     "sourcePageNumber": 106,
-    "sourcePdfName": "nptl 6 weeks.pdf",
-    "questionText": "What distinguishes an edge analytics inference pipeline from a centralized cloud training pipeline?",
+    "sourcePdfName": "NPTEL Assignment 7",
+    "questionText": "In a Smart Warehousing system, which module is responsible for analyzing real-time events and historical data to make automated operational decisions?",
     "options": [
-      "Edge pipelines train 100-billion parameter models from scratch continuously",
-      "Edge pipelines execute lightweight pre-trained models (quantized/pruned) for low-latency scoring and anomaly detection",
-      "Cloud pipelines can only process analog signals",
-      "Edge inference cannot process numerical data"
+      "Administrative module",
+      "RFID Reader",
+      "Barcode Scanner",
+      "Conveyor Belt Sensor"
     ],
-    "correctAnswerIndex": 1,
+    "correctAnswerIndex": 0,
     "answerSource": "Manually Verified",
     "isApproved": true,
-    "explanation": "Model training occurs on compute-intensive cloud GPU clusters, while optimized, quantized models (e.g. TinyML, ONNX, TensorRT) run inference locally at the edge.",
+    "explanation": "The Administrative module acts as the core controller, processing incoming telemetry alongside historical records to automate warehousing workflows.",
     "createdAt": "2026-09-18T14:00:00.000Z"
   },
   {
@@ -1976,18 +1976,18 @@ const IIOT_WEEKS_7_8_9_QUESTIONS: Question[] = [
     "weekNumber": 7,
     "originalQuestionNumber": 13,
     "sourcePageNumber": 107,
-    "sourcePdfName": "nptl 6 weeks.pdf",
-    "questionText": "Which metric best quantifies jitter in industrial edge networking?",
+    "sourcePdfName": "NPTEL Assignment 7",
+    "questionText": "What does the term \"Set Point\" refer to in an Industrial Control System (ICS)?",
     "options": [
-      "Total hard disk storage capacity",
-      "The statistical variation or standard deviation in packet arrival delay over time",
-      "The color temperature of the optical fiber indicator LED",
-      "The physical weight of the Ethernet cable"
+      "The point where the system shuts down permanently",
+      "Standard value of the process parameter for controlled operation",
+      "The highest error registered by a sensor",
+      "The physical location where the controller is mounted"
     ],
     "correctAnswerIndex": 1,
     "answerSource": "Manually Verified",
     "isApproved": true,
-    "explanation": "Jitter is the deviation in packet latency. In deterministic CPS control, minimal jitter is just as crucial as low mean latency.",
+    "explanation": "The Set Point (SP) is the desired or target reference value that a feedback control loop aims to maintain for a controlled industrial process variable.",
     "createdAt": "2026-09-18T14:00:00.000Z"
   },
   {
@@ -1996,18 +1996,18 @@ const IIOT_WEEKS_7_8_9_QUESTIONS: Question[] = [
     "weekNumber": 7,
     "originalQuestionNumber": 14,
     "sourcePageNumber": 108,
-    "sourcePdfName": "nptl 6 weeks.pdf",
-    "questionText": "What is the primary benefit of deploying local MQTT message brokers on industrial edge gateways?",
+    "sourcePdfName": "NPTEL Assignment 7",
+    "questionText": "Which statement correctly describes an Open Loop Control System?",
     "options": [
-      "Enables high-frequency local pub/sub messaging among factory cell devices independent of cloud availability",
-      "Eliminates the need for any IP addressing in the plant",
-      "Increases the latency of local actuator commands by 100x",
-      "Forces all sensor values to be binary booleans only"
+      "Control action depends entirely on the output measurement",
+      "Requires continuous feedback sensors to operate",
+      "Control action is completely independent of the output of the system",
+      "Automatically corrects disturbances in real time"
     ],
-    "correctAnswerIndex": 0,
+    "correctAnswerIndex": 2,
     "answerSource": "Manually Verified",
     "isApproved": true,
-    "explanation": "A local MQTT broker at the edge facilitates high-speed, decoupled communication between local machines, sensors, and HMIs without relying on external cloud latency or availability.",
+    "explanation": "An open-loop control system does not use feedback from the output to adjust control input; the control action operates completely independent of the system's output.",
     "createdAt": "2026-09-18T14:00:00.000Z"
   },
   {
@@ -2016,18 +2016,18 @@ const IIOT_WEEKS_7_8_9_QUESTIONS: Question[] = [
     "weekNumber": 7,
     "originalQuestionNumber": 15,
     "sourcePageNumber": 109,
-    "sourcePdfName": "nptl 6 weeks.pdf",
-    "questionText": "Which hardware mechanism provides cryptographic key storage and hardware-rooted attestation for edge computing appliances?",
+    "sourcePdfName": "NPTEL Assignment 7",
+    "questionText": "Which of the following is a primary component of a SCADA system responsible for interfacing directly with physical sensors and actuators?",
     "options": [
-      "Trusted Platform Module (TPM 2.0) or Secure Element",
-      "Dynamic Random Access Memory (DRAM)",
-      "Standard SATA Hard Disk drive spindle",
-      "Unshielded twisted pair copper wire"
+      "Enterprise Resource Planning (ERP) server",
+      "Human Machine Interface (HMI) screen",
+      "Database Historian",
+      "Remote Telemetry Units (RTUs)"
     ],
-    "correctAnswerIndex": 0,
+    "correctAnswerIndex": 3,
     "answerSource": "Manually Verified",
     "isApproved": true,
-    "explanation": "TPMs and hardware Secure Elements protect private keys against extraction and provide measured boot attestation verifying that edge firmware has not been tampered with.",
+    "explanation": "Remote Telemetry Units (RTUs) connect directly to field instruments, converting physical analog/digital signals into network communications for the SCADA master station.",
     "createdAt": "2026-09-18T14:00:00.000Z"
   },
   {
@@ -2036,18 +2036,18 @@ const IIOT_WEEKS_7_8_9_QUESTIONS: Question[] = [
     "weekNumber": 8,
     "originalQuestionNumber": 1,
     "sourcePageNumber": 110,
-    "sourcePdfName": "nptl 6 weeks.pdf",
-    "questionText": "What are the five sequential levels of the widely adopted 5C architecture for Cyber-Physical Systems (CPS)?",
+    "sourcePdfName": "NPTEL Assignment 8",
+    "questionText": "Which type of analytics is used to calculate the Remaining Useful Life (RUL) of industrial machinery typically over an hours-based timescale?",
     "options": [
-      "Connection, Conversion, Cyber, Cognition, and Configuration",
-      "Cloud, Compute, Cable, Copper, and Control",
-      "Client, Compiler, Cipher, Channel, and Cursor",
-      "Capture, Compress, Compute, Crash, and Clear"
+      "Descriptive analytics",
+      "Diagnostic analytics",
+      "Prescriptive analytics",
+      "Prognostic analytics"
     ],
-    "correctAnswerIndex": 0,
+    "correctAnswerIndex": 3,
     "answerSource": "Manually Verified",
     "isApproved": true,
-    "explanation": "The 5C architecture proposed by Lee et al. defines five tiers: Connection (Level 1), Conversion (Level 2), Cyber (Level 3), Cognition (Level 4), and Configuration (Level 5).",
+    "explanation": "Prognostic analytics assesses equipment health indicators to forecast Remaining Useful Life (RUL) and anticipate failures before they occur.",
     "createdAt": "2026-09-18T14:00:00.000Z"
   },
   {
@@ -2056,18 +2056,18 @@ const IIOT_WEEKS_7_8_9_QUESTIONS: Question[] = [
     "weekNumber": 8,
     "originalQuestionNumber": 2,
     "sourcePageNumber": 111,
-    "sourcePdfName": "nptl 6 weeks.pdf",
-    "questionText": "In the 5C CPS architecture, what is the core responsibility of Level 1 (Connection Level)?",
+    "sourcePdfName": "NPTEL Assignment 8",
+    "questionText": "Which of the following big data technologies is specifically designed as a real-time distributed stream processing tool capable of Complex Event Processing (CEP)?",
     "options": [
-      "Generating strategic business intelligence reports for executives",
-      "Acquiring reliable and accurate raw data from machines, smart sensors, and controllers",
-      "Predicting future financial market trends",
-      "Simulating 3D virtual reality factory tours"
+      "Apache Hadoop",
+      "Apache Hive",
+      "Apache Storm",
+      "Apache Pig"
     ],
-    "correctAnswerIndex": 1,
+    "correctAnswerIndex": 2,
     "answerSource": "Manually Verified",
     "isApproved": true,
-    "explanation": "Level 1 (Connection) focuses on seamless, noise-free sensor data acquisition, plug-and-play communication, and field telemetry gathering.",
+    "explanation": "Apache Storm is a distributed real-time stream computation system designed for high-throughput stream processing and Complex Event Processing (CEP).",
     "createdAt": "2026-09-18T14:00:00.000Z"
   },
   {
@@ -2076,18 +2076,18 @@ const IIOT_WEEKS_7_8_9_QUESTIONS: Question[] = [
     "weekNumber": 8,
     "originalQuestionNumber": 3,
     "sourcePageNumber": 112,
-    "sourcePdfName": "nptl 6 weeks.pdf",
-    "questionText": "What primary transformation occurs at Level 2 (Conversion Level) of the 5C CPS architecture?",
+    "sourcePdfName": "NPTEL Assignment 8",
+    "questionText": "What is the primary distinction between the Fuzzy C-Means (FCM) clustering algorithm and the K-Means clustering algorithm?",
     "options": [
-      "Raw sensor data is transformed into actionable information and health assessment metrics",
-      "Digital data is converted into analog telephone tones",
-      "Electric alternating current is converted to mechanical coal combustion",
-      "All text strings are translated into human spoken audio"
+      "FCM allows a data point to belong to more than one cluster with varying membership degrees",
+      "FCM works only with 1-dimensional categorical data",
+      "K-Means allows fuzzy probabilities while FCM enforces strict hard boundaries",
+      "FCM does not require specifying the number of clusters"
     ],
     "correctAnswerIndex": 0,
     "answerSource": "Manually Verified",
     "isApproved": true,
-    "explanation": "The Conversion level calculates condition indicators, health degradation indices, and remaining useful life (RUL) from raw sensor streams.",
+    "explanation": "Fuzzy C-Means (FCM) assigns soft membership degrees between 0 and 1 allowing points to belong to multiple clusters, unlike K-Means which enforces hard, mutually exclusive partitioning.",
     "createdAt": "2026-09-18T14:00:00.000Z"
   },
   {
@@ -2096,18 +2096,18 @@ const IIOT_WEEKS_7_8_9_QUESTIONS: Question[] = [
     "weekNumber": 8,
     "originalQuestionNumber": 4,
     "sourcePageNumber": 113,
-    "sourcePdfName": "nptl 6 weeks.pdf",
-    "questionText": "Which artifact functions as the information hub in Level 3 (Cyber Level) of the 5C architecture?",
+    "sourcePdfName": "NPTEL Assignment 8",
+    "questionText": "Which machine learning approach is used when the output variable to be predicted is a continuous real-valued number (such as temperature or pressure)?",
     "options": [
-      "A manual logbook kept on the shop floor",
-      "A Digital Twin model representing physical assets and performing fleet-level peer comparison",
-      "A standalone analog voltmeter",
-      "A physical magnetic compass"
+      "Classification",
+      "Clustering",
+      "Association Rule Mining",
+      "Regression"
     ],
-    "correctAnswerIndex": 1,
+    "correctAnswerIndex": 3,
     "answerSource": "Manually Verified",
     "isApproved": true,
-    "explanation": "Level 3 (Cyber) acts as the central information hub where Digital Twins aggregate machine information to perform comparative peer-to-peer fleet analytics.",
+    "explanation": "Regression models predict continuous numerical quantities, whereas classification models predict discrete categorical labels.",
     "createdAt": "2026-09-18T14:00:00.000Z"
   },
   {
@@ -2116,18 +2116,18 @@ const IIOT_WEEKS_7_8_9_QUESTIONS: Question[] = [
     "weekNumber": 8,
     "originalQuestionNumber": 5,
     "sourcePageNumber": 114,
-    "sourcePdfName": "nptl 6 weeks.pdf",
-    "questionText": "Level 4 (Cognition Level) in a Cyber-Physical System delivers which primary capability?",
+    "sourcePdfName": "NPTEL Assignment 8",
+    "questionText": "How does Reinforcement Learning (RL) fundamentally differ from Supervised Learning?",
     "options": [
-      "Generating comprehensive diagnostics, comparative expert insights, and prioritizing maintenance decisions for human operators",
-      "Replacing copper wires with plastic tubes",
-      "Deleting past test attempts to save hard drive space",
-      "Turning off all factory lights during night shifts"
+      "RL relies exclusively on pre-labeled ground truth datasets",
+      "RL utilizes a reward function that acts as feedback to the agent based on actions taken in an environment",
+      "RL does not interact with any environment or agent",
+      "RL only works with offline batch files"
     ],
-    "correctAnswerIndex": 0,
+    "correctAnswerIndex": 1,
     "answerSource": "Manually Verified",
     "isApproved": true,
-    "explanation": "The Cognition level presents synthesized diagnostic knowledge and decision-support optimization strategies to machine operators and management.",
+    "explanation": "Reinforcement Learning optimizes an agent's policy via feedback from a reward/penalty function interacting dynamically with an environment, without static pre-labeled supervisor targets.",
     "createdAt": "2026-09-18T14:00:00.000Z"
   },
   {
@@ -2136,18 +2136,18 @@ const IIOT_WEEKS_7_8_9_QUESTIONS: Question[] = [
     "weekNumber": 8,
     "originalQuestionNumber": 6,
     "sourcePageNumber": 115,
-    "sourcePdfName": "nptl 6 weeks.pdf",
-    "questionText": "What distinguishes Level 5 (Configuration Level) in the 5C architecture?",
+    "sourcePdfName": "NPTEL Assignment 8",
+    "questionText": "What is the key advantage of Deep Learning over traditional Machine Learning in industrial feature extraction?",
     "options": [
-      "It closes the feedback control loop by applying corrective supervisory actions back to the physical actuators and machines",
-      "It only prints paper spreadsheets for manual filing",
-      "It prevents any data from flowing back to physical hardware",
-      "It resets all passwords to blank strings"
+      "Deep learning requires manual handcrafted feature engineering by domain experts",
+      "Deep learning performs end-to-end learning by automatically extracting hierarchical features directly from raw data",
+      "Deep learning works only on small datasets with fewer than 10 rows",
+      "Deep learning never requires computational accelerators like GPUs"
     ],
-    "correctAnswerIndex": 0,
+    "correctAnswerIndex": 1,
     "answerSource": "Manually Verified",
     "isApproved": true,
-    "explanation": "Level 5 (Configuration) represents self-configuration and self-adaptation, sending supervisory feedback control decisions back to the physical world.",
+    "explanation": "Deep learning eliminates tedious manual feature extraction by automatically learning hierarchical representations directly from raw multi-sensor telemetry.",
     "createdAt": "2026-09-18T14:00:00.000Z"
   },
   {
@@ -2156,18 +2156,18 @@ const IIOT_WEEKS_7_8_9_QUESTIONS: Question[] = [
     "weekNumber": 8,
     "originalQuestionNumber": 7,
     "sourcePageNumber": 116,
-    "sourcePdfName": "nptl 6 weeks.pdf",
-    "questionText": "A Digital Twin differs from a standard 3D CAD computer model because a Digital Twin:",
+    "sourcePdfName": "NPTEL Assignment 8",
+    "questionText": "Which company developed the Collaborative Distributed Deep Learning platform that allows multiple industrial participants to train neural networks without sharing private raw data?",
     "options": [
-      "Has a continuous bidirectional or synchronized data link with its physical counterpart throughout its operational lifecycle",
-      "Cannot be rendered on a computer screen",
-      "Is always made of physical clay and wire",
-      "Does not model any physical dimensions"
+      "Intel",
+      "Cisco",
+      "Siemens",
+      "TOSHIBA"
     ],
-    "correctAnswerIndex": 0,
+    "correctAnswerIndex": 3,
     "answerSource": "Manually Verified",
     "isApproved": true,
-    "explanation": "A Digital Twin is a living digital replica that maintains real-time bidirectional synchronization with the state, telemetry, and environment of its physical asset.",
+    "explanation": "Toshiba developed a Collaborative Distributed Deep Learning framework that allows industrial enterprises to jointly train neural models without centralizing proprietary raw data.",
     "createdAt": "2026-09-18T14:00:00.000Z"
   },
   {
@@ -2176,18 +2176,18 @@ const IIOT_WEEKS_7_8_9_QUESTIONS: Question[] = [
     "weekNumber": 8,
     "originalQuestionNumber": 8,
     "sourcePageNumber": 117,
-    "sourcePdfName": "nptl 6 weeks.pdf",
-    "questionText": "What is Hardware-in-the-Loop (HIL) simulation used for in CPS engineering?",
+    "sourcePdfName": "NPTEL Assignment 8",
+    "questionText": "Which of the following is an example of an industrial Software as a Service (SaaS) application specifically used for machinery performance monitoring?",
     "options": [
-      "Testing real embedded controllers against mathematical real-time simulations of the physical plant environment",
-      "Replacing digital software with mechanical hand cranks",
-      "Calculating employee payroll taxes",
-      "Measuring ambient room acoustic volume"
+      "Industrial Machinery Catalyst from Siemens",
+      "Amazon EC2 Virtual Machines",
+      "Google Compute Engine",
+      "Microsoft Azure Blob Storage"
     ],
     "correctAnswerIndex": 0,
     "answerSource": "Manually Verified",
     "isApproved": true,
-    "explanation": "HIL tests actual embedded hardware controllers by connecting their I/O directly to a real-time computerized mathematical simulator mimicking the physical machine.",
+    "explanation": "Industrial Machinery Catalyst by Siemens is an industrial SaaS application for equipment performance tracking and lifecycle analytics, whereas EC2 and Compute Engine are IaaS.",
     "createdAt": "2026-09-18T14:00:00.000Z"
   },
   {
@@ -2196,18 +2196,18 @@ const IIOT_WEEKS_7_8_9_QUESTIONS: Question[] = [
     "weekNumber": 8,
     "originalQuestionNumber": 9,
     "sourcePageNumber": 118,
-    "sourcePdfName": "nptl 6 weeks.pdf",
-    "questionText": "Which characteristic defines a Smart Actuator in Industry 4.0?",
+    "sourcePdfName": "NPTEL Assignment 8",
+    "questionText": "Which cloud deployment model is characterized by combining two or more distinct cloud infrastructures (such as private and public) bound together by standardized technology?",
     "options": [
-      "Only responds to manually turned hand valves",
-      "Integrates microprocessors, sensors, self-diagnostic capabilities, and network communication alongside mechanical motion",
-      "Operates without any electrical or mechanical power",
-      "Requires constant mechanical rewinding"
+      "Community Cloud",
+      "Private Cloud",
+      "Hybrid Cloud",
+      "Public Cloud"
     ],
-    "correctAnswerIndex": 1,
+    "correctAnswerIndex": 2,
     "answerSource": "Manually Verified",
     "isApproved": true,
-    "explanation": "Smart actuators incorporate onboard processing, position/load sensors, digital bus connectivity, and self-calibration to provide closed-loop control and diagnostic feedback.",
+    "explanation": "A Hybrid Cloud composition combines distinct private and public cloud infrastructures connected via standardized data and application portability technologies.",
     "createdAt": "2026-09-18T14:00:00.000Z"
   },
   {
@@ -2216,18 +2216,18 @@ const IIOT_WEEKS_7_8_9_QUESTIONS: Question[] = [
     "weekNumber": 8,
     "originalQuestionNumber": 10,
     "sourcePageNumber": 119,
-    "sourcePdfName": "nptl 6 weeks.pdf",
-    "questionText": "In the context of RAMI 4.0 (Reference Architectural Model Industrie 4.0), what does the 'Asset Administration Shell' (AAS) represent?",
+    "sourcePdfName": "NPTEL Assignment 8",
+    "questionText": "Which industrial IoT platform, developed by General Electric, is specifically engineered to build and run industrial Digital Twin applications?",
     "options": [
-      "The standardized digital representation and API wrapper that exposes an asset's data and capabilities to Industry 4.0 networks",
-      "A physical metal enclosure that protects machinery from rain",
-      "A legal contract signed between industrial suppliers",
-      "A shell script used only for formatting floppy disks"
+      "Apple HomeKit",
+      "GE Predix",
+      "Android Things",
+      "Samsung SmartThings"
     ],
-    "correctAnswerIndex": 0,
+    "correctAnswerIndex": 1,
     "answerSource": "Manually Verified",
     "isApproved": true,
-    "explanation": "The Asset Administration Shell (AAS) is the digital standardized container describing the properties, capabilities, and submodels of an asset in the Industry 4.0 ecosystem.",
+    "explanation": "GE Predix is the industrial IoT platform engineered by General Electric to construct, deploy, and maintain industrial analytics and Digital Twins for physical assets.",
     "createdAt": "2026-09-18T14:00:00.000Z"
   },
   {
@@ -2236,18 +2236,18 @@ const IIOT_WEEKS_7_8_9_QUESTIONS: Question[] = [
     "weekNumber": 8,
     "originalQuestionNumber": 11,
     "sourcePageNumber": 120,
-    "sourcePdfName": "nptl 6 weeks.pdf",
-    "questionText": "Which cyber-physical vulnerability was famously exploited by the Stuxnet worm against industrial centrifuge controllers?",
+    "sourcePdfName": "NPTEL Assignment 8",
+    "questionText": "In the C3 Data Lake architecture, how is unstructured or schema-less industrial data primarily stored?",
     "options": [
-      "Overcharging industrial office laptops via USB cables",
-      "Intercepting and altering frequency converter commands while spoofing normal telemetry to monitoring operators",
-      "Physically cutting overhead high-voltage transmission lines",
-      "Flooding human email inboxes with marketing spam"
+      "Relational tables with strict primary keys",
+      "CSV text files only",
+      "Simple Object format",
+      "Magnetic tape drives"
     ],
-    "correctAnswerIndex": 1,
+    "correctAnswerIndex": 2,
     "answerSource": "Manually Verified",
     "isApproved": true,
-    "explanation": "Stuxnet manipulated PLC control code to alter motor centrifuge rotational speeds while falsifying recorded sensor telemetry to convince human operators all parameters were normal.",
+    "explanation": "In C3 Data Lake architectures, unstructured and multi-structured industrial streams are held in Simple Object storage formats for flexible analytical ingestion.",
     "createdAt": "2026-09-18T14:00:00.000Z"
   },
   {
@@ -2256,18 +2256,18 @@ const IIOT_WEEKS_7_8_9_QUESTIONS: Question[] = [
     "weekNumber": 8,
     "originalQuestionNumber": 12,
     "sourcePageNumber": 121,
-    "sourcePdfName": "nptl 6 weeks.pdf",
-    "questionText": "What are the three dimensional axes of the RAMI 4.0 reference architecture?",
+    "sourcePdfName": "NPTEL Assignment 8",
+    "questionText": "Which IIoT platform provides real-time tracking solutions through its 'Now' and 'Tracker' web and mobile application modules?",
     "options": [
-      "Hierarchy Levels, Life Cycle & Value Stream, and Layers",
-      "Width, Height, and Depth",
-      "Voltage, Current, and Resistance",
-      "Sensors, Actuators, and Cables"
+      "ThingSpeak",
+      "Blynk",
+      "Meshify",
+      "IFTTT"
     ],
-    "correctAnswerIndex": 0,
+    "correctAnswerIndex": 2,
     "answerSource": "Manually Verified",
     "isApproved": true,
-    "explanation": "RAMI 4.0 maps industrial systems along 3 axes: Layers (from Asset to Business), Life Cycle & Value Stream (IEC 62890), and Hierarchy Levels (IEC 62264 / IEC 61512).",
+    "explanation": "Meshify provides industrial IoT asset monitoring using 'Now' for live device tracking and 'Tracker' for historical telemetry review.",
     "createdAt": "2026-09-18T14:00:00.000Z"
   },
   {
@@ -2276,18 +2276,18 @@ const IIOT_WEEKS_7_8_9_QUESTIONS: Question[] = [
     "weekNumber": 8,
     "originalQuestionNumber": 13,
     "sourcePageNumber": 122,
-    "sourcePdfName": "nptl 6 weeks.pdf",
-    "questionText": "Which mathematical formalism is standard for modeling the continuous-time dynamics of physical processes in Cyber-Physical Systems?",
+    "sourcePdfName": "NPTEL Assignment 8",
+    "questionText": "In the lifecycle management of industrial IoT devices, which feature is critical when a device is retired, compromised, or permanently removed from service?",
     "options": [
-      "State-space differential equations: dx/dt = Ax + Bu, y = Cx + Du",
-      "Unordered associative word dictionaries",
-      "Simple boolean logic gates only",
-      "Pixel color matrices"
+      "Device decommission",
+      "Firmware update loop",
+      "Automatic over-voltage surge",
+      "Permanent broadcasting mode"
     ],
     "correctAnswerIndex": 0,
     "answerSource": "Manually Verified",
     "isApproved": true,
-    "explanation": "Continuous-time physical systems in CPS are classically formulated using state-space differential equations relating internal state variables x, control inputs u, and observable outputs y.",
+    "explanation": "Device decommissioning is vital to safely deregister the asset, revoke authorization certificates, and prevent unauthorized network access when hardware is retired.",
     "createdAt": "2026-09-18T14:00:00.000Z"
   },
   {
@@ -2296,18 +2296,18 @@ const IIOT_WEEKS_7_8_9_QUESTIONS: Question[] = [
     "weekNumber": 8,
     "originalQuestionNumber": 14,
     "sourcePageNumber": 123,
-    "sourcePdfName": "nptl 6 weeks.pdf",
-    "questionText": "What enables smart sensor self-calibration in modern CPS installations?",
+    "sourcePdfName": "NPTEL Assignment 8",
+    "questionText": "According to Sturm et al., which characteristic is essential for a Service Level Agreement (SLA) metric to be meaningful and enforceable in industrial cloud services?",
     "options": [
-      "Onboard microcontrollers using known baseline physical standards or cross-sensor algorithmic validation",
-      "Manually adjusting a mechanical potentiometer screw daily",
-      "Replacing the entire sensor assembly every 2 hours",
-      "Using exclusively plastic structural housings"
+      "Subjective",
+      "Informal",
+      "Quantifiable",
+      "Ambiguous"
     ],
-    "correctAnswerIndex": 0,
+    "correctAnswerIndex": 2,
     "answerSource": "Manually Verified",
     "isApproved": true,
-    "explanation": "Smart sensors leverage integrated DSPs and microcontrollers running auto-zeroing algorithms, cross-sensor consistency checks, and drift-compensation models.",
+    "explanation": "Sturm et al. state that SLA service parameters must be quantifiable so that service levels, availability, and compliance can be objectively evaluated.",
     "createdAt": "2026-09-18T14:00:00.000Z"
   },
   {
@@ -2316,18 +2316,18 @@ const IIOT_WEEKS_7_8_9_QUESTIONS: Question[] = [
     "weekNumber": 8,
     "originalQuestionNumber": 15,
     "sourcePageNumber": 124,
-    "sourcePdfName": "nptl 6 weeks.pdf",
-    "questionText": "In a Cyber-Physical Production System (CPPS), plug-and-produce modularity is made possible primarily through:",
+    "sourcePdfName": "NPTEL Assignment 8",
+    "questionText": "How does Fog Computing directly address the bandwidth and latency limitations of centralized Cloud Computing in large-scale IIoT?",
     "options": [
-      "Self-describing semantic machine models, standardized industrial interfaces, and automated service discovery",
-      "Hardcoding fixed IP addresses and point-to-point analog wiring harnesses",
-      "Mandatory manual rewiring by factory electricians whenever a job changes",
-      "Eliminating all communication protocols"
+      "By identifying useful data and reducing the amount of raw data transmitted over the wide area network to the cloud",
+      "By moving all cloud servers into mobile phone handsets",
+      "By replacing all wired fiber optics with 2G cellular",
+      "By completely eliminating the use of routers and switches"
     ],
     "correctAnswerIndex": 0,
     "answerSource": "Manually Verified",
     "isApproved": true,
-    "explanation": "Plug-and-produce relies on semantic interoperability (such as OPC UA Companion Specifications and AAS), allowing newly added production modules to advertise capabilities and reconfigure autonomously.",
+    "explanation": "Fog computing filters, aggregates, and analyzes telemetry close to edge devices, significantly reducing the volume of raw data that must traverse the WAN to the central cloud.",
     "createdAt": "2026-09-18T14:00:00.000Z"
   },
   {
@@ -2336,18 +2336,18 @@ const IIOT_WEEKS_7_8_9_QUESTIONS: Question[] = [
     "weekNumber": 9,
     "originalQuestionNumber": 1,
     "sourcePageNumber": 125,
-    "sourcePdfName": "nptl 6 weeks.pdf",
-    "questionText": "What core architectural feature makes OPC Unified Architecture (OPC UA, IEC 62541) platform-independent and firewall-friendly?",
+    "sourcePdfName": "NPTEL Assignment 9",
+    "questionText": "In industrial environments, how does Fog Computing prevent 'noisy' big data from crowding the central cloud network?",
     "options": [
-      "Binary/JSON encoding over standard TCP/IP or WebSockets, replacing legacy Microsoft DCOM dependencies",
-      "Strict requirement for Windows XP operating systems only",
-      "Exclusive operation over RS-232 serial cables without networking",
-      "Requirement to run solely on mainframe computers"
+      "By transmitting every raw sensor reading without inspection",
+      "Prior filtration and preprocessing of raw data at the edge/fog tier",
+      "Increasing the sampling frequency to gigahertz levels",
+      "Disconnecting all wireless nodes from the internet"
     ],
-    "correctAnswerIndex": 0,
+    "correctAnswerIndex": 1,
     "answerSource": "Manually Verified",
     "isApproved": true,
-    "explanation": "OPC UA eliminated legacy OPC DA's dependency on Microsoft DCOM by introducing platform-agnostic service-oriented architecture with secure binary TCP and HTTPS/WebSocket bindings.",
+    "explanation": "Fog computing applies prior filtration, anomaly scrubbing, and local preprocessing at edge nodes to prevent unrefined noisy streams from flooding the cloud.",
     "createdAt": "2026-09-18T14:00:00.000Z"
   },
   {
@@ -2356,18 +2356,18 @@ const IIOT_WEEKS_7_8_9_QUESTIONS: Question[] = [
     "weekNumber": 9,
     "originalQuestionNumber": 2,
     "sourcePageNumber": 126,
-    "sourcePdfName": "nptl 6 weeks.pdf",
-    "questionText": "Which communication model was introduced in OPC UA Part 14 to enable high-speed deterministic multicast for motion control and field-level controllers?",
+    "sourcePdfName": "NPTEL Assignment 9",
+    "questionText": "Which key capability does a Fog-based industrial computing platform offer that traditional remote cloud servers cannot guarantee for mission-critical manufacturing?",
     "options": [
-      "OPC UA PubSub (Publish-Subscribe)",
-      "Single-client synchronous polling",
-      "Manual batch file upload via FTP",
-      "Serial token ring ring-passing"
+      "Merging real-time and non-real-time workloads with deterministic low-latency execution",
+      "Infinite physical disk storage on a single microcontroller",
+      "Free unlimited cellular bandwidth worldwide",
+      "Immunity to physical power outages without batteries"
     ],
     "correctAnswerIndex": 0,
     "answerSource": "Manually Verified",
     "isApproved": true,
-    "explanation": "OPC UA PubSub enables one-to-many and many-to-many communication, combining with TSN Ethernet to achieve deterministic sub-millisecond motion control without client/server polling overhead.",
+    "explanation": "Fog platforms can co-locate deterministic real-time sub-millisecond control alongside soft real-time data aggregation, which remote cloud servers cannot guarantee over WAN links.",
     "createdAt": "2026-09-18T14:00:00.000Z"
   },
   {
@@ -2376,18 +2376,18 @@ const IIOT_WEEKS_7_8_9_QUESTIONS: Question[] = [
     "weekNumber": 9,
     "originalQuestionNumber": 3,
     "sourcePageNumber": 127,
-    "sourcePdfName": "nptl 6 weeks.pdf",
-    "questionText": "Which standard defines the Time-Aware Shaper (TAS) in IEEE 802.1 Time-Sensitive Networking (TSN)?",
+    "sourcePdfName": "NPTEL Assignment 9",
+    "questionText": "Which company provides an edge-node software solution designed to integrate heterogeneous industrial equipment, PLCs, and field protocols?",
     "options": [
-      "IEEE 802.1Qbv",
-      "IEEE 802.11b",
-      "IEEE 802.3u",
-      "IEEE 754"
+      "Uber Technologies",
+      "Netflix Media",
+      "Twitter Inc.",
+      "Nebbiolo Technologies"
     ],
-    "correctAnswerIndex": 0,
+    "correctAnswerIndex": 3,
     "answerSource": "Manually Verified",
     "isApproved": true,
-    "explanation": "IEEE 802.1Qbv defines the Time-Aware Shaper, which opens and closes transmission gates on queue buffers according to a synchronized global schedule to guarantee zero packet interference for scheduled traffic.",
+    "explanation": "Nebbiolo Technologies specializes in edge and fog software nodes that bridge disparate industrial controllers, PLCs, and protocols into modern computing tiers.",
     "createdAt": "2026-09-18T14:00:00.000Z"
   },
   {
@@ -2396,18 +2396,18 @@ const IIOT_WEEKS_7_8_9_QUESTIONS: Question[] = [
     "weekNumber": 9,
     "originalQuestionNumber": 4,
     "sourcePageNumber": 128,
-    "sourcePdfName": "nptl 6 weeks.pdf",
-    "questionText": "Which protocol standardizes microsecond-precision clock synchronization across IEEE 802.1 TSN bridges and nodes?",
+    "sourcePdfName": "NPTEL Assignment 9",
+    "questionText": "What is the purpose of the '%in%' operator in the R programming language when used for IIoT data analysis?",
     "options": [
-      "IEEE 802.1AS (Generalized Precision Time Protocol - gPTP)",
-      "NTP (Network Time Protocol) over standard public dialup",
-      "Manual wristwatch visual inspection",
-      "ICMP ping echo timestamping"
+      "To multiply two large matrices",
+      "To check whether elements of the first vector are contained within a second vector",
+      "To define an inline lambda function",
+      "To import a C++ library into the workspace"
     ],
-    "correctAnswerIndex": 0,
+    "correctAnswerIndex": 1,
     "answerSource": "Manually Verified",
     "isApproved": true,
-    "explanation": "IEEE 802.1AS is a profile of IEEE 1588 PTP that synchronizes network devices to a Grandmaster clock with sub-microsecond precision across heterogeneous media.",
+    "explanation": "In R, `%in%` is a vector matching operator that returns a boolean vector indicating whether each element of the left-hand operand is found in the right-hand operand.",
     "createdAt": "2026-09-18T14:00:00.000Z"
   },
   {
@@ -2416,18 +2416,18 @@ const IIOT_WEEKS_7_8_9_QUESTIONS: Question[] = [
     "weekNumber": 9,
     "originalQuestionNumber": 5,
     "sourcePageNumber": 129,
-    "sourcePdfName": "nptl 6 weeks.pdf",
-    "questionText": "Why cannot standard unmanaged commercial Ethernet (IEEE 802.3) alone satisfy hard real-time CPS requirements?",
+    "sourcePdfName": "NPTEL Assignment 9",
+    "questionText": "Which validation method is commonly demonstrated in machine learning workflows using R to assess model generalization across industrial datasets?",
     "options": [
-      "CSMA/CD arbitration, buffer queue contention, and non-deterministic queuing delays introduce unbounded jitter and packet loss",
-      "Commercial Ethernet cables cannot carry digital bits",
-      "Commercial Ethernet is strictly limited to 300 baud transmission speeds",
-      "Commercial Ethernet cannot interface with RJ45 connectors"
+      "Zero-shot estimation without training data",
+      "Single-sample evaluation",
+      "Ten-fold cross-validation",
+      "Manual guess-and-check"
     ],
-    "correctAnswerIndex": 0,
+    "correctAnswerIndex": 2,
     "answerSource": "Manually Verified",
     "isApproved": true,
-    "explanation": "Standard best-effort Ethernet allows unpredictable queuing delays, buffer overflows, and packet collisions, causing unbounded latency and jitter incompatible with hard real-time control.",
+    "explanation": "Ten-fold cross-validation is standard for evaluating predictive model generalization by repeatedly training on 90% and validating on 10% across 10 folds.",
     "createdAt": "2026-09-18T14:00:00.000Z"
   },
   {
@@ -2436,18 +2436,18 @@ const IIOT_WEEKS_7_8_9_QUESTIONS: Question[] = [
     "weekNumber": 9,
     "originalQuestionNumber": 6,
     "sourcePageNumber": 130,
-    "sourcePdfName": "nptl 6 weeks.pdf",
-    "questionText": "What key advantage does Data Distribution Service (DDS, OMG standard) provide in distributed Cyber-Physical Systems?",
+    "sourcePdfName": "NPTEL Assignment 9",
+    "questionText": "In the Julia programming language, which function is used to create an associative collection of key-value pairs (hash map)?",
     "options": [
-      "Data-centric publish-subscribe architecture with rich configurable Quality of Service (QoS) policies (deadline, reliability, durability, latency budget)",
-      "Strict requirement that all nodes must connect to one central database server",
-      "Elimination of all binary data transfer",
-      "Manual paper routing of all data requests"
+      "Array()",
+      "Set()",
+      "Dict()",
+      "Tuple()"
     ],
-    "correctAnswerIndex": 0,
+    "correctAnswerIndex": 2,
     "answerSource": "Manually Verified",
     "isApproved": true,
-    "explanation": "DDS is a peer-to-peer data-centric pub/sub middleware featuring over 20 configurable QoS parameters governing real-time delivery guarantees without broker bottlenecks.",
+    "explanation": "In Julia, `Dict()` creates an associative dictionary collection storing key-value pairs.",
     "createdAt": "2026-09-18T14:00:00.000Z"
   },
   {
@@ -2456,18 +2456,18 @@ const IIOT_WEEKS_7_8_9_QUESTIONS: Question[] = [
     "weekNumber": 9,
     "originalQuestionNumber": 7,
     "sourcePageNumber": 131,
-    "sourcePdfName": "nptl 6 weeks.pdf",
-    "questionText": "What constitutes the communication cycle in PROFINET IRT (Isochronous Real-Time)?",
+    "sourcePdfName": "NPTEL Assignment 9",
+    "questionText": "Which technique eliminates duplicated and repetitive sensor packets in IIoT networks through detection, filtering, and data compression?",
     "options": [
-      "A deterministic cycle divided into an Isochronous Real-Time phase (reserved time-slots) and an Open Communication phase (standard TCP/IP)",
-      "Random transmission without any scheduled periods",
-      "Only sending data when human operators press an emergency stop button",
-      "Strict transmission of data exactly once every 24 hours"
+      "Data amplification",
+      "Packet duplication",
+      "Redundancy mitigation",
+      "Unicast flooding"
     ],
-    "correctAnswerIndex": 0,
+    "correctAnswerIndex": 2,
     "answerSource": "Manually Verified",
     "isApproved": true,
-    "explanation": "PROFINET IRT splits every bus communication cycle into a scheduled deterministic phase reserved for motion control, and an open phase for standard TCP/IP traffic.",
+    "explanation": "Redundancy mitigation identifies, filters, and compresses duplicate telemetry data to prevent bandwidth waste in sensor networks.",
     "createdAt": "2026-09-18T14:00:00.000Z"
   },
   {
@@ -2476,18 +2476,18 @@ const IIOT_WEEKS_7_8_9_QUESTIONS: Question[] = [
     "weekNumber": 9,
     "originalQuestionNumber": 8,
     "sourcePageNumber": 132,
-    "sourcePdfName": "nptl 6 weeks.pdf",
-    "questionText": "In an OPC UA Information Model, nodes in the AddressSpace are interconnected using:",
+    "sourcePdfName": "NPTEL Assignment 9",
+    "questionText": "In the Apache Hadoop architecture, which core component manages computing resources (CPU, memory, storage) and schedules applications across the cluster?",
     "options": [
-      "Typed References (e.g., Organizes, HasComponent, HasProperty)",
-      "Simple unindexed comma-separated text values",
-      "Physical copper jumpers between circuits",
-      "Magnetic tape reels"
+      "Hadoop Distributed File System (HDFS)",
+      "MapReduce v1",
+      "Flume",
+      "Yet Another Resource Negotiator (YARN)"
     ],
-    "correctAnswerIndex": 0,
+    "correctAnswerIndex": 3,
     "answerSource": "Manually Verified",
     "isApproved": true,
-    "explanation": "OPC UA represents complex asset hierarchies as an object-oriented graph of Nodes interconnected by semantically defined References such as HasComponent or HasTypeDefinition.",
+    "explanation": "YARN (Yet Another Resource Negotiator) manages cluster resources and schedules execution across distributed nodes in Apache Hadoop.",
     "createdAt": "2026-09-18T14:00:00.000Z"
   },
   {
@@ -2496,18 +2496,18 @@ const IIOT_WEEKS_7_8_9_QUESTIONS: Question[] = [
     "weekNumber": 9,
     "originalQuestionNumber": 9,
     "sourcePageNumber": 133,
-    "sourcePdfName": "nptl 6 weeks.pdf",
-    "questionText": "Which single-pair cabling standard brings Ethernet directly to field-level smart sensors and actuators up to 1000 meters in Industry 4.0?",
+    "sourcePdfName": "NPTEL Assignment 9",
+    "questionText": "What is a major advantage of integrating MongoDB with Hadoop for industrial analytics?",
     "options": [
-      "Single-Pair Ethernet (SPE, 10BASE-T1L / IEEE 802.3cg)",
-      "Standard USB 2.0 cable",
-      "Fiber-optic trans-Atlantic undersea cables",
-      "Coaxial analog antenna cable"
+      "Batch aggregation and processing of large volumes of semi-structured document data",
+      "Completely replaces the need for network interface cards",
+      "Forces all data to be stored strictly in fixed-schema SQL tables",
+      "Eliminates the need for RAM in all computers"
     ],
     "correctAnswerIndex": 0,
     "answerSource": "Manually Verified",
     "isApproved": true,
-    "explanation": "Single-Pair Ethernet (10BASE-T1L) transmits 10 Mbps Ethernet and Power over Data Lines (PoDL) over a single twisted pair up to 1000m, replacing legacy 4-20mA loops.",
+    "explanation": "Integrating MongoDB with Hadoop enables scalable MapReduce processing and batch aggregation over extensive collections of semi-structured JSON/BSON document data.",
     "createdAt": "2026-09-18T14:00:00.000Z"
   },
   {
@@ -2516,18 +2516,18 @@ const IIOT_WEEKS_7_8_9_QUESTIONS: Question[] = [
     "weekNumber": 9,
     "originalQuestionNumber": 10,
     "sourcePageNumber": 134,
-    "sourcePdfName": "nptl 6 weeks.pdf",
-    "questionText": "How does Modbus TCP compare to OPC UA in modern Cyber-Physical systems?",
+    "sourcePdfName": "NPTEL Assignment 9",
+    "questionText": "In the BCube data-center network topology, which routing mechanism is utilized for efficient packet forwarding without intermediate routing tables?",
     "options": [
-      "Modbus TCP is a simple register-based protocol lacking native encryption and semantics, whereas OPC UA provides rich object modeling and end-to-end security",
-      "Modbus TCP has built-in quantum cryptography while OPC UA has no security",
-      "Modbus TCP only runs on wireless satellite links",
-      "Modbus TCP requires specialized supercomputers to decode 16-bit integers"
+      "Open Shortest Path First (OSPF)",
+      "BCube Source Routing (BSR)",
+      "Border Gateway Protocol (BGP)",
+      "Spanning Tree Protocol (STP)"
     ],
-    "correctAnswerIndex": 0,
+    "correctAnswerIndex": 1,
     "answerSource": "Manually Verified",
     "isApproved": true,
-    "explanation": "Modbus TCP is a lightweight legacy protocol reading/writing raw registers without native metadata or security, while OPC UA offers comprehensive semantic modeling, encryption, and authorization.",
+    "explanation": "BCube Source Routing (BSR) embeds the complete path in packet headers at the source host, eliminating routing state and complex lookup tables in switches.",
     "createdAt": "2026-09-18T14:00:00.000Z"
   },
   {
@@ -2536,18 +2536,18 @@ const IIOT_WEEKS_7_8_9_QUESTIONS: Question[] = [
     "weekNumber": 9,
     "originalQuestionNumber": 11,
     "sourcePageNumber": 135,
-    "sourcePdfName": "nptl 6 weeks.pdf",
-    "questionText": "Which framing mechanism in IEEE 802.1Qbu (Frame Preemption) ensures express real-time frames are not blocked by large non-critical frames?",
+    "sourcePdfName": "NPTEL Assignment 9",
+    "questionText": "Why does the inbound network bandwidth demand increase dramatically in an IIoT data center compared to traditional web data centers?",
     "options": [
-      "Interrupting the transmission of a preemptable frame midway and resuming it after the express frame has passed",
-      "Discarding all network frames permanently",
-      "Buffering express frames until midnight",
-      "Converting the Ethernet cable into an optical prism"
+      "Influx of high-frequency small telemetry messages continuously transmitted by millions of distributed sensors",
+      "Users downloading full-length 4K movies from sensors",
+      "Nodes requiring human captcha verification for every packet",
+      "Sensors requiring continuous video conference calls"
     ],
     "correctAnswerIndex": 0,
     "answerSource": "Manually Verified",
     "isApproved": true,
-    "explanation": "IEEE 802.1Qbu Frame Preemption and IEEE 802.3br allow an urgent real-time frame to preempt the transmission of a low-priority standard frame, minimizing store-and-forward latency.",
+    "explanation": "IIoT data centers receive an enormous influx of continuous, high-frequency, small sensor telemetry packets from millions of connected field devices.",
     "createdAt": "2026-09-18T14:00:00.000Z"
   },
   {
@@ -2556,18 +2556,18 @@ const IIOT_WEEKS_7_8_9_QUESTIONS: Question[] = [
     "weekNumber": 9,
     "originalQuestionNumber": 12,
     "sourcePageNumber": 136,
-    "sourcePdfName": "nptl 6 weeks.pdf",
-    "questionText": "In OPC UA security, how is message integrity and confidentiality guaranteed between client and server?",
+    "sourcePdfName": "NPTEL Assignment 9",
+    "questionText": "What is the primary operational advantage of a Software-Defined Data Centre (SDDC) in smart industrial operations?",
     "options": [
-      "Through Security Policies negotiating asymmetric RSA/ECC keys for mutual digital certificate validation and symmetric AES-GCM/CBC encryption",
-      "By sending all messages in plain text without checksums",
-      "By using only random port numbers",
-      "By asking users to manually verify every packet with a keypad"
+      "Hardware is glued together so it can never be altered",
+      "Physical cables must be manually rewired for every new job",
+      "Automated, programmable infrastructure and centralized workload management",
+      "Requires zero electricity to operate"
     ],
-    "correctAnswerIndex": 0,
+    "correctAnswerIndex": 2,
     "answerSource": "Manually Verified",
     "isApproved": true,
-    "explanation": "OPC UA defines formal Security Profiles utilizing X.509 PKI certificates for mutual authentication, digital signatures (SHA-256) for integrity, and AES encryption for confidentiality.",
+    "explanation": "SDDC abstracts networking, storage, and compute into fully programmable, policy-driven software resources that dynamically adjust to industrial application demands.",
     "createdAt": "2026-09-18T14:00:00.000Z"
   },
   {
@@ -2576,18 +2576,18 @@ const IIOT_WEEKS_7_8_9_QUESTIONS: Question[] = [
     "weekNumber": 9,
     "originalQuestionNumber": 13,
     "sourcePageNumber": 137,
-    "sourcePdfName": "nptl 6 weeks.pdf",
-    "questionText": "Which transport protocol is typically paired with MQTT when connecting constrained IoT devices over low-bandwidth cellular connections?",
+    "sourcePdfName": "NPTEL Assignment 9",
+    "questionText": "In Software-Defined Networking (SDN), how can flow table size be minimized when multiple forwarding rules share matching patterns?",
     "options": [
-      "TCP/IP with TLS",
-      "Unreliable raw UDP without transport reliability",
-      "AppleTalk",
-      "Analog AM radio modulation"
+      "Wildcard-based rule combination",
+      "Duplicating every flow entry 100 times",
+      "Deleting all rules and shutting down ports",
+      "Hardcoding MAC addresses into hardware ASIC registers"
     ],
     "correctAnswerIndex": 0,
     "answerSource": "Manually Verified",
     "isApproved": true,
-    "explanation": "MQTT is an application layer protocol operating over reliable byte-stream TCP connections, typically wrapped with TLS for secure remote edge-to-cloud telemetry.",
+    "explanation": "Wildcard-based rule aggregation combines multiple specific flow entries sharing common bit patterns into a single TCAM rule using bitmasks.",
     "createdAt": "2026-09-18T14:00:00.000Z"
   },
   {
@@ -2596,18 +2596,18 @@ const IIOT_WEEKS_7_8_9_QUESTIONS: Question[] = [
     "weekNumber": 9,
     "originalQuestionNumber": 14,
     "sourcePageNumber": 138,
-    "sourcePdfName": "nptl 6 weeks.pdf",
-    "questionText": "What is the primary role of a Centralized Network Controller (CNC) in a TSN-enabled industrial network?",
+    "sourcePdfName": "NPTEL Assignment 9",
+    "questionText": "In an SDN-enabled industrial network, which mechanism enables dynamic adaptation to changing traffic patterns and quality-of-service demands?",
     "options": [
-      "Calculating global transmission schedules (gate control lists) based on stream reservation requirements and deploying them to TSN bridges",
-      "Physically drilling holes in factory machine casings",
-      "Replacing network switches with passive hubs",
-      "Managing human resource employee vacation schedules"
+      "Static DIP switches on physical routers",
+      "Centralized rule-based forwarding policies updated programmatically by the controller",
+      "Power cycling the network core every 5 minutes",
+      "Reverting to analog carrier frequencies"
     ],
-    "correctAnswerIndex": 0,
+    "correctAnswerIndex": 1,
     "answerSource": "Manually Verified",
     "isApproved": true,
-    "explanation": "The Centralized Network Configuration (CNC) entity discovers topology, receives stream traffic requests from CUCs, and computes conflict-free Gate Control Lists for all IEEE 802.1Qbv bridges.",
+    "explanation": "The centralized SDN controller programmatically installs and updates rule-based forwarding policies on OpenFlow switches in real time based on network conditions.",
     "createdAt": "2026-09-18T14:00:00.000Z"
   },
   {
@@ -2616,18 +2616,18 @@ const IIOT_WEEKS_7_8_9_QUESTIONS: Question[] = [
     "weekNumber": 9,
     "originalQuestionNumber": 15,
     "sourcePageNumber": 139,
-    "sourcePdfName": "nptl 6 weeks.pdf",
-    "questionText": "Which architecture pattern decouples industrial producers from consumers, allowing dynamic multi-vendor interoperability across Industry 4.0 factories?",
+    "sourcePdfName": "NPTEL Assignment 9",
+    "questionText": "What constitutes Software-Defined Automation (SDA) in modern Industry 4.0 factories?",
     "options": [
-      "Publish-Subscribe (PubSub) event-driven messaging with semantic topic schemas",
-      "Hardcoded static point-to-point analog wiring harnesses",
-      "Proprietary vendor-locked serial communication loops",
-      "Single-master synchronous token-passing rings"
+      "Replacing all software with manual hand cranks and levers",
+      "Disabling all digital computers in production lines",
+      "Decoupling automation control software from proprietary hardware into a virtualized, real-time software platform",
+      "Storing production orders exclusively on printed paper cards"
     ],
-    "correctAnswerIndex": 0,
+    "correctAnswerIndex": 2,
     "answerSource": "Manually Verified",
     "isApproved": true,
-    "explanation": "PubSub decouples endpoints in space, time, and synchronization, enabling distributed sensors, controllers, and cloud applications to consume events dynamically without hardcoded dependencies.",
+    "explanation": "Software-Defined Automation decouples control logic and soft-PLCs from rigid, vendor-locked hardware, running industrial automation software on virtualized, flexible compute platforms.",
     "createdAt": "2026-09-18T14:00:00.000Z"
   }
 ];
