@@ -26,6 +26,7 @@ import {
   UserPlus,
   Users,
   UserX,
+  RefreshCw,
 } from 'lucide-react';
 import { Course, Question, ExtractedQuestionDraft, User, AnswerSource, MockAttempt } from '../../types';
 import {
@@ -48,6 +49,9 @@ import {
   getAllAttempts,
   fetchAttemptsFromSupabase,
   fetchAdminRecentAttemptsFromSupabase,
+  fetchCoursesFromSupabase,
+  fetchQuestionsFromSupabase,
+  deriveAvailableWeeks,
 } from '../../lib/storage';
 import { processFullPdf, HybridExtractionResult, extractTextFromPdf, parseMcqsFromText, parseAnswerKeySource, applyAnswerKeyMapping } from '../../lib/pdfParser';
 import { uploadPdfDocument } from '../../lib/pdfStorage';
@@ -196,9 +200,16 @@ export const AdminDashboard: React.FC<AdminDashboardProps> = ({
     setTimeout(() => setToastMessage(null), 4000);
   };
 
-  const refreshCourses = () => {
-    setCourses(getCourses(false));
+  const refreshCourses = async () => {
+    const fresh = await fetchCoursesFromSupabase(false);
+    setCourses(fresh);
+    return fresh;
   };
+
+  // Initial load from Supabase on mount
+  useEffect(() => {
+    refreshCourses();
+  }, []);
 
   // ----------------- Ingestion & Review State -----------------
   const [uploadStep, setUploadStep] = useState<'upload_pdf' | 'answer_key' | 'review'>('upload_pdf');
@@ -238,17 +249,48 @@ export const AdminDashboard: React.FC<AdminDashboardProps> = ({
 
   // Attempts monitor
   const [allAttempts, setAllAttempts] = useState<MockAttempt[]>([]);
+  const [isRefreshingAttempts, setIsRefreshingAttempts] = useState(false);
+
+  const refreshAttempts = async () => {
+    setIsRefreshingAttempts(true);
+    try {
+      const atts = await fetchAdminRecentAttemptsFromSupabase();
+      setAllAttempts(atts);
+    } catch (err) {
+      console.warn('Failed to refresh admin attempts:', err);
+    } finally {
+      setIsRefreshingAttempts(false);
+    }
+  };
 
   useEffect(() => {
     if (activeTab === 'attempts') {
-      fetchAdminRecentAttemptsFromSupabase().then((atts) => setAllAttempts(atts));
+      refreshAttempts();
+      const supabase = getSupabaseClient();
+      if (supabase) {
+        const channel = supabase
+          .channel('admin_attempts_realtime')
+          .on(
+            'postgres_changes',
+            { event: '*', schema: 'public', table: 'mock_attempts' },
+            () => {
+              fetchAdminRecentAttemptsFromSupabase().then((atts) => setAllAttempts(atts));
+            }
+          )
+          .subscribe();
+
+        return () => {
+          supabase.removeChannel(channel);
+        };
+      }
     }
   }, [activeTab]);
 
-  const refreshManualQuestions = (cId: string, wk?: number) => {
-    if (!cId) return;
-    const qs = getQuestions(cId, wk !== undefined ? wk : manualWeek, false);
+  const refreshManualQuestions = async (cId: string, wk?: number) => {
+    if (!cId) return [];
+    const qs = await fetchQuestionsFromSupabase(cId, wk !== undefined ? wk : manualWeek, false);
     setManualCourseQuestions(qs);
+    return qs;
   };
 
   useEffect(() => {
@@ -259,7 +301,7 @@ export const AdminDashboard: React.FC<AdminDashboardProps> = ({
     }
   }, [activeTab, manualCourseId, manualWeek, courses]);
 
-  const handleAddSingleQuestion = () => {
+  const handleAddSingleQuestion = async () => {
     if (!manualCourseId) {
       setErrorMessage('Please select or create a test bank first.');
       return;
@@ -280,7 +322,7 @@ export const AdminDashboard: React.FC<AdminDashboardProps> = ({
     const course = courses.find((c) => c.id === manualCourseId);
     if (!course) return;
 
-    const existingQs = getQuestions(manualCourseId);
+    const existingQs = await fetchQuestionsFromSupabase(manualCourseId, 'all', false);
     const newQuestion: Question = {
       id: `q-manual-${manualCourseId}-${Date.now()}-${existingQs.length + 1}`,
       courseId: manualCourseId,
@@ -299,17 +341,21 @@ export const AdminDashboard: React.FC<AdminDashboardProps> = ({
       createdAt: new Date().toISOString(),
     };
 
-    saveQuestions([newQuestion]);
+    const saveRes = await saveQuestions([newQuestion]);
+    if (!saveRes.success) {
+      setErrorMessage(`Failed to save question: ${saveRes.error}`);
+      return;
+    }
 
     const allWeeks = Array.from(new Set([...(course.weeks || [1]), manualWeek])).sort((a, b) => a - b);
-    saveCourse({
+    await saveCourse({
       ...course,
       weeks: allWeeks,
       totalQuestions: existingQs.length + 1,
     });
 
-    refreshCourses();
-    refreshManualQuestions(manualCourseId, manualWeek);
+    await refreshCourses();
+    await refreshManualQuestions(manualCourseId, manualWeek);
 
     // Reset single question inputs for fast sequential entry
     setSingleQText('');
@@ -336,7 +382,7 @@ export const AdminDashboard: React.FC<AdminDashboardProps> = ({
     showToast(`Detected ${drafts.length} structured questions ready to save.`);
   };
 
-  const handleSaveBatch = () => {
+  const handleSaveBatch = async () => {
     if (!manualCourseId) {
       setErrorMessage('Please select or create a test bank first.');
       return;
@@ -349,7 +395,7 @@ export const AdminDashboard: React.FC<AdminDashboardProps> = ({
     const course = courses.find((c) => c.id === manualCourseId);
     if (!course) return;
 
-    const existingQs = getQuestions(manualCourseId);
+    const existingQs = await fetchQuestionsFromSupabase(manualCourseId, 'all', false);
     let startIdx = existingQs.length;
 
     const newQuestions: Question[] = parsedBatchPreview.map((d, i) => ({
@@ -365,23 +411,27 @@ export const AdminDashboard: React.FC<AdminDashboardProps> = ({
       createdAt: new Date().toISOString(),
     }));
 
-    saveQuestions(newQuestions);
+    const saveRes = await saveQuestions(newQuestions);
+    if (!saveRes.success) {
+      setErrorMessage(`Failed to save questions: ${saveRes.error}`);
+      return;
+    }
 
     const allWeeks = Array.from(new Set([...(course.weeks || [1]), manualWeek])).sort((a, b) => a - b);
-    saveCourse({
+    await saveCourse({
       ...course,
       weeks: allWeeks,
       totalQuestions: existingQs.length + newQuestions.length,
     });
 
-    refreshCourses();
-    refreshManualQuestions(manualCourseId, manualWeek);
+    await refreshCourses();
+    await refreshManualQuestions(manualCourseId, manualWeek);
     setBatchInputText('');
     setParsedBatchPreview([]);
     showToast(`Added ${newQuestions.length} questions to ${course.name} (Week ${manualWeek})!`);
   };
 
-  const handleCreateNewBank = () => {
+  const handleCreateNewBank = async () => {
     if (!newBankName.trim()) {
       setErrorMessage('Test bank title is required.');
       return;
@@ -398,8 +448,12 @@ export const AdminDashboard: React.FC<AdminDashboardProps> = ({
       createdAt: new Date().toISOString(),
     };
 
-    saveCourse(newBank);
-    refreshCourses();
+    const res = await saveCourse(newBank);
+    if (!res.success) {
+      setErrorMessage(`Failed to create test bank: ${res.error}`);
+      return;
+    }
+    await refreshCourses();
     setManualCourseId(newBank.id);
     setManualWeek(1);
     setShowNewBankModal(false);
@@ -409,26 +463,28 @@ export const AdminDashboard: React.FC<AdminDashboardProps> = ({
     showToast(`Test Bank "${newBank.name}" created! Now add questions.`);
   };
 
-  const handleDeleteManualQuestion = (questionId: string) => {
-    deleteQuestion(questionId);
+  const handleDeleteManualQuestion = async (questionId: string) => {
+    await deleteQuestion(questionId);
     const course = courses.find((c) => c.id === manualCourseId);
     if (course) {
-      const remaining = getQuestions(manualCourseId);
-      saveCourse({
+      const remaining = await fetchQuestionsFromSupabase(manualCourseId, 'all', false);
+      const remainingWeeks = deriveAvailableWeeks(remaining);
+      await saveCourse({
         ...course,
+        weeks: remainingWeeks.length > 0 ? remainingWeeks : [1],
         totalQuestions: remaining.length,
       });
-      refreshCourses();
+      await refreshCourses();
     }
-    refreshManualQuestions(manualCourseId, manualWeek);
+    await refreshManualQuestions(manualCourseId, manualWeek);
     showToast('Question deleted.');
   };
 
-  const handleUpdateManualQuestion = (questionId: string, patch: Partial<Question>) => {
+  const handleUpdateManualQuestion = async (questionId: string, patch: Partial<Question>) => {
     const q = manualCourseQuestions.find((item) => item.id === questionId);
     if (q) {
-      updateQuestion({ ...q, ...patch });
-      refreshManualQuestions(manualCourseId, manualWeek);
+      await updateQuestion({ ...q, ...patch });
+      await refreshManualQuestions(manualCourseId, manualWeek);
     }
   };
 
@@ -687,15 +743,15 @@ export const AdminDashboard: React.FC<AdminDashboardProps> = ({
   };
 
   // ----------------- Save & Publish -----------------
-  const handleSaveAsDraft = () => {
+  const handleSaveAsDraft = async () => {
     if (!workingCourse || draftQuestions.length === 0) return;
 
-    const uniqueWeeks = Array.from(new Set(draftQuestions.map((q) => q.weekNumber || 1))).sort((a, b) => a - b);
+    const uniqueWeeks = deriveAvailableWeeks(draftQuestions);
 
-    saveCourse({
+    await saveCourse({
       ...workingCourse,
       totalQuestions: draftQuestions.length,
-      weeks: uniqueWeeks,
+      weeks: uniqueWeeks.length > 0 ? uniqueWeeks : [1],
       status: 'draft',
     });
 
@@ -713,13 +769,13 @@ export const AdminDashboard: React.FC<AdminDashboardProps> = ({
       createdAt: new Date().toISOString(),
     }));
 
-    saveQuestions(questionsToSave);
-    refreshCourses();
+    await saveQuestions(questionsToSave);
+    await refreshCourses();
     setActiveTab('tests');
     showToast(`Saved "${workingCourse.name}" as Draft with ${uniqueWeeks.length} weeks.`);
   };
 
-  const handlePublishFromReview = () => {
+  const handlePublishFromReview = async () => {
     if (!workingCourse || draftQuestions.length === 0) return;
 
     // Strict validation gate: every question must have a verified answer and be approved
@@ -731,13 +787,13 @@ export const AdminDashboard: React.FC<AdminDashboardProps> = ({
       return;
     }
 
-    const uniqueWeeks = Array.from(new Set(draftQuestions.map((q) => q.weekNumber || 1))).sort((a, b) => a - b);
+    const uniqueWeeks = deriveAvailableWeeks(draftQuestions);
 
     // Save course as published
-    saveCourse({
+    await saveCourse({
       ...workingCourse,
       totalQuestions: draftQuestions.length,
-      weeks: uniqueWeeks,
+      weeks: uniqueWeeks.length > 0 ? uniqueWeeks : [1],
       status: 'published',
       publishedAt: new Date().toISOString(),
     });
@@ -756,34 +812,34 @@ export const AdminDashboard: React.FC<AdminDashboardProps> = ({
       createdAt: new Date().toISOString(),
     }));
 
-    saveQuestions(questionsToSave);
-    refreshCourses();
+    await saveQuestions(questionsToSave);
+    await refreshCourses();
     setActiveTab('tests');
     showToast(`Test "${workingCourse.name}" published with ${uniqueWeeks.length} weeks! Students can now access it.`);
   };
 
 
   // ----------------- Existing Tests Actions -----------------
-  const handlePublishExistingTest = (courseId: string) => {
-    const res = publishTest(courseId);
+  const handlePublishExistingTest = async (courseId: string) => {
+    const res = await publishTest(courseId);
     if (res.success) {
-      refreshCourses();
+      await refreshCourses();
       showToast('Test published successfully.');
     } else {
       setErrorMessage(res.error || 'Could not publish test.');
     }
   };
 
-  const handleUnpublishExistingTest = (courseId: string) => {
-    unpublishTest(courseId);
-    refreshCourses();
+  const handleUnpublishExistingTest = async (courseId: string) => {
+    await unpublishTest(courseId);
+    await refreshCourses();
     showToast('Test reverted to Draft.');
   };
 
-  const handleDeleteExistingTest = (courseId: string, testName: string) => {
+  const handleDeleteExistingTest = async (courseId: string, testName: string) => {
     if (window.confirm(`Are you sure you want to delete "${testName}"? Historical student attempts will remain safe.`)) {
-      deleteTest(courseId);
-      refreshCourses();
+      await deleteTest(courseId);
+      await refreshCourses();
       showToast('Test and question records deleted.');
     }
   };
@@ -1546,7 +1602,10 @@ export const AdminDashboard: React.FC<AdminDashboardProps> = ({
                         onChange={(e) => setBulkTargetWeek(parseInt(e.target.value, 10) || 1)}
                         className="px-3 py-1 rounded bg-white border border-[#DCEAF5] text-xs font-semibold text-[#0F172A]"
                       >
-                        {[1, 2, 3, 4, 5, 6, 7, 8, 9, 10, 11, 12].map((w) => (
+                        {Array.from(
+                          { length: Math.max(12, ...draftQuestions.map((w) => w.weekNumber || 1), bulkTargetWeek) },
+                          (_, i) => i + 1
+                        ).map((w) => (
                           <option key={w} value={w}>
                             Week {w}
                           </option>
@@ -1622,7 +1681,10 @@ export const AdminDashboard: React.FC<AdminDashboardProps> = ({
                                 }
                                 className="bg-transparent font-bold text-[#0284C7] outline-none cursor-pointer"
                               >
-                                {[1, 2, 3, 4, 5, 6, 7, 8, 9, 10, 11, 12].map((w) => (
+                                {Array.from(
+                                  { length: Math.max(12, ...draftQuestions.map((dq) => dq.weekNumber || 1), q.weekNumber || 1) },
+                                  (_, i) => i + 1
+                                ).map((w) => (
                                   <option key={w} value={w}>
                                     {w}
                                   </option>
@@ -1823,26 +1885,53 @@ export const AdminDashboard: React.FC<AdminDashboardProps> = ({
                     </span>
                   </div>
                   <div className="flex flex-wrap items-center gap-1.5">
-                    {[1, 2, 3, 4, 5, 6, 7, 8, 9, 10, 11, 12].map((wk) => {
-                      const isSelected = manualWeek === wk;
+                    {(() => {
+                      const currentManualCourse = courses.find((c) => c.id === manualCourseId);
+                      const existingWeeks = currentManualCourse?.weeks && currentManualCourse.weeks.length > 0
+                        ? currentManualCourse.weeks
+                        : [1];
+                      const allDisplayWeeks = Array.from(
+                        new Set([...existingWeeks, manualWeek, ...manualCourseQuestions.map((q) => q.weekNumber)])
+                      ).sort((a, b) => a - b);
+                      const maxW = Math.max(...allDisplayWeeks, 1);
+
                       return (
-                        <button
-                          key={wk}
-                          type="button"
-                          onClick={() => {
-                            setManualWeek(wk);
-                            refreshManualQuestions(manualCourseId, wk);
-                          }}
-                          className={`px-3 py-1.5 rounded-lg text-xs font-mono font-bold transition-all ${
-                            isSelected
-                              ? 'bg-[#0284C7] text-white shadow-sm'
-                              : 'bg-[#F8FBFF] text-[#64748B] hover:text-[#0F172A] border border-[#DCEAF5]'
-                          }`}
-                        >
-                          Week {wk}
-                        </button>
+                        <>
+                          {allDisplayWeeks.map((wk) => {
+                            const isSelected = manualWeek === wk;
+                            return (
+                              <button
+                                key={wk}
+                                type="button"
+                                onClick={() => {
+                                  setManualWeek(wk);
+                                  refreshManualQuestions(manualCourseId, wk);
+                                }}
+                                className={`px-3 py-1.5 rounded-lg text-xs font-mono font-bold transition-all ${
+                                  isSelected
+                                    ? 'bg-[#0284C7] text-white shadow-sm'
+                                    : 'bg-[#F8FBFF] text-[#64748B] hover:text-[#0F172A] border border-[#DCEAF5]'
+                                }`}
+                              >
+                                Week {wk}
+                              </button>
+                            );
+                          })}
+                          <button
+                            type="button"
+                            onClick={() => {
+                              const nextW = maxW + 1;
+                              setManualWeek(nextW);
+                              refreshManualQuestions(manualCourseId, nextW);
+                            }}
+                            className="px-2.5 py-1.5 rounded-lg text-xs font-mono font-semibold text-[#0284C7] hover:bg-sky-50 border border-dashed border-[#0284C7]/40 transition-all"
+                            title="Add question to next week"
+                          >
+                            + Week {maxW + 1}
+                          </button>
+                        </>
                       );
-                    })}
+                    })()}
                   </div>
                 </div>
               </div>
@@ -2195,64 +2284,143 @@ export const AdminDashboard: React.FC<AdminDashboardProps> = ({
 
         {/* ======================= TAB 3: RECENT ATTEMPTS (COMPACT MONITOR) ======================= */}
         {activeTab === 'attempts' && (
-          <div className="max-w-4xl mx-auto space-y-6">
-            <div className="flex items-center justify-between pb-4 border-b border-[#DCEAF5]">
+          <div className="max-w-5xl mx-auto space-y-6">
+            <div className="flex flex-col sm:flex-row items-start sm:items-center justify-between gap-4 pb-4 border-b border-[#DCEAF5]">
               <div>
                 <div className="text-[11px] font-mono tracking-[0.25em] text-[#0284C7] uppercase font-semibold">
-                  STUDENT ACTIVITY
+                  STUDENT ACTIVITY &amp; ACCURACY
                 </div>
                 <h2 className="font-serif text-2xl text-[#0F172A] uppercase tracking-tight mt-1">
-                  Recent Test Attempts
+                  Recorded Test Attempts
                 </h2>
                 <p className="text-xs text-[#64748B] font-mono mt-1">
-                  COMPACT MONITORING OF STUDENT PARTICIPATION AND RESULTS
+                  AUTHORITATIVE SUPABASE AUDIT LOG • {allAttempts.length} RECORDED SESSIONS
                 </p>
               </div>
-              <span className="text-xs font-mono text-[#64748B]">
-                {allAttempts.length} Completed Simulations
-              </span>
+              <div className="flex items-center gap-3">
+                <button
+                  type="button"
+                  onClick={refreshAttempts}
+                  disabled={isRefreshingAttempts}
+                  className="inline-flex items-center gap-2 px-4 py-2 rounded-full bg-[#0284C7] hover:bg-[#0369a1] text-white text-xs font-bold uppercase tracking-wider transition-all disabled:opacity-50 shadow-sm"
+                >
+                  <RefreshCw className={`w-3.5 h-3.5 ${isRefreshingAttempts ? 'animate-spin' : ''}`} />
+                  <span>{isRefreshingAttempts ? 'REFRESHING...' : 'REFRESH ATTEMPTS'}</span>
+                </button>
+              </div>
             </div>
 
-            <div className="space-y-3">
+            <div className="space-y-4">
               {allAttempts.map((att) => {
-                const dateFormatted = new Date(att.completedAt).toLocaleString('en-GB', {
-                  day: '2-digit',
-                  month: 'short',
-                  year: 'numeric',
-                  hour: '2-digit',
-                  minute: '2-digit',
-                  hour12: true,
-                });
+                const submission = (() => {
+                  const targetStr = att.submittedAt || att.completedAt || att.createdAt;
+                  if (!targetStr) return { date: 'N/A', time: 'N/A' };
+                  try {
+                    const d = new Date(targetStr);
+                    return {
+                      date: d.toLocaleDateString('en-GB', { day: '2-digit', month: 'short', year: 'numeric' }),
+                      time: d.toLocaleTimeString('en-GB', { hour: '2-digit', minute: '2-digit', second: '2-digit', hour12: true }),
+                    };
+                  } catch {
+                    return { date: targetStr, time: '' };
+                  }
+                })();
+
+                const weeksText =
+                  att.selectedWeeks && att.selectedWeeks.length > 0
+                    ? `Week ${att.selectedWeeks.join(', ')}`
+                    : 'All Weeks';
 
                 return (
                   <div
                     key={att.id}
-                    className="p-5 rounded-2xl bg-white border border-[#DCEAF5] shadow-[0_2px_12px_rgba(2,132,199,0.03)] flex flex-col sm:flex-row items-start sm:items-center justify-between gap-4"
+                    className="p-5 sm:p-6 rounded-3xl bg-white border border-[#DCEAF5] shadow-[0_2px_12px_rgba(2,132,199,0.04)] space-y-4 hover:border-sky-300 transition-all"
                   >
-                    <div>
-                      <div className="flex items-center gap-2">
-                        <span className="font-semibold text-sm text-[#0F172A]">
-                          {att.studentName || 'Student'}
+                    {/* Header Row: Reg Number, Course Name, Mode, Attempt ID */}
+                    <div className="flex flex-col sm:flex-row sm:items-center justify-between gap-2 pb-3 border-b border-[#DCEAF5]/60">
+                      <div className="flex items-center gap-2.5 flex-wrap">
+                        <span className="px-3 py-1 rounded-xl bg-[#EFF8FF] border border-[#DCEAF5] text-[#0284C7] font-mono font-bold text-xs">
+                          {att.regNumber || att.studentName || 'STUDENT'}
                         </span>
-                        <span className="text-xs text-[#64748B]">·</span>
-                        <span className="text-xs font-medium text-[#0284C7]">
+                        <span className="font-semibold text-sm text-[#0F172A]">
                           {att.courseName}
                         </span>
+                        <span
+                          className={`px-2.5 py-0.5 rounded-full text-[10px] font-mono uppercase font-bold border ${
+                            att.mode === 'exam'
+                              ? 'bg-rose-50 text-rose-700 border-rose-200'
+                              : 'bg-sky-50 text-sky-700 border-sky-200'
+                          }`}
+                        >
+                          {att.mode}
+                        </span>
                       </div>
-                      <p className="text-xs text-[#64748B] mt-1 font-mono">
-                        {dateFormatted}
-                      </p>
+                      <div className="text-[11px] font-mono text-[#64748B] flex items-center gap-1.5 self-start sm:self-auto">
+                        <span className="opacity-70">ID:</span>
+                        <span className="text-[#0F172A] font-semibold select-all">{att.id}</span>
+                      </div>
                     </div>
 
-                    <div className="flex items-center gap-6 self-end sm:self-center">
-                      <div className="text-right">
-                        <div className="text-base font-bold font-mono text-[#0F172A]">
-                          {att.score} / {att.totalQuestions}
+                    {/* Meta Grid: Selected Weeks, Submitted Date, Submitted Time, Duration */}
+                    <div className="grid grid-cols-2 sm:grid-cols-4 gap-3 text-xs font-mono">
+                      <div className="p-3 rounded-2xl bg-[#F8FBFF] border border-[#DCEAF5]">
+                        <div className="text-[10px] text-[#64748B] uppercase tracking-wider font-semibold">
+                          Selected Weeks
                         </div>
-                        <div className="text-[11px] font-mono text-[#64748B]">
-                          <span className="text-emerald-600 font-semibold">{att.correctCount} Correct</span>
-                          {' · '}
-                          <span className="text-rose-600 font-semibold">{att.wrongCount} Wrong</span>
+                        <div className="font-bold text-[#0F172A] mt-1 truncate" title={weeksText}>
+                          {weeksText}
+                        </div>
+                      </div>
+                      <div className="p-3 rounded-2xl bg-[#F8FBFF] border border-[#DCEAF5]">
+                        <div className="text-[10px] text-[#64748B] uppercase tracking-wider font-semibold">
+                          Submitted Date
+                        </div>
+                        <div className="font-bold text-[#0F172A] mt-1">
+                          {submission.date}
+                        </div>
+                      </div>
+                      <div className="p-3 rounded-2xl bg-[#F8FBFF] border border-[#DCEAF5]">
+                        <div className="text-[10px] text-[#64748B] uppercase tracking-wider font-semibold">
+                          Submitted Time
+                        </div>
+                        <div className="font-bold text-[#0F172A] mt-1">
+                          {submission.time}
+                        </div>
+                      </div>
+                      <div className="p-3 rounded-2xl bg-[#F8FBFF] border border-[#DCEAF5]">
+                        <div className="text-[10px] text-[#64748B] uppercase tracking-wider font-semibold">
+                          Duration
+                        </div>
+                        <div className="font-bold text-[#0F172A] mt-1">
+                          {Math.floor(att.timeTakenSeconds / 60)}m {att.timeTakenSeconds % 60}s
+                        </div>
+                      </div>
+                    </div>
+
+                    {/* Result Row: Total Questions, Correct, Wrong, Score & Percentage */}
+                    <div className="flex flex-wrap items-center justify-between gap-3 pt-1">
+                      <div className="flex flex-wrap items-center gap-3 text-xs font-mono">
+                        <span className="text-emerald-700 bg-emerald-50 px-3 py-1 rounded-xl border border-emerald-200 font-semibold">
+                          {att.correctCount} Correct
+                        </span>
+                        <span className="text-rose-700 bg-rose-50 px-3 py-1 rounded-xl border border-rose-200 font-semibold">
+                          {att.wrongCount} Wrong
+                        </span>
+                        <span className="text-[#64748B] bg-slate-50 px-3 py-1 rounded-xl border border-slate-200">
+                          {att.unansweredCount || 0} Unanswered
+                        </span>
+                        <span className="text-[#64748B] bg-slate-50 px-3 py-1 rounded-xl border border-slate-200">
+                          Total: {att.totalQuestions} Qs
+                        </span>
+                      </div>
+                      <div className="flex items-center gap-3">
+                        <div className="text-right">
+                          <span className="text-sm font-bold font-mono text-[#0F172A]">
+                            Score: {att.score} / {att.totalQuestions}
+                          </span>
+                          <span className="ml-2 text-xs font-mono font-extrabold text-[#0284C7] bg-sky-50 px-2.5 py-1 rounded-lg border border-sky-200">
+                            {att.percentage}%
+                          </span>
                         </div>
                       </div>
                     </div>

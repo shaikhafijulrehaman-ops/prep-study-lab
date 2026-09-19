@@ -1,8 +1,8 @@
-import React, { useState } from 'react';
+import React, { useState, useEffect } from 'react';
 import { motion } from 'framer-motion';
 import { BookOpen, Play, UploadCloud, ChevronRight, Layers, FileText, CheckCircle2 } from 'lucide-react';
 import { Course, Question } from '../types';
-import { getCourses, getQuestions } from '../lib/storage';
+import { getCourses, getQuestions, fetchCoursesFromSupabase, fetchQuestionsFromSupabase, deriveAvailableWeeks } from '../lib/storage';
 
 interface CoursesViewProps {
   onStartCourseTest: (courseId: string) => void;
@@ -11,18 +11,52 @@ interface CoursesViewProps {
 export const CoursesView: React.FC<CoursesViewProps> = ({
   onStartCourseTest,
 }) => {
-  const [courses] = useState<Course[]>(getCourses(true));
+  const [courses, setCourses] = useState<Course[]>(getCourses(true));
   const [selectedCourseId, setSelectedCourseId] = useState<string>(courses[0]?.id || '');
   const [activeWeekTab, setActiveWeekTab] = useState<number | 'all'>('all');
+  const [allQuestions, setAllQuestions] = useState<Question[]>(() => {
+    const initialCourseId = courses[0]?.id;
+    return initialCourseId ? getQuestions(initialCourseId, 'all', true) : [];
+  });
+
+  useEffect(() => {
+    let isMounted = true;
+    const loadData = async () => {
+      const freshCourses = await fetchCoursesFromSupabase(true);
+      if (!isMounted) return;
+      setCourses(freshCourses);
+      const activeId = selectedCourseId || freshCourses[0]?.id || '';
+      setSelectedCourseId(activeId);
+      if (activeId) {
+        const freshQuestions = await fetchQuestionsFromSupabase(activeId, 'all', true);
+        if (isMounted) {
+          setAllQuestions(freshQuestions);
+        }
+      }
+    };
+    loadData();
+    return () => {
+      isMounted = false;
+    };
+  }, []);
+
+  const handleSelectCourse = async (courseId: string) => {
+    setSelectedCourseId(courseId);
+    setActiveWeekTab('all');
+    const freshQuestions = await fetchQuestionsFromSupabase(courseId, 'all', true);
+    setAllQuestions(freshQuestions);
+  };
 
   const selectedCourse = courses.find((c) => c.id === selectedCourseId) || courses[0];
-  const courseQuestions = selectedCourse ? getQuestions(selectedCourse.id, activeWeekTab, true) : [];
 
-  // Group questions by week
-  const allCourseQuestions = selectedCourse ? getQuestions(selectedCourse.id, 'all', true) : [];
-  const weeksAvailable = Array.from(new Set(allCourseQuestions.map((q) => q.weekNumber))).sort(
-    (a, b) => a - b
-  );
+  // Group questions by week dynamically
+  const allCourseQuestions = allQuestions.filter((q) => !selectedCourse || q.courseId === selectedCourse.id);
+  const weeksAvailable = deriveAvailableWeeks(allCourseQuestions);
+
+  const courseQuestions = allCourseQuestions.filter((q) => {
+    if (activeWeekTab === 'all') return true;
+    return q.weekNumber === activeWeekTab;
+  });
 
   return (
     <div className="min-h-screen pt-28 pb-20 px-4 sm:px-8 max-w-6xl mx-auto space-y-10 select-none font-sans">
@@ -71,10 +105,7 @@ export const CoursesView: React.FC<CoursesViewProps> = ({
             return (
               <button
                 key={course.id}
-                onClick={() => {
-                  setSelectedCourseId(course.id);
-                  setActiveWeekTab('all');
-                }}
+                onClick={() => handleSelectCourse(course.id)}
                 className={`w-full text-left p-5 rounded-2xl border transition-all duration-200 ${
                   isSelected
                     ? 'bg-[#EFF8FF] border-[#38BDF8] shadow-[0_4px_16px_rgba(56,189,248,0.15)]'

@@ -90,6 +90,9 @@ export interface MockAttempt {
   unansweredCount: number;
   timeTakenSeconds: number;
   timeLimitSeconds: number | null;
+  selectedWeeks?: number[];
+  startedAt?: string;
+  submittedAt?: string;
   createdAt: string;
   completedAt: string;
   items: AttemptQuestionItem[]; // faithful immutable playback snapshot

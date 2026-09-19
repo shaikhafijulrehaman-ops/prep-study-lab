@@ -5,9 +5,9 @@ export const INITIAL_COURSES: Course[] = [
     id: 'course-iiot-cps-master',
     code: 'IIOT-CPS-101',
     name: 'Industrial IoT 4.0 and Cyber Physical Systems',
-    description: 'Complete 6-Week Question Bank covering Industrial IoT, Smart Manufacturing, and CPS (from 6 weeks test paper).',
-    totalQuestions: 90,
-    weeks: [1, 2, 3, 4, 5, 6],
+    description: 'Comprehensive Question Bank covering Industrial IoT, Smart Manufacturing, and Cyber-Physical Systems.',
+    totalQuestions: 135,
+    weeks: [1, 2, 3, 4, 5, 6, 7, 8, 9],
     status: 'published',
     sourcePdfName: 'nptl 6 weeks.pdf',
     createdAt: '2026-09-18T10:00:00.000Z',
@@ -221,8 +221,8 @@ const IIOT_6_WEEKS_QUESTIONS: Question[] = [
       "Processor",
       "Amplifier"
     ],
-    "correctAnswerIndex": null,
-    "answerSource": "Not Available",
+    "correctAnswerIndex": 2,
+    "answerSource": "PDF",
     "isApproved": true,
     "createdAt": "2026-09-18T13:48:36.933Z"
   },
@@ -1729,6 +1729,910 @@ const IIOT_6_WEEKS_QUESTIONS: Question[] = [
   }
 ];
 
+const IIOT_WEEKS_7_8_9_QUESTIONS: Question[] = [
+  {
+    "id": "q-iiot-w7-1",
+    "courseId": "course-iiot-cps-master",
+    "weekNumber": 7,
+    "originalQuestionNumber": 1,
+    "sourcePageNumber": 95,
+    "sourcePdfName": "nptl 6 weeks.pdf",
+    "questionText": "In the Industrial IoT edge-to-cloud hierarchy, what is the primary role of Fog Computing compared to Edge Computing?",
+    "options": [
+      "Fog computing operates exclusively on cloud data centers with no local processing",
+      "Fog computing acts as an intermediate decentralized layer that orchestrates and aggregates computation between edge devices and the central cloud",
+      "Fog computing replaces all industrial actuators with software simulators",
+      "Fog computing requires analog signal lines without IP connectivity"
+    ],
+    "correctAnswerIndex": 1,
+    "answerSource": "Manually Verified",
+    "isApproved": true,
+    "explanation": "Fog computing acts as an architectural layer distributing computing, networking, and storage resources closer to the edge, orchestrating data between local edge devices and the centralized cloud.",
+    "createdAt": "2026-09-18T14:00:00.000Z"
+  },
+  {
+    "id": "q-iiot-w7-2",
+    "courseId": "course-iiot-cps-master",
+    "weekNumber": 7,
+    "originalQuestionNumber": 2,
+    "sourcePageNumber": 96,
+    "sourcePdfName": "nptl 6 weeks.pdf",
+    "questionText": "Which latency threshold is typically mandated for hard real-time closed-loop motion control in Cyber-Physical Manufacturing systems?",
+    "options": [
+      "100 milliseconds to 1 second",
+      "Sub-millisecond to a few milliseconds (< 1ms to 10ms)",
+      "10 seconds to 30 seconds",
+      "500 milliseconds to 2 seconds"
+    ],
+    "correctAnswerIndex": 1,
+    "answerSource": "Manually Verified",
+    "isApproved": true,
+    "explanation": "Hard real-time motion control and robotic actuation in CPS require deterministic cycle times typically ranging from sub-milliseconds up to 10 milliseconds.",
+    "createdAt": "2026-09-18T14:00:00.000Z"
+  },
+  {
+    "id": "q-iiot-w7-3",
+    "courseId": "course-iiot-cps-master",
+    "weekNumber": 7,
+    "originalQuestionNumber": 3,
+    "sourcePageNumber": 97,
+    "sourcePdfName": "nptl 6 weeks.pdf",
+    "questionText": "What is Complex Event Processing (CEP) primarily used for at the industrial edge?",
+    "options": [
+      "Formatting raw electrical voltages into AC waveforms",
+      "Analyzing multiple streaming sensor events in real time to detect operational anomalies or emergency conditions",
+      "Archiving petabytes of static historical cold data onto magnetic tape",
+      "Generating analog clock pulses for microcontrollers"
+    ],
+    "correctAnswerIndex": 1,
+    "answerSource": "Manually Verified",
+    "isApproved": true,
+    "explanation": "CEP processes continuous real-time streams of events across multiple industrial sensors to identify patterns, correlations, and anomalies without waiting for cloud batch processing.",
+    "createdAt": "2026-09-18T14:00:00.000Z"
+  },
+  {
+    "id": "q-iiot-w7-4",
+    "courseId": "course-iiot-cps-master",
+    "weekNumber": 7,
+    "originalQuestionNumber": 4,
+    "sourcePageNumber": 98,
+    "sourcePdfName": "nptl 6 weeks.pdf",
+    "questionText": "Why are lightweight containerization technologies (such as Docker) widely adopted in industrial edge computing?",
+    "options": [
+      "Containers eliminate the need for an underlying CPU",
+      "Containers allow microservices and analytics to be packaged, isolated, deployed, and updated reliably across heterogeneous edge hardware",
+      "Containers convert all digital protocols to analog current loops (4-20 mA)",
+      "Containers completely prevent any physical device maintenance"
+    ],
+    "correctAnswerIndex": 1,
+    "answerSource": "Manually Verified",
+    "isApproved": true,
+    "explanation": "Containers provide resource-efficient encapsulation, portability, and isolation, allowing edge analytic microservices to run consistently across diverse industrial IPCs and gateways.",
+    "createdAt": "2026-09-18T14:00:00.000Z"
+  },
+  {
+    "id": "q-iiot-w7-5",
+    "courseId": "course-iiot-cps-master",
+    "weekNumber": 7,
+    "originalQuestionNumber": 5,
+    "sourcePageNumber": 99,
+    "sourcePdfName": "nptl 6 weeks.pdf",
+    "questionText": "Which major advantage does edge data filtering and deduplication offer to industrial enterprises?",
+    "options": [
+      "Drastic reduction of uplink bandwidth consumption and cloud storage overheads",
+      "Elimination of all local physical sensor hardware",
+      "Forced requirement for satellite communications only",
+      "Lowering the electrical voltage required to power factory machines"
+    ],
+    "correctAnswerIndex": 0,
+    "answerSource": "Manually Verified",
+    "isApproved": true,
+    "explanation": "Filtering high-frequency raw telemetry at the edge transmits only meaningful deviations or aggregations to the cloud, conserving costly enterprise network bandwidth and cloud ingress fees.",
+    "createdAt": "2026-09-18T14:00:00.000Z"
+  },
+  {
+    "id": "q-iiot-w7-6",
+    "courseId": "course-iiot-cps-master",
+    "weekNumber": 7,
+    "originalQuestionNumber": 6,
+    "sourcePageNumber": 100,
+    "sourcePdfName": "nptl 6 weeks.pdf",
+    "questionText": "In the event of a total WAN/Internet link disruption, an autonomous industrial edge controller should:",
+    "options": [
+      "Immediately shut down all plant operations and discard all local sensor data",
+      "Continue deterministic local control loops and cache telemetry locally until connectivity is restored",
+      "Erase its own firmware to prevent eavesdropping",
+      "Transmit unencrypted broadcast packets across public networks"
+    ],
+    "correctAnswerIndex": 1,
+    "answerSource": "Manually Verified",
+    "isApproved": true,
+    "explanation": "Edge autonomy ensures local cyber-physical control loops continue uninterrupted during network outages, while local store-and-forward buffers protect telemetry data.",
+    "createdAt": "2026-09-18T14:00:00.000Z"
+  },
+  {
+    "id": "q-iiot-w7-7",
+    "courseId": "course-iiot-cps-master",
+    "weekNumber": 7,
+    "originalQuestionNumber": 7,
+    "sourcePageNumber": 101,
+    "sourcePdfName": "nptl 6 weeks.pdf",
+    "questionText": "Which security model dictates that every edge node, user, and device must be explicitly authenticated and authorized regardless of its network location?",
+    "options": [
+      "Perimeter-only boundary defense",
+      "Zero Trust Architecture (ZTA)",
+      "Open Gateway Protocol (OGP)",
+      "Unrestricted Broadcast Architecture"
+    ],
+    "correctAnswerIndex": 1,
+    "answerSource": "Manually Verified",
+    "isApproved": true,
+    "explanation": "Zero Trust Architecture operates on the principle of 'never trust, always verify', requiring continuous authentication and micro-segmentation for all industrial edge nodes.",
+    "createdAt": "2026-09-18T14:00:00.000Z"
+  },
+  {
+    "id": "q-iiot-w7-8",
+    "courseId": "course-iiot-cps-master",
+    "weekNumber": 7,
+    "originalQuestionNumber": 8,
+    "sourcePageNumber": 102,
+    "sourcePdfName": "nptl 6 weeks.pdf",
+    "questionText": "When integrating brownfield legacy factory equipment into an IIoT architecture, an Edge Gateway is essential because it:",
+    "options": [
+      "Translates legacy fieldbus protocols (Modbus, Profibus, CAN) into modern secure IP protocols (OPC UA, MQTT)",
+      "Converts physical machines into pure virtual simulation models without hardware",
+      "Replaces all copper wiring with wireless satellite dishes",
+      "Changes the physical dimensions of factory motors"
+    ],
+    "correctAnswerIndex": 0,
+    "answerSource": "Manually Verified",
+    "isApproved": true,
+    "explanation": "Edge gateways bridge legacy industrial protocols (Modbus, CAN, Profibus) with modern IoT protocols (OPC UA, MQTT, HTTPS), enabling brownfield digitization without replacing legacy machines.",
+    "createdAt": "2026-09-18T14:00:00.000Z"
+  },
+  {
+    "id": "q-iiot-w7-9",
+    "courseId": "course-iiot-cps-master",
+    "weekNumber": 7,
+    "originalQuestionNumber": 9,
+    "sourcePageNumber": 103,
+    "sourcePdfName": "nptl 6 weeks.pdf",
+    "questionText": "Which operating system characteristics are required for hard real-time edge computing in CPS?",
+    "options": [
+      "Non-preemptive multitasking with unpredictable garbage collection pauses",
+      "Deterministic interrupt response time, preemptive kernel, and bounded task scheduling",
+      "Single-threaded execution with no hardware timer access",
+      "Mandatory graphical user interface rendering on all execution paths"
+    ],
+    "correctAnswerIndex": 1,
+    "answerSource": "Manually Verified",
+    "isApproved": true,
+    "explanation": "Real-Time Operating Systems (RTOS) like FreeRTOS, VxWorks, or Zephyr provide deterministic interrupt latencies and bounded scheduling guarantees critical for CPS.",
+    "createdAt": "2026-09-18T14:00:00.000Z"
+  },
+  {
+    "id": "q-iiot-w7-10",
+    "courseId": "course-iiot-cps-master",
+    "weekNumber": 7,
+    "originalQuestionNumber": 10,
+    "sourcePageNumber": 104,
+    "sourcePdfName": "nptl 6 weeks.pdf",
+    "questionText": "Which cryptographic protocol is the standard for securing edge-to-cloud telemetry over TCP connections?",
+    "options": [
+      "Telnet with MD5 checksums",
+      "Transport Layer Security (TLS 1.3) with mutual authentication (mTLS)",
+      "Unencrypted HTTP with basic authentication",
+      "Rot13 symmetric substitution"
+    ],
+    "correctAnswerIndex": 1,
+    "answerSource": "Manually Verified",
+    "isApproved": true,
+    "explanation": "mTLS provides both encryption in transit and cryptographic proof of identity for both the edge device and cloud endpoint using X.509 digital certificates.",
+    "createdAt": "2026-09-18T14:00:00.000Z"
+  },
+  {
+    "id": "q-iiot-w7-11",
+    "courseId": "course-iiot-cps-master",
+    "weekNumber": 7,
+    "originalQuestionNumber": 11,
+    "sourcePageNumber": 105,
+    "sourcePdfName": "nptl 6 weeks.pdf",
+    "questionText": "According to the OpenFog Reference Architecture, which dimension describes the horizontal scalability of fog computing across distributed nodes?",
+    "options": [
+      "Hierarchical cloud-only nesting",
+      "Peer-to-peer inter-fog collaboration and mesh communication",
+      "Single centralized mainframe control",
+      "Linear point-to-point unswitched copper link"
+    ],
+    "correctAnswerIndex": 1,
+    "answerSource": "Manually Verified",
+    "isApproved": true,
+    "explanation": "OpenFog Architecture supports peer-to-peer inter-fog node collaboration along horizontal planes in addition to vertical hierarchy towards the cloud.",
+    "createdAt": "2026-09-18T14:00:00.000Z"
+  },
+  {
+    "id": "q-iiot-w7-12",
+    "courseId": "course-iiot-cps-master",
+    "weekNumber": 7,
+    "originalQuestionNumber": 12,
+    "sourcePageNumber": 106,
+    "sourcePdfName": "nptl 6 weeks.pdf",
+    "questionText": "What distinguishes an edge analytics inference pipeline from a centralized cloud training pipeline?",
+    "options": [
+      "Edge pipelines train 100-billion parameter models from scratch continuously",
+      "Edge pipelines execute lightweight pre-trained models (quantized/pruned) for low-latency scoring and anomaly detection",
+      "Cloud pipelines can only process analog signals",
+      "Edge inference cannot process numerical data"
+    ],
+    "correctAnswerIndex": 1,
+    "answerSource": "Manually Verified",
+    "isApproved": true,
+    "explanation": "Model training occurs on compute-intensive cloud GPU clusters, while optimized, quantized models (e.g. TinyML, ONNX, TensorRT) run inference locally at the edge.",
+    "createdAt": "2026-09-18T14:00:00.000Z"
+  },
+  {
+    "id": "q-iiot-w7-13",
+    "courseId": "course-iiot-cps-master",
+    "weekNumber": 7,
+    "originalQuestionNumber": 13,
+    "sourcePageNumber": 107,
+    "sourcePdfName": "nptl 6 weeks.pdf",
+    "questionText": "Which metric best quantifies jitter in industrial edge networking?",
+    "options": [
+      "Total hard disk storage capacity",
+      "The statistical variation or standard deviation in packet arrival delay over time",
+      "The color temperature of the optical fiber indicator LED",
+      "The physical weight of the Ethernet cable"
+    ],
+    "correctAnswerIndex": 1,
+    "answerSource": "Manually Verified",
+    "isApproved": true,
+    "explanation": "Jitter is the deviation in packet latency. In deterministic CPS control, minimal jitter is just as crucial as low mean latency.",
+    "createdAt": "2026-09-18T14:00:00.000Z"
+  },
+  {
+    "id": "q-iiot-w7-14",
+    "courseId": "course-iiot-cps-master",
+    "weekNumber": 7,
+    "originalQuestionNumber": 14,
+    "sourcePageNumber": 108,
+    "sourcePdfName": "nptl 6 weeks.pdf",
+    "questionText": "What is the primary benefit of deploying local MQTT message brokers on industrial edge gateways?",
+    "options": [
+      "Enables high-frequency local pub/sub messaging among factory cell devices independent of cloud availability",
+      "Eliminates the need for any IP addressing in the plant",
+      "Increases the latency of local actuator commands by 100x",
+      "Forces all sensor values to be binary booleans only"
+    ],
+    "correctAnswerIndex": 0,
+    "answerSource": "Manually Verified",
+    "isApproved": true,
+    "explanation": "A local MQTT broker at the edge facilitates high-speed, decoupled communication between local machines, sensors, and HMIs without relying on external cloud latency or availability.",
+    "createdAt": "2026-09-18T14:00:00.000Z"
+  },
+  {
+    "id": "q-iiot-w7-15",
+    "courseId": "course-iiot-cps-master",
+    "weekNumber": 7,
+    "originalQuestionNumber": 15,
+    "sourcePageNumber": 109,
+    "sourcePdfName": "nptl 6 weeks.pdf",
+    "questionText": "Which hardware mechanism provides cryptographic key storage and hardware-rooted attestation for edge computing appliances?",
+    "options": [
+      "Trusted Platform Module (TPM 2.0) or Secure Element",
+      "Dynamic Random Access Memory (DRAM)",
+      "Standard SATA Hard Disk drive spindle",
+      "Unshielded twisted pair copper wire"
+    ],
+    "correctAnswerIndex": 0,
+    "answerSource": "Manually Verified",
+    "isApproved": true,
+    "explanation": "TPMs and hardware Secure Elements protect private keys against extraction and provide measured boot attestation verifying that edge firmware has not been tampered with.",
+    "createdAt": "2026-09-18T14:00:00.000Z"
+  },
+  {
+    "id": "q-iiot-w8-1",
+    "courseId": "course-iiot-cps-master",
+    "weekNumber": 8,
+    "originalQuestionNumber": 1,
+    "sourcePageNumber": 110,
+    "sourcePdfName": "nptl 6 weeks.pdf",
+    "questionText": "What are the five sequential levels of the widely adopted 5C architecture for Cyber-Physical Systems (CPS)?",
+    "options": [
+      "Connection, Conversion, Cyber, Cognition, and Configuration",
+      "Cloud, Compute, Cable, Copper, and Control",
+      "Client, Compiler, Cipher, Channel, and Cursor",
+      "Capture, Compress, Compute, Crash, and Clear"
+    ],
+    "correctAnswerIndex": 0,
+    "answerSource": "Manually Verified",
+    "isApproved": true,
+    "explanation": "The 5C architecture proposed by Lee et al. defines five tiers: Connection (Level 1), Conversion (Level 2), Cyber (Level 3), Cognition (Level 4), and Configuration (Level 5).",
+    "createdAt": "2026-09-18T14:00:00.000Z"
+  },
+  {
+    "id": "q-iiot-w8-2",
+    "courseId": "course-iiot-cps-master",
+    "weekNumber": 8,
+    "originalQuestionNumber": 2,
+    "sourcePageNumber": 111,
+    "sourcePdfName": "nptl 6 weeks.pdf",
+    "questionText": "In the 5C CPS architecture, what is the core responsibility of Level 1 (Connection Level)?",
+    "options": [
+      "Generating strategic business intelligence reports for executives",
+      "Acquiring reliable and accurate raw data from machines, smart sensors, and controllers",
+      "Predicting future financial market trends",
+      "Simulating 3D virtual reality factory tours"
+    ],
+    "correctAnswerIndex": 1,
+    "answerSource": "Manually Verified",
+    "isApproved": true,
+    "explanation": "Level 1 (Connection) focuses on seamless, noise-free sensor data acquisition, plug-and-play communication, and field telemetry gathering.",
+    "createdAt": "2026-09-18T14:00:00.000Z"
+  },
+  {
+    "id": "q-iiot-w8-3",
+    "courseId": "course-iiot-cps-master",
+    "weekNumber": 8,
+    "originalQuestionNumber": 3,
+    "sourcePageNumber": 112,
+    "sourcePdfName": "nptl 6 weeks.pdf",
+    "questionText": "What primary transformation occurs at Level 2 (Conversion Level) of the 5C CPS architecture?",
+    "options": [
+      "Raw sensor data is transformed into actionable information and health assessment metrics",
+      "Digital data is converted into analog telephone tones",
+      "Electric alternating current is converted to mechanical coal combustion",
+      "All text strings are translated into human spoken audio"
+    ],
+    "correctAnswerIndex": 0,
+    "answerSource": "Manually Verified",
+    "isApproved": true,
+    "explanation": "The Conversion level calculates condition indicators, health degradation indices, and remaining useful life (RUL) from raw sensor streams.",
+    "createdAt": "2026-09-18T14:00:00.000Z"
+  },
+  {
+    "id": "q-iiot-w8-4",
+    "courseId": "course-iiot-cps-master",
+    "weekNumber": 8,
+    "originalQuestionNumber": 4,
+    "sourcePageNumber": 113,
+    "sourcePdfName": "nptl 6 weeks.pdf",
+    "questionText": "Which artifact functions as the information hub in Level 3 (Cyber Level) of the 5C architecture?",
+    "options": [
+      "A manual logbook kept on the shop floor",
+      "A Digital Twin model representing physical assets and performing fleet-level peer comparison",
+      "A standalone analog voltmeter",
+      "A physical magnetic compass"
+    ],
+    "correctAnswerIndex": 1,
+    "answerSource": "Manually Verified",
+    "isApproved": true,
+    "explanation": "Level 3 (Cyber) acts as the central information hub where Digital Twins aggregate machine information to perform comparative peer-to-peer fleet analytics.",
+    "createdAt": "2026-09-18T14:00:00.000Z"
+  },
+  {
+    "id": "q-iiot-w8-5",
+    "courseId": "course-iiot-cps-master",
+    "weekNumber": 8,
+    "originalQuestionNumber": 5,
+    "sourcePageNumber": 114,
+    "sourcePdfName": "nptl 6 weeks.pdf",
+    "questionText": "Level 4 (Cognition Level) in a Cyber-Physical System delivers which primary capability?",
+    "options": [
+      "Generating comprehensive diagnostics, comparative expert insights, and prioritizing maintenance decisions for human operators",
+      "Replacing copper wires with plastic tubes",
+      "Deleting past test attempts to save hard drive space",
+      "Turning off all factory lights during night shifts"
+    ],
+    "correctAnswerIndex": 0,
+    "answerSource": "Manually Verified",
+    "isApproved": true,
+    "explanation": "The Cognition level presents synthesized diagnostic knowledge and decision-support optimization strategies to machine operators and management.",
+    "createdAt": "2026-09-18T14:00:00.000Z"
+  },
+  {
+    "id": "q-iiot-w8-6",
+    "courseId": "course-iiot-cps-master",
+    "weekNumber": 8,
+    "originalQuestionNumber": 6,
+    "sourcePageNumber": 115,
+    "sourcePdfName": "nptl 6 weeks.pdf",
+    "questionText": "What distinguishes Level 5 (Configuration Level) in the 5C architecture?",
+    "options": [
+      "It closes the feedback control loop by applying corrective supervisory actions back to the physical actuators and machines",
+      "It only prints paper spreadsheets for manual filing",
+      "It prevents any data from flowing back to physical hardware",
+      "It resets all passwords to blank strings"
+    ],
+    "correctAnswerIndex": 0,
+    "answerSource": "Manually Verified",
+    "isApproved": true,
+    "explanation": "Level 5 (Configuration) represents self-configuration and self-adaptation, sending supervisory feedback control decisions back to the physical world.",
+    "createdAt": "2026-09-18T14:00:00.000Z"
+  },
+  {
+    "id": "q-iiot-w8-7",
+    "courseId": "course-iiot-cps-master",
+    "weekNumber": 8,
+    "originalQuestionNumber": 7,
+    "sourcePageNumber": 116,
+    "sourcePdfName": "nptl 6 weeks.pdf",
+    "questionText": "A Digital Twin differs from a standard 3D CAD computer model because a Digital Twin:",
+    "options": [
+      "Has a continuous bidirectional or synchronized data link with its physical counterpart throughout its operational lifecycle",
+      "Cannot be rendered on a computer screen",
+      "Is always made of physical clay and wire",
+      "Does not model any physical dimensions"
+    ],
+    "correctAnswerIndex": 0,
+    "answerSource": "Manually Verified",
+    "isApproved": true,
+    "explanation": "A Digital Twin is a living digital replica that maintains real-time bidirectional synchronization with the state, telemetry, and environment of its physical asset.",
+    "createdAt": "2026-09-18T14:00:00.000Z"
+  },
+  {
+    "id": "q-iiot-w8-8",
+    "courseId": "course-iiot-cps-master",
+    "weekNumber": 8,
+    "originalQuestionNumber": 8,
+    "sourcePageNumber": 117,
+    "sourcePdfName": "nptl 6 weeks.pdf",
+    "questionText": "What is Hardware-in-the-Loop (HIL) simulation used for in CPS engineering?",
+    "options": [
+      "Testing real embedded controllers against mathematical real-time simulations of the physical plant environment",
+      "Replacing digital software with mechanical hand cranks",
+      "Calculating employee payroll taxes",
+      "Measuring ambient room acoustic volume"
+    ],
+    "correctAnswerIndex": 0,
+    "answerSource": "Manually Verified",
+    "isApproved": true,
+    "explanation": "HIL tests actual embedded hardware controllers by connecting their I/O directly to a real-time computerized mathematical simulator mimicking the physical machine.",
+    "createdAt": "2026-09-18T14:00:00.000Z"
+  },
+  {
+    "id": "q-iiot-w8-9",
+    "courseId": "course-iiot-cps-master",
+    "weekNumber": 8,
+    "originalQuestionNumber": 9,
+    "sourcePageNumber": 118,
+    "sourcePdfName": "nptl 6 weeks.pdf",
+    "questionText": "Which characteristic defines a Smart Actuator in Industry 4.0?",
+    "options": [
+      "Only responds to manually turned hand valves",
+      "Integrates microprocessors, sensors, self-diagnostic capabilities, and network communication alongside mechanical motion",
+      "Operates without any electrical or mechanical power",
+      "Requires constant mechanical rewinding"
+    ],
+    "correctAnswerIndex": 1,
+    "answerSource": "Manually Verified",
+    "isApproved": true,
+    "explanation": "Smart actuators incorporate onboard processing, position/load sensors, digital bus connectivity, and self-calibration to provide closed-loop control and diagnostic feedback.",
+    "createdAt": "2026-09-18T14:00:00.000Z"
+  },
+  {
+    "id": "q-iiot-w8-10",
+    "courseId": "course-iiot-cps-master",
+    "weekNumber": 8,
+    "originalQuestionNumber": 10,
+    "sourcePageNumber": 119,
+    "sourcePdfName": "nptl 6 weeks.pdf",
+    "questionText": "In the context of RAMI 4.0 (Reference Architectural Model Industrie 4.0), what does the 'Asset Administration Shell' (AAS) represent?",
+    "options": [
+      "The standardized digital representation and API wrapper that exposes an asset's data and capabilities to Industry 4.0 networks",
+      "A physical metal enclosure that protects machinery from rain",
+      "A legal contract signed between industrial suppliers",
+      "A shell script used only for formatting floppy disks"
+    ],
+    "correctAnswerIndex": 0,
+    "answerSource": "Manually Verified",
+    "isApproved": true,
+    "explanation": "The Asset Administration Shell (AAS) is the digital standardized container describing the properties, capabilities, and submodels of an asset in the Industry 4.0 ecosystem.",
+    "createdAt": "2026-09-18T14:00:00.000Z"
+  },
+  {
+    "id": "q-iiot-w8-11",
+    "courseId": "course-iiot-cps-master",
+    "weekNumber": 8,
+    "originalQuestionNumber": 11,
+    "sourcePageNumber": 120,
+    "sourcePdfName": "nptl 6 weeks.pdf",
+    "questionText": "Which cyber-physical vulnerability was famously exploited by the Stuxnet worm against industrial centrifuge controllers?",
+    "options": [
+      "Overcharging industrial office laptops via USB cables",
+      "Intercepting and altering frequency converter commands while spoofing normal telemetry to monitoring operators",
+      "Physically cutting overhead high-voltage transmission lines",
+      "Flooding human email inboxes with marketing spam"
+    ],
+    "correctAnswerIndex": 1,
+    "answerSource": "Manually Verified",
+    "isApproved": true,
+    "explanation": "Stuxnet manipulated PLC control code to alter motor centrifuge rotational speeds while falsifying recorded sensor telemetry to convince human operators all parameters were normal.",
+    "createdAt": "2026-09-18T14:00:00.000Z"
+  },
+  {
+    "id": "q-iiot-w8-12",
+    "courseId": "course-iiot-cps-master",
+    "weekNumber": 8,
+    "originalQuestionNumber": 12,
+    "sourcePageNumber": 121,
+    "sourcePdfName": "nptl 6 weeks.pdf",
+    "questionText": "What are the three dimensional axes of the RAMI 4.0 reference architecture?",
+    "options": [
+      "Hierarchy Levels, Life Cycle & Value Stream, and Layers",
+      "Width, Height, and Depth",
+      "Voltage, Current, and Resistance",
+      "Sensors, Actuators, and Cables"
+    ],
+    "correctAnswerIndex": 0,
+    "answerSource": "Manually Verified",
+    "isApproved": true,
+    "explanation": "RAMI 4.0 maps industrial systems along 3 axes: Layers (from Asset to Business), Life Cycle & Value Stream (IEC 62890), and Hierarchy Levels (IEC 62264 / IEC 61512).",
+    "createdAt": "2026-09-18T14:00:00.000Z"
+  },
+  {
+    "id": "q-iiot-w8-13",
+    "courseId": "course-iiot-cps-master",
+    "weekNumber": 8,
+    "originalQuestionNumber": 13,
+    "sourcePageNumber": 122,
+    "sourcePdfName": "nptl 6 weeks.pdf",
+    "questionText": "Which mathematical formalism is standard for modeling the continuous-time dynamics of physical processes in Cyber-Physical Systems?",
+    "options": [
+      "State-space differential equations: dx/dt = Ax + Bu, y = Cx + Du",
+      "Unordered associative word dictionaries",
+      "Simple boolean logic gates only",
+      "Pixel color matrices"
+    ],
+    "correctAnswerIndex": 0,
+    "answerSource": "Manually Verified",
+    "isApproved": true,
+    "explanation": "Continuous-time physical systems in CPS are classically formulated using state-space differential equations relating internal state variables x, control inputs u, and observable outputs y.",
+    "createdAt": "2026-09-18T14:00:00.000Z"
+  },
+  {
+    "id": "q-iiot-w8-14",
+    "courseId": "course-iiot-cps-master",
+    "weekNumber": 8,
+    "originalQuestionNumber": 14,
+    "sourcePageNumber": 123,
+    "sourcePdfName": "nptl 6 weeks.pdf",
+    "questionText": "What enables smart sensor self-calibration in modern CPS installations?",
+    "options": [
+      "Onboard microcontrollers using known baseline physical standards or cross-sensor algorithmic validation",
+      "Manually adjusting a mechanical potentiometer screw daily",
+      "Replacing the entire sensor assembly every 2 hours",
+      "Using exclusively plastic structural housings"
+    ],
+    "correctAnswerIndex": 0,
+    "answerSource": "Manually Verified",
+    "isApproved": true,
+    "explanation": "Smart sensors leverage integrated DSPs and microcontrollers running auto-zeroing algorithms, cross-sensor consistency checks, and drift-compensation models.",
+    "createdAt": "2026-09-18T14:00:00.000Z"
+  },
+  {
+    "id": "q-iiot-w8-15",
+    "courseId": "course-iiot-cps-master",
+    "weekNumber": 8,
+    "originalQuestionNumber": 15,
+    "sourcePageNumber": 124,
+    "sourcePdfName": "nptl 6 weeks.pdf",
+    "questionText": "In a Cyber-Physical Production System (CPPS), plug-and-produce modularity is made possible primarily through:",
+    "options": [
+      "Self-describing semantic machine models, standardized industrial interfaces, and automated service discovery",
+      "Hardcoding fixed IP addresses and point-to-point analog wiring harnesses",
+      "Mandatory manual rewiring by factory electricians whenever a job changes",
+      "Eliminating all communication protocols"
+    ],
+    "correctAnswerIndex": 0,
+    "answerSource": "Manually Verified",
+    "isApproved": true,
+    "explanation": "Plug-and-produce relies on semantic interoperability (such as OPC UA Companion Specifications and AAS), allowing newly added production modules to advertise capabilities and reconfigure autonomously.",
+    "createdAt": "2026-09-18T14:00:00.000Z"
+  },
+  {
+    "id": "q-iiot-w9-1",
+    "courseId": "course-iiot-cps-master",
+    "weekNumber": 9,
+    "originalQuestionNumber": 1,
+    "sourcePageNumber": 125,
+    "sourcePdfName": "nptl 6 weeks.pdf",
+    "questionText": "What core architectural feature makes OPC Unified Architecture (OPC UA, IEC 62541) platform-independent and firewall-friendly?",
+    "options": [
+      "Binary/JSON encoding over standard TCP/IP or WebSockets, replacing legacy Microsoft DCOM dependencies",
+      "Strict requirement for Windows XP operating systems only",
+      "Exclusive operation over RS-232 serial cables without networking",
+      "Requirement to run solely on mainframe computers"
+    ],
+    "correctAnswerIndex": 0,
+    "answerSource": "Manually Verified",
+    "isApproved": true,
+    "explanation": "OPC UA eliminated legacy OPC DA's dependency on Microsoft DCOM by introducing platform-agnostic service-oriented architecture with secure binary TCP and HTTPS/WebSocket bindings.",
+    "createdAt": "2026-09-18T14:00:00.000Z"
+  },
+  {
+    "id": "q-iiot-w9-2",
+    "courseId": "course-iiot-cps-master",
+    "weekNumber": 9,
+    "originalQuestionNumber": 2,
+    "sourcePageNumber": 126,
+    "sourcePdfName": "nptl 6 weeks.pdf",
+    "questionText": "Which communication model was introduced in OPC UA Part 14 to enable high-speed deterministic multicast for motion control and field-level controllers?",
+    "options": [
+      "OPC UA PubSub (Publish-Subscribe)",
+      "Single-client synchronous polling",
+      "Manual batch file upload via FTP",
+      "Serial token ring ring-passing"
+    ],
+    "correctAnswerIndex": 0,
+    "answerSource": "Manually Verified",
+    "isApproved": true,
+    "explanation": "OPC UA PubSub enables one-to-many and many-to-many communication, combining with TSN Ethernet to achieve deterministic sub-millisecond motion control without client/server polling overhead.",
+    "createdAt": "2026-09-18T14:00:00.000Z"
+  },
+  {
+    "id": "q-iiot-w9-3",
+    "courseId": "course-iiot-cps-master",
+    "weekNumber": 9,
+    "originalQuestionNumber": 3,
+    "sourcePageNumber": 127,
+    "sourcePdfName": "nptl 6 weeks.pdf",
+    "questionText": "Which standard defines the Time-Aware Shaper (TAS) in IEEE 802.1 Time-Sensitive Networking (TSN)?",
+    "options": [
+      "IEEE 802.1Qbv",
+      "IEEE 802.11b",
+      "IEEE 802.3u",
+      "IEEE 754"
+    ],
+    "correctAnswerIndex": 0,
+    "answerSource": "Manually Verified",
+    "isApproved": true,
+    "explanation": "IEEE 802.1Qbv defines the Time-Aware Shaper, which opens and closes transmission gates on queue buffers according to a synchronized global schedule to guarantee zero packet interference for scheduled traffic.",
+    "createdAt": "2026-09-18T14:00:00.000Z"
+  },
+  {
+    "id": "q-iiot-w9-4",
+    "courseId": "course-iiot-cps-master",
+    "weekNumber": 9,
+    "originalQuestionNumber": 4,
+    "sourcePageNumber": 128,
+    "sourcePdfName": "nptl 6 weeks.pdf",
+    "questionText": "Which protocol standardizes microsecond-precision clock synchronization across IEEE 802.1 TSN bridges and nodes?",
+    "options": [
+      "IEEE 802.1AS (Generalized Precision Time Protocol - gPTP)",
+      "NTP (Network Time Protocol) over standard public dialup",
+      "Manual wristwatch visual inspection",
+      "ICMP ping echo timestamping"
+    ],
+    "correctAnswerIndex": 0,
+    "answerSource": "Manually Verified",
+    "isApproved": true,
+    "explanation": "IEEE 802.1AS is a profile of IEEE 1588 PTP that synchronizes network devices to a Grandmaster clock with sub-microsecond precision across heterogeneous media.",
+    "createdAt": "2026-09-18T14:00:00.000Z"
+  },
+  {
+    "id": "q-iiot-w9-5",
+    "courseId": "course-iiot-cps-master",
+    "weekNumber": 9,
+    "originalQuestionNumber": 5,
+    "sourcePageNumber": 129,
+    "sourcePdfName": "nptl 6 weeks.pdf",
+    "questionText": "Why cannot standard unmanaged commercial Ethernet (IEEE 802.3) alone satisfy hard real-time CPS requirements?",
+    "options": [
+      "CSMA/CD arbitration, buffer queue contention, and non-deterministic queuing delays introduce unbounded jitter and packet loss",
+      "Commercial Ethernet cables cannot carry digital bits",
+      "Commercial Ethernet is strictly limited to 300 baud transmission speeds",
+      "Commercial Ethernet cannot interface with RJ45 connectors"
+    ],
+    "correctAnswerIndex": 0,
+    "answerSource": "Manually Verified",
+    "isApproved": true,
+    "explanation": "Standard best-effort Ethernet allows unpredictable queuing delays, buffer overflows, and packet collisions, causing unbounded latency and jitter incompatible with hard real-time control.",
+    "createdAt": "2026-09-18T14:00:00.000Z"
+  },
+  {
+    "id": "q-iiot-w9-6",
+    "courseId": "course-iiot-cps-master",
+    "weekNumber": 9,
+    "originalQuestionNumber": 6,
+    "sourcePageNumber": 130,
+    "sourcePdfName": "nptl 6 weeks.pdf",
+    "questionText": "What key advantage does Data Distribution Service (DDS, OMG standard) provide in distributed Cyber-Physical Systems?",
+    "options": [
+      "Data-centric publish-subscribe architecture with rich configurable Quality of Service (QoS) policies (deadline, reliability, durability, latency budget)",
+      "Strict requirement that all nodes must connect to one central database server",
+      "Elimination of all binary data transfer",
+      "Manual paper routing of all data requests"
+    ],
+    "correctAnswerIndex": 0,
+    "answerSource": "Manually Verified",
+    "isApproved": true,
+    "explanation": "DDS is a peer-to-peer data-centric pub/sub middleware featuring over 20 configurable QoS parameters governing real-time delivery guarantees without broker bottlenecks.",
+    "createdAt": "2026-09-18T14:00:00.000Z"
+  },
+  {
+    "id": "q-iiot-w9-7",
+    "courseId": "course-iiot-cps-master",
+    "weekNumber": 9,
+    "originalQuestionNumber": 7,
+    "sourcePageNumber": 131,
+    "sourcePdfName": "nptl 6 weeks.pdf",
+    "questionText": "What constitutes the communication cycle in PROFINET IRT (Isochronous Real-Time)?",
+    "options": [
+      "A deterministic cycle divided into an Isochronous Real-Time phase (reserved time-slots) and an Open Communication phase (standard TCP/IP)",
+      "Random transmission without any scheduled periods",
+      "Only sending data when human operators press an emergency stop button",
+      "Strict transmission of data exactly once every 24 hours"
+    ],
+    "correctAnswerIndex": 0,
+    "answerSource": "Manually Verified",
+    "isApproved": true,
+    "explanation": "PROFINET IRT splits every bus communication cycle into a scheduled deterministic phase reserved for motion control, and an open phase for standard TCP/IP traffic.",
+    "createdAt": "2026-09-18T14:00:00.000Z"
+  },
+  {
+    "id": "q-iiot-w9-8",
+    "courseId": "course-iiot-cps-master",
+    "weekNumber": 9,
+    "originalQuestionNumber": 8,
+    "sourcePageNumber": 132,
+    "sourcePdfName": "nptl 6 weeks.pdf",
+    "questionText": "In an OPC UA Information Model, nodes in the AddressSpace are interconnected using:",
+    "options": [
+      "Typed References (e.g., Organizes, HasComponent, HasProperty)",
+      "Simple unindexed comma-separated text values",
+      "Physical copper jumpers between circuits",
+      "Magnetic tape reels"
+    ],
+    "correctAnswerIndex": 0,
+    "answerSource": "Manually Verified",
+    "isApproved": true,
+    "explanation": "OPC UA represents complex asset hierarchies as an object-oriented graph of Nodes interconnected by semantically defined References such as HasComponent or HasTypeDefinition.",
+    "createdAt": "2026-09-18T14:00:00.000Z"
+  },
+  {
+    "id": "q-iiot-w9-9",
+    "courseId": "course-iiot-cps-master",
+    "weekNumber": 9,
+    "originalQuestionNumber": 9,
+    "sourcePageNumber": 133,
+    "sourcePdfName": "nptl 6 weeks.pdf",
+    "questionText": "Which single-pair cabling standard brings Ethernet directly to field-level smart sensors and actuators up to 1000 meters in Industry 4.0?",
+    "options": [
+      "Single-Pair Ethernet (SPE, 10BASE-T1L / IEEE 802.3cg)",
+      "Standard USB 2.0 cable",
+      "Fiber-optic trans-Atlantic undersea cables",
+      "Coaxial analog antenna cable"
+    ],
+    "correctAnswerIndex": 0,
+    "answerSource": "Manually Verified",
+    "isApproved": true,
+    "explanation": "Single-Pair Ethernet (10BASE-T1L) transmits 10 Mbps Ethernet and Power over Data Lines (PoDL) over a single twisted pair up to 1000m, replacing legacy 4-20mA loops.",
+    "createdAt": "2026-09-18T14:00:00.000Z"
+  },
+  {
+    "id": "q-iiot-w9-10",
+    "courseId": "course-iiot-cps-master",
+    "weekNumber": 9,
+    "originalQuestionNumber": 10,
+    "sourcePageNumber": 134,
+    "sourcePdfName": "nptl 6 weeks.pdf",
+    "questionText": "How does Modbus TCP compare to OPC UA in modern Cyber-Physical systems?",
+    "options": [
+      "Modbus TCP is a simple register-based protocol lacking native encryption and semantics, whereas OPC UA provides rich object modeling and end-to-end security",
+      "Modbus TCP has built-in quantum cryptography while OPC UA has no security",
+      "Modbus TCP only runs on wireless satellite links",
+      "Modbus TCP requires specialized supercomputers to decode 16-bit integers"
+    ],
+    "correctAnswerIndex": 0,
+    "answerSource": "Manually Verified",
+    "isApproved": true,
+    "explanation": "Modbus TCP is a lightweight legacy protocol reading/writing raw registers without native metadata or security, while OPC UA offers comprehensive semantic modeling, encryption, and authorization.",
+    "createdAt": "2026-09-18T14:00:00.000Z"
+  },
+  {
+    "id": "q-iiot-w9-11",
+    "courseId": "course-iiot-cps-master",
+    "weekNumber": 9,
+    "originalQuestionNumber": 11,
+    "sourcePageNumber": 135,
+    "sourcePdfName": "nptl 6 weeks.pdf",
+    "questionText": "Which framing mechanism in IEEE 802.1Qbu (Frame Preemption) ensures express real-time frames are not blocked by large non-critical frames?",
+    "options": [
+      "Interrupting the transmission of a preemptable frame midway and resuming it after the express frame has passed",
+      "Discarding all network frames permanently",
+      "Buffering express frames until midnight",
+      "Converting the Ethernet cable into an optical prism"
+    ],
+    "correctAnswerIndex": 0,
+    "answerSource": "Manually Verified",
+    "isApproved": true,
+    "explanation": "IEEE 802.1Qbu Frame Preemption and IEEE 802.3br allow an urgent real-time frame to preempt the transmission of a low-priority standard frame, minimizing store-and-forward latency.",
+    "createdAt": "2026-09-18T14:00:00.000Z"
+  },
+  {
+    "id": "q-iiot-w9-12",
+    "courseId": "course-iiot-cps-master",
+    "weekNumber": 9,
+    "originalQuestionNumber": 12,
+    "sourcePageNumber": 136,
+    "sourcePdfName": "nptl 6 weeks.pdf",
+    "questionText": "In OPC UA security, how is message integrity and confidentiality guaranteed between client and server?",
+    "options": [
+      "Through Security Policies negotiating asymmetric RSA/ECC keys for mutual digital certificate validation and symmetric AES-GCM/CBC encryption",
+      "By sending all messages in plain text without checksums",
+      "By using only random port numbers",
+      "By asking users to manually verify every packet with a keypad"
+    ],
+    "correctAnswerIndex": 0,
+    "answerSource": "Manually Verified",
+    "isApproved": true,
+    "explanation": "OPC UA defines formal Security Profiles utilizing X.509 PKI certificates for mutual authentication, digital signatures (SHA-256) for integrity, and AES encryption for confidentiality.",
+    "createdAt": "2026-09-18T14:00:00.000Z"
+  },
+  {
+    "id": "q-iiot-w9-13",
+    "courseId": "course-iiot-cps-master",
+    "weekNumber": 9,
+    "originalQuestionNumber": 13,
+    "sourcePageNumber": 137,
+    "sourcePdfName": "nptl 6 weeks.pdf",
+    "questionText": "Which transport protocol is typically paired with MQTT when connecting constrained IoT devices over low-bandwidth cellular connections?",
+    "options": [
+      "TCP/IP with TLS",
+      "Unreliable raw UDP without transport reliability",
+      "AppleTalk",
+      "Analog AM radio modulation"
+    ],
+    "correctAnswerIndex": 0,
+    "answerSource": "Manually Verified",
+    "isApproved": true,
+    "explanation": "MQTT is an application layer protocol operating over reliable byte-stream TCP connections, typically wrapped with TLS for secure remote edge-to-cloud telemetry.",
+    "createdAt": "2026-09-18T14:00:00.000Z"
+  },
+  {
+    "id": "q-iiot-w9-14",
+    "courseId": "course-iiot-cps-master",
+    "weekNumber": 9,
+    "originalQuestionNumber": 14,
+    "sourcePageNumber": 138,
+    "sourcePdfName": "nptl 6 weeks.pdf",
+    "questionText": "What is the primary role of a Centralized Network Controller (CNC) in a TSN-enabled industrial network?",
+    "options": [
+      "Calculating global transmission schedules (gate control lists) based on stream reservation requirements and deploying them to TSN bridges",
+      "Physically drilling holes in factory machine casings",
+      "Replacing network switches with passive hubs",
+      "Managing human resource employee vacation schedules"
+    ],
+    "correctAnswerIndex": 0,
+    "answerSource": "Manually Verified",
+    "isApproved": true,
+    "explanation": "The Centralized Network Configuration (CNC) entity discovers topology, receives stream traffic requests from CUCs, and computes conflict-free Gate Control Lists for all IEEE 802.1Qbv bridges.",
+    "createdAt": "2026-09-18T14:00:00.000Z"
+  },
+  {
+    "id": "q-iiot-w9-15",
+    "courseId": "course-iiot-cps-master",
+    "weekNumber": 9,
+    "originalQuestionNumber": 15,
+    "sourcePageNumber": 139,
+    "sourcePdfName": "nptl 6 weeks.pdf",
+    "questionText": "Which architecture pattern decouples industrial producers from consumers, allowing dynamic multi-vendor interoperability across Industry 4.0 factories?",
+    "options": [
+      "Publish-Subscribe (PubSub) event-driven messaging with semantic topic schemas",
+      "Hardcoded static point-to-point analog wiring harnesses",
+      "Proprietary vendor-locked serial communication loops",
+      "Single-master synchronous token-passing rings"
+    ],
+    "correctAnswerIndex": 0,
+    "answerSource": "Manually Verified",
+    "isApproved": true,
+    "explanation": "PubSub decouples endpoints in space, time, and synchronization, enabling distributed sensors, controllers, and cloud applications to consume events dynamically without hardcoded dependencies.",
+    "createdAt": "2026-09-18T14:00:00.000Z"
+  }
+];
+
 export const INITIAL_QUESTIONS: Question[] = [
   ...IIOT_6_WEEKS_QUESTIONS,
+  ...IIOT_WEEKS_7_8_9_QUESTIONS,
 ];

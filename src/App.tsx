@@ -17,6 +17,8 @@ import {
   getActiveSession,
   initializeMockSession,
   createRetryWrongSession,
+  fetchCoursesFromSupabase,
+  fetchQuestionsFromSupabase,
 } from './lib/storage';
 import { getCurrentUser, initAuthSession, onAuthStateChanged, logout } from './lib/auth';
 import { MockAttempt, MockConfig, User } from './types';
@@ -111,9 +113,16 @@ export const App: React.FC = () => {
     };
   }, []);
 
-  const refreshCounts = () => {
-    setCoursesCount(getCourses(true).length);
-    setQuestionsCount(getQuestions(undefined, 'all', true).length);
+  const refreshCounts = async () => {
+    try {
+      const freshCourses = await fetchCoursesFromSupabase(true);
+      setCoursesCount(freshCourses.length);
+      const freshQuestions = await fetchQuestionsFromSupabase(undefined, 'all', true);
+      setQuestionsCount(freshQuestions.length);
+    } catch {
+      setCoursesCount(getCourses(true).length);
+      setQuestionsCount(getQuestions(undefined, 'all', true).length);
+    }
   };
 
   const handleLogout = () => {

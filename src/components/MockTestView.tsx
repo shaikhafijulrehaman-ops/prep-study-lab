@@ -1,4 +1,4 @@
-import React, { useState, useEffect, useCallback, useRef } from 'react';
+import React, { useState, useEffect, useRef } from 'react';
 import { motion, AnimatePresence } from 'framer-motion';
 import {
   Clock,
@@ -9,10 +9,7 @@ import {
   Grid,
   Sparkles,
   ShieldAlert,
-  CheckCircle2,
-  XCircle,
   AlertCircle,
-  HelpCircle,
 } from 'lucide-react';
 import { ActiveTestSession, saveActiveSession, finalizeAndSaveAttempt } from '../lib/storage';
 import { MockAttempt, User } from '../types';
@@ -145,8 +142,8 @@ export const MockTestView: React.FC<MockTestViewProps> = ({
       const items = [...prev.items];
       const target = items[prev.currentIndex];
 
-      // In practice mode, if already answered, allow re-selection or toggle
-      const newSelection = target.selectedOptionIndex === optIndex && !isExam ? null : optIndex;
+      // Allow toggling selection off or changing answer in both modes until submission
+      const newSelection = target.selectedOptionIndex === optIndex ? null : optIndex;
 
       items[prev.currentIndex] = {
         ...target,
@@ -370,26 +367,13 @@ export const MockTestView: React.FC<MockTestViewProps> = ({
               const letter = String.fromCharCode(65 + optIndex);
               const isSelected = currentItem.selectedOptionIndex === optIndex;
 
-              // Styles based on mode and feedback
+              // Styles: only distinguish selected vs unselected — no correctness feedback during test
               let containerStyle = 'bg-white border-[#DCEAF5] text-[#334155] hover:bg-[#EFF8FF]/50 hover:border-sky-200 shadow-sm';
               let badgeStyle = 'bg-[#F1F5F9] text-[#64748B] border-[#E2E8F0]';
 
               if (isSelected) {
-                if (isExam) {
-                  containerStyle = 'bg-[#EFF8FF] border-[#38BDF8] text-[#0F172A] shadow-[0_4px_16px_rgba(56,189,248,0.18)]';
-                  badgeStyle = 'bg-[#0284C7] text-white font-bold border-[#0284C7]';
-                } else {
-                  if (optIndex === currentItem.correctOptionIndex) {
-                    containerStyle = 'bg-emerald-50 border-emerald-400 text-emerald-950 shadow-[0_4px_16px_rgba(16,185,129,0.15)]';
-                    badgeStyle = 'bg-emerald-600 text-white font-bold border-emerald-600';
-                  } else {
-                    containerStyle = 'bg-rose-50 border-rose-400 text-rose-950 shadow-[0_4px_16px_rgba(244,63,94,0.15)]';
-                    badgeStyle = 'bg-rose-600 text-white font-bold border-rose-600';
-                  }
-                }
-              } else if (!isExam && currentItem.selectedOptionIndex !== null && optIndex === currentItem.correctOptionIndex) {
-                containerStyle = 'bg-emerald-50/70 border-emerald-300 text-emerald-900';
-                badgeStyle = 'bg-emerald-600 text-white font-bold border-emerald-600';
+                containerStyle = 'bg-[#EFF8FF] border-[#38BDF8] text-[#0F172A] shadow-[0_4px_16px_rgba(56,189,248,0.18)]';
+                badgeStyle = 'bg-[#0284C7] text-white font-bold border-[#0284C7]';
               }
 
               return (
@@ -409,35 +393,10 @@ export const MockTestView: React.FC<MockTestViewProps> = ({
                     </span>
                   </div>
 
-                  {/* Feedback indicator in practice mode */}
-                  {!isExam && isSelected && (
-                    <div className="shrink-0">
-                      {optIndex === currentItem.correctOptionIndex ? (
-                        <CheckCircle2 className="w-5 h-5 text-emerald-600" />
-                      ) : (
-                        <XCircle className="w-5 h-5 text-rose-600" />
-                      )}
-                    </div>
-                  )}
                 </button>
               );
             })}
           </div>
-
-          {/* Immediate Explanation (Practice Mode Only) */}
-          {!isExam && currentItem.selectedOptionIndex !== null && currentItem.explanation && (
-            <motion.div
-              initial={{ opacity: 0, y: 10 }}
-              animate={{ opacity: 1, y: 0 }}
-              className="p-4 rounded-2xl bg-[#EFF8FF] border border-[#DCEAF5] text-xs text-[#0F172A] space-y-1.5"
-            >
-              <div className="flex items-center gap-1.5 text-[#0284C7] font-mono uppercase tracking-widest text-[11px] font-semibold">
-                <HelpCircle className="w-3.5 h-3.5" />
-                <span>Conceptual Insight</span>
-              </div>
-              <p className="leading-relaxed text-[#475569]">{currentItem.explanation}</p>
-            </motion.div>
-          )}
         </div>
 
         {/* Bottom Navigation Controls */}

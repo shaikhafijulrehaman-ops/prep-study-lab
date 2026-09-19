@@ -22,6 +22,22 @@ export function shuffleArray<T>(array: T[]): T[] {
 const REMOVED_LEGACY_COURSE_IDS = new Set(['course-cloud-01', 'course-dl-02', 'course-algo-03']);
 const DELETED_COURSES_KEY = 'prep_studylab_deleted_courses_v1';
 
+/**
+ * Dynamically extracts all distinct week numbers from questions.
+ * Strictly sorts numerically (1, 2, ..., 9, 10, ...) - never lexicographically.
+ */
+export function deriveAvailableWeeks(questions: (Question | { weekNumber?: number; week_number?: number })[]): number[] {
+  const weeks = new Set<number>();
+  questions.forEach((q) => {
+    const raw = 'weekNumber' in q && q.weekNumber !== undefined ? q.weekNumber : (q as any).week_number;
+    const num = typeof raw === 'number' ? raw : parseInt(String(raw), 10);
+    if (!isNaN(num) && num > 0) {
+      weeks.add(num);
+    }
+  });
+  return Array.from(weeks).sort((a, b) => a - b);
+}
+
 // ----------------- Courses & Questions -----------------
 
 export function getCourses(publishedOnly: boolean = false): Course[] {
@@ -53,8 +69,6 @@ export function getCourses(publishedOnly: boolean = false): Course[] {
     }
 
     let courses = Array.from(courseMap.values());
-    localStorage.setItem(KEYS.COURSES, JSON.stringify(courses));
-
     if (publishedOnly) {
       return courses.filter((c) => c.status === 'published');
     }
@@ -64,7 +78,47 @@ export function getCourses(publishedOnly: boolean = false): Course[] {
   }
 }
 
-export function saveCourse(course: Course): Course {
+/**
+ * Loads published or all courses directly from Supabase.
+ * Keeps local cache updated as single source of truth.
+ */
+export async function fetchCoursesFromSupabase(publishedOnly: boolean = false): Promise<Course[]> {
+  const supabase = getSupabaseClient();
+  if (!supabase) return getCourses(publishedOnly);
+
+  try {
+    let query = supabase.from('courses').select('*');
+    if (publishedOnly) {
+      query = query.eq('status', 'published');
+    }
+    const { data, error } = await query.order('created_at', { ascending: true });
+
+    if (error || !data || data.length === 0) {
+      return getCourses(publishedOnly);
+    }
+
+    const mapped: Course[] = data.map((row: any) => ({
+      id: row.id,
+      code: row.code,
+      name: row.name,
+      description: row.description || '',
+      status: row.status,
+      publishedAt: row.published_at || undefined,
+      createdAt: row.created_at || undefined,
+      totalQuestions: row.total_questions || 0,
+      weeks: Array.isArray(row.weeks) ? row.weeks : [],
+    }));
+
+    // Update local cache
+    localStorage.setItem(KEYS.COURSES, JSON.stringify(mapped));
+    return mapped;
+  } catch (err) {
+    console.warn('Error fetching courses from Supabase:', err);
+    return getCourses(publishedOnly);
+  }
+}
+
+export async function saveCourse(course: Course): Promise<{ success: boolean; course: Course; error?: string }> {
   const current = getCourses(false);
   const index = current.findIndex((c) => c.id === course.id);
   const courseWithDefaults: Course = {
@@ -82,36 +136,40 @@ export function saveCourse(course: Course): Course {
   }
   localStorage.setItem(KEYS.COURSES, JSON.stringify(updated));
 
-  // Sync to Supabase in background if configured
   const supabase = getSupabaseClient();
   if (supabase) {
-    supabase
-      .from('courses')
-      .upsert({
-        id: courseWithDefaults.id,
-        code: courseWithDefaults.code,
-        name: courseWithDefaults.name,
-        description: courseWithDefaults.description || '',
-        status: courseWithDefaults.status,
-        published_at: courseWithDefaults.publishedAt || null,
-      })
-      .then(
-        ({ error }) => {
-          if (error) console.warn('Supabase course sync notice:', error.message);
-        },
-        () => {}
-      );
+    try {
+      const { error } = await supabase
+        .from('courses')
+        .upsert({
+          id: courseWithDefaults.id,
+          code: courseWithDefaults.code,
+          name: courseWithDefaults.name,
+          description: courseWithDefaults.description || '',
+          status: courseWithDefaults.status,
+          published_at: courseWithDefaults.publishedAt || null,
+          total_questions: courseWithDefaults.totalQuestions || 0,
+          weeks: courseWithDefaults.weeks || [],
+        });
+      if (error) {
+        console.warn('Supabase course upsert notice:', error.message);
+        return { success: false, course: courseWithDefaults, error: error.message };
+      }
+    } catch (err: any) {
+      console.warn('Supabase course upsert exception:', err);
+      return { success: false, course: courseWithDefaults, error: err?.message || 'Network error' };
+    }
   }
 
-  return courseWithDefaults;
+  return { success: true, course: courseWithDefaults };
 }
 
 /**
  * Publishes a test to students.
  * STRICT VALIDATION: Blocks publishing if any question does not have a verified answer or is unapproved.
  */
-export function publishTest(courseId: string): { success: boolean; error?: string; unverifiedCount?: number } {
-  const questions = getQuestions(courseId, 'all', false);
+export async function publishTest(courseId: string): Promise<{ success: boolean; error?: string; unverifiedCount?: number }> {
+  const questions = await fetchQuestionsFromSupabase(courseId, 'all', false);
   if (questions.length === 0) {
     return { success: false, error: 'Cannot publish a test with 0 questions.' };
   }
@@ -125,37 +183,39 @@ export function publishTest(courseId: string): { success: boolean; error?: strin
     };
   }
 
-  const allCourses = getCourses(false);
+  const allCourses = await fetchCoursesFromSupabase(false);
   const target = allCourses.find((c) => c.id === courseId);
   if (!target) {
     return { success: false, error: 'Test record not found.' };
   }
 
+  const availableWeeks = deriveAvailableWeeks(questions);
   target.status = 'published';
   target.publishedAt = new Date().toISOString();
   target.totalQuestions = questions.length;
-  saveCourse(target);
+  target.weeks = availableWeeks;
 
-  return { success: true };
+  return saveCourse(target);
 }
 
 /**
  * Reverts a published test back to draft status.
  */
-export function unpublishTest(courseId: string): void {
-  const allCourses = getCourses(false);
+export async function unpublishTest(courseId: string): Promise<{ success: boolean; error?: string }> {
+  const allCourses = await fetchCoursesFromSupabase(false);
   const target = allCourses.find((c) => c.id === courseId);
   if (target) {
     target.status = 'draft';
-    saveCourse(target);
+    return saveCourse(target);
   }
+  return { success: false, error: 'Test record not found.' };
 }
 
 /**
  * Deletes a test and its questions.
  * IMMUTABLE SNAPSHOT GUARANTEE: Does NOT delete or corrupt past student MockAttempt snapshots.
  */
-export function deleteTest(courseId: string): void {
+export async function deleteTest(courseId: string): Promise<{ success: boolean; error?: string }> {
   // 1. Remember deleted course so it is never re-seeded
   try {
     const dRaw = localStorage.getItem(DELETED_COURSES_KEY);
@@ -171,17 +231,24 @@ export function deleteTest(courseId: string): void {
   const filteredCourses = currentCourses.filter((c) => c.id !== courseId);
   localStorage.setItem(KEYS.COURSES, JSON.stringify(filteredCourses));
 
-  // 2. Remove questions belonging to this course
+  // 3. Remove questions belonging to this course
   const currentQuestions = getQuestions();
   const filteredQuestions = currentQuestions.filter((q) => q.courseId !== courseId);
   localStorage.setItem(KEYS.QUESTIONS, JSON.stringify(filteredQuestions));
 
-  // 3. Supabase cleanup
+  // 4. Supabase cleanup
   const supabase = getSupabaseClient();
   if (supabase) {
-    supabase.from('questions').delete().eq('course_id', courseId).then(() => {});
-    supabase.from('courses').delete().eq('id', courseId).then(() => {});
+    try {
+      await supabase.from('questions').delete().eq('course_id', courseId);
+      await supabase.from('courses').delete().eq('id', courseId);
+    } catch (err: any) {
+      console.warn('Supabase delete error:', err);
+      return { success: false, error: err?.message };
+    }
   }
+
+  return { success: true };
 }
 
 export function getQuestions(
@@ -205,7 +272,6 @@ export function getQuestions(
     }
 
     all = Array.from(qMap.values());
-    localStorage.setItem(KEYS.QUESTIONS, JSON.stringify(all));
   } catch {
     all = INITIAL_QUESTIONS;
   }
@@ -224,7 +290,71 @@ export function getQuestions(
   });
 }
 
-export function saveQuestions(newQuestions: Question[]): void {
+/**
+ * Loads questions directly from Supabase as authoritative source of truth.
+ * Caches in localStorage for offline resilience.
+ */
+export async function fetchQuestionsFromSupabase(
+  courseId?: string,
+  weekSelection?: number[] | number | 'all',
+  approvedOnly: boolean = false
+): Promise<Question[]> {
+  const supabase = getSupabaseClient();
+  if (!supabase) return getQuestions(courseId, weekSelection, approvedOnly);
+
+  try {
+    let query = supabase.from('questions').select('*');
+    if (courseId) {
+      query = query.eq('course_id', courseId);
+    }
+    if (weekSelection !== undefined && weekSelection !== 'all') {
+      if (Array.isArray(weekSelection)) {
+        if (weekSelection.length > 0) {
+          query = query.in('week_number', weekSelection);
+        }
+      } else if (typeof weekSelection === 'number') {
+        query = query.eq('week_number', weekSelection);
+      }
+    }
+
+    const { data, error } = await query.order('week_number', { ascending: true });
+
+    if (error || !data) {
+      console.warn('Error fetching questions from Supabase:', error?.message);
+      return getQuestions(courseId, weekSelection, approvedOnly);
+    }
+
+    const mapped: Question[] = data.map((row: any) => ({
+      id: row.id,
+      courseId: row.course_id,
+      weekNumber: Number(row.week_number) || 1,
+      sourcePdfId: row.source_pdf_id || undefined,
+      sourcePdfName: row.source_pdf_name || '',
+      questionText: row.question_text,
+      options: row.options as [string, string, string, string],
+      correctAnswerIndex: row.correct_answer_index,
+      answerSource: 'PDF',
+      isApproved: true,
+      explanation: row.explanation || '',
+      createdAt: row.created_at,
+    }));
+
+    if (mapped.length > 0) {
+      const current = getQuestions();
+      const map = new Map<string, Question>();
+      current.forEach((q) => map.set(q.id, q));
+      mapped.forEach((q) => map.set(q.id, q));
+      localStorage.setItem(KEYS.QUESTIONS, JSON.stringify(Array.from(map.values())));
+    }
+
+    return mapped;
+  } catch (err) {
+    console.warn('Error fetching questions from Supabase:', err);
+    return getQuestions(courseId, weekSelection, approvedOnly);
+  }
+}
+
+export async function saveQuestions(newQuestions: Question[]): Promise<{ success: boolean; error?: string }> {
   const current = getQuestions();
   const map = new Map<string, Question>();
   current.forEach((q) => map.set(q.id, q));
@@ -232,70 +362,92 @@ export function saveQuestions(newQuestions: Question[]): void {
   const merged = Array.from(map.values());
   localStorage.setItem(KEYS.QUESTIONS, JSON.stringify(merged));
 
-  // Sync to Supabase in background
   const supabase = getSupabaseClient();
-  if (supabase) {
-    const payload = newQuestions.map((q) => ({
-      id: q.id,
-      course_id: q.courseId,
-      week_number: q.weekNumber,
-      source_pdf_name: q.sourcePdfName || '',
-      question_text: q.questionText,
-      options: q.options,
-      correct_answer_index: q.correctAnswerIndex,
-      answer_source: q.answerSource || 'Not Available',
-      is_approved: q.isApproved ?? false,
-      explanation: q.explanation || '',
-    }));
-    supabase
-      .from('questions')
-      .upsert(payload)
-      .then(
-        ({ error }) => {
-          if (error) console.warn('Supabase questions sync notice:', error.message);
-        },
-        () => {}
-      );
+  if (supabase && newQuestions.length > 0) {
+    try {
+      // Chunk into batches of 50
+      for (let i = 0; i < newQuestions.length; i += 50) {
+        const chunk = newQuestions.slice(i, i + 50).map((q) => ({
+          id: q.id,
+          course_id: q.courseId,
+          week_number: q.weekNumber,
+          source_pdf_id: q.sourcePdfId || null,
+          source_pdf_name: q.sourcePdfName || '',
+          question_text: q.questionText,
+          options: q.options,
+          correct_answer_index: q.correctAnswerIndex ?? 0,
+          explanation: q.explanation || '',
+        }));
+
+        const { error } = await supabase.from('questions').upsert(chunk);
+        if (error) {
+          console.error('Supabase questions upsert error:', error.message);
+          return { success: false, error: error.message };
+        }
+      }
+    } catch (err: any) {
+      console.error('Supabase questions upsert exception:', err);
+      return { success: false, error: err?.message || 'Network error' };
+    }
   }
+
+  return { success: true };
 }
 
-export function updateQuestion(question: Question): void {
+export async function updateQuestion(question: Question): Promise<{ success: boolean; error?: string }> {
   const current = getQuestions();
   const index = current.findIndex((q) => q.id === question.id);
   if (index >= 0) {
     current[index] = question;
     localStorage.setItem(KEYS.QUESTIONS, JSON.stringify(current));
+  }
 
-    const supabase = getSupabaseClient();
-    if (supabase) {
-      supabase
+  const supabase = getSupabaseClient();
+  if (supabase) {
+    try {
+      const { error } = await supabase
         .from('questions')
         .upsert({
           id: question.id,
           course_id: question.courseId,
           week_number: question.weekNumber,
+          source_pdf_id: question.sourcePdfId || null,
           source_pdf_name: question.sourcePdfName || '',
           question_text: question.questionText,
           options: question.options,
-          correct_answer_index: question.correctAnswerIndex,
-          answer_source: question.answerSource,
-          is_approved: question.isApproved,
+          correct_answer_index: question.correctAnswerIndex ?? 0,
           explanation: question.explanation || '',
-        })
-        .then(() => {});
+        });
+      if (error) {
+        console.error('Supabase question update error:', error.message);
+        return { success: false, error: error.message };
+      }
+    } catch (err: any) {
+      return { success: false, error: err?.message || 'Network error' };
     }
   }
+
+  return { success: true };
 }
 
-export function deleteQuestion(questionId: string): void {
+export async function deleteQuestion(questionId: string): Promise<{ success: boolean; error?: string }> {
   const current = getQuestions();
   const updated = current.filter((q) => q.id !== questionId);
   localStorage.setItem(KEYS.QUESTIONS, JSON.stringify(updated));
 
   const supabase = getSupabaseClient();
   if (supabase) {
-    supabase.from('questions').delete().eq('id', questionId).then(() => {});
+    try {
+      const { error } = await supabase.from('questions').delete().eq('id', questionId);
+      if (error) {
+        return { success: false, error: error.message };
+      }
+    } catch (err: any) {
+      return { success: false, error: err?.message || 'Network error' };
+    }
   }
+
+  return { success: true };
 }
 
 // ----------------- Mock Test Generation & Option Order -----------------
@@ -527,6 +679,9 @@ export async function fetchAttemptsFromSupabase(userId?: string): Promise<MockAt
       timeLimitSeconds: row.time_limit_seconds,
       createdAt: row.created_at,
       completedAt: row.completed_at,
+      selectedWeeks: Array.isArray(row.selected_weeks) ? row.selected_weeks : undefined,
+      startedAt: row.started_at || undefined,
+      submittedAt: row.submitted_at || row.completed_at || undefined,
       items: Array.isArray(row.attempt_items)
         ? row.attempt_items
             .sort((a: any, b: any) => a.question_index - b.question_index)
@@ -593,6 +748,9 @@ export async function fetchAdminRecentAttemptsFromSupabase(): Promise<MockAttemp
       timeLimitSeconds: row.time_limit_seconds,
       createdAt: row.created_at,
       completedAt: row.completed_at,
+      selectedWeeks: Array.isArray(row.selected_weeks) ? row.selected_weeks : undefined,
+      startedAt: row.started_at || undefined,
+      submittedAt: row.submitted_at || row.completed_at || undefined,
       items: Array.isArray(row.attempt_items)
         ? row.attempt_items
             .sort((a: any, b: any) => a.question_index - b.question_index)
@@ -657,6 +815,9 @@ export async function finalizeAndSaveAttempt(
     timeLimitSeconds: session.config.timeLimitMinutes > 0 ? session.config.timeLimitMinutes * 60 : null,
     createdAt: session.startedAt,
     completedAt,
+    selectedWeeks: session.config.selectedWeeks || [],
+    startedAt: session.startedAt,
+    submittedAt: completedAt,
     items: session.items, // Exact question and option order preserved
   };
 

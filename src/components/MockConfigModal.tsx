@@ -1,8 +1,8 @@
 import React, { useState, useEffect } from 'react';
 import { motion } from 'framer-motion';
 import { X, Play, Clock, Sliders, CheckCircle2, ShieldAlert, Sparkles, BookOpen } from 'lucide-react';
-import { Course, MockConfig, QuestionSelection, TestMode } from '../types';
-import { getCourses, getQuestions } from '../lib/storage';
+import { Course, MockConfig, QuestionSelection, TestMode, Question } from '../types';
+import { getCourses, getQuestions, fetchCoursesFromSupabase, fetchQuestionsFromSupabase, deriveAvailableWeeks } from '../lib/storage';
 
 interface MockConfigModalProps {
   isOpen: boolean;
@@ -27,34 +27,56 @@ export const MockConfigModal: React.FC<MockConfigModalProps> = ({
   const [selectionType, setSelectionType] = useState<QuestionSelection>('random');
   const [mode, setMode] = useState<TestMode>('practice');
   const [timeLimitMinutes, setTimeLimitMinutes] = useState<number>(15);
+  const [courseQuestions, setCourseQuestions] = useState<Question[]>(() => {
+    const target = preselectedCourseId || courses[0]?.id || '';
+    return target ? getQuestions(target, 'all', true) : [];
+  });
+  const [isLoading, setIsLoading] = useState(false);
 
   const currentCourse = courses.find((c) => c.id === selectedCourseId) || courses[0];
 
-  // Get all unique weeks available for the selected course
-  const allCourseQuestions = currentCourse ? getQuestions(currentCourse.id, 'all', true) : [];
-  const availableWeekNumbers = Array.from(
-    new Set(allCourseQuestions.map((q) => q.weekNumber))
-  ).sort((a, b) => a - b);
+  // Dynamic available weeks derived strictly from questions
+  const availableWeekNumbers = deriveAvailableWeeks(courseQuestions);
 
   // Initialize selected weeks to all available weeks when opening or switching courses
   useEffect(() => {
     if (isOpen) {
-      const freshCourses = getCourses(true);
-      setCourses(freshCourses);
-      const targetCourseId = preselectedCourseId || selectedCourseId || freshCourses[0]?.id || '';
-      setSelectedCourseId(targetCourseId);
+      let isSubscribed = true;
+      setIsLoading(true);
 
-      const questions = getQuestions(targetCourseId, 'all', true);
-      const weeks = Array.from(new Set(questions.map((q) => q.weekNumber))).sort((a, b) => a - b);
-      setSelectedWeeks(weeks.length > 0 ? weeks : [1]);
+      const loadData = async () => {
+        const freshCourses = await fetchCoursesFromSupabase(true);
+        if (!isSubscribed) return;
+        setCourses(freshCourses);
+
+        const targetCourseId = preselectedCourseId || selectedCourseId || freshCourses[0]?.id || '';
+        setSelectedCourseId(targetCourseId);
+
+        const freshQuestions = await fetchQuestionsFromSupabase(targetCourseId, 'all', true);
+        if (!isSubscribed) return;
+        setCourseQuestions(freshQuestions);
+
+        const weeks = deriveAvailableWeeks(freshQuestions);
+        setSelectedWeeks(weeks.length > 0 ? weeks : [1]);
+        setIsLoading(false);
+      };
+
+      loadData();
+
+      return () => {
+        isSubscribed = false;
+      };
     }
   }, [isOpen, preselectedCourseId]);
 
-  const handleCourseChange = (newCourseId: string) => {
+  const handleCourseChange = async (newCourseId: string) => {
     setSelectedCourseId(newCourseId);
-    const questions = getQuestions(newCourseId, 'all', true);
-    const weeks = Array.from(new Set(questions.map((q) => q.weekNumber))).sort((a, b) => a - b);
+    setIsLoading(true);
+    const questions = await fetchQuestionsFromSupabase(newCourseId, 'all', true);
+    setCourseQuestions(questions);
+    const weeks = deriveAvailableWeeks(questions);
     setSelectedWeeks(weeks.length > 0 ? weeks : [1]);
+    setIsLoading(false);
   };
 
   // Toggle an individual week
@@ -79,10 +101,30 @@ export const MockConfigModal: React.FC<MockConfigModalProps> = ({
     }
   };
 
+  // Generate dynamic 3-week chunk range presets based on actual available weeks
+  const rangePresets: { label: string; start: number; end: number }[] = [];
+  if (availableWeekNumbers.length > 3) {
+    const minW = Math.min(...availableWeekNumbers);
+    const maxW = Math.max(...availableWeekNumbers);
+    for (let s = minW; s <= maxW; s += 3) {
+      const e = Math.min(s + 2, maxW);
+      const weeksInRange = availableWeekNumbers.filter((w) => w >= s && w <= e);
+      if (weeksInRange.length > 0) {
+        rangePresets.push({
+          label: s === e ? `Week ${s}` : `Week ${s}–${e}`,
+          start: s,
+          end: e,
+        });
+      }
+    }
+  }
+
   if (!isOpen) return null;
 
   // Calculate dynamically available questions based on selected weeks
-  const availableQuestions = getQuestions(selectedCourseId, selectedWeeks, true);
+  const availableQuestions = courseQuestions.filter((q) =>
+    selectedWeeks.includes(q.weekNumber)
+  );
   const maxAvailable = availableQuestions.length;
 
   const handleLaunch = () => {
@@ -205,40 +247,34 @@ export const MockConfigModal: React.FC<MockConfigModalProps> = ({
               >
                 All Weeks
               </button>
-              {availableWeekNumbers.length >= 6 && (
-                <button
-                  type="button"
-                  onClick={() => handleSelectRange(1, 6)}
-                  className="px-3 py-1 rounded-full text-xs font-mono bg-white text-[#64748B] border border-[#DCEAF5] hover:bg-[#EFF8FF]"
-                >
-                  Week 1–6
-                </button>
-              )}
-              {availableWeekNumbers.length >= 3 && (
-                <button
-                  type="button"
-                  onClick={() => handleSelectRange(1, 3)}
-                  className="px-3 py-1 rounded-full text-xs font-mono bg-white text-[#64748B] border border-[#DCEAF5] hover:bg-[#EFF8FF]"
-                >
-                  Week 1–3
-                </button>
-              )}
-              {availableWeekNumbers.length >= 6 && (
-                <button
-                  type="button"
-                  onClick={() => handleSelectRange(4, 6)}
-                  className="px-3 py-1 rounded-full text-xs font-mono bg-white text-[#64748B] border border-[#DCEAF5] hover:bg-[#EFF8FF]"
-                >
-                  Week 4–6
-                </button>
-              )}
+              {rangePresets.map((preset) => {
+                const isPresetSelected =
+                  availableWeekNumbers
+                    .filter((w) => w >= preset.start && w <= preset.end)
+                    .every((w) => selectedWeeks.includes(w)) &&
+                  selectedWeeks.every((w) => w >= preset.start && w <= preset.end);
+                return (
+                  <button
+                    key={preset.label}
+                    type="button"
+                    onClick={() => handleSelectRange(preset.start, preset.end)}
+                    className={`px-3 py-1 rounded-full text-xs font-mono transition-all border ${
+                      isPresetSelected
+                        ? 'bg-[#0284C7] text-white font-bold shadow-sm border-[#0284C7]'
+                        : 'bg-white text-[#64748B] border border-[#DCEAF5] hover:bg-[#EFF8FF]'
+                    }`}
+                  >
+                    {preset.label}
+                  </button>
+                );
+              })}
             </div>
 
             {/* Individual Week Chips (Multi-Select) */}
-            <div className="grid grid-cols-3 sm:grid-cols-6 gap-2 pt-2">
+            <div className="grid grid-cols-3 sm:grid-cols-4 md:grid-cols-6 lg:grid-cols-8 gap-2 pt-2">
               {availableWeekNumbers.map((wk) => {
                 const isSelected = selectedWeeks.includes(wk);
-                const qCountInWeek = allCourseQuestions.filter((q) => q.weekNumber === wk).length;
+                const qCountInWeek = courseQuestions.filter((q) => q.weekNumber === wk).length;
 
                 return (
                   <button

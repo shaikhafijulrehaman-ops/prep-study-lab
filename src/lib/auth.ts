@@ -38,13 +38,13 @@ function generateSalt(): string {
 
 const DEFAULT_ADMIN: StoredLocalUser = {
   id: 'adm_primary_root',
-  name: 'admin',
+  name: 'Administrator',
   regNumber: 'ADMIN',
-  email: 'admin@prepstudylab.com',
+  email: '',
   role: 'admin',
   status: 'active',
-  passwordHash: 'd64f04256129ce02f876ad088fc3571f23743fe4786d06979d9f91cbf5360d7a',
-  salt: 'preplab_admin_salt_2026',
+  passwordHash: '',
+  salt: '',
   createdAt: '2026-01-01T00:00:00.000Z',
 };
 
@@ -288,6 +288,12 @@ export async function createAccount(
           .from('user_roles')
           .insert({ user_id: data.user.id, role: 'student' })
           .then(() => {}, () => {});
+        if (!data.session) {
+          await supabase.auth.signInWithPassword({
+            email: sanitizedEmail,
+            password,
+          });
+        }
       } else if (supaErr) {
         console.warn('Supabase signup notice:', supaErr.message);
         if (supaErr.message.includes('User already registered')) {
@@ -334,14 +340,9 @@ export async function login(
   if (supabase) {
     try {
       const isEmail = cleanInput.includes('@');
-      let emailToUse = '';
-      if (isEmail) {
-        emailToUse = cleanInput.toLowerCase();
-      } else if (cleanInput.toLowerCase() === 'admin') {
-        emailToUse = 'admin@prepstudylab.com';
-      } else {
-        emailToUse = `${cleanInput.toLowerCase().replace(/[^a-z0-9]/g, '')}@prepstudylab.com`;
-      }
+      const emailToUse = isEmail
+        ? cleanInput.toLowerCase()
+        : `${cleanInput.toLowerCase().replace(/[^a-z0-9]/g, '')}@prepstudylab.com`;
 
       const { data, error } = await supabase.auth.signInWithPassword({
         email: emailToUse,

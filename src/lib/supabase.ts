@@ -1,7 +1,7 @@
 import { createClient, SupabaseClient } from '@supabase/supabase-js';
 
-const envUrl = (import.meta.env.VITE_SUPABASE_URL || '').trim();
-const envKey = (import.meta.env.VITE_SUPABASE_ANON_KEY || '').trim();
+const envUrl = ((typeof import.meta !== 'undefined' && import.meta.env?.VITE_SUPABASE_URL) || (globalThis as any).process?.env?.VITE_SUPABASE_URL || '').trim();
+const envKey = ((typeof import.meta !== 'undefined' && import.meta.env?.VITE_SUPABASE_ANON_KEY) || (globalThis as any).process?.env?.VITE_SUPABASE_ANON_KEY || '').trim();
 
 let cachedClient: SupabaseClient | null = null;
 let initAttempted = false;
