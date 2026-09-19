@@ -141,26 +141,21 @@ export async function initAuthSession(): Promise<User | null> {
         };
         setCurrentUser(authUser);
         return authUser;
-      } else {
-        // No authenticated session in Supabase -> clear cached user!
-        setCurrentUser(null);
-        return null;
       }
     } catch (err) {
       console.warn('Auth session check exception:', err);
     }
   }
 
-  // Fallback to local session only if local user matches and no supabase
+  // Fallback to local session if available
   const stored = getCurrentUser();
-  if (!stored) return null;
-  const localUsers = getStoredLocalUsers();
-  const exists = localUsers.some((u) => u.id === stored.id && u.status !== 'deactivated');
-  if (!exists) {
+  if (stored) {
+    if (stored.status !== 'deactivated') {
+      return stored;
+    }
     setCurrentUser(null);
-    return null;
   }
-  return stored;
+  return null;
 }
 
 /**
@@ -221,6 +216,63 @@ export function onAuthStateChanged(callback: (user: User | null) => void): () =>
 }
 
 /**
+ * Synchronize credentials and profile data into local storage cache
+ * so users can seamlessly authenticate across browser reloads or network drops.
+ */
+export async function syncLocalUserCredentials(user: User, password?: string): Promise<void> {
+  try {
+    const localUsers = getStoredLocalUsers();
+    const cleanReg = user.regNumber || user.name;
+    const existingIndex = localUsers.findIndex(
+      (u) =>
+        u.id === user.id ||
+        (cleanReg && u.regNumber && u.regNumber.toUpperCase() === cleanReg.toUpperCase()) ||
+        (cleanReg && u.name.toUpperCase() === cleanReg.toUpperCase())
+    );
+
+    let salt = '';
+    let passwordHash = '';
+    if (password) {
+      salt = generateSalt();
+      passwordHash = await hashPassword(password, salt);
+    } else if (existingIndex >= 0) {
+      salt = localUsers[existingIndex].salt || '';
+      passwordHash = localUsers[existingIndex].passwordHash || '';
+    }
+
+    const localRecord: StoredLocalUser = {
+      id: user.id,
+      name: user.name,
+      regNumber: user.regNumber,
+      email:
+        user.email ||
+        (cleanReg
+          ? `${cleanReg.toLowerCase().replace(/[^a-z0-9]/g, '')}@prepstudylab.com`
+          : undefined),
+      role: user.role,
+      status: user.status || 'active',
+      passwordHash,
+      salt,
+      createdAt: user.createdAt || new Date().toISOString(),
+    };
+
+    if (existingIndex >= 0) {
+      localUsers[existingIndex] = {
+        ...localUsers[existingIndex],
+        ...localRecord,
+        ...(passwordHash ? { passwordHash, salt } : {}),
+      };
+    } else {
+      localUsers.push(localRecord);
+    }
+
+    saveStoredLocalUsers(localUsers);
+  } catch (err) {
+    console.warn('Could not sync local user credentials:', err);
+  }
+}
+
+/**
  * Public Student Registration by Registration Number only.
  * ONLY accepts: Registration Number, New Password, Confirm Password.
  * Automatically and immutably assigns role = 'student'.
@@ -245,32 +297,8 @@ export async function createAccount(
     return { success: false, error: 'Passwords do not match.' };
   }
 
-  const localUsers = getStoredLocalUsers();
-  const existing = localUsers.find(
-    (u) =>
-      (u.regNumber && u.regNumber.toUpperCase() === cleanReg) ||
-      u.name.toUpperCase() === cleanReg
-  );
-  if (existing) {
-    return { success: false, error: 'An account with this registration number already exists. Please sign in.' };
-  }
-
-  const salt = generateSalt();
-  const passwordHash = await hashPassword(password, salt);
-  const userId = `std_${Date.now()}_${Math.random().toString(36).substring(2, 9)}`;
-
   // Synthesize Supabase auth email from registration number
   const sanitizedEmail = `${cleanReg.toLowerCase().replace(/[^a-z0-9]/g, '')}@prepstudylab.com`;
-
-  // Public signup ALWAYS receives role = 'student'
-  const newUser: User = {
-    id: userId,
-    name: cleanReg,
-    regNumber: cleanReg,
-    role: 'student',
-    status: 'active',
-    createdAt: new Date().toISOString(),
-  };
 
   const supabase = getSupabaseClient();
   if (supabase) {
@@ -282,39 +310,119 @@ export async function createAccount(
           data: { regNumber: cleanReg, name: cleanReg, role: 'student' },
         },
       });
-      if (data?.user?.id) {
-        newUser.id = data.user.id;
-        await supabase
-          .from('user_roles')
-          .insert({ user_id: data.user.id, role: 'student' })
-          .then(() => {}, () => {});
+
+      if (data?.user?.id && !supaErr) {
+        const newUser: User = {
+          id: data.user.id,
+          name: cleanReg,
+          regNumber: cleanReg,
+          email: sanitizedEmail,
+          role: 'student',
+          status: 'active',
+          createdAt: data.user.created_at || new Date().toISOString(),
+        };
+
+        try {
+          await supabase
+            .from('user_roles')
+            .insert({ user_id: data.user.id, role: 'student' });
+        } catch (roleErr) {
+          console.warn('User role insert notice:', roleErr);
+        }
+
         if (!data.session) {
           await supabase.auth.signInWithPassword({
             email: sanitizedEmail,
             password,
           });
         }
-      } else if (supaErr) {
-        console.warn('Supabase signup notice:', supaErr.message);
-        if (supaErr.message.includes('User already registered')) {
-          return { success: false, error: 'An account with this registration number already exists. Please sign in.' };
+
+        setCurrentUser(newUser);
+        await syncLocalUserCredentials(newUser, password);
+        return { success: true, user: newUser };
+      }
+
+      if (
+        supaErr?.message?.includes('User already registered') ||
+        supaErr?.status === 422
+      ) {
+        // If already registered in Supabase, test if the password matches!
+        const { data: signInData, error: signInErr } = await supabase.auth.signInWithPassword({
+          email: sanitizedEmail,
+          password,
+        });
+
+        if (signInData?.user && !signInErr) {
+          const authUser: User = {
+            id: signInData.user.id,
+            name: cleanReg,
+            regNumber: cleanReg,
+            email: sanitizedEmail,
+            role: 'student',
+            status: 'active',
+            createdAt: signInData.user.created_at || new Date().toISOString(),
+          };
+          setCurrentUser(authUser);
+          await syncLocalUserCredentials(authUser, password);
+          return { success: true, user: authUser };
         }
+
+        return {
+          success: false,
+          error: `An account for registration number ${cleanReg} already exists. Please sign in with your password.`,
+        };
       }
     } catch (err) {
-      console.warn('Auth exception:', err);
+      console.warn('Auth exception during signup:', err);
     }
   }
 
-  localUsers.push({
-    id: newUser.id,
+  // Local fallback
+  const localUsers = getStoredLocalUsers();
+  const existing = localUsers.find(
+    (u) =>
+      (u.regNumber && u.regNumber.toUpperCase() === cleanReg) ||
+      u.name.toUpperCase() === cleanReg
+  );
+  if (existing) {
+    const computedHash = await hashPassword(password, existing.salt || '');
+    if (computedHash === existing.passwordHash) {
+      const authUser: User = {
+        id: existing.id,
+        name: existing.name,
+        regNumber: existing.regNumber,
+        email: existing.email,
+        role: existing.role,
+        status: existing.status,
+        createdAt: existing.createdAt,
+      };
+      setCurrentUser(authUser);
+      return { success: true, user: authUser };
+    }
+    return {
+      success: false,
+      error: `An account for registration number ${cleanReg} already exists. Please sign in with your password.`,
+    };
+  }
+
+  const salt = generateSalt();
+  const passwordHash = await hashPassword(password, salt);
+  const userId = `std_${Date.now()}_${Math.random().toString(36).substring(2, 9)}`;
+
+  const newUser: User = {
+    id: userId,
     name: cleanReg,
     regNumber: cleanReg,
     email: sanitizedEmail,
     role: 'student',
     status: 'active',
+    createdAt: new Date().toISOString(),
+  };
+
+  localUsers.push({
+    ...newUser,
     passwordHash,
     salt,
-    createdAt: newUser.createdAt,
   });
   saveStoredLocalUsers(localUsers);
   setCurrentUser(newUser);
@@ -325,6 +433,7 @@ export async function createAccount(
 /**
  * Unified Login by Registration Number or Identifier.
  * Authenticates user, securely verifies their authoritative role, and returns user object.
+ * Automatically saves credentials so the user can always log in again.
  */
 export async function login(
   regNumberOrIdentifier: string,
@@ -335,60 +444,124 @@ export async function login(
     return { success: false, error: 'Please enter your registration number and password.' };
   }
 
-  // 1. Try Supabase Auth first if configured
+  if (password.length < 6) {
+    return { success: false, error: 'Password must be at least 6 characters.' };
+  }
+
+  const isEmail = cleanInput.includes('@');
+  const cleanReg = isEmail ? cleanInput : cleanInput.toUpperCase();
+  const emailToUse = isEmail
+    ? cleanInput.toLowerCase()
+    : `${cleanInput.toLowerCase().replace(/[^a-z0-9]/g, '')}@prepstudylab.com`;
+
+  // 1. Try Supabase Auth first
   const supabase = getSupabaseClient();
   if (supabase) {
     try {
-      const isEmail = cleanInput.includes('@');
-      const emailToUse = isEmail
-        ? cleanInput.toLowerCase()
-        : `${cleanInput.toLowerCase().replace(/[^a-z0-9]/g, '')}@prepstudylab.com`;
-
-      const { data, error } = await supabase.auth.signInWithPassword({
+      const { data: signInData, error: signInError } = await supabase.auth.signInWithPassword({
         email: emailToUse,
         password,
       });
 
-      if (data?.user && !error) {
+      if (signInData?.user && !signInError) {
         // Authoritative role from user_roles or metadata
         let role: UserRole = 'student';
         try {
           const { data: roleRow } = await supabase
             .from('user_roles')
             .select('role')
-            .eq('user_id', data.user.id)
+            .eq('user_id', signInData.user.id)
             .maybeSingle();
 
           if (roleRow?.role === 'admin') {
             role = 'admin';
-          } else if (data.user.user_metadata?.role === 'admin' || data.user.app_metadata?.role === 'admin') {
+          } else if (signInData.user.user_metadata?.role === 'admin' || signInData.user.app_metadata?.role === 'admin') {
             role = 'admin';
           }
         } catch {
-          if (data.user.user_metadata?.role === 'admin' || data.user.app_metadata?.role === 'admin') {
+          if (signInData.user.user_metadata?.role === 'admin' || signInData.user.app_metadata?.role === 'admin') {
             role = 'admin';
           }
         }
 
         const identifier =
-          data.user.user_metadata?.regNumber ||
-          data.user.user_metadata?.name ||
-          cleanInput.toUpperCase();
+          signInData.user.user_metadata?.regNumber ||
+          signInData.user.user_metadata?.name ||
+          cleanReg;
 
         const authUser: User = {
-          id: data.user.id,
+          id: signInData.user.id,
           name: identifier,
-          regNumber: data.user.user_metadata?.regNumber || (role === 'student' ? identifier : undefined),
-          email: data.user.email,
+          regNumber: signInData.user.user_metadata?.regNumber || (role === 'student' ? identifier : undefined),
+          email: signInData.user.email,
           role,
           status: 'active',
-          createdAt: data.user.created_at || new Date().toISOString(),
+          createdAt: signInData.user.created_at || new Date().toISOString(),
         };
+
         setCurrentUser(authUser);
+        await syncLocalUserCredentials(authUser, password);
         return { success: true, user: authUser };
       }
-    } catch {
-      // Fall through to local verify
+
+      // If signIn failed for a student registration number:
+      // Try to auto-register new student OR identify wrong password for existing student
+      if (!isEmail) {
+        const { data: signUpData, error: signUpError } = await supabase.auth.signUp({
+          email: emailToUse,
+          password,
+          options: {
+            data: { regNumber: cleanReg, name: cleanReg, role: 'student' },
+          },
+        });
+
+        if (signUpData?.user && !signUpError) {
+          // New student registered smoothly on first sign-in!
+          const newUserId = signUpData.user.id;
+          try {
+            await supabase
+              .from('user_roles')
+              .insert({ user_id: newUserId, role: 'student' });
+          } catch (roleErr) {
+            console.warn('Failed to insert student role row:', roleErr);
+          }
+
+          if (!signUpData.session) {
+            await supabase.auth.signInWithPassword({
+              email: emailToUse,
+              password,
+            });
+          }
+
+          const newUser: User = {
+            id: newUserId,
+            name: cleanReg,
+            regNumber: cleanReg,
+            email: emailToUse,
+            role: 'student',
+            status: 'active',
+            createdAt: signUpData.user.created_at || new Date().toISOString(),
+          };
+
+          setCurrentUser(newUser);
+          await syncLocalUserCredentials(newUser, password);
+          return { success: true, user: newUser };
+        }
+
+        // If signUp returned "User already registered", the account exists in Supabase,
+        // which means the password they entered was wrong!
+        if (
+          signUpError?.message?.includes('User already registered') ||
+          signUpError?.status === 422
+        ) {
+          return {
+            success: false,
+            error: `Incorrect password for registration number ${cleanReg}. Please check your credentials.`,
+          };
+        }
+      }
+    } catch (err: any) {
+      console.warn('Supabase auth attempt notice:', err);
     }
   }
 
@@ -401,32 +574,67 @@ export async function login(
       (u.email && u.email.toLowerCase() === cleanInput.toLowerCase())
   );
 
-  if (!match) {
-    return { success: false, error: 'Account not found. Please check your credentials.' };
+  if (match) {
+    if (match.status === 'deactivated') {
+      return { success: false, error: 'This account has been deactivated. Please contact an administrator.' };
+    }
+
+    if (match.passwordHash && match.salt) {
+      const computedHash = await hashPassword(password, match.salt);
+      if (computedHash !== match.passwordHash) {
+        return {
+          success: false,
+          error: `Incorrect password for registration number ${cleanReg}. Please check your credentials.`,
+        };
+      }
+    }
+
+    const identifier = match.regNumber || match.name;
+    const authUser: User = {
+      id: match.id,
+      name: identifier,
+      regNumber: match.regNumber || (match.role === 'student' ? identifier : undefined),
+      email: match.email,
+      role: match.role === 'admin' ? 'admin' : 'student',
+      status: match.status || 'active',
+      createdAt: match.createdAt,
+    };
+    setCurrentUser(authUser);
+    return { success: true, user: authUser };
   }
 
-  if (match.status === 'deactivated') {
-    return { success: false, error: 'This account has been deactivated. Please contact an administrator.' };
+  // If local offline fallback and valid student regNumber: auto-save local account
+  if (!isEmail && cleanReg.length >= 3) {
+    const salt = generateSalt();
+    const passwordHash = await hashPassword(password, salt);
+    const newLocalUser: StoredLocalUser = {
+      id: `std_${Date.now()}_${Math.random().toString(36).substring(2, 9)}`,
+      name: cleanReg,
+      regNumber: cleanReg,
+      email: emailToUse,
+      role: 'student',
+      status: 'active',
+      passwordHash,
+      salt,
+      createdAt: new Date().toISOString(),
+    };
+    localUsers.push(newLocalUser);
+    saveStoredLocalUsers(localUsers);
+
+    const authUser: User = {
+      id: newLocalUser.id,
+      name: newLocalUser.name,
+      regNumber: newLocalUser.regNumber,
+      email: newLocalUser.email,
+      role: 'student',
+      status: 'active',
+      createdAt: newLocalUser.createdAt,
+    };
+    setCurrentUser(authUser);
+    return { success: true, user: authUser };
   }
 
-  const computedHash = await hashPassword(password, match.salt);
-  if (computedHash !== match.passwordHash) {
-    return { success: false, error: 'Incorrect password. Please try again.' };
-  }
-
-  const identifier = match.regNumber || match.name;
-  const user: User = {
-    id: match.id,
-    name: identifier,
-    regNumber: match.regNumber || (match.role === 'student' ? identifier : undefined),
-    email: match.email,
-    role: match.role === 'admin' ? 'admin' : 'student',
-    status: match.status || 'active',
-    createdAt: match.createdAt,
-  };
-
-  setCurrentUser(user);
-  return { success: true, user };
+  return { success: false, error: 'Account not found. Please check your credentials.' };
 }
 
 /**

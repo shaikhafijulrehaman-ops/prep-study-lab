@@ -121,7 +121,7 @@ export const AuthModal: React.FC<AuthModalProps> = ({
               <p className="text-[11px] text-[#64748B] font-sans">
                 {mode === 'signup'
                   ? 'Enter your registration number and password to register'
-                  : 'Enter your registration number and password to continue'}
+                  : 'Enter your registration number and password to continue (new students register automatically)'}
               </p>
             </div>
           </div>
