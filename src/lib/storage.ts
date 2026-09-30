@@ -62,7 +62,17 @@ export function getCourses(publishedOnly: boolean = false): Course[] {
       if (Array.isArray(parsed)) {
         parsed.forEach((c) => {
           if (c && c.id && !deletedSet.has(c.id)) {
-            courseMap.set(c.id, { ...c, status: c.status || 'published' });
+            const initial = INITIAL_COURSES.find((ic) => ic.id === c.id);
+            const mergedWeeks = initial?.weeks
+              ? Array.from(new Set([...(c.weeks || []), ...initial.weeks])).sort((a, b) => a - b)
+              : (c.weeks || []);
+            const totalQuestions = Math.max(c.totalQuestions || 0, initial?.totalQuestions || 0);
+            courseMap.set(c.id, {
+              ...c,
+              weeks: mergedWeeks,
+              totalQuestions,
+              status: c.status || 'published',
+            });
           }
         });
       }

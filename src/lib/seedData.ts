@@ -6,8 +6,8 @@ export const INITIAL_COURSES: Course[] = [
     code: 'IIOT-CPS-101',
     name: 'Industrial IoT 4.0 and Cyber Physical Systems',
     description: 'Comprehensive Question Bank covering Industrial IoT, Smart Manufacturing, and Cyber-Physical Systems.',
-    totalQuestions: 135,
-    weeks: [1, 2, 3, 4, 5, 6, 7, 8, 9],
+    totalQuestions: 150,
+    weeks: [1, 2, 3, 4, 5, 6, 7, 8, 9, 10],
     status: 'published',
     sourcePdfName: 'nptl 6 weeks.pdf',
     createdAt: '2026-09-18T10:00:00.000Z',
@@ -2632,7 +2632,311 @@ const IIOT_WEEKS_7_8_9_QUESTIONS: Question[] = [
   }
 ];
 
+const IIOT_WEEK_10_QUESTIONS: Question[] = [
+  {
+    id: "q-iiot-w10-1",
+    courseId: "course-iiot-cps-master",
+    weekNumber: 10,
+    originalQuestionNumber: 1,
+    sourcePageNumber: 1,
+    sourcePdfName: "NPTEL_WEEK-10.pdf",
+    questionText: "In Software-Defined 6TiSCH, at which layer is the slicing mechanism proposed to isolate SDN control overhead?",
+    options: [
+      "Physical Layer",
+      "Layer 2",
+      "Transport Layer",
+      "Application Layer"
+    ],
+    correctAnswerIndex: 1,
+    answerSource: "PDF",
+    isApproved: true,
+    explanation: "In Software-Defined 6TiSCH, the slicing mechanism is proposed at Layer 2 to isolate SDN control overhead and guarantee QoS for industrial traffic.",
+    createdAt: "2026-09-30T10:00:00.000Z"
+  },
+  {
+    id: "q-iiot-w10-2",
+    courseId: "course-iiot-cps-master",
+    weekNumber: 10,
+    originalQuestionNumber: 2,
+    sourcePageNumber: 1,
+    sourcePdfName: "NPTEL_WEEK-10.pdf",
+    questionText: "In the adaptive transmission architecture for Software-Defined Edge Computing in IIoT, data streams are divided into which two categories?",
+    options: [
+      "Local and global data streams",
+      "Secure and insecure data streams",
+      "Ordinary and emergent data streams",
+      "Wired and wireless data streams"
+    ],
+    correctAnswerIndex: 2,
+    answerSource: "PDF",
+    isApproved: true,
+    explanation: "In the adaptive transmission architecture for Software-Defined Edge Computing in IIoT, data streams are divided into ordinary and emergent data streams.",
+    createdAt: "2026-09-30T10:00:00.000Z"
+  },
+  {
+    id: "q-iiot-w10-3",
+    courseId: "course-iiot-cps-master",
+    weekNumber: 10,
+    originalQuestionNumber: 3,
+    sourcePageNumber: 1,
+    sourcePdfName: "NPTEL_WEEK-10.pdf",
+    questionText: "According to the challenges and opportunities of Software-Defined IIoT, fog nodes/access devices play an important role in providing which type of service?",
+    options: [
+      "Delay-constrained emergent services",
+      "Long-term archival services",
+      "Offline batch-processing services",
+      "Manual configuration services"
+    ],
+    correctAnswerIndex: 0,
+    answerSource: "PDF",
+    isApproved: true,
+    explanation: "According to the challenges and opportunities of Software-Defined IIoT, fog nodes/access devices play an important role in providing delay-constrained emergent services.",
+    createdAt: "2026-09-30T10:00:00.000Z"
+  },
+  {
+    id: "q-iiot-w10-4",
+    courseId: "course-iiot-cps-master",
+    weekNumber: 10,
+    originalQuestionNumber: 4,
+    sourcePageNumber: 1,
+    sourcePdfName: "NPTEL_WEEK-10.pdf",
+    questionText: "In a trustworthy IIoT system, which property refers to the ability of the system to function correctly under dynamic adversarial conditions?",
+    options: [
+      "Privacy",
+      "Reliability",
+      "Safety",
+      "Resilience"
+    ],
+    correctAnswerIndex: 3,
+    answerSource: "PDF",
+    isApproved: true,
+    explanation: "Resilience refers to the ability of the system to function correctly under dynamic adversarial conditions and adapt to disruptions.",
+    createdAt: "2026-09-30T10:00:00.000Z"
+  },
+  {
+    id: "q-iiot-w10-5",
+    courseId: "course-iiot-cps-master",
+    weekNumber: 10,
+    originalQuestionNumber: 5,
+    sourcePageNumber: 2,
+    sourcePdfName: "NPTEL_WEEK-10.pdf",
+    questionText: "In the STRIDE threat model, what does the letter ‘E’ represent?",
+    options: [
+      "Encryption",
+      "Elevation of privilege",
+      "Exposure of information",
+      "Endpoint security"
+    ],
+    correctAnswerIndex: 1,
+    answerSource: "PDF",
+    isApproved: true,
+    explanation: "In the STRIDE threat model (Spoofing, Tampering, Repudiation, Information disclosure, Denial of service, Elevation of privilege), the letter 'E' represents Elevation of privilege.",
+    createdAt: "2026-09-30T10:00:00.000Z"
+  },
+  {
+    id: "q-iiot-w10-6",
+    courseId: "course-iiot-cps-master",
+    weekNumber: 10,
+    originalQuestionNumber: 6,
+    sourcePageNumber: 2,
+    sourcePdfName: "NPTEL_WEEK-10.pdf",
+    questionText: "Which participant in the IIoT trust flow is responsible for designing a cost-efficient trustworthy system, defining trust requirements for components, and conducting tests and certifications?",
+    options: [
+      "System Owner",
+      "End User",
+      "System Builder",
+      "Cloud Service Provider"
+    ],
+    correctAnswerIndex: 2,
+    answerSource: "PDF",
+    isApproved: true,
+    explanation: "The System Builder is responsible for designing a cost-efficient trustworthy system, defining component trust requirements, and conducting tests and certifications.",
+    createdAt: "2026-09-30T10:00:00.000Z"
+  },
+  {
+    id: "q-iiot-w10-7",
+    courseId: "course-iiot-cps-master",
+    weekNumber: 10,
+    originalQuestionNumber: 7,
+    sourcePageNumber: 2,
+    sourcePdfName: "NPTEL_WEEK-10.pdf",
+    questionText: "Which of the following is suggested as a solution for protecting resource-constrained IIoT end devices?",
+    options: [
+      "Lightweight symmetric key cryptography",
+      "Increasing the size of every transmitted packet",
+      "Disabling device authentication",
+      "Storing all security operations only in the cloud"
+    ],
+    correctAnswerIndex: 0,
+    answerSource: "PDF",
+    isApproved: true,
+    explanation: "Lightweight symmetric key cryptography is suggested as an optimal solution for securing resource-constrained IIoT end devices with minimal processing overhead.",
+    createdAt: "2026-09-30T10:00:00.000Z"
+  },
+  {
+    id: "q-iiot-w10-8",
+    courseId: "course-iiot-cps-master",
+    weekNumber: 10,
+    originalQuestionNumber: 8,
+    sourcePageNumber: 2,
+    sourcePdfName: "NPTEL_WEEK-10.pdf",
+    questionText: "Which three states of data are considered under data protection in IIoT?",
+    options: [
+      "Data-at-source, Data-at-cloud, and Data-at-edge",
+      "Data-at-Rest, Data-in-Use, and Data-in-Transit",
+      "Structured, Semi-structured, and Unstructured data",
+      "Sensor data, Control data, and Application data"
+    ],
+    correctAnswerIndex: 1,
+    answerSource: "PDF",
+    isApproved: true,
+    explanation: "Data protection in IIoT considers three states: Data-at-Rest, Data-in-Use, and Data-in-Transit.",
+    createdAt: "2026-09-30T10:00:00.000Z"
+  },
+  {
+    id: "q-iiot-w10-9",
+    courseId: "course-iiot-cps-master",
+    weekNumber: 10,
+    originalQuestionNumber: 9,
+    sourcePageNumber: 2,
+    sourcePdfName: "NPTEL_WEEK-10.pdf",
+    questionText: "Which standard listed under OT security provides guidance for security in Industrial Control Systems?",
+    options: [
+      "ISO 27017",
+      "NIST SP 800-82",
+      "ISO/IEC 15408",
+      "NIST SP 800-144"
+    ],
+    correctAnswerIndex: 1,
+    answerSource: "PDF",
+    isApproved: true,
+    explanation: "NIST SP 800-82 provides dedicated guidance for security in Industrial Control Systems (ICS), including SCADA, DCS, and PLCs.",
+    createdAt: "2026-09-30T10:00:00.000Z"
+  },
+  {
+    id: "q-iiot-w10-10",
+    courseId: "course-iiot-cps-master",
+    weekNumber: 10,
+    originalQuestionNumber: 10,
+    sourcePageNumber: 2,
+    sourcePdfName: "NPTEL_WEEK-10.pdf",
+    questionText: "Which of the following is NOT one of the five layers of Hitachi’s Lumada IoT platform?",
+    options: [
+      "Edge",
+      "Core",
+      "Analytics",
+      "Transport"
+    ],
+    correctAnswerIndex: 3,
+    answerSource: "PDF",
+    isApproved: true,
+    explanation: "The five layers of Hitachi's Lumada IoT platform are Edge, Core, Analytics, Studio, and Foundry. Transport is NOT one of them.",
+    createdAt: "2026-09-30T10:00:00.000Z"
+  },
+  {
+    id: "q-iiot-w10-11",
+    courseId: "course-iiot-cps-master",
+    weekNumber: 10,
+    originalQuestionNumber: 11,
+    sourcePageNumber: 3,
+    sourcePdfName: "NPTEL_WEEK-10.pdf",
+    questionText: "In the North Star BlueScope Steel smart-factory application, sensors are used to detect which environmental hazards?",
+    options: [
+      "Radiation and toxic gases",
+      "Network congestion and packet loss",
+      "Inventory shortages and production delays",
+      "Voltage fluctuations and cloud failures"
+    ],
+    correctAnswerIndex: 0,
+    answerSource: "PDF",
+    isApproved: true,
+    explanation: "In North Star BlueScope Steel's smart-factory application, sensors are deployed to detect hazardous radiation and toxic gases to ensure worker safety.",
+    createdAt: "2026-09-30T10:00:00.000Z"
+  },
+  {
+    id: "q-iiot-w10-12",
+    courseId: "course-iiot-cps-master",
+    weekNumber: 10,
+    originalQuestionNumber: 12,
+    sourcePageNumber: 3,
+    sourcePdfName: "NPTEL_WEEK-10.pdf",
+    questionText: "What technology does SmartLabel use to provide product-related information such as ingredients, allergens, and nutritional value to consumers?",
+    options: [
+      "RFID tag",
+      "Bluetooth beacon",
+      "QR code",
+      "GPS receiver"
+    ],
+    correctAnswerIndex: 2,
+    answerSource: "PDF",
+    isApproved: true,
+    explanation: "SmartLabel uses QR codes on packaging that consumers scan with smartphones to access detailed product ingredients, allergens, and nutritional facts.",
+    createdAt: "2026-09-30T10:00:00.000Z"
+  },
+  {
+    id: "q-iiot-w10-13",
+    courseId: "course-iiot-cps-master",
+    weekNumber: 10,
+    originalQuestionNumber: 13,
+    sourcePageNumber: 3,
+    sourcePdfName: "NPTEL_WEEK-10.pdf",
+    questionText: "In the Intellicup smart beverage-vending solution, what is integrated at the base of the IoT-enabled cup?",
+    options: [
+      "GPS module",
+      "NFC chip",
+      "Temperature sensor",
+      "Wi-Fi router"
+    ],
+    correctAnswerIndex: 1,
+    answerSource: "PDF",
+    isApproved: true,
+    explanation: "In the Intellicup smart beverage-vending solution, an NFC chip is integrated at the base of the cup to authenticate and regulate pouring.",
+    createdAt: "2026-09-30T10:00:00.000Z"
+  },
+  {
+    id: "q-iiot-w10-14",
+    courseId: "course-iiot-cps-master",
+    weekNumber: 10,
+    originalQuestionNumber: 14,
+    sourcePageNumber: 3,
+    sourcePdfName: "NPTEL_WEEK-10.pdf",
+    questionText: "Which characteristic of a smart factory allows process parameters such as machine configuration, material flow, and temperature control to be optimally adjusted?",
+    options: [
+      "Flexibility",
+      "Isolation",
+      "Centralization",
+      "Redundancy"
+    ],
+    correctAnswerIndex: 0,
+    answerSource: "PDF",
+    isApproved: true,
+    explanation: "Flexibility allows smart factories to automatically and adaptively adjust process parameters such as machine configuration, material flow, and temperature control.",
+    createdAt: "2026-09-30T10:00:00.000Z"
+  },
+  {
+    id: "q-iiot-w10-15",
+    courseId: "course-iiot-cps-master",
+    weekNumber: 10,
+    originalQuestionNumber: 15,
+    sourcePageNumber: 4,
+    sourcePdfName: "NPTEL_WEEK-10.pdf",
+    questionText: "Which network-security mechanism acts as a fence between a trusted internal network and an unauthorized external network and uses a set of rules to allow or block traffic?",
+    options: [
+      "Hypervisor",
+      "Firewall",
+      "Load balancer",
+      "Data logger"
+    ],
+    correctAnswerIndex: 1,
+    answerSource: "PDF",
+    isApproved: true,
+    explanation: "A firewall acts as a protective boundary between a trusted internal network and unauthorized external networks, filtering network traffic based on established security rules.",
+    createdAt: "2026-09-30T10:00:00.000Z"
+  }
+];
+
 export const INITIAL_QUESTIONS: Question[] = [
   ...IIOT_6_WEEKS_QUESTIONS,
   ...IIOT_WEEKS_7_8_9_QUESTIONS,
+  ...IIOT_WEEK_10_QUESTIONS,
 ];
