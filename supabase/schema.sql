@@ -214,7 +214,7 @@ CREATE POLICY "Attempt items access"
         EXISTS (
             SELECT 1 FROM public.mock_attempts 
             WHERE mock_attempts.id = attempt_items.attempt_id 
-            AND (mock_attempts.user_id = auth.uid() OR public.is_admin())
+            AND (mock_attempts.user_id = auth.uid() OR mock_attempts.user_id IS NULL OR public.is_admin())
         )
     );
 
