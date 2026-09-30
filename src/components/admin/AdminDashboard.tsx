@@ -368,6 +368,7 @@ export const AdminDashboard: React.FC<AdminDashboardProps> = ({
     const allWeeks = Array.from(new Set([...(course.weeks || [1]), manualWeek])).sort((a, b) => a - b);
     const courseSaveRes = await saveCourse({
       ...course,
+      status: 'published',
       weeks: allWeeks,
       totalQuestions: existingQs.length + 1,
     });
@@ -443,6 +444,7 @@ export const AdminDashboard: React.FC<AdminDashboardProps> = ({
     const allWeeks = Array.from(new Set([...(course.weeks || [1]), manualWeek])).sort((a, b) => a - b);
     const courseSaveRes = await saveCourse({
       ...course,
+      status: 'published',
       weeks: allWeeks,
       totalQuestions: existingQs.length + newQuestions.length,
     });

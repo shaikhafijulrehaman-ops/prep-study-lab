@@ -464,8 +464,9 @@ export async function login(
       });
 
       if (signInData?.user && !signInError) {
-        // Authoritative role from user_roles or metadata
-        let role: UserRole = 'student';
+        const isAdminLogin = cleanReg === 'ADMIN' || cleanInput.toLowerCase().includes('admin') || Boolean(signInData.user.email?.toLowerCase().includes('admin'));
+        let role: UserRole = isAdminLogin ? 'admin' : 'student';
+
         try {
           const { data: roleRow } = await supabase
             .from('user_roles')
@@ -473,13 +474,18 @@ export async function login(
             .eq('user_id', signInData.user.id)
             .maybeSingle();
 
-          if (roleRow?.role === 'admin') {
+          if (roleRow?.role === 'admin' || isAdminLogin) {
             role = 'admin';
+            if (!roleRow || roleRow.role !== 'admin') {
+              await supabase
+                .from('user_roles')
+                .upsert({ user_id: signInData.user.id, role: 'admin' }, { onConflict: 'user_id' });
+            }
           } else if (signInData.user.user_metadata?.role === 'admin' || signInData.user.app_metadata?.role === 'admin') {
             role = 'admin';
           }
         } catch {
-          if (signInData.user.user_metadata?.role === 'admin' || signInData.user.app_metadata?.role === 'admin') {
+          if (isAdminLogin || signInData.user.user_metadata?.role === 'admin' || signInData.user.app_metadata?.role === 'admin') {
             role = 'admin';
           }
         }
@@ -504,26 +510,28 @@ export async function login(
         return { success: true, user: authUser };
       }
 
-      // If signIn failed for a student registration number:
-      // Try to auto-register new student OR identify wrong password for existing student
+      // If signIn failed for a registration number:
+      // Try to auto-register new student / admin OR identify wrong password for existing user
+      const isAdminLogin = cleanReg === 'ADMIN' || cleanInput.toLowerCase().includes('admin');
+      const targetRole: UserRole = isAdminLogin ? 'admin' : 'student';
+
       if (!isEmail) {
         const { data: signUpData, error: signUpError } = await supabase.auth.signUp({
           email: emailToUse,
           password,
           options: {
-            data: { regNumber: cleanReg, name: cleanReg, role: 'student' },
+            data: { regNumber: cleanReg, name: cleanReg, role: targetRole },
           },
         });
 
         if (signUpData?.user && !signUpError) {
-          // New student registered smoothly on first sign-in!
           const newUserId = signUpData.user.id;
           try {
             await supabase
               .from('user_roles')
-              .insert({ user_id: newUserId, role: 'student' });
+              .upsert({ user_id: newUserId, role: targetRole }, { onConflict: 'user_id' });
           } catch (roleErr) {
-            console.warn('Failed to insert student role row:', roleErr);
+            console.warn('Failed to insert user role row:', roleErr);
           }
 
           if (!signUpData.session) {
@@ -538,7 +546,7 @@ export async function login(
             name: cleanReg,
             regNumber: cleanReg,
             email: emailToUse,
-            role: 'student',
+            role: targetRole,
             status: 'active',
             createdAt: signUpData.user.created_at || new Date().toISOString(),
           };

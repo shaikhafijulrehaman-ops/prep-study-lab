@@ -39,36 +39,28 @@ export function deriveAvailableWeeks(questions: (Question | { weekNumber?: numbe
 
 /**
  * Returns cached courses from localStorage.
- * Defaults to INITIAL_COURSES (all 10 weeks) if cache is empty.
+ * Does NOT contain hardcoded mock data or demo fallbacks.
  */
 export function getCourses(publishedOnly: boolean = false): Course[] {
   try {
     const raw = localStorage.getItem(KEYS.COURSES);
-    let courses: Course[] = [];
-    if (raw) {
-      const parsed = JSON.parse(raw);
-      if (Array.isArray(parsed) && parsed.length > 0) {
-        courses = parsed.filter((c) => c && c.id && c.name);
-      }
-    }
-    if (courses.length === 0) {
-      courses = [...INITIAL_COURSES];
-      try {
-        localStorage.setItem(KEYS.COURSES, JSON.stringify(courses));
-      } catch {}
-    }
+    if (!raw) return [];
+    const parsed = JSON.parse(raw);
+    if (!Array.isArray(parsed)) return [];
+
+    const courses: Course[] = parsed.filter((c) => c && c.id && c.name);
     if (publishedOnly) {
       return courses.filter((c) => c.status === 'published');
     }
     return courses;
   } catch {
-    return publishedOnly ? INITIAL_COURSES.filter((c) => c.status === 'published') : [...INITIAL_COURSES];
+    return [];
   }
 }
 
 /**
  * Loads published or all courses directly from Supabase as authoritative source of truth.
- * Falls back to 10-week initial course dataset if Supabase is offline or empty.
+ * Updates local cache only to reflect authoritative Supabase data.
  */
 export async function fetchCoursesFromSupabase(publishedOnly: boolean = false): Promise<Course[]> {
   const supabase = getSupabaseClient();
@@ -81,12 +73,12 @@ export async function fetchCoursesFromSupabase(publishedOnly: boolean = false): 
     }
     const { data, error } = await query.order('created_at', { ascending: true });
 
-    if (error || !data || data.length === 0) {
-      if (error) {
-        console.warn('Supabase fetch courses notice:', error.message);
-      }
+    if (error) {
+      console.warn('Supabase fetch courses error:', error.message);
       return getCourses(publishedOnly);
     }
+
+    if (!data) return [];
 
     const mapped: Course[] = data.map((row: any) => {
       let weeks: number[] = [];
@@ -133,31 +125,37 @@ export async function saveCourse(course: Course): Promise<{ success: boolean; co
   };
 
   const supabase = getSupabaseClient();
-  if (supabase) {
-    try {
-      const payload = {
-        id: courseWithDefaults.id,
-        code: courseWithDefaults.code,
-        name: courseWithDefaults.name,
-        description: courseWithDefaults.description || '',
-        status: courseWithDefaults.status,
-        published_at: courseWithDefaults.publishedAt || null,
-        total_questions: courseWithDefaults.totalQuestions || 0,
-        weeks: courseWithDefaults.weeks || [],
-      };
-
-      const { error } = await supabase.from('courses').upsert(payload);
-      if (error) {
-        console.error('Supabase course upsert error:', error.message);
-        return { success: false, course: courseWithDefaults, error: error.message };
-      }
-    } catch (err: any) {
-      console.error('Supabase course upsert exception:', err);
-      return { success: false, course: courseWithDefaults, error: err?.message || 'Network error' };
-    }
+  if (!supabase) {
+    return {
+      success: false,
+      course: courseWithDefaults,
+      error: 'Supabase database is not connected. Please verify your Supabase configuration.',
+    };
   }
 
-  // Update local cache ONLY AFTER Supabase succeeds (or when running without Supabase client)
+  try {
+    const payload = {
+      id: courseWithDefaults.id,
+      code: courseWithDefaults.code,
+      name: courseWithDefaults.name,
+      description: courseWithDefaults.description || '',
+      status: courseWithDefaults.status,
+      published_at: courseWithDefaults.publishedAt || null,
+      total_questions: courseWithDefaults.totalQuestions || 0,
+      weeks: courseWithDefaults.weeks || [],
+    };
+
+    const { error } = await supabase.from('courses').upsert(payload);
+    if (error) {
+      console.error('Supabase course upsert error:', error.message);
+      return { success: false, course: courseWithDefaults, error: error.message };
+    }
+  } catch (err: any) {
+    console.error('Supabase course upsert exception:', err);
+    return { success: false, course: courseWithDefaults, error: err?.message || 'Network error' };
+  }
+
+  // Update local cache ONLY AFTER Supabase confirms write
   const current = getCourses(false);
   const index = current.findIndex((c) => c.id === courseWithDefaults.id);
   let updated: Course[];
@@ -226,22 +224,23 @@ export async function unpublishTest(courseId: string): Promise<{ success: boolea
 export async function deleteTest(courseId: string): Promise<{ success: boolean; error?: string }> {
   // 1. Supabase cleanup FIRST
   const supabase = getSupabaseClient();
-  if (supabase) {
-    try {
-      const { error: qErr } = await supabase.from('questions').delete().eq('course_id', courseId);
-      if (qErr) {
-        console.error('Supabase delete questions error:', qErr.message);
-        return { success: false, error: qErr.message };
-      }
-      const { error: cErr } = await supabase.from('courses').delete().eq('id', courseId);
-      if (cErr) {
-        console.error('Supabase delete course error:', cErr.message);
-        return { success: false, error: cErr.message };
-      }
-    } catch (err: any) {
-      console.warn('Supabase delete error:', err);
-      return { success: false, error: err?.message };
+  if (!supabase) {
+    return { success: false, error: 'Supabase database is not connected. Please verify your Supabase configuration.' };
+  }
+  try {
+    const { error: qErr } = await supabase.from('questions').delete().eq('course_id', courseId);
+    if (qErr) {
+      console.error('Supabase delete questions error:', qErr.message);
+      return { success: false, error: qErr.message };
     }
+    const { error: cErr } = await supabase.from('courses').delete().eq('id', courseId);
+    if (cErr) {
+      console.error('Supabase delete course error:', cErr.message);
+      return { success: false, error: cErr.message };
+    }
+  } catch (err: any) {
+    console.warn('Supabase delete error:', err);
+    return { success: false, error: err?.message };
   }
 
   // 2. Remove from local cache
@@ -257,7 +256,8 @@ export async function deleteTest(courseId: string): Promise<{ success: boolean; 
 }
 
 /**
- * Reads cached questions from localStorage. Defaults to all 10 weeks (150 questions) if cache is empty.
+ * Reads cached questions from localStorage.
+ * Does NOT contain hardcoded mock data or demo fallbacks.
  */
 export function getQuestions(
   courseId?: string,
@@ -277,13 +277,6 @@ export function getQuestions(
     all = [];
   }
 
-  if (all.length === 0) {
-    all = [...INITIAL_QUESTIONS];
-    try {
-      localStorage.setItem(KEYS.QUESTIONS, JSON.stringify(all));
-    } catch {}
-  }
-
   return all.filter((q) => {
     if (courseId && q.courseId !== courseId) return false;
     if (weekSelection !== undefined && weekSelection !== 'all') {
@@ -300,7 +293,7 @@ export function getQuestions(
 
 /**
  * Loads questions directly from Supabase as authoritative source of truth.
- * Falls back to full 10-week question dataset if Supabase is offline or empty.
+ * Returns empty array if none exist, never injects hardcoded seed data.
  */
 export async function fetchQuestionsFromSupabase(
   courseId?: string,
@@ -330,11 +323,17 @@ export async function fetchQuestionsFromSupabase(
 
     const { data, error } = await query.order('week_number', { ascending: true });
 
-    if (error || !data || data.length === 0) {
-      if (error) {
-        console.warn('Supabase fetch questions notice:', error.message);
-      }
+    if (error) {
+      console.warn('Supabase fetch questions notice:', error.message);
       return getQuestions(courseId, weekSelection, approvedOnly);
+    }
+
+    if (!data || data.length === 0) {
+      // If fetching all questions and database is empty, sync local cache to empty
+      if (!courseId && (!weekSelection || weekSelection === 'all') && !approvedOnly) {
+        localStorage.setItem(KEYS.QUESTIONS, JSON.stringify([]));
+      }
+      return [];
     }
 
     const mapped: Question[] = data.map((row: any) => {
@@ -376,7 +375,9 @@ export async function fetchQuestionsFromSupabase(
       };
     });
 
-    if (mapped.length > 0) {
+    if (!courseId && (!weekSelection || weekSelection === 'all') && !approvedOnly) {
+      localStorage.setItem(KEYS.QUESTIONS, JSON.stringify(mapped));
+    } else if (mapped.length > 0) {
       const current = getQuestions();
       const map = new Map<string, Question>();
       current.forEach((q) => map.set(q.id, q));
@@ -399,37 +400,42 @@ export async function saveQuestions(newQuestions: Question[]): Promise<{ success
   if (newQuestions.length === 0) return { success: true };
 
   const supabase = getSupabaseClient();
-  if (supabase) {
-    try {
-      // Chunk into batches of 50
-      for (let i = 0; i < newQuestions.length; i += 50) {
-        const chunk = newQuestions.slice(i, i + 50).map((q) => ({
-          id: q.id,
-          course_id: q.courseId,
-          week_number: q.weekNumber,
-          source_pdf_id: q.sourcePdfId || null,
-          source_pdf_name: q.sourcePdfName || '',
-          question_text: q.questionText,
-          options: q.options,
-          correct_answer_index: q.correctAnswerIndex ?? null,
-          answer_source: q.answerSource || (q.correctAnswerIndex !== null ? 'Manually Verified' : 'Not Available'),
-          is_approved: q.isApproved !== undefined ? q.isApproved : (q.correctAnswerIndex !== null),
-          explanation: q.explanation || '',
-        }));
-
-        const { error } = await supabase.from('questions').upsert(chunk);
-        if (error) {
-          console.error('Supabase questions upsert error:', error.message);
-          return { success: false, error: error.message };
-        }
-      }
-    } catch (err: any) {
-      console.error('Supabase questions upsert exception:', err);
-      return { success: false, error: err?.message || 'Network error' };
-    }
+  if (!supabase) {
+    return {
+      success: false,
+      error: 'Supabase database is not connected. Please verify your Supabase configuration.',
+    };
   }
 
-  // Update local cache ONLY AFTER Supabase succeeds
+  try {
+    // Chunk into batches of 50
+    for (let i = 0; i < newQuestions.length; i += 50) {
+      const chunk = newQuestions.slice(i, i + 50).map((q) => ({
+        id: q.id,
+        course_id: q.courseId,
+        week_number: q.weekNumber,
+        source_pdf_id: q.sourcePdfId || null,
+        source_pdf_name: q.sourcePdfName || '',
+        question_text: q.questionText,
+        options: q.options,
+        correct_answer_index: q.correctAnswerIndex ?? null,
+        answer_source: q.answerSource || (q.correctAnswerIndex !== null ? 'Manually Verified' : 'Not Available'),
+        is_approved: q.isApproved !== undefined ? q.isApproved : (q.correctAnswerIndex !== null),
+        explanation: q.explanation || '',
+      }));
+
+      const { error } = await supabase.from('questions').upsert(chunk);
+      if (error) {
+        console.error('Supabase questions upsert error:', error.message);
+        return { success: false, error: error.message };
+      }
+    }
+  } catch (err: any) {
+    console.error('Supabase questions upsert exception:', err);
+    return { success: false, error: err?.message || 'Network error' };
+  }
+
+  // Update local cache ONLY AFTER Supabase confirms write
   const current = getQuestions();
   const map = new Map<string, Question>();
   current.forEach((q) => map.set(q.id, q));
@@ -444,30 +450,35 @@ export async function saveQuestions(newQuestions: Question[]): Promise<{ success
  */
 export async function updateQuestion(question: Question): Promise<{ success: boolean; error?: string }> {
   const supabase = getSupabaseClient();
-  if (supabase) {
-    try {
-      const { error } = await supabase
-        .from('questions')
-        .upsert({
-          id: question.id,
-          course_id: question.courseId,
-          week_number: question.weekNumber,
-          source_pdf_id: question.sourcePdfId || null,
-          source_pdf_name: question.sourcePdfName || '',
-          question_text: question.questionText,
-          options: question.options,
-          correct_answer_index: question.correctAnswerIndex ?? null,
-          answer_source: question.answerSource || 'Manually Verified',
-          is_approved: question.isApproved !== undefined ? question.isApproved : true,
-          explanation: question.explanation || '',
-        });
-      if (error) {
-        console.error('Supabase question update error:', error.message);
-        return { success: false, error: error.message };
-      }
-    } catch (err: any) {
-      return { success: false, error: err?.message || 'Network error' };
+  if (!supabase) {
+    return {
+      success: false,
+      error: 'Supabase database is not connected. Please verify your Supabase configuration.',
+    };
+  }
+
+  try {
+    const { error } = await supabase
+      .from('questions')
+      .upsert({
+        id: question.id,
+        course_id: question.courseId,
+        week_number: question.weekNumber,
+        source_pdf_id: question.sourcePdfId || null,
+        source_pdf_name: question.sourcePdfName || '',
+        question_text: question.questionText,
+        options: question.options,
+        correct_answer_index: question.correctAnswerIndex ?? null,
+        answer_source: question.answerSource || 'Manually Verified',
+        is_approved: question.isApproved !== undefined ? question.isApproved : true,
+        explanation: question.explanation || '',
+      });
+    if (error) {
+      console.error('Supabase question update error:', error.message);
+      return { success: false, error: error.message };
     }
+  } catch (err: any) {
+    return { success: false, error: err?.message || 'Network error' };
   }
 
   // Update local cache only after Supabase succeeds
@@ -486,15 +497,20 @@ export async function updateQuestion(question: Question): Promise<{ success: boo
  */
 export async function deleteQuestion(questionId: string): Promise<{ success: boolean; error?: string }> {
   const supabase = getSupabaseClient();
-  if (supabase) {
-    try {
-      const { error } = await supabase.from('questions').delete().eq('id', questionId);
-      if (error) {
-        return { success: false, error: error.message };
-      }
-    } catch (err: any) {
-      return { success: false, error: err?.message || 'Network error' };
+  if (!supabase) {
+    return {
+      success: false,
+      error: 'Supabase database is not connected. Please verify your Supabase configuration.',
+    };
+  }
+
+  try {
+    const { error } = await supabase.from('questions').delete().eq('id', questionId);
+    if (error) {
+      return { success: false, error: error.message };
     }
+  } catch (err: any) {
+    return { success: false, error: err?.message || 'Network error' };
   }
 
   const current = getQuestions();
@@ -510,21 +526,26 @@ export async function deleteQuestion(questionId: string): Promise<{ success: boo
  */
 export async function deleteQuestionsByWeek(courseId: string, weekNumber: number): Promise<{ success: boolean; error?: string }> {
   const supabase = getSupabaseClient();
-  if (supabase) {
-    try {
-      const { error } = await supabase
-        .from('questions')
-        .delete()
-        .eq('course_id', courseId)
-        .eq('week_number', weekNumber);
+  if (!supabase) {
+    return {
+      success: false,
+      error: 'Supabase database is not connected. Please verify your Supabase configuration.',
+    };
+  }
 
-      if (error) {
-        console.error('Supabase deleteQuestionsByWeek error:', error.message);
-        return { success: false, error: error.message };
-      }
-    } catch (err: any) {
-      return { success: false, error: err?.message || 'Network error' };
+  try {
+    const { error } = await supabase
+      .from('questions')
+      .delete()
+      .eq('course_id', courseId)
+      .eq('week_number', weekNumber);
+
+    if (error) {
+      console.error('Supabase deleteQuestionsByWeek error:', error.message);
+      return { success: false, error: error.message };
     }
+  } catch (err: any) {
+    return { success: false, error: err?.message || 'Network error' };
   }
 
   // Update local cache
