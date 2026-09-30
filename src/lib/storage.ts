@@ -317,10 +317,6 @@ export async function fetchQuestionsFromSupabase(
         query = query.eq('week_number', weekSelection);
       }
     }
-    if (approvedOnly) {
-      query = query.eq('is_approved', true);
-    }
-
     const { data, error } = await query.order('week_number', { ascending: true });
 
     if (error) {
@@ -336,7 +332,7 @@ export async function fetchQuestionsFromSupabase(
       return [];
     }
 
-    const mapped: Question[] = data.map((row: any) => {
+    let mapped: Question[] = data.map((row: any) => {
       let options: [string, string, string, string] = ['Option A', 'Option B', 'Option C', 'Option D'];
       if (Array.isArray(row.options)) {
         options = [
@@ -368,12 +364,16 @@ export async function fetchQuestionsFromSupabase(
         questionText: row.question_text,
         options,
         correctAnswerIndex: row.correct_answer_index,
-        answerSource: row.answer_source || 'Manually Verified',
-        isApproved: row.is_approved ?? true,
+        answerSource: row.answer_source || (row.correct_answer_index !== null ? 'Manually Verified' : 'Not Available'),
+        isApproved: row.is_approved !== undefined ? Boolean(row.is_approved) : (row.correct_answer_index !== null),
         explanation: row.explanation || '',
         createdAt: row.created_at,
       };
     });
+
+    if (approvedOnly) {
+      mapped = mapped.filter((q) => q.isApproved && q.correctAnswerIndex !== null);
+    }
 
     if (!courseId && (!weekSelection || weekSelection === 'all') && !approvedOnly) {
       localStorage.setItem(KEYS.QUESTIONS, JSON.stringify(mapped));
@@ -394,7 +394,7 @@ export async function fetchQuestionsFromSupabase(
 
 /**
  * Saves or updates questions in Supabase FIRST.
- * Strictly persists `is_approved`, `answer_source`, `options`, `explanation`, and `correct_answer_index`.
+ * Strictly persists options, explanation, and correct_answer_index.
  */
 export async function saveQuestions(newQuestions: Question[]): Promise<{ success: boolean; error?: string }> {
   if (newQuestions.length === 0) return { success: true };
@@ -419,8 +419,6 @@ export async function saveQuestions(newQuestions: Question[]): Promise<{ success
         question_text: q.questionText,
         options: q.options,
         correct_answer_index: q.correctAnswerIndex ?? null,
-        answer_source: q.answerSource || (q.correctAnswerIndex !== null ? 'Manually Verified' : 'Not Available'),
-        is_approved: q.isApproved !== undefined ? q.isApproved : (q.correctAnswerIndex !== null),
         explanation: q.explanation || '',
       }));
 
@@ -469,8 +467,6 @@ export async function updateQuestion(question: Question): Promise<{ success: boo
         question_text: question.questionText,
         options: question.options,
         correct_answer_index: question.correctAnswerIndex ?? null,
-        answer_source: question.answerSource || 'Manually Verified',
-        is_approved: question.isApproved !== undefined ? question.isApproved : true,
         explanation: question.explanation || '',
       });
     if (error) {
