@@ -808,11 +808,14 @@ export async function fetchAttemptsFromSupabase(userId?: string): Promise<MockAt
   if (!supabase) return getAttempts(userId);
 
   try {
-    const { data, error } = await supabase
-      .from('mock_attempts')
-      .select('*, attempt_items(*)')
-      .eq('user_id', userId)
-      .order('completed_at', { ascending: false });
+    const isUuid = /^[0-9a-f]{8}-[0-9a-f]{4}-[0-9a-f]{4}-[0-9a-f]{4}-[0-9a-f]{12}$/i.test(userId);
+    let query = supabase.from('mock_attempts').select('*, attempt_items(*)');
+    if (isUuid) {
+      query = query.eq('user_id', userId);
+    } else {
+      query = query.or(`student_name.eq.${userId},reg_number.eq.${userId}`);
+    }
+    const { data, error } = await query.order('completed_at', { ascending: false });
 
     if (error || !data) return getAttempts(userId);
 
@@ -981,11 +984,19 @@ export async function finalizeAndSaveAttempt(
   if (supabase) {
     try {
       // 1. Resolve authoritative Supabase user if available
-      let authUserId = userId;
+      let authUserId: string | null = null;
       const { data: sessionData } = await supabase.auth.getSession();
-      if (sessionData?.session?.user) {
+      if (
+        sessionData?.session?.user?.id &&
+        /^[0-9a-f]{8}-[0-9a-f]{4}-[0-9a-f]{4}-[0-9a-f]{4}-[0-9a-f]{12}$/i.test(sessionData.session.user.id)
+      ) {
         authUserId = sessionData.session.user.id;
         attempt.userId = authUserId;
+      } else if (
+        userId &&
+        /^[0-9a-f]{8}-[0-9a-f]{4}-[0-9a-f]{4}-[0-9a-f]{4}-[0-9a-f]{12}$/i.test(userId)
+      ) {
+        authUserId = userId;
       }
 
       // 2. Idempotency Check: check if this attempt is already saved
@@ -997,14 +1008,14 @@ export async function finalizeAndSaveAttempt(
 
       if (existingAttempt) {
         // Already recorded; clear session and return success
-        saveActiveSession(null, authUserId);
+        saveActiveSession(null, userId);
         return { success: true, attempt };
       }
 
       // 3. Write attempt header to Supabase
       const { error: attemptErr } = await supabase.from('mock_attempts').insert({
         id: attempt.id,
-        user_id: authUserId || null,
+        user_id: authUserId, // Strictly a valid UUID string or null (never a string identifier like std_...)
         course_id: attempt.courseId,
         course_name: attempt.courseName,
         mode: attempt.mode,
