@@ -35,8 +35,12 @@ export const MockConfigModal: React.FC<MockConfigModalProps> = ({
 
   const currentCourse = courses.find((c) => c.id === selectedCourseId) || courses[0];
 
-  // Dynamic available weeks derived strictly from questions
-  const availableWeekNumbers = deriveAvailableWeeks(courseQuestions);
+  // Dynamic available weeks derived from questions or course record
+  const availableWeekNumbers = (() => {
+    const derived = deriveAvailableWeeks(courseQuestions);
+    if (derived.length > 0) return derived;
+    return Array.isArray(currentCourse?.weeks) ? currentCourse.weeks : [];
+  })();
 
   // Initialize selected weeks to all available weeks when opening or switching courses
   useEffect(() => {
@@ -52,12 +56,14 @@ export const MockConfigModal: React.FC<MockConfigModalProps> = ({
         const targetCourseId = preselectedCourseId || selectedCourseId || freshCourses[0]?.id || '';
         setSelectedCourseId(targetCourseId);
 
+        const targetCourse = freshCourses.find((c) => c.id === targetCourseId);
         const freshQuestions = await fetchQuestionsFromSupabase(targetCourseId, 'all', true);
         if (!isSubscribed) return;
         setCourseQuestions(freshQuestions);
 
         const weeks = deriveAvailableWeeks(freshQuestions);
-        setSelectedWeeks(weeks.length > 0 ? weeks : [1]);
+        const finalWeeks = weeks.length > 0 ? weeks : (targetCourse?.weeks || []);
+        setSelectedWeeks(finalWeeks);
         setIsLoading(false);
       };
 
@@ -72,10 +78,12 @@ export const MockConfigModal: React.FC<MockConfigModalProps> = ({
   const handleCourseChange = async (newCourseId: string) => {
     setSelectedCourseId(newCourseId);
     setIsLoading(true);
+    const targetCourse = courses.find((c) => c.id === newCourseId);
     const questions = await fetchQuestionsFromSupabase(newCourseId, 'all', true);
     setCourseQuestions(questions);
     const weeks = deriveAvailableWeeks(questions);
-    setSelectedWeeks(weeks.length > 0 ? weeks : [1]);
+    const finalWeeks = weeks.length > 0 ? weeks : (targetCourse?.weeks || []);
+    setSelectedWeeks(finalWeeks);
     setIsLoading(false);
   };
 

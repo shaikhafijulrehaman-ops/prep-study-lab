@@ -1,12 +1,11 @@
 import { Course, Question, MockAttempt, AttemptQuestionItem, UserProgress, MockConfig, ExtractedQuestionDraft } from '../types';
-import { INITIAL_COURSES, INITIAL_QUESTIONS } from './seedData';
 import { getSupabaseClient } from './supabase';
 
 const KEYS = {
-  COURSES: 'prep_studylab_courses_v1',
-  QUESTIONS: 'prep_studylab_questions_v1',
-  ATTEMPTS: 'prep_studylab_attempts_v1',
-  ACTIVE_TEST: 'prep_studylab_active_test_v1',
+  COURSES: 'prep_studylab_courses_v2',
+  QUESTIONS: 'prep_studylab_questions_v2',
+  ATTEMPTS: 'prep_studylab_attempts_v2',
+  ACTIVE_TEST: 'prep_studylab_active_test_v2',
 };
 
 // Fisher-Yates array shuffler
@@ -18,9 +17,6 @@ export function shuffleArray<T>(array: T[]): T[] {
   }
   return arr;
 }
-
-const REMOVED_LEGACY_COURSE_IDS = new Set(['course-cloud-01', 'course-dl-02', 'course-algo-03']);
-const DELETED_COURSES_KEY = 'prep_studylab_deleted_courses_v1';
 
 /**
  * Dynamically extracts all distinct week numbers from questions.
@@ -38,59 +34,32 @@ export function deriveAvailableWeeks(questions: (Question | { weekNumber?: numbe
   return Array.from(weeks).sort((a, b) => a - b);
 }
 
-// ----------------- Courses & Questions -----------------
+// ----------------- Courses & Questions (Supabase Authoritative) -----------------
 
+/**
+ * Returns cached courses from localStorage.
+ * Does NOT contain hardcoded mock data or demo fallbacks.
+ */
 export function getCourses(publishedOnly: boolean = false): Course[] {
   try {
     const raw = localStorage.getItem(KEYS.COURSES);
-    let deletedList: string[] = [];
-    try {
-      const dRaw = localStorage.getItem(DELETED_COURSES_KEY);
-      if (dRaw) deletedList = JSON.parse(dRaw);
-    } catch {}
-    const deletedSet = new Set([...REMOVED_LEGACY_COURSE_IDS, ...deletedList]);
+    if (!raw) return [];
+    const parsed = JSON.parse(raw);
+    if (!Array.isArray(parsed)) return [];
 
-    const courseMap = new Map<string, Course>();
-    INITIAL_COURSES.forEach((c) => {
-      if (!deletedSet.has(c.id)) {
-        courseMap.set(c.id, c);
-      }
-    });
-
-    if (raw) {
-      const parsed = JSON.parse(raw);
-      if (Array.isArray(parsed)) {
-        parsed.forEach((c) => {
-          if (c && c.id && !deletedSet.has(c.id)) {
-            const initial = INITIAL_COURSES.find((ic) => ic.id === c.id);
-            const mergedWeeks = initial?.weeks
-              ? Array.from(new Set([...(c.weeks || []), ...initial.weeks])).sort((a, b) => a - b)
-              : (c.weeks || []);
-            const totalQuestions = Math.max(c.totalQuestions || 0, initial?.totalQuestions || 0);
-            courseMap.set(c.id, {
-              ...c,
-              weeks: mergedWeeks,
-              totalQuestions,
-              status: c.status || 'published',
-            });
-          }
-        });
-      }
-    }
-
-    let courses = Array.from(courseMap.values());
+    const courses: Course[] = parsed.filter((c) => c && c.id && c.name);
     if (publishedOnly) {
       return courses.filter((c) => c.status === 'published');
     }
     return courses;
   } catch {
-    return publishedOnly ? INITIAL_COURSES.filter((c) => c.status === 'published') : INITIAL_COURSES;
+    return [];
   }
 }
 
 /**
- * Loads published or all courses directly from Supabase.
- * Keeps local cache updated as single source of truth.
+ * Loads published or all courses directly from Supabase as authoritative source of truth.
+ * Updates local cache only to reflect authoritative Supabase data.
  */
 export async function fetchCoursesFromSupabase(publishedOnly: boolean = false): Promise<Course[]> {
   const supabase = getSupabaseClient();
@@ -103,23 +72,38 @@ export async function fetchCoursesFromSupabase(publishedOnly: boolean = false): 
     }
     const { data, error } = await query.order('created_at', { ascending: true });
 
-    if (error || !data || data.length === 0) {
+    if (error) {
+      console.warn('Error fetching courses from Supabase:', error.message);
       return getCourses(publishedOnly);
     }
 
-    const mapped: Course[] = data.map((row: any) => ({
-      id: row.id,
-      code: row.code,
-      name: row.name,
-      description: row.description || '',
-      status: row.status,
-      publishedAt: row.published_at || undefined,
-      createdAt: row.created_at || undefined,
-      totalQuestions: row.total_questions || 0,
-      weeks: Array.isArray(row.weeks) ? row.weeks : [],
-    }));
+    if (!data) return [];
 
-    // Update local cache
+    const mapped: Course[] = data.map((row: any) => {
+      let weeks: number[] = [];
+      if (Array.isArray(row.weeks)) {
+        weeks = row.weeks;
+      } else if (typeof row.weeks === 'string') {
+        try {
+          const parsed = JSON.parse(row.weeks);
+          if (Array.isArray(parsed)) weeks = parsed;
+        } catch {}
+      }
+
+      return {
+        id: row.id,
+        code: row.code,
+        name: row.name,
+        description: row.description || '',
+        status: row.status,
+        publishedAt: row.published_at || undefined,
+        createdAt: row.created_at || undefined,
+        totalQuestions: Number(row.total_questions) || 0,
+        weeks: weeks.sort((a, b) => a - b),
+      };
+    });
+
+    // Update local cache with exact authoritative records from Supabase
     localStorage.setItem(KEYS.COURSES, JSON.stringify(mapped));
     return mapped;
   } catch (err) {
@@ -128,15 +112,45 @@ export async function fetchCoursesFromSupabase(publishedOnly: boolean = false): 
   }
 }
 
+/**
+ * Saves or updates a Course/Test Bank in Supabase FIRST.
+ * Local cache is updated ONLY after Supabase confirms the save.
+ */
 export async function saveCourse(course: Course): Promise<{ success: boolean; course: Course; error?: string }> {
-  const current = getCourses(false);
-  const index = current.findIndex((c) => c.id === course.id);
   const courseWithDefaults: Course = {
     ...course,
     status: course.status || 'draft',
     createdAt: course.createdAt || new Date().toISOString(),
   };
 
+  const supabase = getSupabaseClient();
+  if (supabase) {
+    try {
+      const payload = {
+        id: courseWithDefaults.id,
+        code: courseWithDefaults.code,
+        name: courseWithDefaults.name,
+        description: courseWithDefaults.description || '',
+        status: courseWithDefaults.status,
+        published_at: courseWithDefaults.publishedAt || null,
+        total_questions: courseWithDefaults.totalQuestions || 0,
+        weeks: courseWithDefaults.weeks || [],
+      };
+
+      const { error } = await supabase.from('courses').upsert(payload);
+      if (error) {
+        console.error('Supabase course upsert error:', error.message);
+        return { success: false, course: courseWithDefaults, error: error.message };
+      }
+    } catch (err: any) {
+      console.error('Supabase course upsert exception:', err);
+      return { success: false, course: courseWithDefaults, error: err?.message || 'Network error' };
+    }
+  }
+
+  // Update local cache ONLY AFTER Supabase succeeds (or when running without Supabase client)
+  const current = getCourses(false);
+  const index = current.findIndex((c) => c.id === courseWithDefaults.id);
   let updated: Course[];
   if (index >= 0) {
     updated = [...current];
@@ -145,31 +159,6 @@ export async function saveCourse(course: Course): Promise<{ success: boolean; co
     updated = [courseWithDefaults, ...current];
   }
   localStorage.setItem(KEYS.COURSES, JSON.stringify(updated));
-
-  const supabase = getSupabaseClient();
-  if (supabase) {
-    try {
-      const { error } = await supabase
-        .from('courses')
-        .upsert({
-          id: courseWithDefaults.id,
-          code: courseWithDefaults.code,
-          name: courseWithDefaults.name,
-          description: courseWithDefaults.description || '',
-          status: courseWithDefaults.status,
-          published_at: courseWithDefaults.publishedAt || null,
-          total_questions: courseWithDefaults.totalQuestions || 0,
-          weeks: courseWithDefaults.weeks || [],
-        });
-      if (error) {
-        console.warn('Supabase course upsert notice:', error.message);
-        return { success: false, course: courseWithDefaults, error: error.message };
-      }
-    } catch (err: any) {
-      console.warn('Supabase course upsert exception:', err);
-      return { success: false, course: courseWithDefaults, error: err?.message || 'Network error' };
-    }
-  }
 
   return { success: true, course: courseWithDefaults };
 }
@@ -181,14 +170,14 @@ export async function saveCourse(course: Course): Promise<{ success: boolean; co
 export async function publishTest(courseId: string): Promise<{ success: boolean; error?: string; unverifiedCount?: number }> {
   const questions = await fetchQuestionsFromSupabase(courseId, 'all', false);
   if (questions.length === 0) {
-    return { success: false, error: 'Cannot publish a test with 0 questions.' };
+    return { success: false, error: 'Cannot publish a test with 0 questions in Supabase.' };
   }
 
   const unverified = questions.filter((q) => q.correctAnswerIndex === null || !q.isApproved);
   if (unverified.length > 0) {
     return {
       success: false,
-      error: 'Some questions do not have verified answers.',
+      error: `Some questions do not have verified answers (${unverified.length} questions unverified).`,
       unverifiedCount: unverified.length,
     };
   }
@@ -196,7 +185,7 @@ export async function publishTest(courseId: string): Promise<{ success: boolean;
   const allCourses = await fetchCoursesFromSupabase(false);
   const target = allCourses.find((c) => c.id === courseId);
   if (!target) {
-    return { success: false, error: 'Test record not found.' };
+    return { success: false, error: 'Test record not found in Supabase.' };
   }
 
   const availableWeeks = deriveAvailableWeeks(questions);
@@ -218,49 +207,49 @@ export async function unpublishTest(courseId: string): Promise<{ success: boolea
     target.status = 'draft';
     return saveCourse(target);
   }
-  return { success: false, error: 'Test record not found.' };
+  return { success: false, error: 'Test record not found in Supabase.' };
 }
 
 /**
- * Deletes a test and its questions.
- * IMMUTABLE SNAPSHOT GUARANTEE: Does NOT delete or corrupt past student MockAttempt snapshots.
+ * Deletes a test and its questions from Supabase.
+ * IMMUTABLE SNAPSHOT GUARANTEE: Does NOT delete past student MockAttempt snapshots.
  */
 export async function deleteTest(courseId: string): Promise<{ success: boolean; error?: string }> {
-  // 1. Remember deleted course so it is never re-seeded
-  try {
-    const dRaw = localStorage.getItem(DELETED_COURSES_KEY);
-    const dList: string[] = dRaw ? JSON.parse(dRaw) : [];
-    if (!dList.includes(courseId)) {
-      dList.push(courseId);
-      localStorage.setItem(DELETED_COURSES_KEY, JSON.stringify(dList));
-    }
-  } catch {}
-
-  // 2. Remove course
-  const currentCourses = getCourses(false);
-  const filteredCourses = currentCourses.filter((c) => c.id !== courseId);
-  localStorage.setItem(KEYS.COURSES, JSON.stringify(filteredCourses));
-
-  // 3. Remove questions belonging to this course
-  const currentQuestions = getQuestions();
-  const filteredQuestions = currentQuestions.filter((q) => q.courseId !== courseId);
-  localStorage.setItem(KEYS.QUESTIONS, JSON.stringify(filteredQuestions));
-
-  // 4. Supabase cleanup
+  // 1. Supabase cleanup FIRST
   const supabase = getSupabaseClient();
   if (supabase) {
     try {
-      await supabase.from('questions').delete().eq('course_id', courseId);
-      await supabase.from('courses').delete().eq('id', courseId);
+      const { error: qErr } = await supabase.from('questions').delete().eq('course_id', courseId);
+      if (qErr) {
+        console.error('Supabase delete questions error:', qErr.message);
+        return { success: false, error: qErr.message };
+      }
+      const { error: cErr } = await supabase.from('courses').delete().eq('id', courseId);
+      if (cErr) {
+        console.error('Supabase delete course error:', cErr.message);
+        return { success: false, error: cErr.message };
+      }
     } catch (err: any) {
       console.warn('Supabase delete error:', err);
       return { success: false, error: err?.message };
     }
   }
 
+  // 2. Remove from local cache
+  const currentCourses = getCourses(false);
+  const filteredCourses = currentCourses.filter((c) => c.id !== courseId);
+  localStorage.setItem(KEYS.COURSES, JSON.stringify(filteredCourses));
+
+  const currentQuestions = getQuestions();
+  const filteredQuestions = currentQuestions.filter((q) => q.courseId !== courseId);
+  localStorage.setItem(KEYS.QUESTIONS, JSON.stringify(filteredQuestions));
+
   return { success: true };
 }
 
+/**
+ * Reads cached questions from localStorage without hardcoded demo fallbacks.
+ */
 export function getQuestions(
   courseId?: string,
   weekSelection?: number[] | number | 'all',
@@ -269,21 +258,14 @@ export function getQuestions(
   let all: Question[] = [];
   try {
     const raw = localStorage.getItem(KEYS.QUESTIONS);
-    const qMap = new Map<string, Question>();
-    INITIAL_QUESTIONS.forEach((q) => qMap.set(q.id, q));
-
     if (raw) {
       const parsed = JSON.parse(raw);
       if (Array.isArray(parsed)) {
-        parsed.forEach((q) => {
-          if (q && q.id) qMap.set(q.id, q);
-        });
+        all = parsed.filter((q) => q && q.id && q.questionText);
       }
     }
-
-    all = Array.from(qMap.values());
   } catch {
-    all = INITIAL_QUESTIONS;
+    all = [];
   }
 
   return all.filter((q) => {
@@ -302,7 +284,7 @@ export function getQuestions(
 
 /**
  * Loads questions directly from Supabase as authoritative source of truth.
- * Caches in localStorage for offline resilience.
+ * Updates local cache for offline/transient caching only.
  */
 export async function fetchQuestionsFromSupabase(
   courseId?: string,
@@ -326,28 +308,57 @@ export async function fetchQuestionsFromSupabase(
         query = query.eq('week_number', weekSelection);
       }
     }
+    if (approvedOnly) {
+      query = query.eq('is_approved', true);
+    }
 
     const { data, error } = await query.order('week_number', { ascending: true });
 
-    if (error || !data) {
-      console.warn('Error fetching questions from Supabase:', error?.message);
+    if (error) {
+      console.warn('Error fetching questions from Supabase:', error.message);
       return getQuestions(courseId, weekSelection, approvedOnly);
     }
 
-    const mapped: Question[] = data.map((row: any) => ({
-      id: row.id,
-      courseId: row.course_id,
-      weekNumber: Number(row.week_number) || 1,
-      sourcePdfId: row.source_pdf_id || undefined,
-      sourcePdfName: row.source_pdf_name || '',
-      questionText: row.question_text,
-      options: row.options as [string, string, string, string],
-      correctAnswerIndex: row.correct_answer_index,
-      answerSource: 'PDF',
-      isApproved: true,
-      explanation: row.explanation || '',
-      createdAt: row.created_at,
-    }));
+    if (!data) return [];
+
+    const mapped: Question[] = data.map((row: any) => {
+      let options: [string, string, string, string] = ['Option A', 'Option B', 'Option C', 'Option D'];
+      if (Array.isArray(row.options)) {
+        options = [
+          row.options[0] || 'Option A',
+          row.options[1] || 'Option B',
+          row.options[2] || 'Option C',
+          row.options[3] || 'Option D',
+        ];
+      } else if (typeof row.options === 'string') {
+        try {
+          const parsed = JSON.parse(row.options);
+          if (Array.isArray(parsed)) {
+            options = [
+              parsed[0] || 'Option A',
+              parsed[1] || 'Option B',
+              parsed[2] || 'Option C',
+              parsed[3] || 'Option D',
+            ];
+          }
+        } catch {}
+      }
+
+      return {
+        id: row.id,
+        courseId: row.course_id,
+        weekNumber: Number(row.week_number) || 1,
+        sourcePdfId: row.source_pdf_id || undefined,
+        sourcePdfName: row.source_pdf_name || '',
+        questionText: row.question_text,
+        options,
+        correctAnswerIndex: row.correct_answer_index,
+        answerSource: row.answer_source || 'Manually Verified',
+        isApproved: row.is_approved ?? true,
+        explanation: row.explanation || '',
+        createdAt: row.created_at,
+      };
+    });
 
     if (mapped.length > 0) {
       const current = getQuestions();
@@ -364,16 +375,15 @@ export async function fetchQuestionsFromSupabase(
   }
 }
 
+/**
+ * Saves or updates questions in Supabase FIRST.
+ * Strictly persists `is_approved`, `answer_source`, `options`, `explanation`, and `correct_answer_index`.
+ */
 export async function saveQuestions(newQuestions: Question[]): Promise<{ success: boolean; error?: string }> {
-  const current = getQuestions();
-  const map = new Map<string, Question>();
-  current.forEach((q) => map.set(q.id, q));
-  newQuestions.forEach((q) => map.set(q.id, q));
-  const merged = Array.from(map.values());
-  localStorage.setItem(KEYS.QUESTIONS, JSON.stringify(merged));
+  if (newQuestions.length === 0) return { success: true };
 
   const supabase = getSupabaseClient();
-  if (supabase && newQuestions.length > 0) {
+  if (supabase) {
     try {
       // Chunk into batches of 50
       for (let i = 0; i < newQuestions.length; i += 50) {
@@ -385,7 +395,9 @@ export async function saveQuestions(newQuestions: Question[]): Promise<{ success
           source_pdf_name: q.sourcePdfName || '',
           question_text: q.questionText,
           options: q.options,
-          correct_answer_index: q.correctAnswerIndex ?? 0,
+          correct_answer_index: q.correctAnswerIndex ?? null,
+          answer_source: q.answerSource || (q.correctAnswerIndex !== null ? 'Manually Verified' : 'Not Available'),
+          is_approved: q.isApproved !== undefined ? q.isApproved : (q.correctAnswerIndex !== null),
           explanation: q.explanation || '',
         }));
 
@@ -401,17 +413,20 @@ export async function saveQuestions(newQuestions: Question[]): Promise<{ success
     }
   }
 
+  // Update local cache ONLY AFTER Supabase succeeds
+  const current = getQuestions();
+  const map = new Map<string, Question>();
+  current.forEach((q) => map.set(q.id, q));
+  newQuestions.forEach((q) => map.set(q.id, q));
+  localStorage.setItem(KEYS.QUESTIONS, JSON.stringify(Array.from(map.values())));
+
   return { success: true };
 }
 
+/**
+ * Updates a question in Supabase FIRST.
+ */
 export async function updateQuestion(question: Question): Promise<{ success: boolean; error?: string }> {
-  const current = getQuestions();
-  const index = current.findIndex((q) => q.id === question.id);
-  if (index >= 0) {
-    current[index] = question;
-    localStorage.setItem(KEYS.QUESTIONS, JSON.stringify(current));
-  }
-
   const supabase = getSupabaseClient();
   if (supabase) {
     try {
@@ -425,7 +440,9 @@ export async function updateQuestion(question: Question): Promise<{ success: boo
           source_pdf_name: question.sourcePdfName || '',
           question_text: question.questionText,
           options: question.options,
-          correct_answer_index: question.correctAnswerIndex ?? 0,
+          correct_answer_index: question.correctAnswerIndex ?? null,
+          answer_source: question.answerSource || 'Manually Verified',
+          is_approved: question.isApproved !== undefined ? question.isApproved : true,
           explanation: question.explanation || '',
         });
       if (error) {
@@ -437,14 +454,21 @@ export async function updateQuestion(question: Question): Promise<{ success: boo
     }
   }
 
+  // Update local cache only after Supabase succeeds
+  const current = getQuestions();
+  const index = current.findIndex((q) => q.id === question.id);
+  if (index >= 0) {
+    current[index] = question;
+    localStorage.setItem(KEYS.QUESTIONS, JSON.stringify(current));
+  }
+
   return { success: true };
 }
 
+/**
+ * Deletes a question from Supabase.
+ */
 export async function deleteQuestion(questionId: string): Promise<{ success: boolean; error?: string }> {
-  const current = getQuestions();
-  const updated = current.filter((q) => q.id !== questionId);
-  localStorage.setItem(KEYS.QUESTIONS, JSON.stringify(updated));
-
   const supabase = getSupabaseClient();
   if (supabase) {
     try {
@@ -455,6 +479,54 @@ export async function deleteQuestion(questionId: string): Promise<{ success: boo
     } catch (err: any) {
       return { success: false, error: err?.message || 'Network error' };
     }
+  }
+
+  const current = getQuestions();
+  const updated = current.filter((q) => q.id !== questionId);
+  localStorage.setItem(KEYS.QUESTIONS, JSON.stringify(updated));
+
+  return { success: true };
+}
+
+/**
+ * Deletes all questions belonging to a specific week/module from Supabase.
+ * Recalculates and updates the parent course weeks and question count.
+ */
+export async function deleteQuestionsByWeek(courseId: string, weekNumber: number): Promise<{ success: boolean; error?: string }> {
+  const supabase = getSupabaseClient();
+  if (supabase) {
+    try {
+      const { error } = await supabase
+        .from('questions')
+        .delete()
+        .eq('course_id', courseId)
+        .eq('week_number', weekNumber);
+
+      if (error) {
+        console.error('Supabase deleteQuestionsByWeek error:', error.message);
+        return { success: false, error: error.message };
+      }
+    } catch (err: any) {
+      return { success: false, error: err?.message || 'Network error' };
+    }
+  }
+
+  // Update local cache
+  const currentQuestions = getQuestions();
+  const filtered = currentQuestions.filter((q) => !(q.courseId === courseId && q.weekNumber === weekNumber));
+  localStorage.setItem(KEYS.QUESTIONS, JSON.stringify(filtered));
+
+  // Recalculate remaining course weeks and total questions from Supabase
+  const remaining = await fetchQuestionsFromSupabase(courseId, 'all', false);
+  const remainingWeeks = deriveAvailableWeeks(remaining);
+  const allCourses = await fetchCoursesFromSupabase(false);
+  const targetCourse = allCourses.find((c) => c.id === courseId);
+  if (targetCourse) {
+    await saveCourse({
+      ...targetCourse,
+      weeks: remainingWeeks,
+      totalQuestions: remaining.length,
+    });
   }
 
   return { success: true };
@@ -479,17 +551,11 @@ export interface ActiveTestSession {
  * 2. Independent option order shuffling for every question
  * 3. Exact tracking of displayed options and mapped correct option index
  */
-export function initializeMockSession(config: MockConfig): ActiveTestSession {
-  // Resolve weeks filter
-  const targetWeeks = config.selectedWeeks && config.selectedWeeks.length > 0
-    ? config.selectedWeeks
-    : config.weekNumber !== undefined && config.weekNumber !== 'all'
-    ? [config.weekNumber]
-    : 'all';
-
-  const allCourseQuestions = getQuestions(config.courseId, targetWeeks, true);
-  const attempts = getAttempts();
-
+function buildSessionFromQuestions(
+  config: MockConfig,
+  questions: Question[],
+  attempts: MockAttempt[]
+): ActiveTestSession {
   // Determine attempted / wrong question IDs for this course
   const attemptedQuestionIds = new Set<string>();
   const wrongQuestionIds = new Set<string>();
@@ -509,17 +575,17 @@ export function initializeMockSession(config: MockConfig): ActiveTestSession {
 
   switch (config.selectionType) {
     case 'unattempted':
-      pool = allCourseQuestions.filter((q) => !attemptedQuestionIds.has(q.id));
-      if (pool.length === 0) pool = allCourseQuestions; // Fallback if all attempted
+      pool = questions.filter((q) => !attemptedQuestionIds.has(q.id));
+      if (pool.length === 0) pool = questions; // Fallback if all attempted
       break;
     case 'wrong':
-      pool = allCourseQuestions.filter((q) => wrongQuestionIds.has(q.id));
-      if (pool.length === 0) pool = allCourseQuestions; // Fallback if no wrongs
+      pool = questions.filter((q) => wrongQuestionIds.has(q.id));
+      if (pool.length === 0) pool = questions; // Fallback if no wrongs
       break;
     case 'random':
     case 'all':
     default:
-      pool = [...allCourseQuestions];
+      pool = [...questions];
       break;
   }
 
@@ -581,6 +647,48 @@ export function initializeMockSession(config: MockConfig): ActiveTestSession {
 
   saveActiveSession(session);
   return session;
+}
+
+/**
+ * Creates a new randomized mock test session synchronously from cached questions.
+ */
+export function initializeMockSession(config: MockConfig, userId?: string): ActiveTestSession {
+  const targetWeeks = config.selectedWeeks && config.selectedWeeks.length > 0
+    ? config.selectedWeeks
+    : config.weekNumber !== undefined && config.weekNumber !== 'all'
+    ? [config.weekNumber]
+    : 'all';
+
+  const allCourseQuestions = getQuestions(config.courseId, targetWeeks, true);
+  const attempts = getAttempts(userId);
+  return buildSessionFromQuestions(config, allCourseQuestions, attempts);
+}
+
+/**
+ * Creates a new mock test session by fetching questions directly from Supabase first.
+ * Ensures questions from newly published weeks are guaranteed to be present for the student.
+ */
+export async function initializeMockSessionAsync(config: MockConfig, userId?: string): Promise<ActiveTestSession> {
+  const targetWeeks = config.selectedWeeks && config.selectedWeeks.length > 0
+    ? config.selectedWeeks
+    : config.weekNumber !== undefined && config.weekNumber !== 'all'
+    ? [config.weekNumber]
+    : 'all';
+
+  let allCourseQuestions = await fetchQuestionsFromSupabase(config.courseId, targetWeeks, true);
+  if (allCourseQuestions.length === 0) {
+    allCourseQuestions = getQuestions(config.courseId, targetWeeks, true);
+  }
+
+  let attempts = getAttempts(userId);
+  if (userId) {
+    try {
+      const freshAttempts = await fetchAttemptsFromSupabase(userId);
+      if (freshAttempts.length > 0) attempts = freshAttempts;
+    } catch {}
+  }
+
+  return buildSessionFromQuestions(config, allCourseQuestions, attempts);
 }
 
 export function saveActiveSession(session: ActiveTestSession | null, userId?: string): void {

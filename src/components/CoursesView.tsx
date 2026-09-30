@@ -3,6 +3,7 @@ import { motion } from 'framer-motion';
 import { BookOpen, Play, UploadCloud, ChevronRight, Layers, FileText, CheckCircle2 } from 'lucide-react';
 import { Course, Question } from '../types';
 import { getCourses, getQuestions, fetchCoursesFromSupabase, fetchQuestionsFromSupabase, deriveAvailableWeeks } from '../lib/storage';
+import { getSupabaseClient } from '../lib/supabase';
 
 interface CoursesViewProps {
   onStartCourseTest: (courseId: string) => void;
@@ -14,29 +15,51 @@ export const CoursesView: React.FC<CoursesViewProps> = ({
   const [courses, setCourses] = useState<Course[]>(getCourses(true));
   const [selectedCourseId, setSelectedCourseId] = useState<string>(courses[0]?.id || '');
   const [activeWeekTab, setActiveWeekTab] = useState<number | 'all'>('all');
-  const [allQuestions, setAllQuestions] = useState<Question[]>(() => {
-    const initialCourseId = courses[0]?.id;
-    return initialCourseId ? getQuestions(initialCourseId, 'all', true) : [];
-  });
+  const [allQuestions, setAllQuestions] = useState<Question[]>([]);
+
+  const loadData = async () => {
+    const freshCourses = await fetchCoursesFromSupabase(true);
+    setCourses(freshCourses);
+    const activeId = selectedCourseId || freshCourses[0]?.id || '';
+    setSelectedCourseId(activeId);
+    if (activeId) {
+      const freshQuestions = await fetchQuestionsFromSupabase(activeId, 'all', true);
+      setAllQuestions(freshQuestions);
+    }
+  };
 
   useEffect(() => {
     let isMounted = true;
-    const loadData = async () => {
-      const freshCourses = await fetchCoursesFromSupabase(true);
-      if (!isMounted) return;
-      setCourses(freshCourses);
-      const activeId = selectedCourseId || freshCourses[0]?.id || '';
-      setSelectedCourseId(activeId);
-      if (activeId) {
-        const freshQuestions = await fetchQuestionsFromSupabase(activeId, 'all', true);
-        if (isMounted) {
-          setAllQuestions(freshQuestions);
-        }
-      }
-    };
     loadData();
+
+    // Live real-time database subscription for instant synchronization
+    const supabase = getSupabaseClient();
+    let channel: any = null;
+    if (supabase) {
+      channel = supabase
+        .channel('courses_view_realtime')
+        .on(
+          'postgres_changes',
+          { event: '*', schema: 'public', table: 'courses' },
+          () => {
+            if (isMounted) loadData();
+          }
+        )
+        .on(
+          'postgres_changes',
+          { event: '*', schema: 'public', table: 'questions' },
+          () => {
+            if (isMounted) loadData();
+          }
+        )
+        .subscribe();
+    }
+
     return () => {
       isMounted = false;
+      if (supabase && channel) {
+        supabase.removeChannel(channel);
+      }
     };
   }, []);
 
@@ -99,7 +122,7 @@ export const CoursesView: React.FC<CoursesViewProps> = ({
             </div>
 
           {courses.map((course) => {
-            const count = getQuestions(course.id).length;
+            const count = course.totalQuestions || (course.id === selectedCourseId ? allCourseQuestions.length : 0);
             const isSelected = course.id === selectedCourseId;
 
             return (

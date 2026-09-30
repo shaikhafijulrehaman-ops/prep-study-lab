@@ -16,11 +16,13 @@ import {
   getQuestions,
   getActiveSession,
   initializeMockSession,
+  initializeMockSessionAsync,
   createRetryWrongSession,
   fetchCoursesFromSupabase,
   fetchQuestionsFromSupabase,
 } from './lib/storage';
 import { getCurrentUser, initAuthSession, onAuthStateChanged, logout } from './lib/auth';
+import { getSupabaseClient } from './lib/supabase';
 import { MockAttempt, MockConfig, User } from './types';
 
 export const App: React.FC = () => {
@@ -106,10 +108,37 @@ export const App: React.FC = () => {
 
     checkHash();
     window.addEventListener('hashchange', checkHash);
+
+    // Subscribe to live database updates on published courses and questions
+    const supabase = getSupabaseClient();
+    let liveChannel: any = null;
+    if (supabase) {
+      liveChannel = supabase
+        .channel('app_live_catalog_sync')
+        .on(
+          'postgres_changes',
+          { event: '*', schema: 'public', table: 'courses' },
+          () => {
+            refreshCounts();
+          }
+        )
+        .on(
+          'postgres_changes',
+          { event: '*', schema: 'public', table: 'questions' },
+          () => {
+            refreshCounts();
+          }
+        )
+        .subscribe();
+    }
+
     return () => {
       isMounted = false;
       unsubscribe();
       window.removeEventListener('hashchange', checkHash);
+      if (supabase && liveChannel) {
+        supabase.removeChannel(liveChannel);
+      }
     };
   }, []);
 
@@ -180,10 +209,14 @@ export const App: React.FC = () => {
 
   // Launch fresh mock test from config with auth guard
   const handleStartTest = (config: MockConfig) => {
-    requireAuth(() => {
-      const newSession = initializeMockSession(config);
-      setViewingResultAttempt(null);
-      setActiveSession(newSession);
+    requireAuth(async () => {
+      try {
+        const newSession = await initializeMockSessionAsync(config, currentUser?.id);
+        setViewingResultAttempt(null);
+        setActiveSession(newSession);
+      } catch (err: any) {
+        showToast('Error starting test: ' + (err?.message || 'Failed to fetch test questions.'));
+      }
     }, 'Authentication is required before starting any test.');
   };
 

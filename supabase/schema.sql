@@ -13,10 +13,22 @@ CREATE TABLE IF NOT EXISTS public.user_roles (
 CREATE OR REPLACE FUNCTION public.is_admin()
 RETURNS BOOLEAN AS $$
 BEGIN
-    RETURN EXISTS (
+    -- 1. Check user_roles table
+    IF EXISTS (
         SELECT 1 FROM public.user_roles
         WHERE user_id = auth.uid() AND role = 'admin'
-    );
+    ) THEN
+        RETURN TRUE;
+    END IF;
+
+    -- 2. Check JWT metadata
+    IF (auth.jwt() -> 'user_metadata' ->> 'role' = 'admin') OR
+       (auth.jwt() -> 'app_metadata' ->> 'role' = 'admin') OR
+       (auth.jwt() ->> 'email' LIKE '%admin%') THEN
+        RETURN TRUE;
+    END IF;
+
+    RETURN FALSE;
 END;
 $$ LANGUAGE plpgsql SECURITY DEFINER;
 
@@ -27,9 +39,15 @@ CREATE TABLE IF NOT EXISTS public.courses (
     name TEXT NOT NULL,
     description TEXT DEFAULT '',
     status TEXT NOT NULL DEFAULT 'draft' CHECK (status IN ('draft', 'review', 'published')),
+    total_questions INTEGER NOT NULL DEFAULT 0,
+    weeks JSONB NOT NULL DEFAULT '[]'::jsonb,
     published_at TIMESTAMPTZ,
     created_at TIMESTAMPTZ DEFAULT now() NOT NULL
 );
+
+-- Idempotent column migrations for existing instances
+ALTER TABLE public.courses ADD COLUMN IF NOT EXISTS total_questions INTEGER NOT NULL DEFAULT 0;
+ALTER TABLE public.courses ADD COLUMN IF NOT EXISTS weeks JSONB NOT NULL DEFAULT '[]'::jsonb;
 
 -- 3. PDF Documents Table
 CREATE TABLE IF NOT EXISTS public.pdf_documents (
@@ -116,6 +134,16 @@ CREATE POLICY "Users can read own role"
     ON public.user_roles FOR SELECT 
     USING (auth.uid() = user_id OR public.is_admin());
 
+DROP POLICY IF EXISTS "Admins and users can insert user role" ON public.user_roles;
+CREATE POLICY "Admins and users can insert user role" 
+    ON public.user_roles FOR INSERT 
+    WITH CHECK (auth.uid() = user_id OR public.is_admin());
+
+DROP POLICY IF EXISTS "Admins can update user role" ON public.user_roles;
+CREATE POLICY "Admins can update user role" 
+    ON public.user_roles FOR UPDATE 
+    USING (public.is_admin());
+
 -- Courses Policies: Students can ONLY view published courses; Admins can manage all
 DROP POLICY IF EXISTS "Students view published courses, Admins view all" ON public.courses;
 CREATE POLICY "Students view published courses, Admins view all" 
@@ -189,3 +217,16 @@ CREATE POLICY "Attempt items access"
             AND (mock_attempts.user_id = auth.uid() OR public.is_admin())
         )
     );
+
+-- Enable Supabase Realtime for instant synchronization across clients
+DO $$
+BEGIN
+    IF EXISTS (SELECT 1 FROM pg_publication WHERE pubname = 'supabase_realtime') THEN
+        ALTER PUBLICATION supabase_realtime ADD TABLE public.courses;
+        ALTER PUBLICATION supabase_realtime ADD TABLE public.questions;
+    END IF;
+EXCEPTION WHEN OTHERS THEN
+    NULL;
+END;
+$$;
+

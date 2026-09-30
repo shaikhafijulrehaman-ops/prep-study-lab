@@ -46,6 +46,7 @@ import {
   saveQuestions,
   updateQuestion,
   deleteQuestion,
+  deleteQuestionsByWeek,
   getAllAttempts,
   fetchAttemptsFromSupabase,
   fetchAdminRecentAttemptsFromSupabase,
@@ -343,16 +344,21 @@ export const AdminDashboard: React.FC<AdminDashboardProps> = ({
 
     const saveRes = await saveQuestions([newQuestion]);
     if (!saveRes.success) {
-      setErrorMessage(`Failed to save question: ${saveRes.error}`);
+      setErrorMessage(saveRes.error ? `Unable to publish Week. Please try again: ${saveRes.error}` : 'Unable to publish Week. Please try again.');
       return;
     }
 
     const allWeeks = Array.from(new Set([...(course.weeks || [1]), manualWeek])).sort((a, b) => a - b);
-    await saveCourse({
+    const courseSaveRes = await saveCourse({
       ...course,
       weeks: allWeeks,
       totalQuestions: existingQs.length + 1,
     });
+
+    if (!courseSaveRes.success) {
+      setErrorMessage(courseSaveRes.error ? `Unable to publish Week. Please try again: ${courseSaveRes.error}` : 'Unable to publish Week. Please try again.');
+      return;
+    }
 
     await refreshCourses();
     await refreshManualQuestions(manualCourseId, manualWeek);
@@ -413,16 +419,21 @@ export const AdminDashboard: React.FC<AdminDashboardProps> = ({
 
     const saveRes = await saveQuestions(newQuestions);
     if (!saveRes.success) {
-      setErrorMessage(`Failed to save questions: ${saveRes.error}`);
+      setErrorMessage(saveRes.error ? `Unable to publish Week. Please try again: ${saveRes.error}` : 'Unable to publish Week. Please try again.');
       return;
     }
 
     const allWeeks = Array.from(new Set([...(course.weeks || [1]), manualWeek])).sort((a, b) => a - b);
-    await saveCourse({
+    const courseSaveRes = await saveCourse({
       ...course,
       weeks: allWeeks,
       totalQuestions: existingQs.length + newQuestions.length,
     });
+
+    if (!courseSaveRes.success) {
+      setErrorMessage(courseSaveRes.error ? `Unable to publish Week. Please try again: ${courseSaveRes.error}` : 'Unable to publish Week. Please try again.');
+      return;
+    }
 
     await refreshCourses();
     await refreshManualQuestions(manualCourseId, manualWeek);
@@ -478,6 +489,37 @@ export const AdminDashboard: React.FC<AdminDashboardProps> = ({
     }
     await refreshManualQuestions(manualCourseId, manualWeek);
     showToast('Question deleted.');
+  };
+
+  const handleDeleteWeek = async (weekNum: number) => {
+    if (!manualCourseId) return;
+    const course = courses.find((c) => c.id === manualCourseId);
+    if (!course) return;
+
+    if (!window.confirm(`Are you sure you want to delete Week ${weekNum} and all its questions from "${course.name}"?`)) {
+      return;
+    }
+
+    const delRes = await deleteQuestionsByWeek(manualCourseId, weekNum);
+    if (!delRes.success) {
+      setErrorMessage(`Unable to delete Week ${weekNum}. Please try again.`);
+      return;
+    }
+
+    // Recalculate remaining weeks & total questions from Supabase
+    const remainingQs = await fetchQuestionsFromSupabase(manualCourseId, 'all', false);
+    const newWeeks = deriveAvailableWeeks(remainingQs);
+    await saveCourse({
+      ...course,
+      weeks: newWeeks.length > 0 ? newWeeks : [1],
+      totalQuestions: remainingQs.length,
+    });
+
+    await refreshCourses();
+    const nextWeek = newWeeks.length > 0 ? newWeeks[0] : 1;
+    setManualWeek(nextWeek);
+    await refreshManualQuestions(manualCourseId, nextWeek);
+    showToast(`Week ${weekNum} deleted successfully.`);
   };
 
   const handleUpdateManualQuestion = async (questionId: string, patch: Partial<Question>) => {
@@ -748,13 +790,6 @@ export const AdminDashboard: React.FC<AdminDashboardProps> = ({
 
     const uniqueWeeks = deriveAvailableWeeks(draftQuestions);
 
-    await saveCourse({
-      ...workingCourse,
-      totalQuestions: draftQuestions.length,
-      weeks: uniqueWeeks.length > 0 ? uniqueWeeks : [1],
-      status: 'draft',
-    });
-
     const questionsToSave: Question[] = draftQuestions.map((dq, i) => ({
       id: `q-${workingCourse.id}-${i + 1}`,
       courseId: workingCourse.id,
@@ -762,14 +797,31 @@ export const AdminDashboard: React.FC<AdminDashboardProps> = ({
       questionText: dq.questionText,
       options: dq.options,
       correctAnswerIndex: dq.correctAnswerIndex,
-      answerSource: dq.answerSource,
+      answerSource: dq.answerSource || 'Manually Verified',
       isApproved: dq.isApproved,
       explanation: dq.explanation,
       sourcePdfName: workingCourse.sourcePdfName,
       createdAt: new Date().toISOString(),
     }));
 
-    await saveQuestions(questionsToSave);
+    const qRes = await saveQuestions(questionsToSave);
+    if (!qRes.success) {
+      setErrorMessage(qRes.error ? `Unable to save questions: ${qRes.error}` : 'Unable to save test. Please try again.');
+      return;
+    }
+
+    const cRes = await saveCourse({
+      ...workingCourse,
+      totalQuestions: draftQuestions.length,
+      weeks: uniqueWeeks.length > 0 ? uniqueWeeks : [1],
+      status: 'draft',
+    });
+
+    if (!cRes.success) {
+      setErrorMessage(cRes.error ? `Unable to save test: ${cRes.error}` : 'Unable to save test. Please try again.');
+      return;
+    }
+
     await refreshCourses();
     setActiveTab('tests');
     showToast(`Saved "${workingCourse.name}" as Draft with ${uniqueWeeks.length} weeks.`);
@@ -789,15 +841,6 @@ export const AdminDashboard: React.FC<AdminDashboardProps> = ({
 
     const uniqueWeeks = deriveAvailableWeeks(draftQuestions);
 
-    // Save course as published
-    await saveCourse({
-      ...workingCourse,
-      totalQuestions: draftQuestions.length,
-      weeks: uniqueWeeks.length > 0 ? uniqueWeeks : [1],
-      status: 'published',
-      publishedAt: new Date().toISOString(),
-    });
-
     const questionsToSave: Question[] = draftQuestions.map((dq, i) => ({
       id: `q-${workingCourse.id}-${i + 1}`,
       courseId: workingCourse.id,
@@ -805,17 +848,37 @@ export const AdminDashboard: React.FC<AdminDashboardProps> = ({
       questionText: dq.questionText,
       options: dq.options,
       correctAnswerIndex: dq.correctAnswerIndex,
-      answerSource: dq.answerSource,
+      answerSource: dq.answerSource || 'Manually Verified',
       isApproved: true,
       explanation: dq.explanation,
       sourcePdfName: workingCourse.sourcePdfName,
       createdAt: new Date().toISOString(),
     }));
 
-    await saveQuestions(questionsToSave);
+    // 1. Save all questions to Supabase FIRST
+    const qSaveRes = await saveQuestions(questionsToSave);
+    if (!qSaveRes.success) {
+      setErrorMessage('Unable to publish Week. Please try again.');
+      return;
+    }
+
+    // 2. Mark the Week/course as published only after questions are successfully saved
+    const courseSaveRes = await saveCourse({
+      ...workingCourse,
+      totalQuestions: draftQuestions.length,
+      weeks: uniqueWeeks.length > 0 ? uniqueWeeks : [1],
+      status: 'published',
+      publishedAt: new Date().toISOString(),
+    });
+
+    if (!courseSaveRes.success) {
+      setErrorMessage('Unable to publish Week. Please try again.');
+      return;
+    }
+
     await refreshCourses();
     setActiveTab('tests');
-    showToast(`Test "${workingCourse.name}" published with ${uniqueWeeks.length} weeks! Students can now access it.`);
+    showToast('Week published successfully.');
   };
 
 
@@ -824,23 +887,31 @@ export const AdminDashboard: React.FC<AdminDashboardProps> = ({
     const res = await publishTest(courseId);
     if (res.success) {
       await refreshCourses();
-      showToast('Test published successfully.');
+      showToast('Week published successfully.');
     } else {
-      setErrorMessage(res.error || 'Could not publish test.');
+      setErrorMessage(res.error || 'Unable to publish Week. Please try again.');
     }
   };
 
   const handleUnpublishExistingTest = async (courseId: string) => {
-    await unpublishTest(courseId);
-    await refreshCourses();
-    showToast('Test reverted to Draft.');
+    const res = await unpublishTest(courseId);
+    if (res.success) {
+      await refreshCourses();
+      showToast('Test reverted to Draft.');
+    } else {
+      setErrorMessage(res.error || 'Unable to unpublish test. Please try again.');
+    }
   };
 
   const handleDeleteExistingTest = async (courseId: string, testName: string) => {
     if (window.confirm(`Are you sure you want to delete "${testName}"? Historical student attempts will remain safe.`)) {
-      await deleteTest(courseId);
-      await refreshCourses();
-      showToast('Test and question records deleted.');
+      const res = await deleteTest(courseId);
+      if (res.success) {
+        await refreshCourses();
+        showToast('Test deleted successfully.');
+      } else {
+        setErrorMessage(res.error || 'Unable to delete test. Please try again.');
+      }
     }
   };
 
@@ -2144,6 +2215,17 @@ export const AdminDashboard: React.FC<AdminDashboardProps> = ({
                     ALL QUESTIONS SAVED IN THIS MODULE ARE IMMEDIATELY ACCESSIBLE
                   </p>
                 </div>
+                {manualCourseQuestions.length > 0 && (
+                  <button
+                    type="button"
+                    onClick={() => handleDeleteWeek(manualWeek)}
+                    className="flex items-center gap-1.5 px-3 py-1.5 rounded-xl border border-rose-200 text-rose-600 hover:bg-rose-50 text-xs font-mono font-medium transition-all"
+                    title={`Delete Week ${manualWeek} and all its questions`}
+                  >
+                    <Trash2 className="w-3.5 h-3.5" />
+                    <span>Delete Week {manualWeek}</span>
+                  </button>
+                )}
               </div>
 
               {manualCourseQuestions.length === 0 ? (
