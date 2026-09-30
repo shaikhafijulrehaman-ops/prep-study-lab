@@ -1,5 +1,6 @@
 import { Course, Question, MockAttempt, AttemptQuestionItem, UserProgress, MockConfig, ExtractedQuestionDraft } from '../types';
 import { getSupabaseClient } from './supabase';
+import { INITIAL_COURSES, INITIAL_QUESTIONS } from './seedData';
 
 const KEYS = {
   COURSES: 'prep_studylab_courses_v2',
@@ -38,28 +39,36 @@ export function deriveAvailableWeeks(questions: (Question | { weekNumber?: numbe
 
 /**
  * Returns cached courses from localStorage.
- * Does NOT contain hardcoded mock data or demo fallbacks.
+ * Defaults to INITIAL_COURSES (all 10 weeks) if cache is empty.
  */
 export function getCourses(publishedOnly: boolean = false): Course[] {
   try {
     const raw = localStorage.getItem(KEYS.COURSES);
-    if (!raw) return [];
-    const parsed = JSON.parse(raw);
-    if (!Array.isArray(parsed)) return [];
-
-    const courses: Course[] = parsed.filter((c) => c && c.id && c.name);
+    let courses: Course[] = [];
+    if (raw) {
+      const parsed = JSON.parse(raw);
+      if (Array.isArray(parsed) && parsed.length > 0) {
+        courses = parsed.filter((c) => c && c.id && c.name);
+      }
+    }
+    if (courses.length === 0) {
+      courses = [...INITIAL_COURSES];
+      try {
+        localStorage.setItem(KEYS.COURSES, JSON.stringify(courses));
+      } catch {}
+    }
     if (publishedOnly) {
       return courses.filter((c) => c.status === 'published');
     }
     return courses;
   } catch {
-    return [];
+    return publishedOnly ? INITIAL_COURSES.filter((c) => c.status === 'published') : [...INITIAL_COURSES];
   }
 }
 
 /**
  * Loads published or all courses directly from Supabase as authoritative source of truth.
- * Updates local cache only to reflect authoritative Supabase data.
+ * Falls back to 10-week initial course dataset if Supabase is offline or empty.
  */
 export async function fetchCoursesFromSupabase(publishedOnly: boolean = false): Promise<Course[]> {
   const supabase = getSupabaseClient();
@@ -72,12 +81,12 @@ export async function fetchCoursesFromSupabase(publishedOnly: boolean = false): 
     }
     const { data, error } = await query.order('created_at', { ascending: true });
 
-    if (error) {
-      console.warn('Error fetching courses from Supabase:', error.message);
+    if (error || !data || data.length === 0) {
+      if (error) {
+        console.warn('Supabase fetch courses notice:', error.message);
+      }
       return getCourses(publishedOnly);
     }
-
-    if (!data) return [];
 
     const mapped: Course[] = data.map((row: any) => {
       let weeks: number[] = [];
@@ -103,7 +112,7 @@ export async function fetchCoursesFromSupabase(publishedOnly: boolean = false): 
       };
     });
 
-    // Update local cache with exact authoritative records from Supabase
+    // Update local cache with exact records
     localStorage.setItem(KEYS.COURSES, JSON.stringify(mapped));
     return mapped;
   } catch (err) {
@@ -248,7 +257,7 @@ export async function deleteTest(courseId: string): Promise<{ success: boolean; 
 }
 
 /**
- * Reads cached questions from localStorage without hardcoded demo fallbacks.
+ * Reads cached questions from localStorage. Defaults to all 10 weeks (150 questions) if cache is empty.
  */
 export function getQuestions(
   courseId?: string,
@@ -260,12 +269,19 @@ export function getQuestions(
     const raw = localStorage.getItem(KEYS.QUESTIONS);
     if (raw) {
       const parsed = JSON.parse(raw);
-      if (Array.isArray(parsed)) {
+      if (Array.isArray(parsed) && parsed.length > 0) {
         all = parsed.filter((q) => q && q.id && q.questionText);
       }
     }
   } catch {
     all = [];
+  }
+
+  if (all.length === 0) {
+    all = [...INITIAL_QUESTIONS];
+    try {
+      localStorage.setItem(KEYS.QUESTIONS, JSON.stringify(all));
+    } catch {}
   }
 
   return all.filter((q) => {
@@ -284,7 +300,7 @@ export function getQuestions(
 
 /**
  * Loads questions directly from Supabase as authoritative source of truth.
- * Updates local cache for offline/transient caching only.
+ * Falls back to full 10-week question dataset if Supabase is offline or empty.
  */
 export async function fetchQuestionsFromSupabase(
   courseId?: string,
@@ -314,12 +330,12 @@ export async function fetchQuestionsFromSupabase(
 
     const { data, error } = await query.order('week_number', { ascending: true });
 
-    if (error) {
-      console.warn('Error fetching questions from Supabase:', error.message);
+    if (error || !data || data.length === 0) {
+      if (error) {
+        console.warn('Supabase fetch questions notice:', error.message);
+      }
       return getQuestions(courseId, weekSelection, approvedOnly);
     }
-
-    if (!data) return [];
 
     const mapped: Question[] = data.map((row: any) => {
       let options: [string, string, string, string] = ['Option A', 'Option B', 'Option C', 'Option D'];
@@ -1189,4 +1205,39 @@ export function createRetryWrongSession(previousAttempt: MockAttempt): ActiveTes
 
   saveActiveSession(session);
   return session;
+}
+
+/**
+ * Synchronizes/seeds all 10 weeks of questions and courses into Supabase and local cache.
+ */
+export async function seedAll10WeeksToSupabase(): Promise<{ success: boolean; count: number; error?: string }> {
+  try {
+    localStorage.setItem(KEYS.COURSES, JSON.stringify(INITIAL_COURSES));
+    localStorage.setItem(KEYS.QUESTIONS, JSON.stringify(INITIAL_QUESTIONS));
+
+    const supabase = getSupabaseClient();
+    if (supabase) {
+      const course = INITIAL_COURSES[0];
+      await supabase.from('courses').upsert({
+        id: course.id,
+        code: course.code,
+        name: course.name,
+        description: course.description,
+        status: course.status,
+        total_questions: course.totalQuestions,
+        weeks: course.weeks,
+        published_at: course.publishedAt,
+      });
+
+      const chunkSize = 25;
+      for (let i = 0; i < INITIAL_QUESTIONS.length; i += chunkSize) {
+        const chunk = INITIAL_QUESTIONS.slice(i, i + chunkSize);
+        await saveQuestions(chunk);
+      }
+    }
+
+    return { success: true, count: INITIAL_QUESTIONS.length };
+  } catch (err: any) {
+    return { success: false, count: 0, error: err?.message || 'Failed to seed 10 weeks' };
+  }
 }

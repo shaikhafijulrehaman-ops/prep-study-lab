@@ -53,6 +53,7 @@ import {
   fetchCoursesFromSupabase,
   fetchQuestionsFromSupabase,
   deriveAvailableWeeks,
+  seedAll10WeeksToSupabase,
 } from '../../lib/storage';
 import { processFullPdf, HybridExtractionResult, extractTextFromPdf, parseMcqsFromText, parseAnswerKeySource, applyAnswerKeyMapping } from '../../lib/pdfParser';
 import { uploadPdfDocument } from '../../lib/pdfStorage';
@@ -286,6 +287,22 @@ export const AdminDashboard: React.FC<AdminDashboardProps> = ({
       }
     }
   }, [activeTab]);
+
+  const [seedingLoading, setSeedingLoading] = useState(false);
+  const handleSeed10Weeks = async () => {
+    if (!window.confirm('Populate/Sync all 10 Weeks (150 Questions) into Supabase & storage?')) return;
+    setSeedingLoading(true);
+    const res = await seedAll10WeeksToSupabase();
+    setSeedingLoading(false);
+    if (res.success) {
+      await refreshCourses();
+      const activeId = manualCourseId || courses[0]?.id || 'course-iiot-cps-master';
+      await refreshManualQuestions(activeId, manualWeek);
+      showToast('All 10 Weeks (150 Questions) populated successfully!');
+    } else {
+      setErrorMessage(res.error || 'Failed to populate 10 weeks.');
+    }
+  };
 
   const refreshManualQuestions = async (cId: string, wk?: number) => {
     if (!cId) return [];
@@ -1079,6 +1096,15 @@ export const AdminDashboard: React.FC<AdminDashboardProps> = ({
         </div>
 
         <div className="flex items-center gap-2">
+          <button
+            onClick={handleSeed10Weeks}
+            disabled={seedingLoading}
+            className="flex items-center gap-1.5 px-3 py-1.5 rounded-full bg-emerald-50 text-emerald-700 border border-emerald-300 text-xs font-mono font-medium hover:bg-emerald-100 transition-all shadow-sm disabled:opacity-50 cursor-pointer"
+            title="Populate/Sync all 10 Weeks (150 Questions) into Supabase & storage"
+          >
+            <RefreshCw className={`w-3.5 h-3.5 ${seedingLoading ? 'animate-spin' : ''}`} />
+            <span>{seedingLoading ? 'Syncing...' : 'Sync All 10 Weeks'}</span>
+          </button>
           <button
             onClick={onNavigateToStudentPlatform}
             title="Browse Student Platform"
