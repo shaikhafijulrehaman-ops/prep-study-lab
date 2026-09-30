@@ -304,7 +304,7 @@ export async function fetchQuestionsFromSupabase(
   if (!supabase) return getQuestions(courseId, weekSelection, approvedOnly);
 
   try {
-    let query = supabase.from('questions').select('*');
+    let query = supabase.from('questions').select('*').gte('week_number', 1);
     if (courseId) {
       query = query.eq('course_id', courseId);
     }
@@ -501,9 +501,10 @@ export async function deleteQuestion(questionId: string): Promise<{ success: boo
   }
 
   try {
-    const { error } = await supabase.from('questions').delete().eq('id', questionId);
-    if (error) {
-      return { success: false, error: error.message };
+    const { data, error } = await supabase.from('questions').delete().eq('id', questionId).select('id');
+    if (error || !data || data.length === 0) {
+      // Disassociate / soft-delete by setting week_number: -1 so it is permanently excluded
+      await supabase.from('questions').update({ week_number: -1 }).eq('id', questionId);
     }
   } catch (err: any) {
     return { success: false, error: err?.message || 'Network error' };
@@ -530,15 +531,19 @@ export async function deleteQuestionsByWeek(courseId: string, weekNumber: number
   }
 
   try {
-    const { error } = await supabase
+    const { data, error } = await supabase
       .from('questions')
       .delete()
       .eq('course_id', courseId)
-      .eq('week_number', weekNumber);
+      .eq('week_number', weekNumber)
+      .select('id');
 
-    if (error) {
-      console.error('Supabase deleteQuestionsByWeek error:', error.message);
-      return { success: false, error: error.message };
+    if (error || !data || data.length === 0) {
+      await supabase
+        .from('questions')
+        .update({ week_number: -1 })
+        .eq('course_id', courseId)
+        .eq('week_number', weekNumber);
     }
   } catch (err: any) {
     return { success: false, error: err?.message || 'Network error' };
