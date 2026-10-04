@@ -368,13 +368,52 @@ export const MockTestView: React.FC<MockTestViewProps> = ({
             {currentItem.displayedOptions.map((optionText, optIndex) => {
               const letter = String.fromCharCode(65 + optIndex);
               const isSelected = currentItem.selectedOptionIndex === optIndex;
+              const hasAnswered = currentItem.selectedOptionIndex !== null;
+              const isOptionCorrect = currentItem.correctOptionIndex === optIndex;
 
-              const containerStyle = isSelected
-                ? 'bg-[#EFF8FF] border-[#38BDF8] text-[#0F172A] shadow-[0_4px_16px_rgba(56,189,248,0.18)] ring-1 ring-[#38BDF8]/50'
-                : 'bg-white border-[#DCEAF5] text-[#334155] hover:bg-[#EFF8FF]/50 hover:border-sky-200 shadow-sm';
-              const badgeStyle = isSelected
-                ? 'bg-[#0284C7] text-white font-bold border-[#0284C7]'
-                : 'bg-[#F1F5F9] text-[#64748B] border-[#E2E8F0]';
+              let containerStyle = 'bg-white border-[#DCEAF5] text-[#334155] hover:bg-[#EFF8FF]/50 hover:border-sky-200 shadow-sm';
+              let badgeStyle = 'bg-[#F1F5F9] text-[#64748B] border-[#E2E8F0]';
+              let statusBadge: React.ReactNode = null;
+
+              if (isExam) {
+                // Exam Mode: Strictly neutral selection — zero correctness leaked before final submission
+                if (isSelected) {
+                  containerStyle = 'bg-[#EFF8FF] border-[#38BDF8] text-[#0F172A] shadow-[0_4px_16px_rgba(56,189,248,0.18)] ring-1 ring-[#38BDF8]/50';
+                  badgeStyle = 'bg-[#0284C7] text-white font-bold border-[#0284C7]';
+                }
+              } else {
+                // Practice / Sample Mode: Immediate correctness feedback upon selection
+                if (hasAnswered) {
+                  if (isOptionCorrect) {
+                    // This option is the correct answer
+                    containerStyle = 'bg-emerald-50/90 border-emerald-500 text-emerald-950 shadow-[0_4px_16px_rgba(16,185,129,0.18)] ring-1 ring-emerald-500/40';
+                    badgeStyle = 'bg-emerald-600 text-white font-bold border-emerald-600';
+                    statusBadge = (
+                      <span className="shrink-0 px-2.5 py-1 rounded-full text-xs font-semibold bg-emerald-100 text-emerald-800 border border-emerald-300 flex items-center gap-1.5 shadow-xs">
+                        <CheckCircle2 className="w-3.5 h-3.5 text-emerald-600" />
+                        <span>Correct</span>
+                      </span>
+                    );
+                  } else if (isSelected) {
+                    // Student selected this option and it is wrong
+                    containerStyle = 'bg-rose-50/90 border-rose-500 text-rose-950 shadow-[0_4px_16px_rgba(244,63,94,0.18)] ring-1 ring-rose-500/40';
+                    badgeStyle = 'bg-rose-600 text-white font-bold border-rose-600';
+                    statusBadge = (
+                      <span className="shrink-0 px-2.5 py-1 rounded-full text-xs font-semibold bg-rose-100 text-rose-800 border border-rose-300 flex items-center gap-1.5 shadow-xs">
+                        <XCircle className="w-3.5 h-3.5 text-rose-600" />
+                        <span>Wrong</span>
+                      </span>
+                    );
+                  } else {
+                    // Other unselected incorrect options
+                    containerStyle = 'bg-white/70 border-[#E2E8F0] text-[#94A3B8] opacity-60';
+                    badgeStyle = 'bg-[#F1F5F9] text-[#94A3B8] border-[#E2E8F0]';
+                  }
+                } else if (isSelected) {
+                  containerStyle = 'bg-[#EFF8FF] border-[#38BDF8] text-[#0F172A] shadow-sm';
+                  badgeStyle = 'bg-[#0284C7] text-white font-bold border-[#0284C7]';
+                }
+              }
 
               return (
                 <button
@@ -392,10 +431,61 @@ export const MockTestView: React.FC<MockTestViewProps> = ({
                       {optionText}
                     </span>
                   </div>
+                  {statusBadge}
                 </button>
               );
             })}
           </div>
+
+          {/* Practice / Sample Mode: Immediate Answer Feedback Banner */}
+          {!isExam && currentItem.selectedOptionIndex !== null && (
+            <motion.div
+              initial={{ opacity: 0, y: 8 }}
+              animate={{ opacity: 1, y: 0 }}
+              className={`p-4 sm:p-5 rounded-2xl border mt-5 space-y-2.5 ${
+                currentItem.selectedOptionIndex === currentItem.correctOptionIndex
+                  ? 'bg-emerald-50/90 border-emerald-200 text-emerald-950 shadow-xs'
+                  : 'bg-rose-50/90 border-rose-200 text-rose-950 shadow-xs'
+              }`}
+            >
+              <div className="flex items-center gap-2.5 font-semibold text-sm sm:text-base">
+                {currentItem.selectedOptionIndex === currentItem.correctOptionIndex ? (
+                  <>
+                    <CheckCircle2 className="w-5 h-5 text-emerald-600 shrink-0" />
+                    <span className="text-emerald-800 font-bold">Correct</span>
+                  </>
+                ) : (
+                  <>
+                    <XCircle className="w-5 h-5 text-rose-600 shrink-0" />
+                    <span className="text-rose-800 font-bold">Wrong</span>
+                  </>
+                )}
+              </div>
+
+              {currentItem.selectedOptionIndex !== currentItem.correctOptionIndex &&
+                currentItem.correctOptionIndex !== null && (
+                  <div className="text-xs sm:text-sm text-rose-900 font-medium">
+                    <span>Correct Answer: </span>
+                    <strong className="underline underline-offset-2">
+                      {String.fromCharCode(65 + currentItem.correctOptionIndex)}. {currentItem.displayedOptions[currentItem.correctOptionIndex]}
+                    </strong>
+                  </div>
+                )}
+
+              {currentItem.explanation && (
+                <div
+                  className={`text-xs leading-relaxed pt-2.5 border-t font-normal ${
+                    currentItem.selectedOptionIndex === currentItem.correctOptionIndex
+                      ? 'border-emerald-200/80 text-emerald-900'
+                      : 'border-rose-200/80 text-rose-900'
+                  }`}
+                >
+                  <span className="font-semibold">Explanation: </span>
+                  {currentItem.explanation}
+                </div>
+              )}
+            </motion.div>
+          )}
         </div>
 
         {/* Bottom Navigation Controls */}
@@ -466,22 +556,49 @@ export const MockTestView: React.FC<MockTestViewProps> = ({
 
                 {/* Status Legend */}
                 <div className="grid grid-cols-2 gap-2 text-[10px] font-mono mb-6">
-                  <div className="flex items-center gap-2 text-[#64748B]">
-                    <span className="w-2.5 h-2.5 rounded bg-[#0284C7]" />
-                    <span>Answered ({answeredCount})</span>
-                  </div>
-                  <div className="flex items-center gap-2 text-[#64748B]">
-                    <span className="w-2.5 h-2.5 rounded bg-amber-500" />
-                    <span>Marked ({markedCount})</span>
-                  </div>
-                  <div className="flex items-center gap-2 text-[#64748B]">
-                    <span className="w-2.5 h-2.5 rounded bg-slate-200" />
-                    <span>Unanswered ({unansweredCount})</span>
-                  </div>
-                  <div className="flex items-center gap-2 text-[#64748B]">
-                    <span className="w-2.5 h-2.5 rounded border border-[#0284C7]" />
-                    <span>Current</span>
-                  </div>
+                  {isExam ? (
+                    <>
+                      <div className="flex items-center gap-2 text-[#64748B]">
+                        <span className="w-2.5 h-2.5 rounded bg-[#0284C7]" />
+                        <span>Answered ({answeredCount})</span>
+                      </div>
+                      <div className="flex items-center gap-2 text-[#64748B]">
+                        <span className="w-2.5 h-2.5 rounded bg-amber-500" />
+                        <span>Marked ({markedCount})</span>
+                      </div>
+                      <div className="flex items-center gap-2 text-[#64748B]">
+                        <span className="w-2.5 h-2.5 rounded bg-slate-200" />
+                        <span>Unanswered ({unansweredCount})</span>
+                      </div>
+                      <div className="flex items-center gap-2 text-[#64748B]">
+                        <span className="w-2.5 h-2.5 rounded border border-[#0284C7]" />
+                        <span>Current</span>
+                      </div>
+                    </>
+                  ) : (
+                    <>
+                      <div className="flex items-center gap-2 text-[#64748B]">
+                        <span className="w-2.5 h-2.5 rounded bg-emerald-600" />
+                        <span>
+                          Correct ({session.items.filter((i) => i.selectedOptionIndex !== null && i.selectedOptionIndex === i.correctOptionIndex).length})
+                        </span>
+                      </div>
+                      <div className="flex items-center gap-2 text-[#64748B]">
+                        <span className="w-2.5 h-2.5 rounded bg-rose-600" />
+                        <span>
+                          Wrong ({session.items.filter((i) => i.selectedOptionIndex !== null && i.selectedOptionIndex !== i.correctOptionIndex).length})
+                        </span>
+                      </div>
+                      <div className="flex items-center gap-2 text-[#64748B]">
+                        <span className="w-2.5 h-2.5 rounded bg-amber-500" />
+                        <span>Marked ({markedCount})</span>
+                      </div>
+                      <div className="flex items-center gap-2 text-[#64748B]">
+                        <span className="w-2.5 h-2.5 rounded bg-slate-200" />
+                        <span>Unanswered ({unansweredCount})</span>
+                      </div>
+                    </>
+                  )}
                 </div>
 
                 {/* Questions Grid */}
@@ -493,7 +610,14 @@ export const MockTestView: React.FC<MockTestViewProps> = ({
 
                     let bg = 'bg-slate-50 text-[#64748B] border-slate-200';
                     if (isAnswered) {
-                      bg = 'bg-[#EFF8FF] text-[#0284C7] border-[#38BDF8] font-semibold';
+                      if (!isExam) {
+                        const isCorrect = item.selectedOptionIndex === item.correctOptionIndex;
+                        bg = isCorrect
+                          ? 'bg-emerald-50 text-emerald-700 border-emerald-300 font-semibold'
+                          : 'bg-rose-50 text-rose-700 border-rose-300 font-semibold';
+                      } else {
+                        bg = 'bg-[#EFF8FF] text-[#0284C7] border-[#38BDF8] font-semibold';
+                      }
                     }
                     if (isMarked) {
                       bg = 'bg-amber-50 text-amber-700 border-amber-300 font-semibold';

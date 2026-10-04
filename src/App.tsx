@@ -43,6 +43,7 @@ export const App: React.FC = () => {
   // Modals
   const [isConfigModalOpen, setIsConfigModalOpen] = useState(false);
   const [preselectedCourseId, setPreselectedCourseId] = useState<string | undefined>(undefined);
+  const [isStartingTest, setIsStartingTest] = useState(false);
 
   // Live count trackers (Published tests only for student view)
   const [coursesCount, setCoursesCount] = useState(getCourses(true).length);
@@ -168,6 +169,7 @@ export const App: React.FC = () => {
   const handleTabChange = (tab: NavTab) => {
     if ((tab === 'tests' || tab === 'progress') && !currentUser) {
       setAuthReason('Sign in with your Registration Number to access your tests and progress tracking.');
+      setPendingTestAction(() => () => setActiveTab(tab));
       setIsAuthModalOpen(true);
       return;
     }
@@ -207,15 +209,20 @@ export const App: React.FC = () => {
     }
   };
 
-  // Launch fresh mock test from config with auth guard
+  // Launch fresh mock test from config with auth guard and direct transition into test flow
   const handleStartTest = (config: MockConfig) => {
     requireAuth(async () => {
+      setIsStartingTest(true);
+      setIsConfigModalOpen(false);
+      setActiveTab('tests');
       try {
         const newSession = await initializeMockSessionAsync(config, currentUser?.id);
         setViewingResultAttempt(null);
         setActiveSession(newSession);
       } catch (err: any) {
         showToast('Error starting test: ' + (err?.message || 'Failed to fetch test questions.'));
+      } finally {
+        setIsStartingTest(false);
       }
     }, 'Authentication is required before starting any test.');
   };
@@ -235,6 +242,7 @@ export const App: React.FC = () => {
         showToast('No incorrect questions to re-attempt in this test.');
         return;
       }
+      setActiveTab('tests');
       setViewingResultAttempt(null);
       setActiveSession(retrySession);
     });
@@ -243,6 +251,7 @@ export const App: React.FC = () => {
   // Resume uncompleted test
   const handleResumeTest = (session: ActiveTestSession) => {
     requireAuth(() => {
+      setActiveTab('tests');
       setViewingResultAttempt(null);
       setActiveSession(session);
     });
@@ -287,8 +296,19 @@ export const App: React.FC = () => {
         </div>
       )}
 
-      {/* When active test is running: Full examination mode */}
-      {activeSession ? (
+      {/* Test Preparing / Loading Screen: Direct transition inside test flow without Home-page flash */}
+      {isStartingTest ? (
+        <div className="min-h-screen bg-[#F8FBFF] flex flex-col items-center justify-center p-6 text-center select-none font-sans">
+          <div className="relative mb-5">
+            <div className="w-16 h-16 rounded-2xl bg-gradient-to-tr from-sky-500 to-blue-600 flex items-center justify-center shadow-[0_8px_30px_rgba(2,132,199,0.25)] animate-pulse">
+              <Sparkles className="w-8 h-8 text-white" />
+            </div>
+          </div>
+          <p className="text-xs font-mono uppercase tracking-[0.25em] text-[#0284C7] font-semibold">PREP STUDY LAB</p>
+          <p className="text-xs text-[#64748B] font-mono mt-1 tracking-wider">PREPARING TEST INTERFACE...</p>
+        </div>
+      ) : activeSession ? (
+        /* When active test is running: Full examination mode */
         <MockTestView
           session={activeSession}
           currentUser={currentUser}
