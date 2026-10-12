@@ -1,0 +1,212 @@
+[
+  {
+    "id": "q-hrm-w1-1",
+    "original_question_number": 1,
+    "week_number": 1,
+    "source_pdf_name": "WEEK 01.pdf",
+    "source_page": 1,
+    "question_text": "Which of the following best defines Human Resource Development?",
+    "options": [
+      "Human resource development is the process of increasing the capacity of the human resource through development",
+      "Human resource development is fostering short-term work-related learning capacity at the individual, group, and organizational levels",
+      "set of systematic and planned activities designed by an organization to provide its members with the necessary skills to meet the financial demands of the organization.",
+      "Human resource development is fostering short-term work-related learning capacity at the organizational level."
+    ],
+    "correct_answer_index": 0,
+    "accepted_answer_text": "a.",
+    "answer_source": "PDF",
+    "is_approved": true,
+    "needs_review": false,
+    "review_reason": null,
+    "explanation": ""
+  },
+  {
+    "id": "q-hrm-w1-2",
+    "original_question_number": 2,
+    "week_number": 1,
+    "source_pdf_name": "WEEK 01.pdf",
+    "source_page": 1,
+    "question_text": "Who coined the term \"Human Resource Development\" (HRD)?",
+    "options": [
+      "Hamlin and Stewart",
+      "Leonard Nadler",
+      "Robert Owen",
+      "Fomburn"
+    ],
+    "correct_answer_index": 1,
+    "accepted_answer_text": "b.",
+    "answer_source": "PDF",
+    "is_approved": true,
+    "needs_review": false,
+    "review_reason": null,
+    "explanation": ""
+  },
+  {
+    "id": "q-hrm-w1-3",
+    "original_question_number": 3,
+    "week_number": 1,
+    "source_pdf_name": "WEEK 01.pdf",
+    "source_page": 2,
+    "question_text": "Who proposed the five principles of a learning organization?",
+    "options": [
+      "Robert Owen",
+      "T.V Rao",
+      "Peter Senge",
+      "Chris Argyris"
+    ],
+    "correct_answer_index": 2,
+    "accepted_answer_text": "c.",
+    "answer_source": "PDF",
+    "is_approved": true,
+    "needs_review": false,
+    "review_reason": null,
+    "explanation": ""
+  },
+  {
+    "id": "q-hrm-w1-4",
+    "original_question_number": 4,
+    "week_number": 1,
+    "source_pdf_name": "WEEK 01.pdf",
+    "source_page": 2,
+    "question_text": "Employee orientation and Coaching are related to which of the following functions of HRD?",
+    "options": [
+      "Scholarship",
+      "Organizational development",
+      "Training",
+      "Personal growth"
+    ],
+    "correct_answer_index": 2,
+    "accepted_answer_text": "c.",
+    "answer_source": "PDF",
+    "is_approved": true,
+    "needs_review": false,
+    "review_reason": null,
+    "explanation": ""
+  },
+  {
+    "id": "q-hrm-w1-5",
+    "original_question_number": 5,
+    "week_number": 1,
+    "source_pdf_name": "WEEK 01.pdf",
+    "source_page": 3,
+    "question_text": "Which concept refers to the planned effort to improve organizational effectiveness and the well-being of organizational members by applying behavioral science knowledge?",
+    "options": [
+      "Organization learning",
+      "Organizational Development",
+      "Education",
+      "Counselling"
+    ],
+    "correct_answer_index": 1,
+    "accepted_answer_text": "b.",
+    "answer_source": "PDF",
+    "is_approved": true,
+    "needs_review": false,
+    "review_reason": null,
+    "explanation": ""
+  },
+  {
+    "id": "q-hrm-w1-6",
+    "original_question_number": 6,
+    "week_number": 1,
+    "source_pdf_name": "WEEK 01.pdf",
+    "source_page": 3,
+    "question_text": "At which level of Human Resource Development (HRD) are professional associations, government departments, and voluntary organizations represented?",
+    "options": [
+      "micro level",
+      "individual level",
+      "macro level",
+      "both macro and micro levels"
+    ],
+    "correct_answer_index": 2,
+    "accepted_answer_text": "c.",
+    "answer_source": "PDF",
+    "is_approved": true,
+    "needs_review": false,
+    "review_reason": null,
+    "explanation": ""
+  },
+  {
+    "id": "q-hrm-w1-7",
+    "original_question_number": 7,
+    "week_number": 1,
+    "source_pdf_name": "WEEK 01.pdf",
+    "source_page": 4,
+    "question_text": "Which of the following is true in the context of HRD?",
+    "options": [
+      "reactiveness",
+      "routine",
+      "administrative",
+      "proactiveness"
+    ],
+    "correct_answer_index": 3,
+    "accepted_answer_text": "d.",
+    "answer_source": "PDF",
+    "is_approved": true,
+    "needs_review": false,
+    "review_reason": null,
+    "explanation": ""
+  },
+  {
+    "id": "q-hrm-w1-8",
+    "original_question_number": 8,
+    "week_number": 1,
+    "source_pdf_name": "WEEK 01.pdf",
+    "source_page": 4,
+    "question_text": "Define the term career development?",
+    "options": [
+      "Process by which groups progress through single change actions to achieve their professional achievement as per the organization",
+      "Developing the skills and attitude not directly related to job linked to personal growth and development",
+      "Process of improving an organization’s effectiveness and member’s well-being through the application of behavioral science concepts",
+      "Process by which individuals progress through series of changes until they achieve their personal level of maximum achievement."
+    ],
+    "correct_answer_index": 3,
+    "accepted_answer_text": "d.",
+    "answer_source": "PDF",
+    "is_approved": true,
+    "needs_review": false,
+    "review_reason": null,
+    "explanation": ""
+  },
+  {
+    "id": "q-hrm-w1-9",
+    "original_question_number": 9,
+    "week_number": 1,
+    "source_pdf_name": "WEEK 01.pdf",
+    "source_page": 5,
+    "question_text": "Which of the following is not a core principle of andragogy?",
+    "options": [
+      "Motivation",
+      "Self-concept of the learner",
+      "Forced conditioning of the learner",
+      "Readiness to learn and practice"
+    ],
+    "correct_answer_index": 2,
+    "accepted_answer_text": "c.",
+    "answer_source": "PDF",
+    "is_approved": true,
+    "needs_review": false,
+    "review_reason": null,
+    "explanation": ""
+  },
+  {
+    "id": "q-hrm-w1-10",
+    "original_question_number": 10,
+    "week_number": 1,
+    "source_pdf_name": "WEEK 01.pdf",
+    "source_page": 5,
+    "question_text": "In which role does the HRD professional implement coaching activities?",
+    "options": [
+      "HRD professional as an instructor",
+      "HRD professional as a consultant",
+      "HRD professional as a researcher",
+      "HRD professional as an executive"
+    ],
+    "correct_answer_index": 1,
+    "accepted_answer_text": "b.",
+    "answer_source": "PDF",
+    "is_approved": true,
+    "needs_review": false,
+    "review_reason": null,
+    "explanation": ""
+  }
+]

@@ -1,0 +1,212 @@
+[
+  {
+    "id": "q-hrm-w7-1",
+    "original_question_number": 1,
+    "week_number": 7,
+    "source_pdf_name": "WEEK 07.pdf",
+    "source_page": 1,
+    "question_text": "Which of the following is a characteristic of potential appraisal?",
+    "options": [
+      "It is a future-oriented process",
+      "part of reward management",
+      "The time for the potential appraisal is fixed",
+      "It guarantees promotion"
+    ],
+    "correct_answer_index": 0,
+    "accepted_answer_text": "a.",
+    "answer_source": "PDF",
+    "is_approved": true,
+    "needs_review": false,
+    "review_reason": null,
+    "explanation": ""
+  },
+  {
+    "id": "q-hrm-w7-2",
+    "original_question_number": 2,
+    "week_number": 7,
+    "source_pdf_name": "WEEK 07.pdf",
+    "source_page": 2,
+    "question_text": "What do you understand by the power of analysis?",
+    "options": [
+      "The ability to examine a problem in the context of a much broader framework of reference",
+      "The ability to sell ideas to other people and gain a continuing commitment, particularly when the individual is using personal influence rather than 'management authority'",
+      "The capacity to break down, reformulate, or transform a complicated situation into manageable terms",
+      "The ability to examine a problem in the context of a much narrower framework of reference, being able to detect, within a specific situation, relationships with those aspects that could be affecting the situation"
+    ],
+    "correct_answer_index": 2,
+    "accepted_answer_text": "c.",
+    "answer_source": "PDF",
+    "is_approved": true,
+    "needs_review": false,
+    "review_reason": null,
+    "explanation": ""
+  },
+  {
+    "id": "q-hrm-w7-3",
+    "original_question_number": 3,
+    "week_number": 7,
+    "source_pdf_name": "WEEK 07.pdf",
+    "source_page": 3,
+    "question_text": "\"The ability or capacity for growth and development into a leadership role\" explains which of the following terms?",
+    "options": [
+      "leader",
+      "personality",
+      "potential",
+      "performance"
+    ],
+    "correct_answer_index": 2,
+    "accepted_answer_text": "c.",
+    "answer_source": "PDF",
+    "is_approved": true,
+    "needs_review": false,
+    "review_reason": null,
+    "explanation": ""
+  },
+  {
+    "id": "q-hrm-w7-4",
+    "original_question_number": 4,
+    "week_number": 7,
+    "source_pdf_name": "WEEK 07.pdf",
+    "source_page": 4,
+    "question_text": "Which of the following is a characteristic of potential-focused appraisal?",
+    "options": [
+      "objective in nature",
+      "quantitative approach",
+      "non-quantitative approach",
+      "Focus on past performance"
+    ],
+    "correct_answer_index": 2,
+    "accepted_answer_text": "c.",
+    "answer_source": "PDF",
+    "is_approved": true,
+    "needs_review": false,
+    "review_reason": null,
+    "explanation": ""
+  },
+  {
+    "id": "q-hrm-w7-5",
+    "original_question_number": 5,
+    "week_number": 7,
+    "source_pdf_name": "WEEK 07.pdf",
+    "source_page": 5,
+    "question_text": "What do you understand by the in-basket technique of potential appraisal?",
+    "options": [
+      "represents a day-to-day decision-making situation that a manager is likely to face in the written form from various sources",
+      "Consists of 4 to 6 participants given to solve a problem & instructed to derive a group solution within a specified period.",
+      "A computer program is used to generate information and simulate the game; participants are not allowed to access the computer directly but rather through a mediator.",
+      "A method of studying the nature of certain roles by acting out their concrete details in a contrived situation that permits better and more objective observation"
+    ],
+    "correct_answer_index": 0,
+    "accepted_answer_text": "a.",
+    "answer_source": "PDF",
+    "is_approved": true,
+    "needs_review": false,
+    "review_reason": null,
+    "explanation": ""
+  },
+  {
+    "id": "q-hrm-w7-6",
+    "original_question_number": 6,
+    "week_number": 7,
+    "source_pdf_name": "WEEK 07.pdf",
+    "source_page": 6,
+    "question_text": "What is succession planning?",
+    "options": [
+      "It helps develop qualities such as conflict management, verbal and nonverbal communication skills, flexibility, and problem-solving.",
+      "A method of studying the nature of certain roles by acting out their concrete details in a contrived situation that permits better and more objective observation.",
+      "It serves as the link between organizations and employees' personal career goals.",
+      "Identifying capabilities for key areas and positions, identifying the person as a successor, and identifying the potentials"
+    ],
+    "correct_answer_index": 3,
+    "accepted_answer_text": "d.",
+    "answer_source": "PDF",
+    "is_approved": true,
+    "needs_review": false,
+    "review_reason": null,
+    "explanation": ""
+  },
+  {
+    "id": "q-hrm-w7-7",
+    "original_question_number": 7,
+    "week_number": 7,
+    "source_pdf_name": "WEEK 07.pdf",
+    "source_page": 7,
+    "question_text": "What do you understand by \"reward\"??",
+    "options": [
+      "The achievement and benefit received by employees for their behavior in an organization are known as rewards.",
+      "The achievements and benefits employees receive for their job performance in an organization are known as rewards.",
+      "The achievements and benefits the organization receives for its performance and profit.",
+      "The promotions received by employees for their length of service in an organization are known as rewards."
+    ],
+    "correct_answer_index": 1,
+    "accepted_answer_text": "b.",
+    "answer_source": "PDF",
+    "is_approved": true,
+    "needs_review": false,
+    "review_reason": null,
+    "explanation": ""
+  },
+  {
+    "id": "q-hrm-w7-8",
+    "original_question_number": 8,
+    "week_number": 7,
+    "source_pdf_name": "WEEK 07.pdf",
+    "source_page": 8,
+    "question_text": "What are the two major approaches to the reward system?",
+    "options": [
+      "traditional, convenient",
+      "total, convenient",
+      "traditional, contingent",
+      "terminal, contingent"
+    ],
+    "correct_answer_index": 2,
+    "accepted_answer_text": "c.",
+    "answer_source": "PDF",
+    "is_approved": true,
+    "needs_review": false,
+    "review_reason": null,
+    "explanation": ""
+  },
+  {
+    "id": "q-hrm-w7-9",
+    "original_question_number": 9,
+    "week_number": 7,
+    "source_pdf_name": "WEEK 07.pdf",
+    "source_page": 8,
+    "question_text": "Which of the following is a performance-based reward?",
+    "options": [
+      "seniority or time in rank",
+      "piecework pay plans",
+      "pension plans",
+      "profit sharing"
+    ],
+    "correct_answer_index": 1,
+    "accepted_answer_text": "b.",
+    "answer_source": "PDF",
+    "is_approved": true,
+    "needs_review": false,
+    "review_reason": null,
+    "explanation": ""
+  },
+  {
+    "id": "q-hrm-w7-10",
+    "original_question_number": 10,
+    "week_number": 7,
+    "source_pdf_name": "WEEK 07.pdf",
+    "source_page": 9,
+    "question_text": "What do you understand by defamation in the context of legal principles affecting performance management?",
+    "options": [
+      "The employer or employee can end the employment relationship at any time",
+      "When PMS is outlined in documents such as an employee manual, an employment contract, or other materials, but is not implemented as described.",
+      "Disclosure of untrue, unfavorable performance information that damages an employee's reputation.",
+      "Raters assign scores differently to various employees based on factors unrelated to performance, such as race, nationality, color, or ethnic and national origin."
+    ],
+    "correct_answer_index": 2,
+    "accepted_answer_text": "c.",
+    "answer_source": "PDF",
+    "is_approved": true,
+    "needs_review": false,
+    "review_reason": null,
+    "explanation": ""
+  }
+]

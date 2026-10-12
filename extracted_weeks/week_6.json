@@ -1,0 +1,212 @@
+[
+  {
+    "id": "q-hrm-w6-1",
+    "original_question_number": 1,
+    "week_number": 6,
+    "source_pdf_name": "WEEK 06.pdf",
+    "source_page": 1,
+    "question_text": "Which of the following is true in the context of mentoring?",
+    "options": [
+      "Generally, touches only personal life",
+      "Generally, touches only professional life",
+      "Can be only a one-time contact, no long-term relationship, usually formal",
+      "Helps the person to solve their problems or attain their goals"
+    ],
+    "correct_answer_index": 3,
+    "accepted_answer_text": "d.",
+    "answer_source": "PDF",
+    "is_approved": true,
+    "needs_review": false,
+    "review_reason": null,
+    "explanation": ""
+  },
+  {
+    "id": "q-hrm-w6-2",
+    "original_question_number": 2,
+    "week_number": 6,
+    "source_pdf_name": "WEEK 06.pdf",
+    "source_page": 1,
+    "question_text": "Which of the following is an example of career functions?",
+    "options": [
+      "challenging assignment",
+      "counselling",
+      "role modelling",
+      "friendship"
+    ],
+    "correct_answer_index": 0,
+    "accepted_answer_text": "a.",
+    "answer_source": "PDF",
+    "is_approved": true,
+    "needs_review": false,
+    "review_reason": null,
+    "explanation": ""
+  },
+  {
+    "id": "q-hrm-w6-3",
+    "original_question_number": 3,
+    "week_number": 6,
+    "source_pdf_name": "WEEK 06.pdf",
+    "source_page": 2,
+    "question_text": "Which of the following is an example of the psychological functions of mentoring?",
+    "options": [
+      "Exposure and visibility",
+      "Acceptance and confirmation",
+      "Protection",
+      "Coaching"
+    ],
+    "correct_answer_index": 1,
+    "accepted_answer_text": "b.",
+    "answer_source": "PDF",
+    "is_approved": true,
+    "needs_review": false,
+    "review_reason": null,
+    "explanation": ""
+  },
+  {
+    "id": "q-hrm-w6-4",
+    "original_question_number": 4,
+    "week_number": 6,
+    "source_pdf_name": "WEEK 06.pdf",
+    "source_page": 2,
+    "question_text": "What is the primary objective of the \"developmental\" mentoring model?",
+    "options": [
+      "career success",
+      "hierarchy senior",
+      "financial stability",
+      "personal development"
+    ],
+    "correct_answer_index": 3,
+    "accepted_answer_text": "d.",
+    "answer_source": "PDF",
+    "is_approved": true,
+    "needs_review": false,
+    "review_reason": null,
+    "explanation": ""
+  },
+  {
+    "id": "q-hrm-w6-5",
+    "original_question_number": 5,
+    "week_number": 6,
+    "source_pdf_name": "WEEK 06.pdf",
+    "source_page": 3,
+    "question_text": "What is the full form of SMART goals?",
+    "options": [
+      "S = specific, M= measurable, A = achievable, R = reliable, T = time framed",
+      "S = stretched, M= measurable, A = active, R = relevant, T = time framed",
+      "S = specific/stretched, M= measurable, A = achievable, R = relevant, T = time framed",
+      "S = specific, M= measurable, A = achievable, R = responsible, T = time framed"
+    ],
+    "correct_answer_index": 2,
+    "accepted_answer_text": "c.",
+    "answer_source": "PDF",
+    "is_approved": true,
+    "needs_review": false,
+    "review_reason": null,
+    "explanation": ""
+  },
+  {
+    "id": "q-hrm-w6-6",
+    "original_question_number": 6,
+    "week_number": 6,
+    "source_pdf_name": "WEEK 06.pdf",
+    "source_page": 3,
+    "question_text": "What is the final step of the Mentoring Implementation Process??",
+    "options": [
+      "Train mentors/mentees",
+      "Implementation",
+      "Evaluation",
+      "Follow Up"
+    ],
+    "correct_answer_index": 2,
+    "accepted_answer_text": "c.",
+    "answer_source": "PDF",
+    "is_approved": true,
+    "needs_review": false,
+    "review_reason": null,
+    "explanation": ""
+  },
+  {
+    "id": "q-hrm-w6-7",
+    "original_question_number": 7,
+    "week_number": 6,
+    "source_pdf_name": "WEEK 06.pdf",
+    "source_page": 4,
+    "question_text": "Which of the following are essential characteristics of mentoring relationships?",
+    "options": [
+      "confidentiality",
+      "trust",
+      "confidence",
+      "all of the above"
+    ],
+    "correct_answer_index": 3,
+    "accepted_answer_text": "d.",
+    "answer_source": "PDF",
+    "is_approved": true,
+    "needs_review": false,
+    "review_reason": null,
+    "explanation": ""
+  },
+  {
+    "id": "q-hrm-w6-8",
+    "original_question_number": 8,
+    "week_number": 6,
+    "source_pdf_name": "WEEK 06.pdf",
+    "source_page": 5,
+    "question_text": "\"Betrayal\" explains which type of potential dysfunction occurs in Mentoring Relationships.",
+    "options": [
+      "negative relations",
+      "difficulty",
+      "spoiling",
+      "sabotage"
+    ],
+    "correct_answer_index": 2,
+    "accepted_answer_text": "c.",
+    "answer_source": "PDF",
+    "is_approved": true,
+    "needs_review": false,
+    "review_reason": null,
+    "explanation": ""
+  },
+  {
+    "id": "q-hrm-w6-9",
+    "original_question_number": 9,
+    "week_number": 6,
+    "source_pdf_name": "WEEK 06.pdf",
+    "source_page": 6,
+    "question_text": "\"Good intentions to others\" and \"psychosocial issues\" lead to which of the Four Potential Dysfunctions in Mentoring Relationships?",
+    "options": [
+      "difficulty",
+      "sabotage",
+      "spoiling",
+      "negative relations"
+    ],
+    "correct_answer_index": 0,
+    "accepted_answer_text": "a.",
+    "answer_source": "PDF",
+    "is_approved": true,
+    "needs_review": false,
+    "review_reason": null,
+    "explanation": ""
+  },
+  {
+    "id": "q-hrm-w6-10",
+    "original_question_number": 10,
+    "week_number": 6,
+    "source_pdf_name": "WEEK 06.pdf",
+    "source_page": 6,
+    "question_text": "\"Conflict\" is a part of which type of potential dysfunctions in mentoring relationships?",
+    "options": [
+      "negative relations",
+      "spoiling",
+      "difficulty",
+      "sabotage"
+    ],
+    "correct_answer_index": 0,
+    "accepted_answer_text": "a.",
+    "answer_source": "PDF",
+    "is_approved": true,
+    "needs_review": false,
+    "review_reason": null,
+    "explanation": ""
+  }
+]

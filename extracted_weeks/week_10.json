@@ -1,0 +1,212 @@
+[
+  {
+    "id": "q-hrm-w10-1",
+    "original_question_number": 1,
+    "week_number": 10,
+    "source_pdf_name": "WEEK 10.pdf",
+    "source_page": 1,
+    "question_text": "Which of the following is NOT a component of Intellectual Capital?",
+    "options": [
+      "human Capital",
+      "structural Capital",
+      "financial Capital",
+      "relational Capital"
+    ],
+    "correct_answer_index": 2,
+    "accepted_answer_text": "c.",
+    "answer_source": "PDF",
+    "is_approved": true,
+    "needs_review": false,
+    "review_reason": null,
+    "explanation": ""
+  },
+  {
+    "id": "q-hrm-w10-2",
+    "original_question_number": 2,
+    "week_number": 10,
+    "source_pdf_name": "WEEK 10.pdf",
+    "source_page": 1,
+    "question_text": "Which of the following is an indicator of human Capital?",
+    "options": [
+      "employee satisfaction index",
+      "investment in sales",
+      "sales per quarter",
+      "no. of patents"
+    ],
+    "correct_answer_index": 0,
+    "accepted_answer_text": "a.",
+    "answer_source": "PDF",
+    "is_approved": true,
+    "needs_review": false,
+    "review_reason": null,
+    "explanation": ""
+  },
+  {
+    "id": "q-hrm-w10-3",
+    "original_question_number": 3,
+    "week_number": 10,
+    "source_pdf_name": "WEEK 10.pdf",
+    "source_page": 2,
+    "question_text": "\"Brand awareness\" indicates which of the components of intellectual Capital?",
+    "options": [
+      "customer capital",
+      "organizational capitals",
+      "social Capital",
+      "relational Capital"
+    ],
+    "correct_answer_index": 3,
+    "accepted_answer_text": "d.",
+    "answer_source": "PDF",
+    "is_approved": true,
+    "needs_review": false,
+    "review_reason": null,
+    "explanation": ""
+  },
+  {
+    "id": "q-hrm-w10-4",
+    "original_question_number": 4,
+    "week_number": 10,
+    "source_pdf_name": "WEEK 10.pdf",
+    "source_page": 2,
+    "question_text": "Which of the following is true in the context of social Capital?",
+    "options": [
+      "Relationships, reputation, image, loyalty, satisfaction",
+      "Support, cooperative action, networks, trust, mutual understanding",
+      "Customer contracts, distribution channels, licensing agreements",
+      "Individual education, know-how, competence"
+    ],
+    "correct_answer_index": 1,
+    "accepted_answer_text": "b.",
+    "answer_source": "PDF",
+    "is_approved": true,
+    "needs_review": false,
+    "review_reason": null,
+    "explanation": ""
+  },
+  {
+    "id": "q-hrm-w10-5",
+    "original_question_number": 5,
+    "week_number": 10,
+    "source_pdf_name": "WEEK 10.pdf",
+    "source_page": 3,
+    "question_text": "Are infrastructural assets and Intellectual property components of intellectual Capital?",
+    "options": [
+      "human capitals",
+      "social Capital",
+      "organizational Capital",
+      "customer capital"
+    ],
+    "correct_answer_index": 2,
+    "accepted_answer_text": "c.",
+    "answer_source": "PDF",
+    "is_approved": true,
+    "needs_review": false,
+    "review_reason": null,
+    "explanation": ""
+  },
+  {
+    "id": "q-hrm-w10-6",
+    "original_question_number": 6,
+    "week_number": 10,
+    "source_pdf_name": "WEEK 10.pdf",
+    "source_page": 3,
+    "question_text": "What does ICN stand for?",
+    "options": [
+      "Intellectual Capacity Navigator",
+      "Intellectual Capital Navigator",
+      "Intellectual Credit Navigator",
+      "Intellectual Customer Navigator"
+    ],
+    "correct_answer_index": 1,
+    "accepted_answer_text": "b.",
+    "answer_source": "PDF",
+    "is_approved": true,
+    "needs_review": false,
+    "review_reason": null,
+    "explanation": ""
+  },
+  {
+    "id": "q-hrm-w10-7",
+    "original_question_number": 7,
+    "week_number": 10,
+    "source_pdf_name": "WEEK 10.pdf",
+    "source_page": 4,
+    "question_text": "Which of the following is NOT a part of Edvinsson's Navigator?",
+    "options": [
+      "customer capital",
+      "process capital",
+      "policy capital",
+      "financial Capital"
+    ],
+    "correct_answer_index": 2,
+    "accepted_answer_text": "c.",
+    "answer_source": "PDF",
+    "is_approved": true,
+    "needs_review": false,
+    "review_reason": null,
+    "explanation": ""
+  },
+  {
+    "id": "q-hrm-w10-8",
+    "original_question_number": 8,
+    "week_number": 10,
+    "source_pdf_name": "WEEK 10.pdf",
+    "source_page": 4,
+    "question_text": "What are the five focus areas of Skandia IC Measures?",
+    "options": [
+      "human, financial, customer, process, renewal, and development",
+      "human, financial, cultural, process, renewal, and deployment",
+      "human, financial, customer, process, training, and development",
+      "human, financial, structure, process, renewal, and deployment"
+    ],
+    "correct_answer_index": 0,
+    "accepted_answer_text": "a.",
+    "answer_source": "PDF",
+    "is_approved": true,
+    "needs_review": false,
+    "review_reason": null,
+    "explanation": ""
+  },
+  {
+    "id": "q-hrm-w10-9",
+    "original_question_number": 9,
+    "week_number": 10,
+    "source_pdf_name": "WEEK 10.pdf",
+    "source_page": 5,
+    "question_text": "Which of the following is part of the relationship capital index?",
+    "options": [
+      "distribution efficiency",
+      "value creation per employee",
+      "customer retention",
+      "ability to generate new business"
+    ],
+    "correct_answer_index": 2,
+    "accepted_answer_text": "c.",
+    "answer_source": "PDF",
+    "is_approved": true,
+    "needs_review": false,
+    "review_reason": null,
+    "explanation": ""
+  },
+  {
+    "id": "q-hrm-w10-10",
+    "original_question_number": 10,
+    "week_number": 10,
+    "source_pdf_name": "WEEK 10.pdf",
+    "source_page": 5,
+    "question_text": "What is the full form of EVA?",
+    "options": [
+      "Economic Value Added",
+      "Economic Value Asset",
+      "Economic Vision Added",
+      "Economic Vision Asset"
+    ],
+    "correct_answer_index": 0,
+    "accepted_answer_text": "a.",
+    "answer_source": "PDF",
+    "is_approved": true,
+    "needs_review": false,
+    "review_reason": null,
+    "explanation": ""
+  }
+]

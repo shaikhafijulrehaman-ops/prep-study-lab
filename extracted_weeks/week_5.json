@@ -1,0 +1,212 @@
+[
+  {
+    "id": "q-hrm-w5-1",
+    "original_question_number": 1,
+    "week_number": 5,
+    "source_pdf_name": "WEEK 5.pdf",
+    "source_page": 1,
+    "question_text": "Which of the following is NOT included in the content of the development plan?",
+    "options": [
+      "new skill or knowledge to be acquired, and how this will occur",
+      "Keep the needs of the organization only in mind",
+      "include a description of specific steps to be taken and specific objectives to reach",
+      "information on the resources and strategies to achieve the objectives the completion date"
+    ],
+    "correct_answer_index": 1,
+    "accepted_answer_text": "b.",
+    "answer_source": "PDF",
+    "is_approved": true,
+    "needs_review": false,
+    "review_reason": null,
+    "explanation": ""
+  },
+  {
+    "id": "q-hrm-w5-2",
+    "original_question_number": 2,
+    "week_number": 5,
+    "source_pdf_name": "WEEK 5.pdf",
+    "source_page": 2,
+    "question_text": "Which of the following is the best description of a coach?",
+    "options": [
+      "The one who provides one-on-one coaching on the job",
+      "The one who gets the professional service",
+      "in employment",
+      "The stakeholders, including more senior executives of the firm"
+    ],
+    "correct_answer_index": 0,
+    "accepted_answer_text": "a.",
+    "answer_source": "PDF",
+    "is_approved": true,
+    "needs_review": false,
+    "review_reason": null,
+    "explanation": ""
+  },
+  {
+    "id": "q-hrm-w5-3",
+    "original_question_number": 3,
+    "week_number": 5,
+    "source_pdf_name": "WEEK 5.pdf",
+    "source_page": 3,
+    "question_text": "Which of the following options is true in the context of collaborative ongoing performance?",
+    "options": [
+      "providing feedback",
+      "training employee",
+      "rewarding employee behavior",
+      "Concern with short-term performance"
+    ],
+    "correct_answer_index": 2,
+    "accepted_answer_text": "c.",
+    "answer_source": "PDF",
+    "is_approved": true,
+    "needs_review": false,
+    "review_reason": null,
+    "explanation": ""
+  },
+  {
+    "id": "q-hrm-w5-4",
+    "original_question_number": 4,
+    "week_number": 5,
+    "source_pdf_name": "WEEK 5.pdf",
+    "source_page": 3,
+    "question_text": "What is the role of the supervisor in coaching?",
+    "options": [
+      "Should be motivated to see the work group succeed",
+      "Is not responsible for the unit's effectiveness",
+      "Has the authority to supervise but not conduct a coaching program",
+      "Can use limited information on hand"
+    ],
+    "correct_answer_index": 0,
+    "accepted_answer_text": "a.",
+    "answer_source": "PDF",
+    "is_approved": true,
+    "needs_review": false,
+    "review_reason": null,
+    "explanation": ""
+  },
+  {
+    "id": "q-hrm-w5-5",
+    "original_question_number": 5,
+    "week_number": 5,
+    "source_pdf_name": "WEEK 5.pdf",
+    "source_page": 4,
+    "question_text": "Which of the following is true with respect to mentoring?",
+    "options": [
+      "people centered",
+      "problem centered",
+      "short term",
+      "self-awareness"
+    ],
+    "correct_answer_index": 0,
+    "accepted_answer_text": "a.",
+    "answer_source": "PDF",
+    "is_approved": true,
+    "needs_review": false,
+    "review_reason": null,
+    "explanation": ""
+  },
+  {
+    "id": "q-hrm-w5-6",
+    "original_question_number": 6,
+    "week_number": 5,
+    "source_pdf_name": "WEEK 5.pdf",
+    "source_page": 4,
+    "question_text": "Which of the following is included in the process of the Conceptual Framework for understanding coaching?",
+    "options": [
+      "self-awareness",
+      "learning",
+      "organizational support",
+      "feedback receptivity"
+    ],
+    "correct_answer_index": 0,
+    "accepted_answer_text": "a.",
+    "answer_source": "PDF",
+    "is_approved": true,
+    "needs_review": false,
+    "review_reason": null,
+    "explanation": ""
+  },
+  {
+    "id": "q-hrm-w5-7",
+    "original_question_number": 7,
+    "week_number": 5,
+    "source_pdf_name": "WEEK 5.pdf",
+    "source_page": 5,
+    "question_text": "What is the focus of coaching?",
+    "options": [
+      "people centered",
+      "issue centered",
+      "problem centered",
+      "competition"
+    ],
+    "correct_answer_index": 2,
+    "accepted_answer_text": "c.",
+    "answer_source": "PDF",
+    "is_approved": true,
+    "needs_review": false,
+    "review_reason": null,
+    "explanation": ""
+  },
+  {
+    "id": "q-hrm-w5-8",
+    "original_question_number": 8,
+    "week_number": 5,
+    "source_pdf_name": "WEEK 5.pdf",
+    "source_page": 5,
+    "question_text": "Individual success and organizational success are the outcomes of which of the steps of the Conceptual Framework for understanding coaching?",
+    "options": [
+      "proximal outcomes",
+      "antecedents",
+      "distal outcomes",
+      "process"
+    ],
+    "correct_answer_index": 2,
+    "accepted_answer_text": "c.",
+    "answer_source": "PDF",
+    "is_approved": true,
+    "needs_review": false,
+    "review_reason": null,
+    "explanation": ""
+  },
+  {
+    "id": "q-hrm-w5-9",
+    "original_question_number": 9,
+    "week_number": 5,
+    "source_pdf_name": "WEEK 5.pdf",
+    "source_page": 6,
+    "question_text": "What is the first step in coaching to improve poor performance?",
+    "options": [
+      "responding to poor performance",
+      "defining poor performance",
+      "planning steps for overcoming poor performance",
+      "providing feedback"
+    ],
+    "correct_answer_index": 1,
+    "accepted_answer_text": "b.",
+    "answer_source": "PDF",
+    "is_approved": true,
+    "needs_review": false,
+    "review_reason": null,
+    "explanation": ""
+  },
+  {
+    "id": "q-hrm-w5-10",
+    "original_question_number": 10,
+    "week_number": 5,
+    "source_pdf_name": "WEEK 5.pdf",
+    "source_page": 7,
+    "question_text": "Which of the following is NOT a critical success factor for coaching?",
+    "options": [
+      "capacity",
+      "clarity",
+      "condition",
+      "commitment"
+    ],
+    "correct_answer_index": 0,
+    "accepted_answer_text": "a.",
+    "answer_source": "PDF",
+    "is_approved": true,
+    "needs_review": false,
+    "review_reason": null,
+    "explanation": ""
+  }
+]

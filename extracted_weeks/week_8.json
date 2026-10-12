@@ -1,0 +1,212 @@
+[
+  {
+    "id": "q-hrm-w8-1",
+    "original_question_number": 1,
+    "week_number": 8,
+    "source_pdf_name": "WEEK 08.pdf",
+    "source_page": 1,
+    "question_text": "Human competency can be classified into which two broad categories?",
+    "options": [
+      "hidden and vague",
+      "clear and visible",
+      "hidden and visible",
+      "specific and valuable"
+    ],
+    "correct_answer_index": 2,
+    "accepted_answer_text": "c.",
+    "answer_source": "PDF",
+    "is_approved": true,
+    "needs_review": false,
+    "review_reason": null,
+    "explanation": ""
+  },
+  {
+    "id": "q-hrm-w8-2",
+    "original_question_number": 2,
+    "week_number": 8,
+    "source_pdf_name": "WEEK 08.pdf",
+    "source_page": 1,
+    "question_text": "What do you understand by \"motives\"?",
+    "options": [
+      "What drives us",
+      "self-concept and values",
+      "acquiring information in a particular field",
+      "a learned ability"
+    ],
+    "correct_answer_index": 0,
+    "accepted_answer_text": "a.",
+    "answer_source": "PDF",
+    "is_approved": true,
+    "needs_review": false,
+    "review_reason": null,
+    "explanation": ""
+  },
+  {
+    "id": "q-hrm-w8-3",
+    "original_question_number": 3,
+    "week_number": 8,
+    "source_pdf_name": "WEEK 08.pdf",
+    "source_page": 2,
+    "question_text": "What is competency profiling?",
+    "options": [
+      "A list of an individual's competencies that represent the factors most critical to success in given jobs, departments, or organizations that are part of the individual's current career plan.",
+      "It is the process of identifying the organization and person fit required for effective behavioral performance in a particular occupation or profession.",
+      "A list of an individual's competencies that represent the factor most critical to behavior outcomes leading to organizational success.",
+      "It is the process of identifying the knowledge, skills, abilities, attitudes, and judgment required for effective performance in a particular occupation or profession."
+    ],
+    "correct_answer_index": 3,
+    "accepted_answer_text": "d.",
+    "answer_source": "PDF",
+    "is_approved": true,
+    "needs_review": false,
+    "review_reason": null,
+    "explanation": ""
+  },
+  {
+    "id": "q-hrm-w8-4",
+    "original_question_number": 4,
+    "week_number": 8,
+    "source_pdf_name": "WEEK 08.pdf",
+    "source_page": 3,
+    "question_text": "What does a competency map explain?",
+    "options": [
+      "Define the competency requirements for all key jobs in an organization. This consists of generic competencies.",
+      "Define the competency requirements that cover only a few jobs in an organization. This consists of selected competencies.",
+      "A set of competencies that are required to perform a specified role.",
+      "Describe the different aspects of competent behavior in an occupation against competency dimensions such as strategic capability, resource management, and quality."
+    ],
+    "correct_answer_index": 3,
+    "accepted_answer_text": "d.",
+    "answer_source": "PDF",
+    "is_approved": true,
+    "needs_review": false,
+    "review_reason": null,
+    "explanation": ""
+  },
+  {
+    "id": "q-hrm-w8-5",
+    "original_question_number": 5,
+    "week_number": 8,
+    "source_pdf_name": "WEEK 08.pdf",
+    "source_page": 3,
+    "question_text": "Finance and environmental management are examples of which type of competency?",
+    "options": [
+      "Generic competencies",
+      "Managerial competencies",
+      "Technical/ functional competencies",
+      "Behavioral competencies"
+    ],
+    "correct_answer_index": 2,
+    "accepted_answer_text": "c.",
+    "answer_source": "PDF",
+    "is_approved": true,
+    "needs_review": false,
+    "review_reason": null,
+    "explanation": ""
+  },
+  {
+    "id": "q-hrm-w8-6",
+    "original_question_number": 6,
+    "week_number": 8,
+    "source_pdf_name": "WEEK 08.pdf",
+    "source_page": 4,
+    "question_text": "Which of the following is an example of generic competencies?",
+    "options": [
+      "finance",
+      "supervisory responsibility",
+      "communication",
+      "environment management"
+    ],
+    "correct_answer_index": 2,
+    "accepted_answer_text": "c.",
+    "answer_source": "PDF",
+    "is_approved": true,
+    "needs_review": false,
+    "review_reason": null,
+    "explanation": ""
+  },
+  {
+    "id": "q-hrm-w8-7",
+    "original_question_number": 7,
+    "week_number": 8,
+    "source_pdf_name": "WEEK 08.pdf",
+    "source_page": 4,
+    "question_text": "Which of the following is true in the context of Job analysis?",
+    "options": [
+      "A distilled set of underlying personal characteristics",
+      "Data generation from outstanding performers, in addition to subject matter experts and other job incumbents",
+      "Data generation from subject matter experts, job incumbents",
+      "Outstanding Performance"
+    ],
+    "correct_answer_index": 2,
+    "accepted_answer_text": "c.",
+    "answer_source": "PDF",
+    "is_approved": true,
+    "needs_review": false,
+    "review_reason": null,
+    "explanation": ""
+  },
+  {
+    "id": "q-hrm-w8-8",
+    "original_question_number": 8,
+    "week_number": 8,
+    "source_pdf_name": "WEEK 08.pdf",
+    "source_page": 5,
+    "question_text": "What do you understand by Strategic Workforce Planning?",
+    "options": [
+      "Develop assessment tools to determine whether the workforce possesses the competencies necessary to meet personal goals.",
+      "Develop assessment tools to determine whether the workforce possesses the competencies necessary to meet professional goals.",
+      "Develop assessment tools to determine whether the workforce possesses the competencies necessary to meet organizational goals.",
+      "Develop assessment tools to determine whether the workforce possesses the competencies necessary to meet personal and professional goals."
+    ],
+    "correct_answer_index": 2,
+    "accepted_answer_text": "c.",
+    "answer_source": "PDF",
+    "is_approved": true,
+    "needs_review": false,
+    "review_reason": null,
+    "explanation": ""
+  },
+  {
+    "id": "q-hrm-w8-9",
+    "original_question_number": 9,
+    "week_number": 8,
+    "source_pdf_name": "WEEK 08.pdf",
+    "source_page": 6,
+    "question_text": "Which of the following is TRUE in the context of performance management?",
+    "options": [
+      "Create rating guides to help managers assess each competency.",
+      "Create guides that describe senior-level career paths and the competencies required at each step.",
+      "Create a guide for managers to reward the demonstration of specific competencies by their employees.",
+      "Design a competency-based compensation program where employees' salaries increase based on proficiency in selected competencies."
+    ],
+    "correct_answer_index": 0,
+    "accepted_answer_text": "a.",
+    "answer_source": "PDF",
+    "is_approved": true,
+    "needs_review": false,
+    "review_reason": null,
+    "explanation": ""
+  },
+  {
+    "id": "q-hrm-w8-10",
+    "original_question_number": 10,
+    "week_number": 8,
+    "source_pdf_name": "WEEK 08.pdf",
+    "source_page": 7,
+    "question_text": "What do you understand by 360-Degree Feedback?",
+    "options": [
+      "The approach uses various types of discussion and simulation exercises to reflect the real-life demands of the job. Candidates are asked to work through certain scenarios while a trained assessor observes their behavior.",
+      "Data about critical events -- exceptional examples of accomplishment or failure -- is collected through interviews or questionnaires as soon as possible after occurrence.",
+      "The situations are designed to reveal skills and aptitude that help identify which individuals are good matches for the current and future requirements of the job.",
+      "It involves a collection of perceptions about an individual's behavior and its impact on bosses, colleagues, subordinates, and internal and external customers."
+    ],
+    "correct_answer_index": 3,
+    "accepted_answer_text": "d.",
+    "answer_source": "PDF",
+    "is_approved": true,
+    "needs_review": false,
+    "review_reason": null,
+    "explanation": ""
+  }
+]

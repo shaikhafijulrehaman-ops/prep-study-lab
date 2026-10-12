@@ -1,0 +1,212 @@
+[
+  {
+    "id": "q-hrm-w11-1",
+    "original_question_number": 1,
+    "week_number": 11,
+    "source_pdf_name": "WEEK 11.pdf",
+    "source_page": 1,
+    "question_text": "Rules, contracts, and documents are examples of which type of knowledge?",
+    "options": [
+      "tacit knowledge",
+      "explicit knowledge",
+      "knowledge sharing",
+      "procedural knowledge"
+    ],
+    "correct_answer_index": 1,
+    "accepted_answer_text": "b.",
+    "answer_source": "PDF",
+    "is_approved": true,
+    "needs_review": false,
+    "review_reason": null,
+    "explanation": ""
+  },
+  {
+    "id": "q-hrm-w11-2",
+    "original_question_number": 2,
+    "week_number": 11,
+    "source_pdf_name": "WEEK 11.pdf",
+    "source_page": 1,
+    "question_text": "What do you understand by Organizational learning?",
+    "options": [
+      "development of new knowledge and acquisition of new insights that have the potential to influence changes in financial benefits.",
+      "research of the old knowledge and topics that have the potential to influence changes and to improve organizational performance.",
+      "development of new knowledge, acquisition of new insights that have the potential to influence behavioral changes and thus improve organizational performance.",
+      "development of technical skills to increase an organization's revenue."
+    ],
+    "correct_answer_index": 2,
+    "accepted_answer_text": "c.",
+    "answer_source": "PDF",
+    "is_approved": true,
+    "needs_review": false,
+    "review_reason": null,
+    "explanation": ""
+  },
+  {
+    "id": "q-hrm-w11-3",
+    "original_question_number": 3,
+    "week_number": 11,
+    "source_pdf_name": "WEEK 11.pdf",
+    "source_page": 2,
+    "question_text": "Are \"Lower-level Learning\" and \"Not-Strategic Learning\" characteristics of a type of organizational learning?",
+    "options": [
+      "single loop learning",
+      "double loop learning",
+      "triple loop learning",
+      "multi-loop learning"
+    ],
+    "correct_answer_index": 0,
+    "accepted_answer_text": "a.",
+    "answer_source": "PDF",
+    "is_approved": true,
+    "needs_review": false,
+    "review_reason": null,
+    "explanation": ""
+  },
+  {
+    "id": "q-hrm-w11-4",
+    "original_question_number": 4,
+    "week_number": 11,
+    "source_pdf_name": "WEEK 11.pdf",
+    "source_page": 2,
+    "question_text": "What is triple-loop learning?",
+    "options": [
+      "When errors are detected and corrected, but firms continue with their present policies and goals.",
+      "The organization questions and modifies its existing norms, procedures, policies, and objectives",
+      ". Organizational members learn how to learn and form new beliefs that impact their thinking and, therefore, what they do and how they do it.",
+      "When people get better at a particular activity through practice or training"
+    ],
+    "correct_answer_index": 2,
+    "accepted_answer_text": "c.",
+    "answer_source": "PDF",
+    "is_approved": true,
+    "needs_review": false,
+    "review_reason": null,
+    "explanation": ""
+  },
+  {
+    "id": "q-hrm-w11-5",
+    "original_question_number": 5,
+    "week_number": 11,
+    "source_pdf_name": "WEEK 11.pdf",
+    "source_page": 3,
+    "question_text": "Which of the following is not a component of a learning organization?",
+    "options": [
+      "can be achieved through quick management training",
+      "It is a multi-level concept",
+      "based on continuous knowledge transfer and adaptation",
+      "requires specific HRM policies supportive of a learning culture"
+    ],
+    "correct_answer_index": 0,
+    "accepted_answer_text": "a.",
+    "answer_source": "PDF",
+    "is_approved": true,
+    "needs_review": false,
+    "review_reason": null,
+    "explanation": ""
+  },
+  {
+    "id": "q-hrm-w11-6",
+    "original_question_number": 6,
+    "week_number": 11,
+    "source_pdf_name": "WEEK 11.pdf",
+    "source_page": 3,
+    "question_text": "Which of the following is an element of an information processing system?",
+    "options": [
+      "development",
+      "strategy",
+      "distribution",
+      "communication"
+    ],
+    "correct_answer_index": 2,
+    "accepted_answer_text": "c.",
+    "answer_source": "PDF",
+    "is_approved": true,
+    "needs_review": false,
+    "review_reason": null,
+    "explanation": ""
+  },
+  {
+    "id": "q-hrm-w11-7",
+    "original_question_number": 7,
+    "week_number": 11,
+    "source_pdf_name": "WEEK 11.pdf",
+    "source_page": 4,
+    "question_text": "Which of the following is NOT a subsystem of Experiential Learning in the roadmap of organizational learning?",
+    "options": [
+      "Organizational self-appraisal",
+      "Scanning",
+      "Unintentional learning",
+      "Organizational Experiments"
+    ],
+    "correct_answer_index": 1,
+    "accepted_answer_text": "b.",
+    "answer_source": "PDF",
+    "is_approved": true,
+    "needs_review": false,
+    "review_reason": null,
+    "explanation": ""
+  },
+  {
+    "id": "q-hrm-w11-8",
+    "original_question_number": 8,
+    "week_number": 11,
+    "source_pdf_name": "WEEK 11.pdf",
+    "source_page": 4,
+    "question_text": "Supply chains, the government, and professional societies form a part of which of these workplace learning communities?",
+    "options": [
+      "networks and partnerships",
+      "the individual",
+      "the workgroup",
+      "the enterprise"
+    ],
+    "correct_answer_index": 0,
+    "accepted_answer_text": "a.",
+    "answer_source": "PDF",
+    "is_approved": true,
+    "needs_review": false,
+    "review_reason": null,
+    "explanation": ""
+  },
+  {
+    "id": "q-hrm-w11-9",
+    "original_question_number": 9,
+    "week_number": 11,
+    "source_pdf_name": "WEEK 11.pdf",
+    "source_page": 5,
+    "question_text": "According to Senge, which of the following is not one of the five disciplines of Learning Organization?",
+    "options": [
+      "shared mission",
+      "systems thinking",
+      "mental models",
+      "team learning"
+    ],
+    "correct_answer_index": 0,
+    "accepted_answer_text": "a.",
+    "answer_source": "PDF",
+    "is_approved": true,
+    "needs_review": false,
+    "review_reason": null,
+    "explanation": ""
+  },
+  {
+    "id": "q-hrm-w11-10",
+    "original_question_number": 10,
+    "week_number": 11,
+    "source_pdf_name": "WEEK 11.pdf",
+    "source_page": 5,
+    "question_text": "Which of the following is a characteristic of a complex adaptive system?",
+    "options": [
+      "dynamic behavior",
+      "quantum leaps",
+      "new product",
+      "new service"
+    ],
+    "correct_answer_index": 0,
+    "accepted_answer_text": "a.",
+    "answer_source": "PDF",
+    "is_approved": true,
+    "needs_review": false,
+    "review_reason": null,
+    "explanation": ""
+  }
+]

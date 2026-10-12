@@ -28,7 +28,7 @@ export function deriveAvailableWeeks(questions: (Question | { weekNumber?: numbe
   questions.forEach((q) => {
     const raw = 'weekNumber' in q && q.weekNumber !== undefined ? q.weekNumber : (q as any).week_number;
     const num = typeof raw === 'number' ? raw : parseInt(String(raw), 10);
-    if (!isNaN(num) && num > 0) {
+    if (!isNaN(num) && num >= 0) {
       weeks.add(num);
     }
   });
@@ -304,7 +304,7 @@ export async function fetchQuestionsFromSupabase(
   if (!supabase) return getQuestions(courseId, weekSelection, approvedOnly);
 
   try {
-    let query = supabase.from('questions').select('*').gte('week_number', 1);
+    let query = supabase.from('questions').select('*').gte('week_number', 0);
     if (courseId) {
       query = query.eq('course_id', courseId);
     }
@@ -358,7 +358,7 @@ export async function fetchQuestionsFromSupabase(
       return {
         id: row.id,
         courseId: row.course_id,
-        weekNumber: Number(row.week_number) || 1,
+        weekNumber: row.week_number !== undefined && row.week_number !== null ? Number(row.week_number) : 1,
         sourcePdfId: row.source_pdf_id || undefined,
         sourcePdfName: row.source_pdf_name || '',
         questionText: row.question_text,

@@ -1,0 +1,317 @@
+[
+  {
+    "id": "q-hrm-w0-1",
+    "original_question_number": 1,
+    "week_number": 0,
+    "source_pdf_name": "Week 0.pdf",
+    "source_page": 1,
+    "question_text": "How does training and development offer competitive advantage to an organization?",
+    "options": [
+      "Reduces performance deficiencies",
+      "Ensures employee compliance",
+      "Increases supervisor's role",
+      "None of the above"
+    ],
+    "correct_answer_index": 0,
+    "accepted_answer_text": "a.",
+    "answer_source": "Manually Verified",
+    "is_approved": true,
+    "needs_review": false,
+    "review_reason": null,
+    "explanation": ""
+  },
+  {
+    "id": "q-hrm-w0-2",
+    "original_question_number": 2,
+    "week_number": 0,
+    "source_pdf_name": "Week 0.pdf",
+    "source_page": 1,
+    "question_text": "Which of these is an off – the – job training method?",
+    "options": [
+      "Games and simulation",
+      "Job rotation",
+      "Orientation training",
+      "Coaching"
+    ],
+    "correct_answer_index": 0,
+    "accepted_answer_text": "a.",
+    "answer_source": "Manually Verified",
+    "is_approved": true,
+    "needs_review": false,
+    "review_reason": null,
+    "explanation": ""
+  },
+  {
+    "id": "q-hrm-w0-3",
+    "original_question_number": 3,
+    "week_number": 0,
+    "source_pdf_name": "Week 0.pdf",
+    "source_page": 2,
+    "question_text": "Match the following techniques of training with their correct description:\n1.Internships —— A. acting out situations that might occur in the workplace\n2. Outward – bound training —— B. Games to test ability to plan ahead\n3. Mirroring —— C. Training with an external perspective\n4. Strategic planning —— D. Adventure sports for teams\n5. Role playing —— E. training the colleges or universities pass outs about the practical aspects of their study",
+    "options": [
+      "1-E, 2-D, 3-C, 4-B, 5-A",
+      "1-A, 2-D, 3-E, 4-C, 5-B",
+      "1-D, 2-A, 3-C, 4-E, 5-B",
+      "1-C, 2-D, 3-B, 4-A, 5-E"
+    ],
+    "correct_answer_index": 0,
+    "accepted_answer_text": "a.",
+    "answer_source": "Manually Verified",
+    "is_approved": true,
+    "needs_review": false,
+    "review_reason": null,
+    "explanation": ""
+  },
+  {
+    "id": "q-hrm-w0-4",
+    "original_question_number": 4,
+    "week_number": 0,
+    "source_pdf_name": "Week 0.pdf",
+    "source_page": 2,
+    "question_text": "The unique characteristics of a learning organization is that:",
+    "options": [
+      "the members learn about each other",
+      "it has the capacity to gather new information and use it for improvement",
+      "it focuses on selecting new employees who love learning and are highly skilled",
+      "employees are rewarded for submitting creative suggestions and participating in their implementation"
+    ],
+    "correct_answer_index": 1,
+    "accepted_answer_text": "b.",
+    "answer_source": "Manually Verified",
+    "is_approved": true,
+    "needs_review": false,
+    "review_reason": null,
+    "explanation": ""
+  },
+  {
+    "id": "q-hrm-w0-5",
+    "original_question_number": 5,
+    "week_number": 0,
+    "source_pdf_name": "Week 0.pdf",
+    "source_page": 3,
+    "question_text": "A set of systematic and planned activities designed by an organization to provide its members with the opportunities to learn necessary skills to meet current and future job demands is known as:",
+    "options": [
+      "Human resource management",
+      "Change management",
+      "Human resource development",
+      "Career Planning"
+    ],
+    "correct_answer_index": 2,
+    "accepted_answer_text": "c.",
+    "answer_source": "Manually Verified",
+    "is_approved": true,
+    "needs_review": false,
+    "review_reason": null,
+    "explanation": ""
+  },
+  {
+    "id": "q-hrm-w0-6",
+    "original_question_number": 6,
+    "week_number": 0,
+    "source_pdf_name": "Week 0.pdf",
+    "source_page": 3,
+    "question_text": "An important advantage of on-the-job training is that it",
+    "options": [
+      "provides immediate transfer of training",
+      "allows employees to learn at their own rate without any pressure to produce results",
+      "provides for greater group interaction",
+      "reduces the costs of supervision"
+    ],
+    "correct_answer_index": 0,
+    "accepted_answer_text": "a.",
+    "answer_source": "Manually Verified",
+    "is_approved": true,
+    "needs_review": false,
+    "review_reason": null,
+    "explanation": ""
+  },
+  {
+    "id": "q-hrm-w0-7",
+    "original_question_number": 7,
+    "week_number": 0,
+    "source_pdf_name": "Week 0.pdf",
+    "source_page": 4,
+    "question_text": "The core of all HRD efforts is:",
+    "options": [
+      "Better coordination of efforts",
+      "Internal control",
+      "Workplace Learning",
+      "Employee satisfaction"
+    ],
+    "correct_answer_index": 2,
+    "accepted_answer_text": "c.",
+    "answer_source": "Manually Verified",
+    "is_approved": true,
+    "needs_review": false,
+    "review_reason": null,
+    "explanation": ""
+  },
+  {
+    "id": "q-hrm-w0-8",
+    "original_question_number": 8,
+    "week_number": 0,
+    "source_pdf_name": "Week 0.pdf",
+    "source_page": 4,
+    "question_text": "The best reason for organizing a training program is because:",
+    "options": [
+      "it contributes to the organization's goals and objectives",
+      "it has been highly advertised.",
+      "competitors are using the training.",
+      "concern about federal agency pressure."
+    ],
+    "correct_answer_index": 0,
+    "accepted_answer_text": "a.",
+    "answer_source": "Manually Verified",
+    "is_approved": true,
+    "needs_review": false,
+    "review_reason": null,
+    "explanation": ""
+  },
+  {
+    "id": "q-hrm-w0-9",
+    "original_question_number": 9,
+    "week_number": 0,
+    "source_pdf_name": "Week 0.pdf",
+    "source_page": 5,
+    "question_text": "HRD seeks to develop people's:",
+    "options": [
+      "Knowledge",
+      "Expertise",
+      "Productivity",
+      "All of these"
+    ],
+    "correct_answer_index": 3,
+    "accepted_answer_text": "d.",
+    "answer_source": "Manually Verified",
+    "is_approved": true,
+    "needs_review": false,
+    "review_reason": null,
+    "explanation": ""
+  },
+  {
+    "id": "q-hrm-w0-10",
+    "original_question_number": 10,
+    "week_number": 0,
+    "source_pdf_name": "Week 0.pdf",
+    "source_page": 5,
+    "question_text": "The first HRD intervention experienced by an employee when they join an organization is usually:",
+    "options": [
+      "Mentoring",
+      "Orientation",
+      "On-the-job training",
+      "Coaching"
+    ],
+    "correct_answer_index": 1,
+    "accepted_answer_text": "b.",
+    "answer_source": "Manually Verified",
+    "is_approved": true,
+    "needs_review": false,
+    "review_reason": null,
+    "explanation": ""
+  },
+  {
+    "id": "q-hrm-w0-11",
+    "original_question_number": 11,
+    "week_number": 0,
+    "source_pdf_name": "Week 0.pdf",
+    "source_page": 6,
+    "question_text": "Learning undertaken for the development of skills for work and in work, on-job or off-job, to enable effective performance in a job or role is known as:",
+    "options": [
+      "Coaching",
+      "Education",
+      "Training",
+      "Mentoring"
+    ],
+    "correct_answer_index": 2,
+    "accepted_answer_text": "c.",
+    "answer_source": "Manually Verified",
+    "is_approved": true,
+    "needs_review": false,
+    "review_reason": null,
+    "explanation": ""
+  },
+  {
+    "id": "q-hrm-w0-12",
+    "original_question_number": 12,
+    "week_number": 0,
+    "source_pdf_name": "Week 0.pdf",
+    "source_page": 6,
+    "question_text": "HRD activities are meant primarily for employees and workers, not for executives:",
+    "options": [
+      "True",
+      "False",
+      "Option C",
+      "Option D"
+    ],
+    "correct_answer_index": 1,
+    "accepted_answer_text": "b.",
+    "answer_source": "Manually Verified",
+    "is_approved": true,
+    "needs_review": false,
+    "review_reason": null,
+    "explanation": ""
+  },
+  {
+    "id": "q-hrm-w0-13",
+    "original_question_number": 13,
+    "week_number": 0,
+    "source_pdf_name": "Week 0.pdf",
+    "source_page": 7,
+    "question_text": "HRD system must enable their employees to identify their hidden potential and make them competent enough to exploit their talent in an optimum manner so that they could contribute their efforts in attaining organizational goals. This statement reflects which principle of HRD:",
+    "options": [
+      "Principle of Development of Organizational Capability",
+      "Principle of Potential Maximization",
+      "Principle of Autonomy Maximization",
+      "Principle of Participative Decision-making"
+    ],
+    "correct_answer_index": 1,
+    "accepted_answer_text": "b.",
+    "answer_source": "Manually Verified",
+    "is_approved": true,
+    "needs_review": false,
+    "review_reason": null,
+    "explanation": ""
+  },
+  {
+    "id": "q-hrm-w0-14",
+    "original_question_number": 14,
+    "week_number": 0,
+    "source_pdf_name": "Week 0.pdf",
+    "source_page": 7,
+    "question_text": "The process of determining the gap between what are the capabilities of the current employee and what they are required to do is known as:",
+    "options": [
+      "HRD Design",
+      "HRD Implementation",
+      "HRD Evaluation",
+      "HRD Needs Assessment"
+    ],
+    "correct_answer_index": 3,
+    "accepted_answer_text": "d.",
+    "answer_source": "Manually Verified",
+    "is_approved": true,
+    "needs_review": false,
+    "review_reason": null,
+    "explanation": ""
+  },
+  {
+    "id": "q-hrm-w0-15",
+    "original_question_number": 15,
+    "week_number": 0,
+    "source_pdf_name": "Week 0.pdf",
+    "source_page": 8,
+    "question_text": "HRD programs must respond to job changes and integrate the long-term plans and strategies of the organization to ensure the efficient and effective use of resources.",
+    "options": [
+      "True",
+      "False",
+      "Option C",
+      "Option D"
+    ],
+    "correct_answer_index": 0,
+    "accepted_answer_text": "a.",
+    "answer_source": "Manually Verified",
+    "is_approved": true,
+    "needs_review": false,
+    "review_reason": null,
+    "explanation": ""
+  }
+]

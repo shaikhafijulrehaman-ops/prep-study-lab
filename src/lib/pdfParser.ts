@@ -810,10 +810,10 @@ function convertVisionResultsToDrafts(
 }
 
 function parseWeekFromHeading(heading: string): number | null {
-  const m = heading.match(/(?:week|wk)\s*0*([1-9]\d?)/i);
+  const m = heading.match(/(?:week|wk)\s*0*(\d+)/i);
   if (m) {
     const num = parseInt(m[1], 10);
-    if (num > 0 && num <= 52) return num;
+    if (num >= 0 && num <= 52) return num;
   }
   return null;
 }

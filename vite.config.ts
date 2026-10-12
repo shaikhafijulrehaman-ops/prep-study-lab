@@ -11,4 +11,12 @@ export default defineConfig({
   optimizeDeps: {
     include: ['pdfjs-dist'],
   },
+  server: {
+    port: 3002,
+    strictPort: true,
+  },
+  preview: {
+    port: 3002,
+    strictPort: true,
+  },
 });

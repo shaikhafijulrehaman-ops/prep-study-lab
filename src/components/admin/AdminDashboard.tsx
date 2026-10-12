@@ -1989,6 +1989,11 @@ export const AdminDashboard: React.FC<AdminDashboardProps> = ({
                       const existingWeeks = currentManualCourse?.weeks && currentManualCourse.weeks.length > 0
                         ? currentManualCourse.weeks
                         : [1];
+                      const minKnownWeek = Math.min(
+                        manualWeek,
+                        ...existingWeeks,
+                        ...manualCourseQuestions.map((q) => q.weekNumber)
+                      );
                       const maxKnownWeek = Math.max(
                         10,
                         manualWeek,
@@ -1996,7 +2001,8 @@ export const AdminDashboard: React.FC<AdminDashboardProps> = ({
                         ...manualCourseQuestions.map((q) => q.weekNumber)
                       );
                       const allDisplayWeeks: number[] = [];
-                      for (let w = 1; w <= maxKnownWeek; w++) {
+                      const startW = minKnownWeek <= 0 ? 0 : 1;
+                      for (let w = startW; w <= maxKnownWeek; w++) {
                         allDisplayWeeks.push(w);
                       }
                       const maxW = maxKnownWeek;

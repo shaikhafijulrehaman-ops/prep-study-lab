@@ -1,6 +1,6 @@
 import React, { useState, useEffect } from 'react';
 import { motion } from 'framer-motion';
-import { BookOpen, Play, UploadCloud, ChevronRight, Layers, FileText, CheckCircle2 } from 'lucide-react';
+import { BookOpen, Play, UploadCloud, ChevronRight, ChevronDown, Layers, FileText, CheckCircle2 } from 'lucide-react';
 import { Course, Question } from '../types';
 import { getCourses, getQuestions, fetchCoursesFromSupabase, fetchQuestionsFromSupabase, deriveAvailableWeeks } from '../lib/storage';
 import { getSupabaseClient } from '../lib/supabase';
@@ -96,6 +96,26 @@ export const CoursesView: React.FC<CoursesViewProps> = ({
             VERIFIED QUESTION ARCHIVES AVAILABLE FOR SIMULATION
           </p>
         </div>
+
+        {courses.length > 0 && (
+          <div className="relative w-full sm:w-auto">
+            <div className="relative flex items-center">
+              <select
+                aria-label="Course selector"
+                value={selectedCourseId}
+                onChange={(e) => handleSelectCourse(e.target.value)}
+                className="appearance-none w-full sm:w-80 px-4 py-3 pr-10 rounded-2xl bg-white border border-[#DCEAF5] text-xs font-semibold text-[#0F172A] shadow-sm outline-none focus:border-[#0284C7] cursor-pointer"
+              >
+                {courses.map((c) => (
+                  <option key={c.id} value={c.id}>
+                    {c.code} — {c.name} ({c.totalQuestions || 0} Questions)
+                  </option>
+                ))}
+              </select>
+              <ChevronDown className="w-4 h-4 text-[#0284C7] absolute right-3 pointer-events-none" />
+            </div>
+          </div>
+        )}
       </div>
 
       {/* Main Course Explorer or Empty State */}
