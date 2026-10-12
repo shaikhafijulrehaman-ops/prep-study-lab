@@ -2,6 +2,18 @@ import { Course, Question } from '../types';
 
 export const INITIAL_COURSES: Course[] = [
   {
+    id: 'course-hrm-master',
+    code: 'HRM-101',
+    name: 'HUMAN RESOURCE MANAGEMENT',
+    description: 'Comprehensive Question Bank covering Human Resource Management, Strategic HRD, Mentoring, and Organizational Development.',
+    totalQuestions: 135,
+    weeks: [0, 1, 2, 3, 4, 5, 6, 7, 8, 9, 10, 11, 12],
+    status: 'published',
+    sourcePdfName: 'Week 0.pdf - WEEK 12.pdf',
+    createdAt: '2026-10-12T13:00:00.000Z',
+    publishedAt: '2026-10-12T13:00:00.000Z',
+  },
+  {
     id: 'course-iiot-cps-master',
     code: 'IIOT-CPS-101',
     name: 'Industrial IoT 4.0 and Cyber Physical Systems',
@@ -2935,8 +2947,2578 @@ const IIOT_WEEK_10_QUESTIONS: Question[] = [
   }
 ];
 
+
+const HRM_QUESTIONS: Question[] = [
+  {
+    "id": "q-hrm-w0-1",
+    "courseId": "course-hrm-master",
+    "weekNumber": 0,
+    "originalQuestionNumber": 1,
+    "sourcePdfName": "Week 0.pdf",
+    "questionText": "How does training and development offer competitive advantage to an organization?",
+    "options": [
+      "Reduces performance deficiencies",
+      "Ensures employee compliance",
+      "Increases supervisor's role",
+      "None of the above"
+    ],
+    "correctAnswerIndex": 0,
+    "answerSource": "Manually Verified",
+    "isApproved": true,
+    "explanation": "",
+    "createdAt": "2026-10-12T13:00:00.000Z"
+  },
+  {
+    "id": "q-hrm-w0-2",
+    "courseId": "course-hrm-master",
+    "weekNumber": 0,
+    "originalQuestionNumber": 2,
+    "sourcePdfName": "Week 0.pdf",
+    "questionText": "Which of these is an off \u2013 the \u2013 job training method?",
+    "options": [
+      "Games and simulation",
+      "Job rotation",
+      "Orientation training",
+      "Coaching"
+    ],
+    "correctAnswerIndex": 0,
+    "answerSource": "Manually Verified",
+    "isApproved": true,
+    "explanation": "",
+    "createdAt": "2026-10-12T13:00:00.000Z"
+  },
+  {
+    "id": "q-hrm-w0-3",
+    "courseId": "course-hrm-master",
+    "weekNumber": 0,
+    "originalQuestionNumber": 3,
+    "sourcePdfName": "Week 0.pdf",
+    "questionText": "Match the following techniques of training with their correct description:\n1.Internships \u2014\u2014 A. acting out situations that might occur in the workplace\n2. Outward \u2013 bound training \u2014\u2014 B. Games to test ability to plan ahead\n3. Mirroring \u2014\u2014 C. Training with an external perspective\n4. Strategic planning \u2014\u2014 D. Adventure sports for teams\n5. Role playing \u2014\u2014 E. training the colleges or universities pass outs about the practical aspects of their study",
+    "options": [
+      "1-E, 2-D, 3-C, 4-B, 5-A",
+      "1-A, 2-D, 3-E, 4-C, 5-B",
+      "1-D, 2-A, 3-C, 4-E, 5-B",
+      "1-C, 2-D, 3-B, 4-A, 5-E"
+    ],
+    "correctAnswerIndex": 0,
+    "answerSource": "Manually Verified",
+    "isApproved": true,
+    "explanation": "",
+    "createdAt": "2026-10-12T13:00:00.000Z"
+  },
+  {
+    "id": "q-hrm-w0-4",
+    "courseId": "course-hrm-master",
+    "weekNumber": 0,
+    "originalQuestionNumber": 4,
+    "sourcePdfName": "Week 0.pdf",
+    "questionText": "The unique characteristics of a learning organization is that:",
+    "options": [
+      "the members learn about each other",
+      "it has the capacity to gather new information and use it for improvement",
+      "it focuses on selecting new employees who love learning and are highly skilled",
+      "employees are rewarded for submitting creative suggestions and participating in their implementation"
+    ],
+    "correctAnswerIndex": 1,
+    "answerSource": "Manually Verified",
+    "isApproved": true,
+    "explanation": "",
+    "createdAt": "2026-10-12T13:00:00.000Z"
+  },
+  {
+    "id": "q-hrm-w0-5",
+    "courseId": "course-hrm-master",
+    "weekNumber": 0,
+    "originalQuestionNumber": 5,
+    "sourcePdfName": "Week 0.pdf",
+    "questionText": "A set of systematic and planned activities designed by an organization to provide its members with the opportunities to learn necessary skills to meet current and future job demands is known as:",
+    "options": [
+      "Human resource management",
+      "Change management",
+      "Human resource development",
+      "Career Planning"
+    ],
+    "correctAnswerIndex": 2,
+    "answerSource": "Manually Verified",
+    "isApproved": true,
+    "explanation": "",
+    "createdAt": "2026-10-12T13:00:00.000Z"
+  },
+  {
+    "id": "q-hrm-w0-6",
+    "courseId": "course-hrm-master",
+    "weekNumber": 0,
+    "originalQuestionNumber": 6,
+    "sourcePdfName": "Week 0.pdf",
+    "questionText": "An important advantage of on-the-job training is that it",
+    "options": [
+      "provides immediate transfer of training",
+      "allows employees to learn at their own rate without any pressure to produce results",
+      "provides for greater group interaction",
+      "reduces the costs of supervision"
+    ],
+    "correctAnswerIndex": 0,
+    "answerSource": "Manually Verified",
+    "isApproved": true,
+    "explanation": "",
+    "createdAt": "2026-10-12T13:00:00.000Z"
+  },
+  {
+    "id": "q-hrm-w0-7",
+    "courseId": "course-hrm-master",
+    "weekNumber": 0,
+    "originalQuestionNumber": 7,
+    "sourcePdfName": "Week 0.pdf",
+    "questionText": "The core of all HRD efforts is:",
+    "options": [
+      "Better coordination of efforts",
+      "Internal control",
+      "Workplace Learning",
+      "Employee satisfaction"
+    ],
+    "correctAnswerIndex": 2,
+    "answerSource": "Manually Verified",
+    "isApproved": true,
+    "explanation": "",
+    "createdAt": "2026-10-12T13:00:00.000Z"
+  },
+  {
+    "id": "q-hrm-w0-8",
+    "courseId": "course-hrm-master",
+    "weekNumber": 0,
+    "originalQuestionNumber": 8,
+    "sourcePdfName": "Week 0.pdf",
+    "questionText": "The best reason for organizing a training program is because:",
+    "options": [
+      "it contributes to the organization's goals and objectives",
+      "it has been highly advertised.",
+      "competitors are using the training.",
+      "concern about federal agency pressure."
+    ],
+    "correctAnswerIndex": 0,
+    "answerSource": "Manually Verified",
+    "isApproved": true,
+    "explanation": "",
+    "createdAt": "2026-10-12T13:00:00.000Z"
+  },
+  {
+    "id": "q-hrm-w0-9",
+    "courseId": "course-hrm-master",
+    "weekNumber": 0,
+    "originalQuestionNumber": 9,
+    "sourcePdfName": "Week 0.pdf",
+    "questionText": "HRD seeks to develop people's:",
+    "options": [
+      "Knowledge",
+      "Expertise",
+      "Productivity",
+      "All of these"
+    ],
+    "correctAnswerIndex": 3,
+    "answerSource": "Manually Verified",
+    "isApproved": true,
+    "explanation": "",
+    "createdAt": "2026-10-12T13:00:00.000Z"
+  },
+  {
+    "id": "q-hrm-w0-10",
+    "courseId": "course-hrm-master",
+    "weekNumber": 0,
+    "originalQuestionNumber": 10,
+    "sourcePdfName": "Week 0.pdf",
+    "questionText": "The first HRD intervention experienced by an employee when they join an organization is usually:",
+    "options": [
+      "Mentoring",
+      "Orientation",
+      "On-the-job training",
+      "Coaching"
+    ],
+    "correctAnswerIndex": 1,
+    "answerSource": "Manually Verified",
+    "isApproved": true,
+    "explanation": "",
+    "createdAt": "2026-10-12T13:00:00.000Z"
+  },
+  {
+    "id": "q-hrm-w0-11",
+    "courseId": "course-hrm-master",
+    "weekNumber": 0,
+    "originalQuestionNumber": 11,
+    "sourcePdfName": "Week 0.pdf",
+    "questionText": "Learning undertaken for the development of skills for work and in work, on-job or off-job, to enable effective performance in a job or role is known as:",
+    "options": [
+      "Coaching",
+      "Education",
+      "Training",
+      "Mentoring"
+    ],
+    "correctAnswerIndex": 2,
+    "answerSource": "Manually Verified",
+    "isApproved": true,
+    "explanation": "",
+    "createdAt": "2026-10-12T13:00:00.000Z"
+  },
+  {
+    "id": "q-hrm-w0-12",
+    "courseId": "course-hrm-master",
+    "weekNumber": 0,
+    "originalQuestionNumber": 12,
+    "sourcePdfName": "Week 0.pdf",
+    "questionText": "HRD activities are meant primarily for employees and workers, not for executives:",
+    "options": [
+      "True",
+      "False",
+      "Option C",
+      "Option D"
+    ],
+    "correctAnswerIndex": 1,
+    "answerSource": "Manually Verified",
+    "isApproved": true,
+    "explanation": "",
+    "createdAt": "2026-10-12T13:00:00.000Z"
+  },
+  {
+    "id": "q-hrm-w0-13",
+    "courseId": "course-hrm-master",
+    "weekNumber": 0,
+    "originalQuestionNumber": 13,
+    "sourcePdfName": "Week 0.pdf",
+    "questionText": "HRD system must enable their employees to identify their hidden potential and make them competent enough to exploit their talent in an optimum manner so that they could contribute their efforts in attaining organizational goals. This statement reflects which principle of HRD:",
+    "options": [
+      "Principle of Development of Organizational Capability",
+      "Principle of Potential Maximization",
+      "Principle of Autonomy Maximization",
+      "Principle of Participative Decision-making"
+    ],
+    "correctAnswerIndex": 1,
+    "answerSource": "Manually Verified",
+    "isApproved": true,
+    "explanation": "",
+    "createdAt": "2026-10-12T13:00:00.000Z"
+  },
+  {
+    "id": "q-hrm-w0-14",
+    "courseId": "course-hrm-master",
+    "weekNumber": 0,
+    "originalQuestionNumber": 14,
+    "sourcePdfName": "Week 0.pdf",
+    "questionText": "The process of determining the gap between what are the capabilities of the current employee and what they are required to do is known as:",
+    "options": [
+      "HRD Design",
+      "HRD Implementation",
+      "HRD Evaluation",
+      "HRD Needs Assessment"
+    ],
+    "correctAnswerIndex": 3,
+    "answerSource": "Manually Verified",
+    "isApproved": true,
+    "explanation": "",
+    "createdAt": "2026-10-12T13:00:00.000Z"
+  },
+  {
+    "id": "q-hrm-w0-15",
+    "courseId": "course-hrm-master",
+    "weekNumber": 0,
+    "originalQuestionNumber": 15,
+    "sourcePdfName": "Week 0.pdf",
+    "questionText": "HRD programs must respond to job changes and integrate the long-term plans and strategies of the organization to ensure the efficient and effective use of resources.",
+    "options": [
+      "True",
+      "False",
+      "Option C",
+      "Option D"
+    ],
+    "correctAnswerIndex": 0,
+    "answerSource": "Manually Verified",
+    "isApproved": true,
+    "explanation": "",
+    "createdAt": "2026-10-12T13:00:00.000Z"
+  },
+  {
+    "id": "q-hrm-w1-1",
+    "courseId": "course-hrm-master",
+    "weekNumber": 1,
+    "originalQuestionNumber": 1,
+    "sourcePdfName": "WEEK 01.pdf",
+    "questionText": "Which of the following best defines Human Resource Development?",
+    "options": [
+      "Human resource development is the process of increasing the capacity of the human resource through development",
+      "Human resource development is fostering short-term work-related learning capacity at the individual, group, and organizational levels",
+      "set of systematic and planned activities designed by an organization to provide its members with the necessary skills to meet the financial demands of the organization.",
+      "Human resource development is fostering short-term work-related learning capacity at the organizational level."
+    ],
+    "correctAnswerIndex": 0,
+    "answerSource": "PDF",
+    "isApproved": true,
+    "explanation": "",
+    "createdAt": "2026-10-12T13:00:00.000Z"
+  },
+  {
+    "id": "q-hrm-w1-2",
+    "courseId": "course-hrm-master",
+    "weekNumber": 1,
+    "originalQuestionNumber": 2,
+    "sourcePdfName": "WEEK 01.pdf",
+    "questionText": "Who coined the term \"Human Resource Development\" (HRD)?",
+    "options": [
+      "Hamlin and Stewart",
+      "Leonard Nadler",
+      "Robert Owen",
+      "Fomburn"
+    ],
+    "correctAnswerIndex": 1,
+    "answerSource": "PDF",
+    "isApproved": true,
+    "explanation": "",
+    "createdAt": "2026-10-12T13:00:00.000Z"
+  },
+  {
+    "id": "q-hrm-w1-3",
+    "courseId": "course-hrm-master",
+    "weekNumber": 1,
+    "originalQuestionNumber": 3,
+    "sourcePdfName": "WEEK 01.pdf",
+    "questionText": "Who proposed the five principles of a learning organization?",
+    "options": [
+      "Robert Owen",
+      "T.V Rao",
+      "Peter Senge",
+      "Chris Argyris"
+    ],
+    "correctAnswerIndex": 2,
+    "answerSource": "PDF",
+    "isApproved": true,
+    "explanation": "",
+    "createdAt": "2026-10-12T13:00:00.000Z"
+  },
+  {
+    "id": "q-hrm-w1-4",
+    "courseId": "course-hrm-master",
+    "weekNumber": 1,
+    "originalQuestionNumber": 4,
+    "sourcePdfName": "WEEK 01.pdf",
+    "questionText": "Employee orientation and Coaching are related to which of the following functions of HRD?",
+    "options": [
+      "Scholarship",
+      "Organizational development",
+      "Training",
+      "Personal growth"
+    ],
+    "correctAnswerIndex": 2,
+    "answerSource": "PDF",
+    "isApproved": true,
+    "explanation": "",
+    "createdAt": "2026-10-12T13:00:00.000Z"
+  },
+  {
+    "id": "q-hrm-w1-5",
+    "courseId": "course-hrm-master",
+    "weekNumber": 1,
+    "originalQuestionNumber": 5,
+    "sourcePdfName": "WEEK 01.pdf",
+    "questionText": "Which concept refers to the planned effort to improve organizational effectiveness and the well-being of organizational members by applying behavioral science knowledge?",
+    "options": [
+      "Organization learning",
+      "Organizational Development",
+      "Education",
+      "Counselling"
+    ],
+    "correctAnswerIndex": 1,
+    "answerSource": "PDF",
+    "isApproved": true,
+    "explanation": "",
+    "createdAt": "2026-10-12T13:00:00.000Z"
+  },
+  {
+    "id": "q-hrm-w1-6",
+    "courseId": "course-hrm-master",
+    "weekNumber": 1,
+    "originalQuestionNumber": 6,
+    "sourcePdfName": "WEEK 01.pdf",
+    "questionText": "At which level of Human Resource Development (HRD) are professional associations, government departments, and voluntary organizations represented?",
+    "options": [
+      "micro level",
+      "individual level",
+      "macro level",
+      "both macro and micro levels"
+    ],
+    "correctAnswerIndex": 2,
+    "answerSource": "PDF",
+    "isApproved": true,
+    "explanation": "",
+    "createdAt": "2026-10-12T13:00:00.000Z"
+  },
+  {
+    "id": "q-hrm-w1-7",
+    "courseId": "course-hrm-master",
+    "weekNumber": 1,
+    "originalQuestionNumber": 7,
+    "sourcePdfName": "WEEK 01.pdf",
+    "questionText": "Which of the following is true in the context of HRD?",
+    "options": [
+      "reactiveness",
+      "routine",
+      "administrative",
+      "proactiveness"
+    ],
+    "correctAnswerIndex": 3,
+    "answerSource": "PDF",
+    "isApproved": true,
+    "explanation": "",
+    "createdAt": "2026-10-12T13:00:00.000Z"
+  },
+  {
+    "id": "q-hrm-w1-8",
+    "courseId": "course-hrm-master",
+    "weekNumber": 1,
+    "originalQuestionNumber": 8,
+    "sourcePdfName": "WEEK 01.pdf",
+    "questionText": "Define the term career development?",
+    "options": [
+      "Process by which groups progress through single change actions to achieve their professional achievement as per the organization",
+      "Developing the skills and attitude not directly related to job linked to personal growth and development",
+      "Process of improving an organization\u2019s effectiveness and member\u2019s well-being through the application of behavioral science concepts",
+      "Process by which individuals progress through series of changes until they achieve their personal level of maximum achievement."
+    ],
+    "correctAnswerIndex": 3,
+    "answerSource": "PDF",
+    "isApproved": true,
+    "explanation": "",
+    "createdAt": "2026-10-12T13:00:00.000Z"
+  },
+  {
+    "id": "q-hrm-w1-9",
+    "courseId": "course-hrm-master",
+    "weekNumber": 1,
+    "originalQuestionNumber": 9,
+    "sourcePdfName": "WEEK 01.pdf",
+    "questionText": "Which of the following is not a core principle of andragogy?",
+    "options": [
+      "Motivation",
+      "Self-concept of the learner",
+      "Forced conditioning of the learner",
+      "Readiness to learn and practice"
+    ],
+    "correctAnswerIndex": 2,
+    "answerSource": "PDF",
+    "isApproved": true,
+    "explanation": "",
+    "createdAt": "2026-10-12T13:00:00.000Z"
+  },
+  {
+    "id": "q-hrm-w1-10",
+    "courseId": "course-hrm-master",
+    "weekNumber": 1,
+    "originalQuestionNumber": 10,
+    "sourcePdfName": "WEEK 01.pdf",
+    "questionText": "In which role does the HRD professional implement coaching activities?",
+    "options": [
+      "HRD professional as an instructor",
+      "HRD professional as a consultant",
+      "HRD professional as a researcher",
+      "HRD professional as an executive"
+    ],
+    "correctAnswerIndex": 1,
+    "answerSource": "PDF",
+    "isApproved": true,
+    "explanation": "",
+    "createdAt": "2026-10-12T13:00:00.000Z"
+  },
+  {
+    "id": "q-hrm-w2-1",
+    "courseId": "course-hrm-master",
+    "weekNumber": 2,
+    "originalQuestionNumber": 1,
+    "sourcePdfName": "WEEK 2.pdf",
+    "questionText": "Which of the following theories is related to the psychological preposition of HRD?",
+    "options": [
+      "Scarce resource theory",
+      "Human capital theory",
+      "Chaos theory",
+      "Gestalt theory"
+    ],
+    "correctAnswerIndex": 3,
+    "answerSource": "PDF",
+    "isApproved": true,
+    "explanation": "",
+    "createdAt": "2026-10-12T13:00:00.000Z"
+  },
+  {
+    "id": "q-hrm-w2-2",
+    "courseId": "course-hrm-master",
+    "weekNumber": 2,
+    "originalQuestionNumber": 2,
+    "sourcePdfName": "WEEK 2.pdf",
+    "questionText": "What is the focus of the \"Economic theory\" of HRD?",
+    "options": [
+      "Focus on the core issues of efficient, effective resource utilization to meet productive goals in a competitive environment.",
+      "Focus on the core human aspects of developing human resources as well",
+      "as focus on the complex and dynamic interactions of environments, organizations, work processes, and group/individual variables operating at any point in time and over time.",
+      "Focus on enhancing knowledge and skills."
+    ],
+    "correctAnswerIndex": 0,
+    "answerSource": "PDF",
+    "isApproved": true,
+    "explanation": "",
+    "createdAt": "2026-10-12T13:00:00.000Z"
+  },
+  {
+    "id": "q-hrm-w2-3",
+    "courseId": "course-hrm-master",
+    "weekNumber": 2,
+    "originalQuestionNumber": 3,
+    "sourcePdfName": "WEEK 2.pdf",
+    "questionText": "Which of the following proposed cognitive theories?",
+    "options": [
+      "Watson, Pavlov",
+      "Piaget, Bruner, Tolman",
+      "Kofka, Kohler",
+      "Lewin"
+    ],
+    "correctAnswerIndex": 1,
+    "answerSource": "PDF",
+    "isApproved": true,
+    "explanation": "",
+    "createdAt": "2026-10-12T13:00:00.000Z"
+  },
+  {
+    "id": "q-hrm-w2-4",
+    "courseId": "course-hrm-master",
+    "weekNumber": 2,
+    "originalQuestionNumber": 4,
+    "sourcePdfName": "WEEK 2.pdf",
+    "questionText": "Which of the following refers to Human Capital Theory?",
+    "options": [
+      "Human capital refers to the goals and objectives achieved by employees at all levels.",
+      "Human capital refers to the knowledge, expertise, and skills accumulated through education and training.",
+      "Human capital refers to the revenue generated by employees in a prescribed time frame.",
+      "Human capital refers to employees' short-term development in terms of knowledge."
+    ],
+    "correctAnswerIndex": 1,
+    "answerSource": "PDF",
+    "isApproved": true,
+    "explanation": "",
+    "createdAt": "2026-10-12T13:00:00.000Z"
+  },
+  {
+    "id": "q-hrm-w2-5",
+    "courseId": "course-hrm-master",
+    "weekNumber": 2,
+    "originalQuestionNumber": 5,
+    "sourcePdfName": "WEEK 2.pdf",
+    "questionText": "Leadership falls under which of the following levels of Garavan's Model of Strategic Human Resource Development?",
+    "options": [
+      "Level 1",
+      "Level 2",
+      "Level 3",
+      "Level 4"
+    ],
+    "correctAnswerIndex": 1,
+    "answerSource": "PDF",
+    "isApproved": true,
+    "explanation": "",
+    "createdAt": "2026-10-12T13:00:00.000Z"
+  },
+  {
+    "id": "q-hrm-w2-6",
+    "courseId": "course-hrm-master",
+    "weekNumber": 2,
+    "originalQuestionNumber": 6,
+    "sourcePdfName": "WEEK 2.pdf",
+    "questionText": "Which of the following steps ensures speedy delivery of SHRD?",
+    "options": [
+      "utilize competencies to drive SHRD interventions",
+      "blend learning solutions synergistically",
+      "utilize just-in-time learning strategies",
+      "promote one-size-fits-all solutions"
+    ],
+    "correctAnswerIndex": 0,
+    "answerSource": "PDF",
+    "isApproved": true,
+    "explanation": "",
+    "createdAt": "2026-10-12T13:00:00.000Z"
+  },
+  {
+    "id": "q-hrm-w2-7",
+    "courseId": "course-hrm-master",
+    "weekNumber": 2,
+    "originalQuestionNumber": 7,
+    "sourcePdfName": "WEEK 2.pdf",
+    "questionText": "Which of the following is included in \"level 4\" of Garavan's Model of SHRD?",
+    "options": [
+      "employability and careers",
+      "global environment",
+      "job values and uniqueness",
+      "culture"
+    ],
+    "correctAnswerIndex": 0,
+    "answerSource": "PDF",
+    "isApproved": true,
+    "explanation": "",
+    "createdAt": "2026-10-12T13:00:00.000Z"
+  },
+  {
+    "id": "q-hrm-w2-8",
+    "courseId": "course-hrm-master",
+    "weekNumber": 2,
+    "originalQuestionNumber": 8,
+    "sourcePdfName": "WEEK 2.pdf",
+    "questionText": "Which of the following is included in the transactional category of Strategic HRD activities?",
+    "options": [
+      "training and development records",
+      "learning by doing",
+      "knowledge management",
+      "employee counselling"
+    ],
+    "correctAnswerIndex": 0,
+    "answerSource": "PDF",
+    "isApproved": true,
+    "explanation": "",
+    "createdAt": "2026-10-12T13:00:00.000Z"
+  },
+  {
+    "id": "q-hrm-w2-9",
+    "courseId": "course-hrm-master",
+    "weekNumber": 2,
+    "originalQuestionNumber": 9,
+    "sourcePdfName": "WEEK 2.pdf",
+    "questionText": "What do you understand by the \"skill\" of a person?",
+    "options": [
+      "general capacities related to the performance of specific tasks",
+      "An understanding of the factors or principles related to a specific subject",
+      "combines abilities and capacities, generally the result of training",
+      "a person's general feelings of favor or disfavor towards something"
+    ],
+    "correctAnswerIndex": 2,
+    "answerSource": "PDF",
+    "isApproved": true,
+    "explanation": "",
+    "createdAt": "2026-10-12T13:00:00.000Z"
+  },
+  {
+    "id": "q-hrm-w2-10",
+    "courseId": "course-hrm-master",
+    "weekNumber": 2,
+    "originalQuestionNumber": 10,
+    "sourcePdfName": "WEEK 2.pdf",
+    "questionText": "Which of the following is true in the context of the resource-based approach?",
+    "options": [
+      "SHRD can be viewed as an investment in human capital, and the decision to participate in training activities and acquire skills is viewed as a rational choice on the part of individuals",
+      "Human resources are durable, difficult to imitate and substitute, and enable the organization to differentiate itself from other competitors.",
+      "Use of HRD practices as tools to shape patterns of behavior that help organizations achieve goals and objectives",
+      "Different organizational goals and objectives require different types of behaviors and, therefore, different SHRD practices."
+    ],
+    "correctAnswerIndex": 1,
+    "answerSource": "PDF",
+    "isApproved": true,
+    "explanation": "",
+    "createdAt": "2026-10-12T13:00:00.000Z"
+  },
+  {
+    "id": "q-hrm-w3-1",
+    "courseId": "course-hrm-master",
+    "weekNumber": 3,
+    "originalQuestionNumber": 1,
+    "sourcePdfName": "WEEK 03.pdf",
+    "questionText": "Facts, principles, and goals are components of which of the following determinants of performance?",
+    "options": [
+      "developmental knowledge",
+      "declarative knowledge",
+      "decisive knowledge",
+      "procedural knowledge"
+    ],
+    "correctAnswerIndex": 1,
+    "answerSource": "PDF",
+    "isApproved": true,
+    "explanation": "",
+    "createdAt": "2026-10-12T13:00:00.000Z"
+  },
+  {
+    "id": "q-hrm-w3-2",
+    "courseId": "course-hrm-master",
+    "weekNumber": 3,
+    "originalQuestionNumber": 2,
+    "sourcePdfName": "WEEK 03.pdf",
+    "questionText": "What are the determinants of performance?",
+    "options": [
+      "developmental knowledge, productive knowledge, and motivation",
+      "developmental knowledge, procedural knowledge, and motivation",
+      "declarative knowledge, predictive knowledge, motivation",
+      "declarative knowledge, procedural knowledge, motivation"
+    ],
+    "correctAnswerIndex": 3,
+    "answerSource": "PDF",
+    "isApproved": true,
+    "explanation": "",
+    "createdAt": "2026-10-12T13:00:00.000Z"
+  },
+  {
+    "id": "q-hrm-w3-3",
+    "courseId": "course-hrm-master",
+    "weekNumber": 3,
+    "originalQuestionNumber": 3,
+    "sourcePdfName": "WEEK 03.pdf",
+    "questionText": "Cognitive skill is an example of which of the following determinants of performance?",
+    "options": [
+      "Declarative knowledge",
+      "Procedural knowledge",
+      "Factual knowledge",
+      "Documented knowledge"
+    ],
+    "correctAnswerIndex": 1,
+    "answerSource": "PDF",
+    "isApproved": true,
+    "explanation": "",
+    "createdAt": "2026-10-12T13:00:00.000Z"
+  },
+  {
+    "id": "q-hrm-w3-4",
+    "courseId": "course-hrm-master",
+    "weekNumber": 3,
+    "originalQuestionNumber": 4,
+    "sourcePdfName": "WEEK 03.pdf",
+    "questionText": "Which of the following options is a component of motivation?",
+    "options": [
+      "principles",
+      "level of efforts",
+      "goals",
+      "cognitive skills"
+    ],
+    "correctAnswerIndex": 1,
+    "answerSource": "PDF",
+    "isApproved": true,
+    "explanation": "",
+    "createdAt": "2026-10-12T13:00:00.000Z"
+  },
+  {
+    "id": "q-hrm-w3-5",
+    "courseId": "course-hrm-master",
+    "weekNumber": 3,
+    "originalQuestionNumber": 5,
+    "sourcePdfName": "WEEK 03.pdf",
+    "questionText": "What are the two types of performance facets that matter most for employees?",
+    "options": [
+      "task performance, contextual performance",
+      "skill performance, task performance",
+      "task performance, continuous performance",
+      "contextual performance, team performance"
+    ],
+    "correctAnswerIndex": 0,
+    "answerSource": "PDF",
+    "isApproved": true,
+    "explanation": "",
+    "createdAt": "2026-10-12T13:00:00.000Z"
+  },
+  {
+    "id": "q-hrm-w3-6",
+    "courseId": "course-hrm-master",
+    "weekNumber": 3,
+    "originalQuestionNumber": 6,
+    "sourcePdfName": "WEEK 03.pdf",
+    "questionText": "What is the meaning of contextual performance?",
+    "options": [
+      "Activities that transform raw materials into the goods and services that the organization produces",
+      "Activities that help with the transformation process by replenishing the supply of raw materials, distributing its finished products, or providing important planning, coordination, supervising, or staff functions that enable the organization to function effectively and efficiently",
+      "Those behaviors contribute to the organization's effectiveness by providing a good environment for task performance.",
+      "Those behaviors that contribute to the organization's efficiency by providing a good training program and an organizational structure that enables task performance."
+    ],
+    "correctAnswerIndex": 2,
+    "answerSource": "PDF",
+    "isApproved": true,
+    "explanation": "",
+    "createdAt": "2026-10-12T13:00:00.000Z"
+  },
+  {
+    "id": "q-hrm-w3-7",
+    "courseId": "course-hrm-master",
+    "weekNumber": 3,
+    "originalQuestionNumber": 7,
+    "sourcePdfName": "WEEK 03.pdf",
+    "questionText": "Which of the following is true in the context of task performance?",
+    "options": [
+      "Likely to be role prescribed",
+      "Fairly similar across jobs",
+      "Not likely to be role prescribed",
+      "Antecedent: personality"
+    ],
+    "correctAnswerIndex": 0,
+    "answerSource": "PDF",
+    "isApproved": true,
+    "explanation": "",
+    "createdAt": "2026-10-12T13:00:00.000Z"
+  },
+  {
+    "id": "q-hrm-w3-8",
+    "courseId": "course-hrm-master",
+    "weekNumber": 3,
+    "originalQuestionNumber": 8,
+    "sourcePdfName": "WEEK 03.pdf",
+    "questionText": "Define \"voice behavior\"?",
+    "options": [
+      "Behavior that emphasizes expression of constructive challenge to improve rather than merely criticize",
+      "Behavior that emphasizes expression of destructive challenge to improve and criticizing",
+      "Behavior that emphasizes the expression of organizational culture to perform a particular task",
+      "Behavior that emphasizes the expression of employees and how they behave to understand the task, and not criticizing"
+    ],
+    "correctAnswerIndex": 0,
+    "answerSource": "PDF",
+    "isApproved": true,
+    "explanation": "",
+    "createdAt": "2026-10-12T13:00:00.000Z"
+  },
+  {
+    "id": "q-hrm-w3-9",
+    "courseId": "course-hrm-master",
+    "weekNumber": 3,
+    "originalQuestionNumber": 9,
+    "sourcePdfName": "WEEK 03.pdf",
+    "questionText": "Which of the following is an example of a result-oriented approach to performance measurement?",
+    "options": [
+      "personality",
+      "Good teamwork",
+      "Good attendance",
+      "Customer satisfaction"
+    ],
+    "correctAnswerIndex": 3,
+    "answerSource": "PDF",
+    "isApproved": true,
+    "explanation": "",
+    "createdAt": "2026-10-12T13:00:00.000Z"
+  },
+  {
+    "id": "q-hrm-w3-10",
+    "courseId": "course-hrm-master",
+    "weekNumber": 3,
+    "originalQuestionNumber": 10,
+    "sourcePdfName": "WEEK 03.pdf",
+    "questionText": "Which of the following best explains performance standards?",
+    "options": [
+      "Yardsticks are designed to help people understand the extent to which the objective has been achieved.",
+      "Yardsticks are designed to understand who has to achieve the objective",
+      "Yardsticks designed to help people understand the performance standard are designed",
+      "Each aspect can be considered a criterion to judge the extent to which an objective has been designed"
+    ],
+    "correctAnswerIndex": 0,
+    "answerSource": "PDF",
+    "isApproved": true,
+    "explanation": "",
+    "createdAt": "2026-10-12T13:00:00.000Z"
+  },
+  {
+    "id": "q-hrm-w4-1",
+    "courseId": "course-hrm-master",
+    "weekNumber": 4,
+    "originalQuestionNumber": 1,
+    "sourcePdfName": "WEEK 04.pdf",
+    "questionText": "\"Role play\" is an example of which type of training delivery method?",
+    "options": [
+      "on-the-job training",
+      "classroom training",
+      "self-paced training",
+      "simulation training"
+    ],
+    "correctAnswerIndex": 1,
+    "answerSource": "PDF",
+    "isApproved": true,
+    "explanation": "",
+    "createdAt": "2026-10-12T13:00:00.000Z"
+  },
+  {
+    "id": "q-hrm-w4-2",
+    "courseId": "course-hrm-master",
+    "weekNumber": 4,
+    "originalQuestionNumber": 2,
+    "sourcePdfName": "WEEK 04.pdf",
+    "questionText": "Which of the following is an example of experiential learning?",
+    "options": [
+      "outdoor training",
+      "discussion",
+      "self-learning",
+      "job instruction"
+    ],
+    "correctAnswerIndex": 0,
+    "answerSource": "PDF",
+    "isApproved": true,
+    "explanation": "",
+    "createdAt": "2026-10-12T13:00:00.000Z"
+  },
+  {
+    "id": "q-hrm-w4-3",
+    "courseId": "course-hrm-master",
+    "weekNumber": 4,
+    "originalQuestionNumber": 3,
+    "sourcePdfName": "WEEK 04.pdf",
+    "questionText": "What do you understand by role-play learning?",
+    "options": [
+      "Require trainees to gather information, analyze it, and make decisions.",
+      "Provides participants with an opportunity to develop skills by presenting a problem without a solution.",
+      "Demonstrates key behaviors to replicate and provides trainees with opportunities to practice them.",
+      "Requires trainees to assume a character and act out the role in a make-believe scenario or series of scenarios"
+    ],
+    "correctAnswerIndex": 3,
+    "answerSource": "PDF",
+    "isApproved": true,
+    "explanation": "",
+    "createdAt": "2026-10-12T13:00:00.000Z"
+  },
+  {
+    "id": "q-hrm-w4-4",
+    "courseId": "course-hrm-master",
+    "weekNumber": 4,
+    "originalQuestionNumber": 4,
+    "sourcePdfName": "WEEK 04.pdf",
+    "questionText": "Behavior modeling is based on the principles of which theory?",
+    "options": [
+      "social exchange theory",
+      "systems theory",
+      "social learning theory",
+      "constructive learning theory"
+    ],
+    "correctAnswerIndex": 2,
+    "answerSource": "PDF",
+    "isApproved": true,
+    "explanation": "",
+    "createdAt": "2026-10-12T13:00:00.000Z"
+  },
+  {
+    "id": "q-hrm-w4-5",
+    "courseId": "course-hrm-master",
+    "weekNumber": 4,
+    "originalQuestionNumber": 5,
+    "sourcePdfName": "WEEK 04.pdf",
+    "questionText": "What do you understand by Kaizen?",
+    "options": [
+      "Focuses on continuous improvement of business processes",
+      "Focuses on individual learning about the improvement of business processes",
+      "Quality standard with a goal of no more than 3.4 defects per million processes",
+      "Focuses on the continuous behavioral and personality development of employees"
+    ],
+    "correctAnswerIndex": 0,
+    "answerSource": "PDF",
+    "isApproved": true,
+    "explanation": "",
+    "createdAt": "2026-10-12T13:00:00.000Z"
+  },
+  {
+    "id": "q-hrm-w4-6",
+    "courseId": "course-hrm-master",
+    "weekNumber": 4,
+    "originalQuestionNumber": 6,
+    "sourcePdfName": "WEEK 04.pdf",
+    "questionText": "What is the first step of job instruction training?",
+    "options": [
+      "prepare the worker",
+      "Prepare the trainer",
+      "present the task",
+      "arrange the resources"
+    ],
+    "correctAnswerIndex": 0,
+    "answerSource": "PDF",
+    "isApproved": true,
+    "explanation": "",
+    "createdAt": "2026-10-12T13:00:00.000Z"
+  },
+  {
+    "id": "q-hrm-w4-7",
+    "courseId": "course-hrm-master",
+    "weekNumber": 4,
+    "originalQuestionNumber": 7,
+    "sourcePdfName": "WEEK 04.pdf",
+    "questionText": "What is the full form of CBT?",
+    "options": [
+      "corporate-based training",
+      "communication-based training",
+      "culture-based training",
+      "computer-based training"
+    ],
+    "correctAnswerIndex": 3,
+    "answerSource": "PDF",
+    "isApproved": true,
+    "explanation": "",
+    "createdAt": "2026-10-12T13:00:00.000Z"
+  },
+  {
+    "id": "q-hrm-w4-8",
+    "courseId": "course-hrm-master",
+    "weekNumber": 4,
+    "originalQuestionNumber": 8,
+    "sourcePdfName": "WEEK 04.pdf",
+    "questionText": "What is summative evaluation?",
+    "options": [
+      "to render a point-wise judgment or discussion through measurement and assessment of the program process.",
+      "to render a summary judgment or conclusion through measurement and assessment of program outcomes.",
+      "to identify weaknesses in instructional material, methods, or learning objectives with the intention to develop prescriptive solutions during training program design and development",
+      "to identify strength in instructional material, process, or progress with the intention to develop prescriptive solutions after training program design and development"
+    ],
+    "correctAnswerIndex": 1,
+    "answerSource": "PDF",
+    "isApproved": true,
+    "explanation": "",
+    "createdAt": "2026-10-12T13:00:00.000Z"
+  },
+  {
+    "id": "q-hrm-w4-9",
+    "courseId": "course-hrm-master",
+    "weekNumber": 4,
+    "originalQuestionNumber": 9,
+    "sourcePdfName": "WEEK 04.pdf",
+    "questionText": "In the model of evaluation, what does CIPP stand for?",
+    "options": [
+      "Context, Input, Process, Participate",
+      "Context, Input, Progress, Produce",
+      "Context, Input, Process, Product",
+      "Context, Inference, Process, Product"
+    ],
+    "correctAnswerIndex": 2,
+    "answerSource": "PDF",
+    "isApproved": true,
+    "explanation": "",
+    "createdAt": "2026-10-12T13:00:00.000Z"
+  },
+  {
+    "id": "q-hrm-w4-10",
+    "courseId": "course-hrm-master",
+    "weekNumber": 4,
+    "originalQuestionNumber": 10,
+    "sourcePdfName": "WEEK 04.pdf",
+    "questionText": "\"Cognitive outcomes\", \"Skill-based outcomes,\" and \"Affective outcomes\" are part of which evaluation model?",
+    "options": [
+      "Kraiger, Ford, and Salas",
+      "Holton",
+      "Galvin",
+      "Brinkerhoff"
+    ],
+    "correctAnswerIndex": 0,
+    "answerSource": "PDF",
+    "isApproved": true,
+    "explanation": "",
+    "createdAt": "2026-10-12T13:00:00.000Z"
+  },
+  {
+    "id": "q-hrm-w5-1",
+    "courseId": "course-hrm-master",
+    "weekNumber": 5,
+    "originalQuestionNumber": 1,
+    "sourcePdfName": "WEEK 5.pdf",
+    "questionText": "Which of the following is NOT included in the content of the development plan?",
+    "options": [
+      "new skill or knowledge to be acquired, and how this will occur",
+      "Keep the needs of the organization only in mind",
+      "include a description of specific steps to be taken and specific objectives to reach",
+      "information on the resources and strategies to achieve the objectives the completion date"
+    ],
+    "correctAnswerIndex": 1,
+    "answerSource": "PDF",
+    "isApproved": true,
+    "explanation": "",
+    "createdAt": "2026-10-12T13:00:00.000Z"
+  },
+  {
+    "id": "q-hrm-w5-2",
+    "courseId": "course-hrm-master",
+    "weekNumber": 5,
+    "originalQuestionNumber": 2,
+    "sourcePdfName": "WEEK 5.pdf",
+    "questionText": "Which of the following is the best description of a coach?",
+    "options": [
+      "The one who provides one-on-one coaching on the job",
+      "The one who gets the professional service",
+      "in employment",
+      "The stakeholders, including more senior executives of the firm"
+    ],
+    "correctAnswerIndex": 0,
+    "answerSource": "PDF",
+    "isApproved": true,
+    "explanation": "",
+    "createdAt": "2026-10-12T13:00:00.000Z"
+  },
+  {
+    "id": "q-hrm-w5-3",
+    "courseId": "course-hrm-master",
+    "weekNumber": 5,
+    "originalQuestionNumber": 3,
+    "sourcePdfName": "WEEK 5.pdf",
+    "questionText": "Which of the following options is true in the context of collaborative ongoing performance?",
+    "options": [
+      "providing feedback",
+      "training employee",
+      "rewarding employee behavior",
+      "Concern with short-term performance"
+    ],
+    "correctAnswerIndex": 2,
+    "answerSource": "PDF",
+    "isApproved": true,
+    "explanation": "",
+    "createdAt": "2026-10-12T13:00:00.000Z"
+  },
+  {
+    "id": "q-hrm-w5-4",
+    "courseId": "course-hrm-master",
+    "weekNumber": 5,
+    "originalQuestionNumber": 4,
+    "sourcePdfName": "WEEK 5.pdf",
+    "questionText": "What is the role of the supervisor in coaching?",
+    "options": [
+      "Should be motivated to see the work group succeed",
+      "Is not responsible for the unit's effectiveness",
+      "Has the authority to supervise but not conduct a coaching program",
+      "Can use limited information on hand"
+    ],
+    "correctAnswerIndex": 0,
+    "answerSource": "PDF",
+    "isApproved": true,
+    "explanation": "",
+    "createdAt": "2026-10-12T13:00:00.000Z"
+  },
+  {
+    "id": "q-hrm-w5-5",
+    "courseId": "course-hrm-master",
+    "weekNumber": 5,
+    "originalQuestionNumber": 5,
+    "sourcePdfName": "WEEK 5.pdf",
+    "questionText": "Which of the following is true with respect to mentoring?",
+    "options": [
+      "people centered",
+      "problem centered",
+      "short term",
+      "self-awareness"
+    ],
+    "correctAnswerIndex": 0,
+    "answerSource": "PDF",
+    "isApproved": true,
+    "explanation": "",
+    "createdAt": "2026-10-12T13:00:00.000Z"
+  },
+  {
+    "id": "q-hrm-w5-6",
+    "courseId": "course-hrm-master",
+    "weekNumber": 5,
+    "originalQuestionNumber": 6,
+    "sourcePdfName": "WEEK 5.pdf",
+    "questionText": "Which of the following is included in the process of the Conceptual Framework for understanding coaching?",
+    "options": [
+      "self-awareness",
+      "learning",
+      "organizational support",
+      "feedback receptivity"
+    ],
+    "correctAnswerIndex": 0,
+    "answerSource": "PDF",
+    "isApproved": true,
+    "explanation": "",
+    "createdAt": "2026-10-12T13:00:00.000Z"
+  },
+  {
+    "id": "q-hrm-w5-7",
+    "courseId": "course-hrm-master",
+    "weekNumber": 5,
+    "originalQuestionNumber": 7,
+    "sourcePdfName": "WEEK 5.pdf",
+    "questionText": "What is the focus of coaching?",
+    "options": [
+      "people centered",
+      "issue centered",
+      "problem centered",
+      "competition"
+    ],
+    "correctAnswerIndex": 2,
+    "answerSource": "PDF",
+    "isApproved": true,
+    "explanation": "",
+    "createdAt": "2026-10-12T13:00:00.000Z"
+  },
+  {
+    "id": "q-hrm-w5-8",
+    "courseId": "course-hrm-master",
+    "weekNumber": 5,
+    "originalQuestionNumber": 8,
+    "sourcePdfName": "WEEK 5.pdf",
+    "questionText": "Individual success and organizational success are the outcomes of which of the steps of the Conceptual Framework for understanding coaching?",
+    "options": [
+      "proximal outcomes",
+      "antecedents",
+      "distal outcomes",
+      "process"
+    ],
+    "correctAnswerIndex": 2,
+    "answerSource": "PDF",
+    "isApproved": true,
+    "explanation": "",
+    "createdAt": "2026-10-12T13:00:00.000Z"
+  },
+  {
+    "id": "q-hrm-w5-9",
+    "courseId": "course-hrm-master",
+    "weekNumber": 5,
+    "originalQuestionNumber": 9,
+    "sourcePdfName": "WEEK 5.pdf",
+    "questionText": "What is the first step in coaching to improve poor performance?",
+    "options": [
+      "responding to poor performance",
+      "defining poor performance",
+      "planning steps for overcoming poor performance",
+      "providing feedback"
+    ],
+    "correctAnswerIndex": 1,
+    "answerSource": "PDF",
+    "isApproved": true,
+    "explanation": "",
+    "createdAt": "2026-10-12T13:00:00.000Z"
+  },
+  {
+    "id": "q-hrm-w5-10",
+    "courseId": "course-hrm-master",
+    "weekNumber": 5,
+    "originalQuestionNumber": 10,
+    "sourcePdfName": "WEEK 5.pdf",
+    "questionText": "Which of the following is NOT a critical success factor for coaching?",
+    "options": [
+      "capacity",
+      "clarity",
+      "condition",
+      "commitment"
+    ],
+    "correctAnswerIndex": 0,
+    "answerSource": "PDF",
+    "isApproved": true,
+    "explanation": "",
+    "createdAt": "2026-10-12T13:00:00.000Z"
+  },
+  {
+    "id": "q-hrm-w6-1",
+    "courseId": "course-hrm-master",
+    "weekNumber": 6,
+    "originalQuestionNumber": 1,
+    "sourcePdfName": "WEEK 06.pdf",
+    "questionText": "Which of the following is true in the context of mentoring?",
+    "options": [
+      "Generally, touches only personal life",
+      "Generally, touches only professional life",
+      "Can be only a one-time contact, no long-term relationship, usually formal",
+      "Helps the person to solve their problems or attain their goals"
+    ],
+    "correctAnswerIndex": 3,
+    "answerSource": "PDF",
+    "isApproved": true,
+    "explanation": "",
+    "createdAt": "2026-10-12T13:00:00.000Z"
+  },
+  {
+    "id": "q-hrm-w6-2",
+    "courseId": "course-hrm-master",
+    "weekNumber": 6,
+    "originalQuestionNumber": 2,
+    "sourcePdfName": "WEEK 06.pdf",
+    "questionText": "Which of the following is an example of career functions?",
+    "options": [
+      "challenging assignment",
+      "counselling",
+      "role modelling",
+      "friendship"
+    ],
+    "correctAnswerIndex": 0,
+    "answerSource": "PDF",
+    "isApproved": true,
+    "explanation": "",
+    "createdAt": "2026-10-12T13:00:00.000Z"
+  },
+  {
+    "id": "q-hrm-w6-3",
+    "courseId": "course-hrm-master",
+    "weekNumber": 6,
+    "originalQuestionNumber": 3,
+    "sourcePdfName": "WEEK 06.pdf",
+    "questionText": "Which of the following is an example of the psychological functions of mentoring?",
+    "options": [
+      "Exposure and visibility",
+      "Acceptance and confirmation",
+      "Protection",
+      "Coaching"
+    ],
+    "correctAnswerIndex": 1,
+    "answerSource": "PDF",
+    "isApproved": true,
+    "explanation": "",
+    "createdAt": "2026-10-12T13:00:00.000Z"
+  },
+  {
+    "id": "q-hrm-w6-4",
+    "courseId": "course-hrm-master",
+    "weekNumber": 6,
+    "originalQuestionNumber": 4,
+    "sourcePdfName": "WEEK 06.pdf",
+    "questionText": "What is the primary objective of the \"developmental\" mentoring model?",
+    "options": [
+      "career success",
+      "hierarchy senior",
+      "financial stability",
+      "personal development"
+    ],
+    "correctAnswerIndex": 3,
+    "answerSource": "PDF",
+    "isApproved": true,
+    "explanation": "",
+    "createdAt": "2026-10-12T13:00:00.000Z"
+  },
+  {
+    "id": "q-hrm-w6-5",
+    "courseId": "course-hrm-master",
+    "weekNumber": 6,
+    "originalQuestionNumber": 5,
+    "sourcePdfName": "WEEK 06.pdf",
+    "questionText": "What is the full form of SMART goals?",
+    "options": [
+      "S = specific, M= measurable, A = achievable, R = reliable, T = time framed",
+      "S = stretched, M= measurable, A = active, R = relevant, T = time framed",
+      "S = specific/stretched, M= measurable, A = achievable, R = relevant, T = time framed",
+      "S = specific, M= measurable, A = achievable, R = responsible, T = time framed"
+    ],
+    "correctAnswerIndex": 2,
+    "answerSource": "PDF",
+    "isApproved": true,
+    "explanation": "",
+    "createdAt": "2026-10-12T13:00:00.000Z"
+  },
+  {
+    "id": "q-hrm-w6-6",
+    "courseId": "course-hrm-master",
+    "weekNumber": 6,
+    "originalQuestionNumber": 6,
+    "sourcePdfName": "WEEK 06.pdf",
+    "questionText": "What is the final step of the Mentoring Implementation Process??",
+    "options": [
+      "Train mentors/mentees",
+      "Implementation",
+      "Evaluation",
+      "Follow Up"
+    ],
+    "correctAnswerIndex": 2,
+    "answerSource": "PDF",
+    "isApproved": true,
+    "explanation": "",
+    "createdAt": "2026-10-12T13:00:00.000Z"
+  },
+  {
+    "id": "q-hrm-w6-7",
+    "courseId": "course-hrm-master",
+    "weekNumber": 6,
+    "originalQuestionNumber": 7,
+    "sourcePdfName": "WEEK 06.pdf",
+    "questionText": "Which of the following are essential characteristics of mentoring relationships?",
+    "options": [
+      "confidentiality",
+      "trust",
+      "confidence",
+      "all of the above"
+    ],
+    "correctAnswerIndex": 3,
+    "answerSource": "PDF",
+    "isApproved": true,
+    "explanation": "",
+    "createdAt": "2026-10-12T13:00:00.000Z"
+  },
+  {
+    "id": "q-hrm-w6-8",
+    "courseId": "course-hrm-master",
+    "weekNumber": 6,
+    "originalQuestionNumber": 8,
+    "sourcePdfName": "WEEK 06.pdf",
+    "questionText": "\"Betrayal\" explains which type of potential dysfunction occurs in Mentoring Relationships.",
+    "options": [
+      "negative relations",
+      "difficulty",
+      "spoiling",
+      "sabotage"
+    ],
+    "correctAnswerIndex": 2,
+    "answerSource": "PDF",
+    "isApproved": true,
+    "explanation": "",
+    "createdAt": "2026-10-12T13:00:00.000Z"
+  },
+  {
+    "id": "q-hrm-w6-9",
+    "courseId": "course-hrm-master",
+    "weekNumber": 6,
+    "originalQuestionNumber": 9,
+    "sourcePdfName": "WEEK 06.pdf",
+    "questionText": "\"Good intentions to others\" and \"psychosocial issues\" lead to which of the Four Potential Dysfunctions in Mentoring Relationships?",
+    "options": [
+      "difficulty",
+      "sabotage",
+      "spoiling",
+      "negative relations"
+    ],
+    "correctAnswerIndex": 0,
+    "answerSource": "PDF",
+    "isApproved": true,
+    "explanation": "",
+    "createdAt": "2026-10-12T13:00:00.000Z"
+  },
+  {
+    "id": "q-hrm-w6-10",
+    "courseId": "course-hrm-master",
+    "weekNumber": 6,
+    "originalQuestionNumber": 10,
+    "sourcePdfName": "WEEK 06.pdf",
+    "questionText": "\"Conflict\" is a part of which type of potential dysfunctions in mentoring relationships?",
+    "options": [
+      "negative relations",
+      "spoiling",
+      "difficulty",
+      "sabotage"
+    ],
+    "correctAnswerIndex": 0,
+    "answerSource": "PDF",
+    "isApproved": true,
+    "explanation": "",
+    "createdAt": "2026-10-12T13:00:00.000Z"
+  },
+  {
+    "id": "q-hrm-w7-1",
+    "courseId": "course-hrm-master",
+    "weekNumber": 7,
+    "originalQuestionNumber": 1,
+    "sourcePdfName": "WEEK 07.pdf",
+    "questionText": "Which of the following is a characteristic of potential appraisal?",
+    "options": [
+      "It is a future-oriented process",
+      "part of reward management",
+      "The time for the potential appraisal is fixed",
+      "It guarantees promotion"
+    ],
+    "correctAnswerIndex": 0,
+    "answerSource": "PDF",
+    "isApproved": true,
+    "explanation": "",
+    "createdAt": "2026-10-12T13:00:00.000Z"
+  },
+  {
+    "id": "q-hrm-w7-2",
+    "courseId": "course-hrm-master",
+    "weekNumber": 7,
+    "originalQuestionNumber": 2,
+    "sourcePdfName": "WEEK 07.pdf",
+    "questionText": "What do you understand by the power of analysis?",
+    "options": [
+      "The ability to examine a problem in the context of a much broader framework of reference",
+      "The ability to sell ideas to other people and gain a continuing commitment, particularly when the individual is using personal influence rather than 'management authority'",
+      "The capacity to break down, reformulate, or transform a complicated situation into manageable terms",
+      "The ability to examine a problem in the context of a much narrower framework of reference, being able to detect, within a specific situation, relationships with those aspects that could be affecting the situation"
+    ],
+    "correctAnswerIndex": 2,
+    "answerSource": "PDF",
+    "isApproved": true,
+    "explanation": "",
+    "createdAt": "2026-10-12T13:00:00.000Z"
+  },
+  {
+    "id": "q-hrm-w7-3",
+    "courseId": "course-hrm-master",
+    "weekNumber": 7,
+    "originalQuestionNumber": 3,
+    "sourcePdfName": "WEEK 07.pdf",
+    "questionText": "\"The ability or capacity for growth and development into a leadership role\" explains which of the following terms?",
+    "options": [
+      "leader",
+      "personality",
+      "potential",
+      "performance"
+    ],
+    "correctAnswerIndex": 2,
+    "answerSource": "PDF",
+    "isApproved": true,
+    "explanation": "",
+    "createdAt": "2026-10-12T13:00:00.000Z"
+  },
+  {
+    "id": "q-hrm-w7-4",
+    "courseId": "course-hrm-master",
+    "weekNumber": 7,
+    "originalQuestionNumber": 4,
+    "sourcePdfName": "WEEK 07.pdf",
+    "questionText": "Which of the following is a characteristic of potential-focused appraisal?",
+    "options": [
+      "objective in nature",
+      "quantitative approach",
+      "non-quantitative approach",
+      "Focus on past performance"
+    ],
+    "correctAnswerIndex": 2,
+    "answerSource": "PDF",
+    "isApproved": true,
+    "explanation": "",
+    "createdAt": "2026-10-12T13:00:00.000Z"
+  },
+  {
+    "id": "q-hrm-w7-5",
+    "courseId": "course-hrm-master",
+    "weekNumber": 7,
+    "originalQuestionNumber": 5,
+    "sourcePdfName": "WEEK 07.pdf",
+    "questionText": "What do you understand by the in-basket technique of potential appraisal?",
+    "options": [
+      "represents a day-to-day decision-making situation that a manager is likely to face in the written form from various sources",
+      "Consists of 4 to 6 participants given to solve a problem & instructed to derive a group solution within a specified period.",
+      "A computer program is used to generate information and simulate the game; participants are not allowed to access the computer directly but rather through a mediator.",
+      "A method of studying the nature of certain roles by acting out their concrete details in a contrived situation that permits better and more objective observation"
+    ],
+    "correctAnswerIndex": 0,
+    "answerSource": "PDF",
+    "isApproved": true,
+    "explanation": "",
+    "createdAt": "2026-10-12T13:00:00.000Z"
+  },
+  {
+    "id": "q-hrm-w7-6",
+    "courseId": "course-hrm-master",
+    "weekNumber": 7,
+    "originalQuestionNumber": 6,
+    "sourcePdfName": "WEEK 07.pdf",
+    "questionText": "What is succession planning?",
+    "options": [
+      "It helps develop qualities such as conflict management, verbal and nonverbal communication skills, flexibility, and problem-solving.",
+      "A method of studying the nature of certain roles by acting out their concrete details in a contrived situation that permits better and more objective observation.",
+      "It serves as the link between organizations and employees' personal career goals.",
+      "Identifying capabilities for key areas and positions, identifying the person as a successor, and identifying the potentials"
+    ],
+    "correctAnswerIndex": 3,
+    "answerSource": "PDF",
+    "isApproved": true,
+    "explanation": "",
+    "createdAt": "2026-10-12T13:00:00.000Z"
+  },
+  {
+    "id": "q-hrm-w7-7",
+    "courseId": "course-hrm-master",
+    "weekNumber": 7,
+    "originalQuestionNumber": 7,
+    "sourcePdfName": "WEEK 07.pdf",
+    "questionText": "What do you understand by \"reward\"??",
+    "options": [
+      "The achievement and benefit received by employees for their behavior in an organization are known as rewards.",
+      "The achievements and benefits employees receive for their job performance in an organization are known as rewards.",
+      "The achievements and benefits the organization receives for its performance and profit.",
+      "The promotions received by employees for their length of service in an organization are known as rewards."
+    ],
+    "correctAnswerIndex": 1,
+    "answerSource": "PDF",
+    "isApproved": true,
+    "explanation": "",
+    "createdAt": "2026-10-12T13:00:00.000Z"
+  },
+  {
+    "id": "q-hrm-w7-8",
+    "courseId": "course-hrm-master",
+    "weekNumber": 7,
+    "originalQuestionNumber": 8,
+    "sourcePdfName": "WEEK 07.pdf",
+    "questionText": "What are the two major approaches to the reward system?",
+    "options": [
+      "traditional, convenient",
+      "total, convenient",
+      "traditional, contingent",
+      "terminal, contingent"
+    ],
+    "correctAnswerIndex": 2,
+    "answerSource": "PDF",
+    "isApproved": true,
+    "explanation": "",
+    "createdAt": "2026-10-12T13:00:00.000Z"
+  },
+  {
+    "id": "q-hrm-w7-9",
+    "courseId": "course-hrm-master",
+    "weekNumber": 7,
+    "originalQuestionNumber": 9,
+    "sourcePdfName": "WEEK 07.pdf",
+    "questionText": "Which of the following is a performance-based reward?",
+    "options": [
+      "seniority or time in rank",
+      "piecework pay plans",
+      "pension plans",
+      "profit sharing"
+    ],
+    "correctAnswerIndex": 1,
+    "answerSource": "PDF",
+    "isApproved": true,
+    "explanation": "",
+    "createdAt": "2026-10-12T13:00:00.000Z"
+  },
+  {
+    "id": "q-hrm-w7-10",
+    "courseId": "course-hrm-master",
+    "weekNumber": 7,
+    "originalQuestionNumber": 10,
+    "sourcePdfName": "WEEK 07.pdf",
+    "questionText": "What do you understand by defamation in the context of legal principles affecting performance management?",
+    "options": [
+      "The employer or employee can end the employment relationship at any time",
+      "When PMS is outlined in documents such as an employee manual, an employment contract, or other materials, but is not implemented as described.",
+      "Disclosure of untrue, unfavorable performance information that damages an employee's reputation.",
+      "Raters assign scores differently to various employees based on factors unrelated to performance, such as race, nationality, color, or ethnic and national origin."
+    ],
+    "correctAnswerIndex": 2,
+    "answerSource": "PDF",
+    "isApproved": true,
+    "explanation": "",
+    "createdAt": "2026-10-12T13:00:00.000Z"
+  },
+  {
+    "id": "q-hrm-w8-1",
+    "courseId": "course-hrm-master",
+    "weekNumber": 8,
+    "originalQuestionNumber": 1,
+    "sourcePdfName": "WEEK 08.pdf",
+    "questionText": "Human competency can be classified into which two broad categories?",
+    "options": [
+      "hidden and vague",
+      "clear and visible",
+      "hidden and visible",
+      "specific and valuable"
+    ],
+    "correctAnswerIndex": 2,
+    "answerSource": "PDF",
+    "isApproved": true,
+    "explanation": "",
+    "createdAt": "2026-10-12T13:00:00.000Z"
+  },
+  {
+    "id": "q-hrm-w8-2",
+    "courseId": "course-hrm-master",
+    "weekNumber": 8,
+    "originalQuestionNumber": 2,
+    "sourcePdfName": "WEEK 08.pdf",
+    "questionText": "What do you understand by \"motives\"?",
+    "options": [
+      "What drives us",
+      "self-concept and values",
+      "acquiring information in a particular field",
+      "a learned ability"
+    ],
+    "correctAnswerIndex": 0,
+    "answerSource": "PDF",
+    "isApproved": true,
+    "explanation": "",
+    "createdAt": "2026-10-12T13:00:00.000Z"
+  },
+  {
+    "id": "q-hrm-w8-3",
+    "courseId": "course-hrm-master",
+    "weekNumber": 8,
+    "originalQuestionNumber": 3,
+    "sourcePdfName": "WEEK 08.pdf",
+    "questionText": "What is competency profiling?",
+    "options": [
+      "A list of an individual's competencies that represent the factors most critical to success in given jobs, departments, or organizations that are part of the individual's current career plan.",
+      "It is the process of identifying the organization and person fit required for effective behavioral performance in a particular occupation or profession.",
+      "A list of an individual's competencies that represent the factor most critical to behavior outcomes leading to organizational success.",
+      "It is the process of identifying the knowledge, skills, abilities, attitudes, and judgment required for effective performance in a particular occupation or profession."
+    ],
+    "correctAnswerIndex": 3,
+    "answerSource": "PDF",
+    "isApproved": true,
+    "explanation": "",
+    "createdAt": "2026-10-12T13:00:00.000Z"
+  },
+  {
+    "id": "q-hrm-w8-4",
+    "courseId": "course-hrm-master",
+    "weekNumber": 8,
+    "originalQuestionNumber": 4,
+    "sourcePdfName": "WEEK 08.pdf",
+    "questionText": "What does a competency map explain?",
+    "options": [
+      "Define the competency requirements for all key jobs in an organization. This consists of generic competencies.",
+      "Define the competency requirements that cover only a few jobs in an organization. This consists of selected competencies.",
+      "A set of competencies that are required to perform a specified role.",
+      "Describe the different aspects of competent behavior in an occupation against competency dimensions such as strategic capability, resource management, and quality."
+    ],
+    "correctAnswerIndex": 3,
+    "answerSource": "PDF",
+    "isApproved": true,
+    "explanation": "",
+    "createdAt": "2026-10-12T13:00:00.000Z"
+  },
+  {
+    "id": "q-hrm-w8-5",
+    "courseId": "course-hrm-master",
+    "weekNumber": 8,
+    "originalQuestionNumber": 5,
+    "sourcePdfName": "WEEK 08.pdf",
+    "questionText": "Finance and environmental management are examples of which type of competency?",
+    "options": [
+      "Generic competencies",
+      "Managerial competencies",
+      "Technical/ functional competencies",
+      "Behavioral competencies"
+    ],
+    "correctAnswerIndex": 2,
+    "answerSource": "PDF",
+    "isApproved": true,
+    "explanation": "",
+    "createdAt": "2026-10-12T13:00:00.000Z"
+  },
+  {
+    "id": "q-hrm-w8-6",
+    "courseId": "course-hrm-master",
+    "weekNumber": 8,
+    "originalQuestionNumber": 6,
+    "sourcePdfName": "WEEK 08.pdf",
+    "questionText": "Which of the following is an example of generic competencies?",
+    "options": [
+      "finance",
+      "supervisory responsibility",
+      "communication",
+      "environment management"
+    ],
+    "correctAnswerIndex": 2,
+    "answerSource": "PDF",
+    "isApproved": true,
+    "explanation": "",
+    "createdAt": "2026-10-12T13:00:00.000Z"
+  },
+  {
+    "id": "q-hrm-w8-7",
+    "courseId": "course-hrm-master",
+    "weekNumber": 8,
+    "originalQuestionNumber": 7,
+    "sourcePdfName": "WEEK 08.pdf",
+    "questionText": "Which of the following is true in the context of Job analysis?",
+    "options": [
+      "A distilled set of underlying personal characteristics",
+      "Data generation from outstanding performers, in addition to subject matter experts and other job incumbents",
+      "Data generation from subject matter experts, job incumbents",
+      "Outstanding Performance"
+    ],
+    "correctAnswerIndex": 2,
+    "answerSource": "PDF",
+    "isApproved": true,
+    "explanation": "",
+    "createdAt": "2026-10-12T13:00:00.000Z"
+  },
+  {
+    "id": "q-hrm-w8-8",
+    "courseId": "course-hrm-master",
+    "weekNumber": 8,
+    "originalQuestionNumber": 8,
+    "sourcePdfName": "WEEK 08.pdf",
+    "questionText": "What do you understand by Strategic Workforce Planning?",
+    "options": [
+      "Develop assessment tools to determine whether the workforce possesses the competencies necessary to meet personal goals.",
+      "Develop assessment tools to determine whether the workforce possesses the competencies necessary to meet professional goals.",
+      "Develop assessment tools to determine whether the workforce possesses the competencies necessary to meet organizational goals.",
+      "Develop assessment tools to determine whether the workforce possesses the competencies necessary to meet personal and professional goals."
+    ],
+    "correctAnswerIndex": 2,
+    "answerSource": "PDF",
+    "isApproved": true,
+    "explanation": "",
+    "createdAt": "2026-10-12T13:00:00.000Z"
+  },
+  {
+    "id": "q-hrm-w8-9",
+    "courseId": "course-hrm-master",
+    "weekNumber": 8,
+    "originalQuestionNumber": 9,
+    "sourcePdfName": "WEEK 08.pdf",
+    "questionText": "Which of the following is TRUE in the context of performance management?",
+    "options": [
+      "Create rating guides to help managers assess each competency.",
+      "Create guides that describe senior-level career paths and the competencies required at each step.",
+      "Create a guide for managers to reward the demonstration of specific competencies by their employees.",
+      "Design a competency-based compensation program where employees' salaries increase based on proficiency in selected competencies."
+    ],
+    "correctAnswerIndex": 0,
+    "answerSource": "PDF",
+    "isApproved": true,
+    "explanation": "",
+    "createdAt": "2026-10-12T13:00:00.000Z"
+  },
+  {
+    "id": "q-hrm-w8-10",
+    "courseId": "course-hrm-master",
+    "weekNumber": 8,
+    "originalQuestionNumber": 10,
+    "sourcePdfName": "WEEK 08.pdf",
+    "questionText": "What do you understand by 360-Degree Feedback?",
+    "options": [
+      "The approach uses various types of discussion and simulation exercises to reflect the real-life demands of the job. Candidates are asked to work through certain scenarios while a trained assessor observes their behavior.",
+      "Data about critical events -- exceptional examples of accomplishment or failure -- is collected through interviews or questionnaires as soon as possible after occurrence.",
+      "The situations are designed to reveal skills and aptitude that help identify which individuals are good matches for the current and future requirements of the job.",
+      "It involves a collection of perceptions about an individual's behavior and its impact on bosses, colleagues, subordinates, and internal and external customers."
+    ],
+    "correctAnswerIndex": 3,
+    "answerSource": "PDF",
+    "isApproved": true,
+    "explanation": "",
+    "createdAt": "2026-10-12T13:00:00.000Z"
+  },
+  {
+    "id": "q-hrm-w9-1",
+    "courseId": "course-hrm-master",
+    "weekNumber": 9,
+    "originalQuestionNumber": 1,
+    "sourcePdfName": "WEEK 09.pdf",
+    "questionText": "What career planning tool stimulates thinking about careers, strengths/limitations, and development needs?",
+    "options": [
+      "Career planning system",
+      "Career planning workshop",
+      "Career counselling",
+      "Career planning workbook"
+    ],
+    "correctAnswerIndex": 3,
+    "answerSource": "PDF",
+    "isApproved": true,
+    "explanation": "",
+    "createdAt": "2026-10-12T13:00:00.000Z"
+  },
+  {
+    "id": "q-hrm-w9-2",
+    "courseId": "course-hrm-master",
+    "weekNumber": 9,
+    "originalQuestionNumber": 2,
+    "sourcePdfName": "WEEK 09.pdf",
+    "questionText": "What is job security?",
+    "options": [
+      "Development of expertise that helps ensure employment within a range of careers",
+      "Development of marketable skills for job promotion",
+      "Protection against job loss within the company",
+      "Implies security in one job, often with multiple companies"
+    ],
+    "correctAnswerIndex": 2,
+    "answerSource": "PDF",
+    "isApproved": true,
+    "explanation": "",
+    "createdAt": "2026-10-12T13:00:00.000Z"
+  },
+  {
+    "id": "q-hrm-w9-3",
+    "courseId": "course-hrm-master",
+    "weekNumber": 9,
+    "originalQuestionNumber": 3,
+    "sourcePdfName": "WEEK 09.pdf",
+    "questionText": "What are the individual needs in the career development program?",
+    "options": [
+      "Restaffing",
+      "Staffing",
+      "Development",
+      "Fitting into the organization"
+    ],
+    "correctAnswerIndex": 3,
+    "answerSource": "PDF",
+    "isApproved": true,
+    "explanation": "",
+    "createdAt": "2026-10-12T13:00:00.000Z"
+  },
+  {
+    "id": "q-hrm-w9-4",
+    "courseId": "course-hrm-master",
+    "weekNumber": 9,
+    "originalQuestionNumber": 4,
+    "sourcePdfName": "WEEK 09.pdf",
+    "questionText": "Which of the following statements is incorrect with respect to career anchors?",
+    "options": [
+      "Career anchors are developed on a short-term basis",
+      "Career anchors can shape an individual's self-image",
+      "Career anchor evolves into self-concept",
+      "Career anchors include skills, attitudes, and values"
+    ],
+    "correctAnswerIndex": 0,
+    "answerSource": "PDF",
+    "isApproved": true,
+    "explanation": "",
+    "createdAt": "2026-10-12T13:00:00.000Z"
+  },
+  {
+    "id": "q-hrm-w9-5",
+    "courseId": "course-hrm-master",
+    "weekNumber": 9,
+    "originalQuestionNumber": 5,
+    "sourcePdfName": "WEEK 09.pdf",
+    "questionText": "What are the task needs at the establishment stage of Career-Impacted Life Stages?",
+    "options": [
+      "Technical updating and coaching skills",
+      "Rethink work, family",
+      "Identify successors and develop outside interests",
+      "Learn the ropes and get challenging jobs"
+    ],
+    "correctAnswerIndex": 3,
+    "answerSource": "PDF",
+    "isApproved": true,
+    "explanation": "",
+    "createdAt": "2026-10-12T13:00:00.000Z"
+  },
+  {
+    "id": "q-hrm-w9-6",
+    "courseId": "course-hrm-master",
+    "weekNumber": 9,
+    "originalQuestionNumber": 6,
+    "sourcePdfName": "WEEK 09.pdf",
+    "questionText": "Who developed the concept of career anchors?",
+    "options": [
+      "Brousseau et al.",
+      "Nicholson",
+      "Edgar Schein",
+      "Cianni & Wnuck"
+    ],
+    "correctAnswerIndex": 2,
+    "answerSource": "PDF",
+    "isApproved": true,
+    "explanation": "",
+    "createdAt": "2026-10-12T13:00:00.000Z"
+  },
+  {
+    "id": "q-hrm-w9-7",
+    "courseId": "course-hrm-master",
+    "weekNumber": 9,
+    "originalQuestionNumber": 7,
+    "sourcePdfName": "WEEK 09.pdf",
+    "questionText": "Which of the following is not a career anchor?",
+    "options": [
+      "Technical competence",
+      "Managerial competence",
+      "Creativity",
+      "Working style"
+    ],
+    "correctAnswerIndex": 3,
+    "answerSource": "PDF",
+    "isApproved": true,
+    "explanation": "",
+    "createdAt": "2026-10-12T13:00:00.000Z"
+  },
+  {
+    "id": "q-hrm-w9-8",
+    "courseId": "course-hrm-master",
+    "weekNumber": 9,
+    "originalQuestionNumber": 8,
+    "sourcePdfName": "WEEK 09.pdf",
+    "questionText": "What is the responsibility of a manager in career development?",
+    "options": [
+      "knowing why",
+      "advising",
+      "deciding where",
+      "financial assistance"
+    ],
+    "correctAnswerIndex": 1,
+    "answerSource": "PDF",
+    "isApproved": true,
+    "explanation": "",
+    "createdAt": "2026-10-12T13:00:00.000Z"
+  },
+  {
+    "id": "q-hrm-w9-9",
+    "courseId": "course-hrm-master",
+    "weekNumber": 9,
+    "originalQuestionNumber": 9,
+    "sourcePdfName": "WEEK 09.pdf",
+    "questionText": "Which of the following best describes insight?",
+    "options": [
+      "realistic perceptions about one's career goals",
+      "the extent to which people define themselves by their work",
+      "the ability to resist career barriers or disruptions",
+      "the characteristics of a job or career that individuals are drawn to"
+    ],
+    "correctAnswerIndex": 0,
+    "answerSource": "PDF",
+    "isApproved": true,
+    "explanation": "",
+    "createdAt": "2026-10-12T13:00:00.000Z"
+  },
+  {
+    "id": "q-hrm-w9-10",
+    "courseId": "course-hrm-master",
+    "weekNumber": 9,
+    "originalQuestionNumber": 10,
+    "sourcePdfName": "WEEK 09.pdf",
+    "questionText": "Define the term career.",
+    "options": [
+      "Flexible line of movement through which an employee may move during employment with a company",
+      "Formal approach used by the organization to help people acquire the skills and experiences needed to perform current and future jobs",
+      "The general course that a person chooses to pursue throughout his or her working life",
+      "Firm identifies paths and activities for individual employees as they develop."
+    ],
+    "correctAnswerIndex": 2,
+    "answerSource": "PDF",
+    "isApproved": true,
+    "explanation": "",
+    "createdAt": "2026-10-12T13:00:00.000Z"
+  },
+  {
+    "id": "q-hrm-w10-1",
+    "courseId": "course-hrm-master",
+    "weekNumber": 10,
+    "originalQuestionNumber": 1,
+    "sourcePdfName": "WEEK 10.pdf",
+    "questionText": "Which of the following is NOT a component of Intellectual Capital?",
+    "options": [
+      "human Capital",
+      "structural Capital",
+      "financial Capital",
+      "relational Capital"
+    ],
+    "correctAnswerIndex": 2,
+    "answerSource": "PDF",
+    "isApproved": true,
+    "explanation": "",
+    "createdAt": "2026-10-12T13:00:00.000Z"
+  },
+  {
+    "id": "q-hrm-w10-2",
+    "courseId": "course-hrm-master",
+    "weekNumber": 10,
+    "originalQuestionNumber": 2,
+    "sourcePdfName": "WEEK 10.pdf",
+    "questionText": "Which of the following is an indicator of human Capital?",
+    "options": [
+      "employee satisfaction index",
+      "investment in sales",
+      "sales per quarter",
+      "no. of patents"
+    ],
+    "correctAnswerIndex": 0,
+    "answerSource": "PDF",
+    "isApproved": true,
+    "explanation": "",
+    "createdAt": "2026-10-12T13:00:00.000Z"
+  },
+  {
+    "id": "q-hrm-w10-3",
+    "courseId": "course-hrm-master",
+    "weekNumber": 10,
+    "originalQuestionNumber": 3,
+    "sourcePdfName": "WEEK 10.pdf",
+    "questionText": "\"Brand awareness\" indicates which of the components of intellectual Capital?",
+    "options": [
+      "customer capital",
+      "organizational capitals",
+      "social Capital",
+      "relational Capital"
+    ],
+    "correctAnswerIndex": 3,
+    "answerSource": "PDF",
+    "isApproved": true,
+    "explanation": "",
+    "createdAt": "2026-10-12T13:00:00.000Z"
+  },
+  {
+    "id": "q-hrm-w10-4",
+    "courseId": "course-hrm-master",
+    "weekNumber": 10,
+    "originalQuestionNumber": 4,
+    "sourcePdfName": "WEEK 10.pdf",
+    "questionText": "Which of the following is true in the context of social Capital?",
+    "options": [
+      "Relationships, reputation, image, loyalty, satisfaction",
+      "Support, cooperative action, networks, trust, mutual understanding",
+      "Customer contracts, distribution channels, licensing agreements",
+      "Individual education, know-how, competence"
+    ],
+    "correctAnswerIndex": 1,
+    "answerSource": "PDF",
+    "isApproved": true,
+    "explanation": "",
+    "createdAt": "2026-10-12T13:00:00.000Z"
+  },
+  {
+    "id": "q-hrm-w10-5",
+    "courseId": "course-hrm-master",
+    "weekNumber": 10,
+    "originalQuestionNumber": 5,
+    "sourcePdfName": "WEEK 10.pdf",
+    "questionText": "Are infrastructural assets and Intellectual property components of intellectual Capital?",
+    "options": [
+      "human capitals",
+      "social Capital",
+      "organizational Capital",
+      "customer capital"
+    ],
+    "correctAnswerIndex": 2,
+    "answerSource": "PDF",
+    "isApproved": true,
+    "explanation": "",
+    "createdAt": "2026-10-12T13:00:00.000Z"
+  },
+  {
+    "id": "q-hrm-w10-6",
+    "courseId": "course-hrm-master",
+    "weekNumber": 10,
+    "originalQuestionNumber": 6,
+    "sourcePdfName": "WEEK 10.pdf",
+    "questionText": "What does ICN stand for?",
+    "options": [
+      "Intellectual Capacity Navigator",
+      "Intellectual Capital Navigator",
+      "Intellectual Credit Navigator",
+      "Intellectual Customer Navigator"
+    ],
+    "correctAnswerIndex": 1,
+    "answerSource": "PDF",
+    "isApproved": true,
+    "explanation": "",
+    "createdAt": "2026-10-12T13:00:00.000Z"
+  },
+  {
+    "id": "q-hrm-w10-7",
+    "courseId": "course-hrm-master",
+    "weekNumber": 10,
+    "originalQuestionNumber": 7,
+    "sourcePdfName": "WEEK 10.pdf",
+    "questionText": "Which of the following is NOT a part of Edvinsson's Navigator?",
+    "options": [
+      "customer capital",
+      "process capital",
+      "policy capital",
+      "financial Capital"
+    ],
+    "correctAnswerIndex": 2,
+    "answerSource": "PDF",
+    "isApproved": true,
+    "explanation": "",
+    "createdAt": "2026-10-12T13:00:00.000Z"
+  },
+  {
+    "id": "q-hrm-w10-8",
+    "courseId": "course-hrm-master",
+    "weekNumber": 10,
+    "originalQuestionNumber": 8,
+    "sourcePdfName": "WEEK 10.pdf",
+    "questionText": "What are the five focus areas of Skandia IC Measures?",
+    "options": [
+      "human, financial, customer, process, renewal, and development",
+      "human, financial, cultural, process, renewal, and deployment",
+      "human, financial, customer, process, training, and development",
+      "human, financial, structure, process, renewal, and deployment"
+    ],
+    "correctAnswerIndex": 0,
+    "answerSource": "PDF",
+    "isApproved": true,
+    "explanation": "",
+    "createdAt": "2026-10-12T13:00:00.000Z"
+  },
+  {
+    "id": "q-hrm-w10-9",
+    "courseId": "course-hrm-master",
+    "weekNumber": 10,
+    "originalQuestionNumber": 9,
+    "sourcePdfName": "WEEK 10.pdf",
+    "questionText": "Which of the following is part of the relationship capital index?",
+    "options": [
+      "distribution efficiency",
+      "value creation per employee",
+      "customer retention",
+      "ability to generate new business"
+    ],
+    "correctAnswerIndex": 2,
+    "answerSource": "PDF",
+    "isApproved": true,
+    "explanation": "",
+    "createdAt": "2026-10-12T13:00:00.000Z"
+  },
+  {
+    "id": "q-hrm-w10-10",
+    "courseId": "course-hrm-master",
+    "weekNumber": 10,
+    "originalQuestionNumber": 10,
+    "sourcePdfName": "WEEK 10.pdf",
+    "questionText": "What is the full form of EVA?",
+    "options": [
+      "Economic Value Added",
+      "Economic Value Asset",
+      "Economic Vision Added",
+      "Economic Vision Asset"
+    ],
+    "correctAnswerIndex": 0,
+    "answerSource": "PDF",
+    "isApproved": true,
+    "explanation": "",
+    "createdAt": "2026-10-12T13:00:00.000Z"
+  },
+  {
+    "id": "q-hrm-w11-1",
+    "courseId": "course-hrm-master",
+    "weekNumber": 11,
+    "originalQuestionNumber": 1,
+    "sourcePdfName": "WEEK 11.pdf",
+    "questionText": "Rules, contracts, and documents are examples of which type of knowledge?",
+    "options": [
+      "tacit knowledge",
+      "explicit knowledge",
+      "knowledge sharing",
+      "procedural knowledge"
+    ],
+    "correctAnswerIndex": 1,
+    "answerSource": "PDF",
+    "isApproved": true,
+    "explanation": "",
+    "createdAt": "2026-10-12T13:00:00.000Z"
+  },
+  {
+    "id": "q-hrm-w11-2",
+    "courseId": "course-hrm-master",
+    "weekNumber": 11,
+    "originalQuestionNumber": 2,
+    "sourcePdfName": "WEEK 11.pdf",
+    "questionText": "What do you understand by Organizational learning?",
+    "options": [
+      "development of new knowledge and acquisition of new insights that have the potential to influence changes in financial benefits.",
+      "research of the old knowledge and topics that have the potential to influence changes and to improve organizational performance.",
+      "development of new knowledge, acquisition of new insights that have the potential to influence behavioral changes and thus improve organizational performance.",
+      "development of technical skills to increase an organization's revenue."
+    ],
+    "correctAnswerIndex": 2,
+    "answerSource": "PDF",
+    "isApproved": true,
+    "explanation": "",
+    "createdAt": "2026-10-12T13:00:00.000Z"
+  },
+  {
+    "id": "q-hrm-w11-3",
+    "courseId": "course-hrm-master",
+    "weekNumber": 11,
+    "originalQuestionNumber": 3,
+    "sourcePdfName": "WEEK 11.pdf",
+    "questionText": "Are \"Lower-level Learning\" and \"Not-Strategic Learning\" characteristics of a type of organizational learning?",
+    "options": [
+      "single loop learning",
+      "double loop learning",
+      "triple loop learning",
+      "multi-loop learning"
+    ],
+    "correctAnswerIndex": 0,
+    "answerSource": "PDF",
+    "isApproved": true,
+    "explanation": "",
+    "createdAt": "2026-10-12T13:00:00.000Z"
+  },
+  {
+    "id": "q-hrm-w11-4",
+    "courseId": "course-hrm-master",
+    "weekNumber": 11,
+    "originalQuestionNumber": 4,
+    "sourcePdfName": "WEEK 11.pdf",
+    "questionText": "What is triple-loop learning?",
+    "options": [
+      "When errors are detected and corrected, but firms continue with their present policies and goals.",
+      "The organization questions and modifies its existing norms, procedures, policies, and objectives",
+      ". Organizational members learn how to learn and form new beliefs that impact their thinking and, therefore, what they do and how they do it.",
+      "When people get better at a particular activity through practice or training"
+    ],
+    "correctAnswerIndex": 2,
+    "answerSource": "PDF",
+    "isApproved": true,
+    "explanation": "",
+    "createdAt": "2026-10-12T13:00:00.000Z"
+  },
+  {
+    "id": "q-hrm-w11-5",
+    "courseId": "course-hrm-master",
+    "weekNumber": 11,
+    "originalQuestionNumber": 5,
+    "sourcePdfName": "WEEK 11.pdf",
+    "questionText": "Which of the following is not a component of a learning organization?",
+    "options": [
+      "can be achieved through quick management training",
+      "It is a multi-level concept",
+      "based on continuous knowledge transfer and adaptation",
+      "requires specific HRM policies supportive of a learning culture"
+    ],
+    "correctAnswerIndex": 0,
+    "answerSource": "PDF",
+    "isApproved": true,
+    "explanation": "",
+    "createdAt": "2026-10-12T13:00:00.000Z"
+  },
+  {
+    "id": "q-hrm-w11-6",
+    "courseId": "course-hrm-master",
+    "weekNumber": 11,
+    "originalQuestionNumber": 6,
+    "sourcePdfName": "WEEK 11.pdf",
+    "questionText": "Which of the following is an element of an information processing system?",
+    "options": [
+      "development",
+      "strategy",
+      "distribution",
+      "communication"
+    ],
+    "correctAnswerIndex": 2,
+    "answerSource": "PDF",
+    "isApproved": true,
+    "explanation": "",
+    "createdAt": "2026-10-12T13:00:00.000Z"
+  },
+  {
+    "id": "q-hrm-w11-7",
+    "courseId": "course-hrm-master",
+    "weekNumber": 11,
+    "originalQuestionNumber": 7,
+    "sourcePdfName": "WEEK 11.pdf",
+    "questionText": "Which of the following is NOT a subsystem of Experiential Learning in the roadmap of organizational learning?",
+    "options": [
+      "Organizational self-appraisal",
+      "Scanning",
+      "Unintentional learning",
+      "Organizational Experiments"
+    ],
+    "correctAnswerIndex": 1,
+    "answerSource": "PDF",
+    "isApproved": true,
+    "explanation": "",
+    "createdAt": "2026-10-12T13:00:00.000Z"
+  },
+  {
+    "id": "q-hrm-w11-8",
+    "courseId": "course-hrm-master",
+    "weekNumber": 11,
+    "originalQuestionNumber": 8,
+    "sourcePdfName": "WEEK 11.pdf",
+    "questionText": "Supply chains, the government, and professional societies form a part of which of these workplace learning communities?",
+    "options": [
+      "networks and partnerships",
+      "the individual",
+      "the workgroup",
+      "the enterprise"
+    ],
+    "correctAnswerIndex": 0,
+    "answerSource": "PDF",
+    "isApproved": true,
+    "explanation": "",
+    "createdAt": "2026-10-12T13:00:00.000Z"
+  },
+  {
+    "id": "q-hrm-w11-9",
+    "courseId": "course-hrm-master",
+    "weekNumber": 11,
+    "originalQuestionNumber": 9,
+    "sourcePdfName": "WEEK 11.pdf",
+    "questionText": "According to Senge, which of the following is not one of the five disciplines of Learning Organization?",
+    "options": [
+      "shared mission",
+      "systems thinking",
+      "mental models",
+      "team learning"
+    ],
+    "correctAnswerIndex": 0,
+    "answerSource": "PDF",
+    "isApproved": true,
+    "explanation": "",
+    "createdAt": "2026-10-12T13:00:00.000Z"
+  },
+  {
+    "id": "q-hrm-w11-10",
+    "courseId": "course-hrm-master",
+    "weekNumber": 11,
+    "originalQuestionNumber": 10,
+    "sourcePdfName": "WEEK 11.pdf",
+    "questionText": "Which of the following is a characteristic of a complex adaptive system?",
+    "options": [
+      "dynamic behavior",
+      "quantum leaps",
+      "new product",
+      "new service"
+    ],
+    "correctAnswerIndex": 0,
+    "answerSource": "PDF",
+    "isApproved": true,
+    "explanation": "",
+    "createdAt": "2026-10-12T13:00:00.000Z"
+  },
+  {
+    "id": "q-hrm-w12-1",
+    "courseId": "course-hrm-master",
+    "weekNumber": 12,
+    "originalQuestionNumber": 1,
+    "sourcePdfName": "WEEK 12.pdf",
+    "questionText": "What do you understand by power distance in the context of cultural diversity?",
+    "options": [
+      "The extent to which a society feels threatened by uncertain and ambiguous situations and tries to avoid them",
+      "The extent to which a society accepts the power-holding authority and obey",
+      "The extent to which a society accepts the fact that power in institutions and organizations is distributed unequally",
+      "The extent to which a society feels safe in all situations and accepts it happily"
+    ],
+    "correctAnswerIndex": 2,
+    "answerSource": "PDF",
+    "isApproved": true,
+    "explanation": "",
+    "createdAt": "2026-10-12T13:00:00.000Z"
+  },
+  {
+    "id": "q-hrm-w12-2",
+    "courseId": "course-hrm-master",
+    "weekNumber": 12,
+    "originalQuestionNumber": 2,
+    "sourcePdfName": "WEEK 12.pdf",
+    "questionText": "Which of the following best Defines workforce diversity?",
+    "options": [
+      "Systems that do not seek to include people within a workforce who are considered to be in some way different from those of the prevailing constituency",
+      "Policies & practices that seek to include people within a workforce who are considered to be in some way different from those of the prevailing constituency",
+      "Policies and practices that seek to include people within a workforce who are considered to be similar to those of the prevailing constituency",
+      "Systems that seek to include people outside the organization who are considered to be in some way different from those of the prevailing constituency"
+    ],
+    "correctAnswerIndex": 1,
+    "answerSource": "PDF",
+    "isApproved": true,
+    "explanation": "",
+    "createdAt": "2026-10-12T13:00:00.000Z"
+  },
+  {
+    "id": "q-hrm-w12-3",
+    "courseId": "course-hrm-master",
+    "weekNumber": 12,
+    "originalQuestionNumber": 3,
+    "sourcePdfName": "WEEK 12.pdf",
+    "questionText": "Which of the following is NOT one of the 5 dimensions of national culture?",
+    "options": [
+      "Short-term orientation",
+      "Individualism vs. collectivism",
+      "Uncertainty Avoidance",
+      "Quantity vs. Quality of Life"
+    ],
+    "correctAnswerIndex": 0,
+    "answerSource": "PDF",
+    "isApproved": true,
+    "explanation": "",
+    "createdAt": "2026-10-12T13:00:00.000Z"
+  },
+  {
+    "id": "q-hrm-w12-4",
+    "courseId": "course-hrm-master",
+    "weekNumber": 12,
+    "originalQuestionNumber": 4,
+    "sourcePdfName": "WEEK 12.pdf",
+    "questionText": "Which of the following is NOT an attitude towards diversity?",
+    "options": [
+      "Singularism",
+      "Pluralism",
+      "Enthnorelativism",
+      "Ethnocentrism"
+    ],
+    "correctAnswerIndex": 0,
+    "answerSource": "PDF",
+    "isApproved": true,
+    "explanation": "",
+    "createdAt": "2026-10-12T13:00:00.000Z"
+  },
+  {
+    "id": "q-hrm-w12-5",
+    "courseId": "course-hrm-master",
+    "weekNumber": 12,
+    "originalQuestionNumber": 5,
+    "sourcePdfName": "WEEK 12.pdf",
+    "questionText": "\"Belief that groups and subcultures are inherently equal\" explains which attitude of diversity?",
+    "options": [
+      "Ethnocentrism",
+      "Enthnorelativism",
+      "Pluralism",
+      "Singularism"
+    ],
+    "correctAnswerIndex": 0,
+    "answerSource": "PDF",
+    "isApproved": true,
+    "explanation": "",
+    "createdAt": "2026-10-12T13:00:00.000Z"
+  },
+  {
+    "id": "q-hrm-w12-6",
+    "courseId": "course-hrm-master",
+    "weekNumber": 12,
+    "originalQuestionNumber": 6,
+    "sourcePdfName": "WEEK 12.pdf",
+    "questionText": "What is the initial stage of diversity management?",
+    "options": [
+      "denial",
+      "defense",
+      "minimizing differences",
+      "integration"
+    ],
+    "correctAnswerIndex": 0,
+    "answerSource": "PDF",
+    "isApproved": true,
+    "explanation": "",
+    "createdAt": "2026-10-12T13:00:00.000Z"
+  },
+  {
+    "id": "q-hrm-w12-7",
+    "courseId": "course-hrm-master",
+    "weekNumber": 12,
+    "originalQuestionNumber": 7,
+    "sourcePdfName": "WEEK 12.pdf",
+    "questionText": "Who are expatriates?",
+    "options": [
+      "employees who live and work in their own country",
+      "employees who live in their own country and work in a country other than their own",
+      "employees who work in their country and live in a country other than their own",
+      "Employees who live and work in a country other than their own"
+    ],
+    "correctAnswerIndex": 3,
+    "answerSource": "PDF",
+    "isApproved": true,
+    "explanation": "",
+    "createdAt": "2026-10-12T13:00:00.000Z"
+  },
+  {
+    "id": "q-hrm-w12-8",
+    "courseId": "course-hrm-master",
+    "weekNumber": 12,
+    "originalQuestionNumber": 8,
+    "sourcePdfName": "WEEK 12.pdf",
+    "questionText": "What are multicultural teams?",
+    "options": [
+      "made up from similar national, racial, ethnic, and cultural backgrounds",
+      "based on social identity, and organized by employees to focus on the concerns of employees from that group",
+      "based on professional identity, and organized by employers to focus on the concerns of employees from that group",
+      "made up from diverse national, racial, ethnic, and cultural backgrounds"
+    ],
+    "correctAnswerIndex": 3,
+    "answerSource": "PDF",
+    "isApproved": true,
+    "explanation": "",
+    "createdAt": "2026-10-12T13:00:00.000Z"
+  },
+  {
+    "id": "q-hrm-w12-9",
+    "courseId": "course-hrm-master",
+    "weekNumber": 12,
+    "originalQuestionNumber": 9,
+    "sourcePdfName": "WEEK 12.pdf",
+    "questionText": "What does CSR stand for?",
+    "options": [
+      "Corporate social responsibility",
+      "Corporate sustainable responsibility",
+      "Cultural social responsibility",
+      "Culturally sustainable responsibility"
+    ],
+    "correctAnswerIndex": 0,
+    "answerSource": "PDF",
+    "isApproved": true,
+    "explanation": "",
+    "createdAt": "2026-10-12T13:00:00.000Z"
+  },
+  {
+    "id": "q-hrm-w12-10",
+    "courseId": "course-hrm-master",
+    "weekNumber": 12,
+    "originalQuestionNumber": 10,
+    "sourcePdfName": "WEEK 12.pdf",
+    "questionText": "Which of the following is TRUE with respect to stakeholder theory?",
+    "options": [
+      "Stakeholder theory looks only at profit maximization and does not focus on social responsibility, but rather on a corporation's moral obligations to all those who have a stake in the business.",
+      "Stakeholder theory prioritizes profit maximization, grounded in a corporation's legal obligations to generate shareholder wealth.",
+      "Stakeholder theory prioritizes environmental values and considers wealth creation, based on a corporation's legal obligations, to generate shareholder wealth.",
+      "Stakeholder theory looks beyond profit maximization to social and environmental values, grounded in a corporation's moral obligations to all those with a stake in the business."
+    ],
+    "correctAnswerIndex": 3,
+    "answerSource": "PDF",
+    "isApproved": true,
+    "explanation": "",
+    "createdAt": "2026-10-12T13:00:00.000Z"
+  }
+];
+
 export const INITIAL_QUESTIONS: Question[] = [
   ...IIOT_6_WEEKS_QUESTIONS,
   ...IIOT_WEEKS_7_8_9_QUESTIONS,
   ...IIOT_WEEK_10_QUESTIONS,
+  ...HRM_QUESTIONS,
 ];
