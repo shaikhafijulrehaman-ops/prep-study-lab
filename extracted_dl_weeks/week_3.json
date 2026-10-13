@@ -1,0 +1,362 @@
+[
+  {
+    "id": "q-dl-w3-1",
+    "courseId": "course-deep-learning-master",
+    "weekNumber": 3,
+    "originalQuestionNumber": 1,
+    "sourcePdfName": "DeepLearning_July_Oct_2026_Week3.pdf",
+    "questionText": "Case Study 1\nTutoring Session Readiness Score\nAn online tutoring platform uses a small feedforward network to estimate a session-\nreadiness score before assigning a tutor. The model uses two input features:\nx1 : student preparation score,\nx2 : topic difficulty score.\nFor one session, x1 = 2 and x2 = 1. The network computes hidden quantities first and then\ncombines them:\nz1 = 2x1 + x2,\nz2 = x1 −x2 + 1,\nˆy = z1 + 2z2.\nThe computation is feedforward: inputs are used to compute z1, z2, and these hidden quan-\ntities are then used to compute ˆy.\n\nQuestion 1: What is the value of z1 for this session?",
+    "options": [
+      "6",
+      "5",
+      "4",
+      "3"
+    ],
+    "correctAnswerIndex": 1,
+    "answerSource": "PDF",
+    "isApproved": true,
+    "explanation": "z1 = 2x1 + x2 = 2(2) + 1 = 5."
+  },
+  {
+    "id": "q-dl-w3-2",
+    "courseId": "course-deep-learning-master",
+    "weekNumber": 3,
+    "originalQuestionNumber": 2,
+    "sourcePdfName": "DeepLearning_July_Oct_2026_Week3.pdf",
+    "questionText": "Case Study 1\nTutoring Session Readiness Score\nAn online tutoring platform uses a small feedforward network to estimate a session-\nreadiness score before assigning a tutor. The model uses two input features:\nx1 : student preparation score,\nx2 : topic difficulty score.\nFor one session, x1 = 2 and x2 = 1. The network computes hidden quantities first and then\ncombines them:\nz1 = 2x1 + x2,\nz2 = x1 −x2 + 1,\nˆy = z1 + 2z2.\nThe computation is feedforward: inputs are used to compute z1, z2, and these hidden quan-\ntities are then used to compute ˆy.\n\nQuestion 2: What is the value of z2?",
+    "options": [
+      "0",
+      "1",
+      "3",
+      "2"
+    ],
+    "correctAnswerIndex": 3,
+    "answerSource": "PDF",
+    "isApproved": true,
+    "explanation": "z2 = x1 −x2 + 1 = 2 −1 + 1 = 2."
+  },
+  {
+    "id": "q-dl-w3-3",
+    "courseId": "course-deep-learning-master",
+    "weekNumber": 3,
+    "originalQuestionNumber": 3,
+    "sourcePdfName": "DeepLearning_July_Oct_2026_Week3.pdf",
+    "questionText": "Case Study 1\nTutoring Session Readiness Score\nAn online tutoring platform uses a small feedforward network to estimate a session-\nreadiness score before assigning a tutor. The model uses two input features:\nx1 : student preparation score,\nx2 : topic difficulty score.\nFor one session, x1 = 2 and x2 = 1. The network computes hidden quantities first and then\ncombines them:\nz1 = 2x1 + x2,\nz2 = x1 −x2 + 1,\nˆy = z1 + 2z2.\nThe computation is feedforward: inputs are used to compute z1, z2, and these hidden quan-\ntities are then used to compute ˆy.\n\nQuestion 3: What is the final value of ˆy?",
+    "options": [
+      "9",
+      "7",
+      "8",
+      "6"
+    ],
+    "correctAnswerIndex": 0,
+    "answerSource": "PDF",
+    "isApproved": true,
+    "explanation": "ˆy = z1 + 2z2 = 5 + 2(2) = 9."
+  },
+  {
+    "id": "q-dl-w3-4",
+    "courseId": "course-deep-learning-master",
+    "weekNumber": 3,
+    "originalQuestionNumber": 4,
+    "sourcePdfName": "DeepLearning_July_Oct_2026_Week3.pdf",
+    "questionText": "Case Study 1\nTutoring Session Readiness Score\nAn online tutoring platform uses a small feedforward network to estimate a session-\nreadiness score before assigning a tutor. The model uses two input features:\nx1 : student preparation score,\nx2 : topic difficulty score.\nFor one session, x1 = 2 and x2 = 1. The network computes hidden quantities first and then\ncombines them:\nz1 = 2x1 + x2,\nz2 = x1 −x2 + 1,\nˆy = z1 + 2z2.\nThe computation is feedforward: inputs are used to compute z1, z2, and these hidden quan-\ntities are then used to compute ˆy.\n\nQuestion 4: Which computation must be completed before ˆy is evaluated?",
+    "options": [
+      "The loss must be minimized over all stored tutoring sessions.",
+      "The target value must be changed by the model before scoring.",
+      "The hidden quantities z1 and z2 must be computed.",
+      "The learning rate must be set to zero."
+    ],
+    "correctAnswerIndex": 2,
+    "answerSource": "PDF",
+    "isApproved": true,
+    "explanation": "The output depends directly on z1 and z2, so they must be computed first."
+  },
+  {
+    "id": "q-dl-w3-5",
+    "courseId": "course-deep-learning-master",
+    "weekNumber": 3,
+    "originalQuestionNumber": 5,
+    "sourcePdfName": "DeepLearning_July_Oct_2026_Week3.pdf",
+    "questionText": "Case Study 1\nTutoring Session Readiness Score\nAn online tutoring platform uses a small feedforward network to estimate a session-\nreadiness score before assigning a tutor. The model uses two input features:\nx1 : student preparation score,\nx2 : topic difficulty score.\nFor one session, x1 = 2 and x2 = 1. The network computes hidden quantities first and then\ncombines them:\nz1 = 2x1 + x2,\nz2 = x1 −x2 + 1,\nˆy = z1 + 2z2.\nThe computation is feedforward: inputs are used to compute z1, z2, and these hidden quan-\ntities are then used to compute ˆy.\n\nQuestion 5: What makes this a feedforward computation?",
+    "options": [
+      "The output is repeatedly fed back as a new input.",
+      "Information flows from inputs to hidden quantities to output.",
+      "The target label is used before the input features.",
+      "The network stores a separate state for each previous session."
+    ],
+    "correctAnswerIndex": 1,
+    "answerSource": "PDF",
+    "isApproved": true,
+    "explanation": "In a feedforward network, values are computed in one direction from inputs through intermediate units to the output."
+  },
+  {
+    "id": "q-dl-w3-6",
+    "courseId": "course-deep-learning-master",
+    "weekNumber": 3,
+    "originalQuestionNumber": 6,
+    "sourcePdfName": "DeepLearning_July_Oct_2026_Week3.pdf",
+    "questionText": "Case Study 2\nInventory Forecast Calculation Review\nA store wants to understand how a change in one product-level input can affect a final\nforecasting loss. Before training the full inventory model, the analytics team writes a small\ncomputational graph on a whiteboard and follows both the forward values and the local\nderivatives. For one product, the graph is\nu = 2x,\nv = u + 3,\nL = v2.\nFor the current product, x = 1. The team computes local derivatives using the chain rule.\nHere, x is a simplified demand signal, u and v are intermediate quantities, and L is the scalar\nloss that would be reduced during training.\n\nQuestion 6: What is the value of u?",
+    "options": [
+      "2",
+      "1",
+      "3",
+      "4"
+    ],
+    "correctAnswerIndex": 0,
+    "answerSource": "PDF",
+    "isApproved": true,
+    "explanation": "Since u = 2x and x = 1, u = 2."
+  },
+  {
+    "id": "q-dl-w3-7",
+    "courseId": "course-deep-learning-master",
+    "weekNumber": 3,
+    "originalQuestionNumber": 7,
+    "sourcePdfName": "DeepLearning_July_Oct_2026_Week3.pdf",
+    "questionText": "Case Study 2\nInventory Forecast Calculation Review\nA store wants to understand how a change in one product-level input can affect a final\nforecasting loss. Before training the full inventory model, the analytics team writes a small\ncomputational graph on a whiteboard and follows both the forward values and the local\nderivatives. For one product, the graph is\nu = 2x,\nv = u + 3,\nL = v2.\nFor the current product, x = 1. The team computes local derivatives using the chain rule.\nHere, x is a simplified demand signal, u and v are intermediate quantities, and L is the scalar\nloss that would be reduced during training.\n\nQuestion 7: What is the value of v?",
+    "options": [
+      "3",
+      "4",
+      "6",
+      "5"
+    ],
+    "correctAnswerIndex": 3,
+    "answerSource": "PDF",
+    "isApproved": true,
+    "explanation": "v = u + 3 = 2 + 3 = 5."
+  },
+  {
+    "id": "q-dl-w3-8",
+    "courseId": "course-deep-learning-master",
+    "weekNumber": 3,
+    "originalQuestionNumber": 8,
+    "sourcePdfName": "DeepLearning_July_Oct_2026_Week3.pdf",
+    "questionText": "Case Study 2\nInventory Forecast Calculation Review\nA store wants to understand how a change in one product-level input can affect a final\nforecasting loss. Before training the full inventory model, the analytics team writes a small\ncomputational graph on a whiteboard and follows both the forward values and the local\nderivatives. For one product, the graph is\nu = 2x,\nv = u + 3,\nL = v2.\nFor the current product, x = 1. The team computes local derivatives using the chain rule.\nHere, x is a simplified demand signal, u and v are intermediate quantities, and L is the scalar\nloss that would be reduced during training.\n\nQuestion 8: What is the loss L?",
+    "options": [
+      "20",
+      "15",
+      "25",
+      "10"
+    ],
+    "correctAnswerIndex": 2,
+    "answerSource": "PDF",
+    "isApproved": true,
+    "explanation": "L = v2 = 52 = 25."
+  },
+  {
+    "id": "q-dl-w3-9",
+    "courseId": "course-deep-learning-master",
+    "weekNumber": 3,
+    "originalQuestionNumber": 9,
+    "sourcePdfName": "DeepLearning_July_Oct_2026_Week3.pdf",
+    "questionText": "Case Study 2\nInventory Forecast Calculation Review\nA store wants to understand how a change in one product-level input can affect a final\nforecasting loss. Before training the full inventory model, the analytics team writes a small\ncomputational graph on a whiteboard and follows both the forward values and the local\nderivatives. For one product, the graph is\nu = 2x,\nv = u + 3,\nL = v2.\nFor the current product, x = 1. The team computes local derivatives using the chain rule.\nHere, x is a simplified demand signal, u and v are intermediate quantities, and L is the scalar\nloss that would be reduced during training.\n\nQuestion 9: What is ∂L ∂v at v = 5?",
+    "options": [
+      "5",
+      "10",
+      "25",
+      "2"
+    ],
+    "correctAnswerIndex": 1,
+    "answerSource": "PDF",
+    "isApproved": true,
+    "explanation": "Since L = v2, ∂L ∂v = 2v = 10."
+  },
+  {
+    "id": "q-dl-w3-10",
+    "courseId": "course-deep-learning-master",
+    "weekNumber": 3,
+    "originalQuestionNumber": 10,
+    "sourcePdfName": "DeepLearning_July_Oct_2026_Week3.pdf",
+    "questionText": "Case Study 2\nInventory Forecast Calculation Review\nA store wants to understand how a change in one product-level input can affect a final\nforecasting loss. Before training the full inventory model, the analytics team writes a small\ncomputational graph on a whiteboard and follows both the forward values and the local\nderivatives. For one product, the graph is\nu = 2x,\nv = u + 3,\nL = v2.\nFor the current product, x = 1. The team computes local derivatives using the chain rule.\nHere, x is a simplified demand signal, u and v are intermediate quantities, and L is the scalar\nloss that would be reduced during training.\n\nQuestion 10: What is ∂L ∂x?",
+    "options": [
+      "10",
+      "5",
+      "40",
+      "20"
+    ],
+    "correctAnswerIndex": 3,
+    "answerSource": "PDF",
+    "isApproved": true,
+    "explanation": "By the chain rule, ∂L ∂x = ∂L ∂v ∂v ∂u ∂u ∂x = 10(1)(2) = 20."
+  },
+  {
+    "id": "q-dl-w3-11",
+    "courseId": "course-deep-learning-master",
+    "weekNumber": 3,
+    "originalQuestionNumber": 11,
+    "sourcePdfName": "DeepLearning_July_Oct_2026_Week3.pdf",
+    "questionText": "Case Study 3\nSensor Calibration Error Analysis\nA lab calibrates a sensor whose raw reading must be converted into a corrected mea-\nsurement. To check the backpropagation calculations before using many sensor logs, the\nengineers use a one-hidden-unit model and one training example. For this example,\nx = 2,\ny = 5.\nThe model is\nh = w1x + b,\nˆy = w2h,\nwith w1 = 1, b = 0, w2 = 2. The loss is\nL = 1\n2(ˆy −y)2.\nBackpropagation computes gradients from the loss back through the output and hidden\ncomputations. The goal is not to build a production sensor model from one example, but to\nverify how the prediction error is assigned to w2, then passed backward through h to w1.\n\nQuestion 11: What is the hidden value h?",
+    "options": [
+      "1",
+      "4",
+      "2",
+      "5"
+    ],
+    "correctAnswerIndex": 2,
+    "answerSource": "PDF",
+    "isApproved": true,
+    "explanation": "h = w1x + b = 1(2) + 0 = 2."
+  },
+  {
+    "id": "q-dl-w3-12",
+    "courseId": "course-deep-learning-master",
+    "weekNumber": 3,
+    "originalQuestionNumber": 12,
+    "sourcePdfName": "DeepLearning_July_Oct_2026_Week3.pdf",
+    "questionText": "Case Study 3\nSensor Calibration Error Analysis\nA lab calibrates a sensor whose raw reading must be converted into a corrected mea-\nsurement. To check the backpropagation calculations before using many sensor logs, the\nengineers use a one-hidden-unit model and one training example. For this example,\nx = 2,\ny = 5.\nThe model is\nh = w1x + b,\nˆy = w2h,\nwith w1 = 1, b = 0, w2 = 2. The loss is\nL = 1\n2(ˆy −y)2.\nBackpropagation computes gradients from the loss back through the output and hidden\ncomputations. The goal is not to build a production sensor model from one example, but to\nverify how the prediction error is assigned to w2, then passed backward through h to w1.\n\nQuestion 12: What is the prediction ˆy?",
+    "options": [
+      "3",
+      "5",
+      "2",
+      "4"
+    ],
+    "correctAnswerIndex": 3,
+    "answerSource": "PDF",
+    "isApproved": true,
+    "explanation": "ˆy = w2h = 2(2) = 4."
+  },
+  {
+    "id": "q-dl-w3-13",
+    "courseId": "course-deep-learning-master",
+    "weekNumber": 3,
+    "originalQuestionNumber": 13,
+    "sourcePdfName": "DeepLearning_July_Oct_2026_Week3.pdf",
+    "questionText": "Case Study 3\nSensor Calibration Error Analysis\nA lab calibrates a sensor whose raw reading must be converted into a corrected mea-\nsurement. To check the backpropagation calculations before using many sensor logs, the\nengineers use a one-hidden-unit model and one training example. For this example,\nx = 2,\ny = 5.\nThe model is\nh = w1x + b,\nˆy = w2h,\nwith w1 = 1, b = 0, w2 = 2. The loss is\nL = 1\n2(ˆy −y)2.\nBackpropagation computes gradients from the loss back through the output and hidden\ncomputations. The goal is not to build a production sensor model from one example, but to\nverify how the prediction error is assigned to w2, then passed backward through h to w1.\n\nQuestion 13: What is ∂L ∂ˆy ?",
+    "options": [
+      "−1",
+      "1",
+      "−2",
+      "2"
+    ],
+    "correctAnswerIndex": 0,
+    "answerSource": "PDF",
+    "isApproved": true,
+    "explanation": "∂L ∂ˆy = ˆy −y = 4 −5 = −1."
+  },
+  {
+    "id": "q-dl-w3-14",
+    "courseId": "course-deep-learning-master",
+    "weekNumber": 3,
+    "originalQuestionNumber": 14,
+    "sourcePdfName": "DeepLearning_July_Oct_2026_Week3.pdf",
+    "questionText": "Case Study 3\nSensor Calibration Error Analysis\nA lab calibrates a sensor whose raw reading must be converted into a corrected mea-\nsurement. To check the backpropagation calculations before using many sensor logs, the\nengineers use a one-hidden-unit model and one training example. For this example,\nx = 2,\ny = 5.\nThe model is\nh = w1x + b,\nˆy = w2h,\nwith w1 = 1, b = 0, w2 = 2. The loss is\nL = 1\n2(ˆy −y)2.\nBackpropagation computes gradients from the loss back through the output and hidden\ncomputations. The goal is not to build a production sensor model from one example, but to\nverify how the prediction error is assigned to w2, then passed backward through h to w1.\n\nQuestion 14: What is ∂L ∂w2?",
+    "options": [
+      "−1",
+      "−2",
+      "2",
+      "1"
+    ],
+    "correctAnswerIndex": 1,
+    "answerSource": "PDF",
+    "isApproved": true,
+    "explanation": "Since ˆy = w2h, ∂L ∂w2 = ∂L ∂ˆy h = (−1)(2) = −2."
+  },
+  {
+    "id": "q-dl-w3-15",
+    "courseId": "course-deep-learning-master",
+    "weekNumber": 3,
+    "originalQuestionNumber": 15,
+    "sourcePdfName": "DeepLearning_July_Oct_2026_Week3.pdf",
+    "questionText": "Case Study 3\nSensor Calibration Error Analysis\nA lab calibrates a sensor whose raw reading must be converted into a corrected mea-\nsurement. To check the backpropagation calculations before using many sensor logs, the\nengineers use a one-hidden-unit model and one training example. For this example,\nx = 2,\ny = 5.\nThe model is\nh = w1x + b,\nˆy = w2h,\nwith w1 = 1, b = 0, w2 = 2. The loss is\nL = 1\n2(ˆy −y)2.\nBackpropagation computes gradients from the loss back through the output and hidden\ncomputations. The goal is not to build a production sensor model from one example, but to\nverify how the prediction error is assigned to w2, then passed backward through h to w1.\n\nQuestion 15: What is ∂L ∂w1?",
+    "options": [
+      "−1",
+      "1",
+      "−4",
+      "4"
+    ],
+    "correctAnswerIndex": 2,
+    "answerSource": "PDF",
+    "isApproved": true,
+    "explanation": "∂L ∂h = (−1)w2 = −2, and ∂h ∂w1 = x = 2, so ∂L ∂w1 = −4."
+  },
+  {
+    "id": "q-dl-w3-16",
+    "courseId": "course-deep-learning-master",
+    "weekNumber": 3,
+    "originalQuestionNumber": 16,
+    "sourcePdfName": "DeepLearning_July_Oct_2026_Week3.pdf",
+    "questionText": "Case Study 4\nCourse Recommendation Score Update\nA course platform tracks whether a learner is likely to engage with a recommended\nmodule. For an internal training exercise, the team uses a simple linear prediction model so\nthat each gradient and parameter update can be inspected. The model predicts a learner’s\ninterest score as\nˆy = w1x1 + w2x2 + b.\nFor one learner,\nx1 = 1,\nx2 = 2,\ny = 6.\nInitially, w1 = 1, w2 = 1, b = 0. The loss is\nL = 1\n2(ˆy −y)2.\nThe learning rate is η = 0.1, and parameters are updated using\nw ←w −η ∂L\n∂w.\nThe two inputs summarize recent activity and topic match, while the bias accounts for a\nbaseline interest level. The questions focus on how one observed error changes the weights\nand bias after a gradient descent update.\n\nQuestion 16: What is the initial prediction ˆy?",
+    "options": [
+      "4",
+      "3",
+      "5",
+      "2"
+    ],
+    "correctAnswerIndex": 1,
+    "answerSource": "PDF",
+    "isApproved": true,
+    "explanation": "ˆy = 1(1) + 1(2) + 0 = 3."
+  },
+  {
+    "id": "q-dl-w3-17",
+    "courseId": "course-deep-learning-master",
+    "weekNumber": 3,
+    "originalQuestionNumber": 17,
+    "sourcePdfName": "DeepLearning_July_Oct_2026_Week3.pdf",
+    "questionText": "Case Study 4\nCourse Recommendation Score Update\nA course platform tracks whether a learner is likely to engage with a recommended\nmodule. For an internal training exercise, the team uses a simple linear prediction model so\nthat each gradient and parameter update can be inspected. The model predicts a learner’s\ninterest score as\nˆy = w1x1 + w2x2 + b.\nFor one learner,\nx1 = 1,\nx2 = 2,\ny = 6.\nInitially, w1 = 1, w2 = 1, b = 0. The loss is\nL = 1\n2(ˆy −y)2.\nThe learning rate is η = 0.1, and parameters are updated using\nw ←w −η ∂L\n∂w.\nThe two inputs summarize recent activity and topic match, while the bias accounts for a\nbaseline interest level. The questions focus on how one observed error changes the weights\nand bias after a gradient descent update.\n\nQuestion 17: What is ∂L ∂ˆy ?",
+    "options": [
+      "−3",
+      "3",
+      "−6",
+      "6"
+    ],
+    "correctAnswerIndex": 0,
+    "answerSource": "PDF",
+    "isApproved": true,
+    "explanation": "∂L ∂ˆy = ˆy −y = 3 −6 = −3."
+  },
+  {
+    "id": "q-dl-w3-18",
+    "courseId": "course-deep-learning-master",
+    "weekNumber": 3,
+    "originalQuestionNumber": 18,
+    "sourcePdfName": "DeepLearning_July_Oct_2026_Week3.pdf",
+    "questionText": "Case Study 4\nCourse Recommendation Score Update\nA course platform tracks whether a learner is likely to engage with a recommended\nmodule. For an internal training exercise, the team uses a simple linear prediction model so\nthat each gradient and parameter update can be inspected. The model predicts a learner’s\ninterest score as\nˆy = w1x1 + w2x2 + b.\nFor one learner,\nx1 = 1,\nx2 = 2,\ny = 6.\nInitially, w1 = 1, w2 = 1, b = 0. The loss is\nL = 1\n2(ˆy −y)2.\nThe learning rate is η = 0.1, and parameters are updated using\nw ←w −η ∂L\n∂w.\nThe two inputs summarize recent activity and topic match, while the bias accounts for a\nbaseline interest level. The questions focus on how one observed error changes the weights\nand bias after a gradient descent update.\n\nQuestion 18: What is ∂L ∂w2?",
+    "options": [
+      "3",
+      "−3",
+      "6",
+      "−6"
+    ],
+    "correctAnswerIndex": 3,
+    "answerSource": "PDF",
+    "isApproved": true,
+    "explanation": "∂L ∂w2 = (ˆy −y)x2 = (−3)(2) = −6."
+  },
+  {
+    "id": "q-dl-w3-19",
+    "courseId": "course-deep-learning-master",
+    "weekNumber": 3,
+    "originalQuestionNumber": 19,
+    "sourcePdfName": "DeepLearning_July_Oct_2026_Week3.pdf",
+    "questionText": "Case Study 4\nCourse Recommendation Score Update\nA course platform tracks whether a learner is likely to engage with a recommended\nmodule. For an internal training exercise, the team uses a simple linear prediction model so\nthat each gradient and parameter update can be inspected. The model predicts a learner’s\ninterest score as\nˆy = w1x1 + w2x2 + b.\nFor one learner,\nx1 = 1,\nx2 = 2,\ny = 6.\nInitially, w1 = 1, w2 = 1, b = 0. The loss is\nL = 1\n2(ˆy −y)2.\nThe learning rate is η = 0.1, and parameters are updated using\nw ←w −η ∂L\n∂w.\nThe two inputs summarize recent activity and topic match, while the bias accounts for a\nbaseline interest level. The questions focus on how one observed error changes the weights\nand bias after a gradient descent update.\n\nQuestion 19: What is the updated value of w1?",
+    "options": [
+      "0.7",
+      "1.6",
+      "1.3",
+      "0.4"
+    ],
+    "correctAnswerIndex": 2,
+    "answerSource": "PDF",
+    "isApproved": true,
+    "explanation": "∂L ∂w1 = (−3)(1) = −3, so w1 = 1 −0.1(−3) = 1.3."
+  },
+  {
+    "id": "q-dl-w3-20",
+    "courseId": "course-deep-learning-master",
+    "weekNumber": 3,
+    "originalQuestionNumber": 20,
+    "sourcePdfName": "DeepLearning_July_Oct_2026_Week3.pdf",
+    "questionText": "Case Study 4\nCourse Recommendation Score Update\nA course platform tracks whether a learner is likely to engage with a recommended\nmodule. For an internal training exercise, the team uses a simple linear prediction model so\nthat each gradient and parameter update can be inspected. The model predicts a learner’s\ninterest score as\nˆy = w1x1 + w2x2 + b.\nFor one learner,\nx1 = 1,\nx2 = 2,\ny = 6.\nInitially, w1 = 1, w2 = 1, b = 0. The loss is\nL = 1\n2(ˆy −y)2.\nThe learning rate is η = 0.1, and parameters are updated using\nw ←w −η ∂L\n∂w.\nThe two inputs summarize recent activity and topic match, while the bias accounts for a\nbaseline interest level. The questions focus on how one observed error changes the weights\nand bias after a gradient descent update.\n\nQuestion 20: What is the updated value of b?",
+    "options": [
+      "0.3",
+      "−0.3",
+      "0.6",
+      "−0.6"
+    ],
+    "correctAnswerIndex": 0,
+    "answerSource": "PDF",
+    "isApproved": true,
+    "explanation": "∂L ∂b = −3, so b = 0 −0.1(−3) = 0.3."
+  }
+]

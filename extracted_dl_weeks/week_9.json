@@ -1,0 +1,362 @@
+[
+  {
+    "id": "q-dl-w9-1",
+    "courseId": "course-deep-learning-master",
+    "weekNumber": 9,
+    "originalQuestionNumber": 1,
+    "sourcePdfName": "DeepLearning_July_Oct_2026_Week9.pdf",
+    "questionText": "Case Study 1\nCustomer Support Ticket Classification\nA telecom company classifies customer support tickets into billing, network, plan-change,\nand device-support categories. After preprocessing 50,000 historical tickets, the team obtains\na vocabulary of 12,000 unique words. As a baseline, every word is represented using a one-\nhot vector of length equal to the vocabulary size. Each vector has exactly one entry equal\nto 1 and all other entries equal to 0. A ticket is represented using a bag-of-words vector\nobtained by adding the one-hot vectors of the words present in it.\nConsider two short processed tickets:\nTicket A: recharge failed refund\nTicket B: recharge plan refund\nBoth tickets are represented using bag-of-words vectors over the same 12,000-word vocabu-\nlary.\n\nQuestion 1: What is the length of each one-hot word vector?",
+    "options": [
+      "12,000",
+      "50,000",
+      "3",
+      "4"
+    ],
+    "correctAnswerIndex": 0,
+    "answerSource": "PDF",
+    "isApproved": true,
+    "explanation": "A one-hot word vector has length equal to the vocabulary size, which is 12,000."
+  },
+  {
+    "id": "q-dl-w9-2",
+    "courseId": "course-deep-learning-master",
+    "weekNumber": 9,
+    "originalQuestionNumber": 2,
+    "sourcePdfName": "DeepLearning_July_Oct_2026_Week9.pdf",
+    "questionText": "Case Study 1\nCustomer Support Ticket Classification\nA telecom company classifies customer support tickets into billing, network, plan-change,\nand device-support categories. After preprocessing 50,000 historical tickets, the team obtains\na vocabulary of 12,000 unique words. As a baseline, every word is represented using a one-\nhot vector of length equal to the vocabulary size. Each vector has exactly one entry equal\nto 1 and all other entries equal to 0. A ticket is represented using a bag-of-words vector\nobtained by adding the one-hot vectors of the words present in it.\nConsider two short processed tickets:\nTicket A: recharge failed refund\nTicket B: recharge plan refund\nBoth tickets are represented using bag-of-words vectors over the same 12,000-word vocabu-\nlary.\n\nQuestion 2: How many non-zero entries does a single one-hot word vector contain?",
+    "options": [
+      "12,000",
+      "0",
+      "1",
+      "3"
+    ],
+    "correctAnswerIndex": 2,
+    "answerSource": "PDF",
+    "isApproved": true,
+    "explanation": "A one-hot vector has exactly one position set to 1."
+  },
+  {
+    "id": "q-dl-w9-3",
+    "courseId": "course-deep-learning-master",
+    "weekNumber": 9,
+    "originalQuestionNumber": 3,
+    "sourcePdfName": "DeepLearning_July_Oct_2026_Week9.pdf",
+    "questionText": "Case Study 1\nCustomer Support Ticket Classification\nA telecom company classifies customer support tickets into billing, network, plan-change,\nand device-support categories. After preprocessing 50,000 historical tickets, the team obtains\na vocabulary of 12,000 unique words. As a baseline, every word is represented using a one-\nhot vector of length equal to the vocabulary size. Each vector has exactly one entry equal\nto 1 and all other entries equal to 0. A ticket is represented using a bag-of-words vector\nobtained by adding the one-hot vectors of the words present in it.\nConsider two short processed tickets:\nTicket A: recharge failed refund\nTicket B: recharge plan refund\nBoth tickets are represented using bag-of-words vectors over the same 12,000-word vocabu-\nlary.\n\nQuestion 3: How many shared words appear in Ticket A and Ticket B?",
+    "options": [
+      "1",
+      "3",
+      "0",
+      "2"
+    ],
+    "correctAnswerIndex": 3,
+    "answerSource": "PDF",
+    "isApproved": true,
+    "explanation": "The shared words are “recharge” and “refund”, so there are 2 shared words."
+  },
+  {
+    "id": "q-dl-w9-4",
+    "courseId": "course-deep-learning-master",
+    "weekNumber": 9,
+    "originalQuestionNumber": 4,
+    "sourcePdfName": "DeepLearning_July_Oct_2026_Week9.pdf",
+    "questionText": "Case Study 1\nCustomer Support Ticket Classification\nA telecom company classifies customer support tickets into billing, network, plan-change,\nand device-support categories. After preprocessing 50,000 historical tickets, the team obtains\na vocabulary of 12,000 unique words. As a baseline, every word is represented using a one-\nhot vector of length equal to the vocabulary size. Each vector has exactly one entry equal\nto 1 and all other entries equal to 0. A ticket is represented using a bag-of-words vector\nobtained by adding the one-hot vectors of the words present in it.\nConsider two short processed tickets:\nTicket A: recharge failed refund\nTicket B: recharge plan refund\nBoth tickets are represented using bag-of-words vectors over the same 12,000-word vocabu-\nlary.\n\nQuestion 4: What is a major limitation of one-hot word vectors?",
+    "options": [
+      "They are always dense for the data shown here.",
+      "They do not directly capture semantic similarity between words.",
+      "They require labels for every context window for the described model.",
+      "They have variable length for the same vocabulary."
+    ],
+    "correctAnswerIndex": 1,
+    "answerSource": "PDF",
+    "isApproved": true,
+    "explanation": "Distinct one-hot vectors are orthogonal, so they do not encode semantic relatedness."
+  },
+  {
+    "id": "q-dl-w9-5",
+    "courseId": "course-deep-learning-master",
+    "weekNumber": 9,
+    "originalQuestionNumber": 5,
+    "sourcePdfName": "DeepLearning_July_Oct_2026_Week9.pdf",
+    "questionText": "Case Study 1\nCustomer Support Ticket Classification\nA telecom company classifies customer support tickets into billing, network, plan-change,\nand device-support categories. After preprocessing 50,000 historical tickets, the team obtains\na vocabulary of 12,000 unique words. As a baseline, every word is represented using a one-\nhot vector of length equal to the vocabulary size. Each vector has exactly one entry equal\nto 1 and all other entries equal to 0. A ticket is represented using a bag-of-words vector\nobtained by adding the one-hot vectors of the words present in it.\nConsider two short processed tickets:\nTicket A: recharge failed refund\nTicket B: recharge plan refund\nBoth tickets are represented using bag-of-words vectors over the same 12,000-word vocabu-\nlary.\n\nQuestion 5: Why can cosine similarity still be useful for bag-of-words ticket vectors?",
+    "options": [
+      "It measures overlap in word usage while reducing sensitivity to length.",
+      "It learns neural hidden layers automatically from the sparse ticket vectors.",
+      "It converts sparse vectors into images in this specific scenario.",
+      "It guarantees semantic understanding under the given conditions."
+    ],
+    "correctAnswerIndex": 0,
+    "answerSource": "PDF",
+    "isApproved": true,
+    "explanation": "Cosine similarity compares vector direction, which reflects word-overlap patterns in bag-of-words vectors."
+  },
+  {
+    "id": "q-dl-w9-6",
+    "courseId": "course-deep-learning-master",
+    "weekNumber": 9,
+    "originalQuestionNumber": 6,
+    "sourcePdfName": "DeepLearning_July_Oct_2026_Week9.pdf",
+    "questionText": "Case Study 2\nProduct Review Term Analysis\nAn online retailer studies product reviews using word co-occurrence statistics.\nThe\ncleaned toy corpus contains four review fragments:\nbattery lasts long\nscreen looks bright\nbattery charges fast\nbright screen response\nThe selected vocabulary is ordered as\n[battery, screen, bright, long, fast].\nThe team uses a context window of 1, so only the immediate left and right words are counted\nas context. The co-occurrence matrix C has one row per target word and one column per\ncontext word.\n\nQuestion 6: What is the size of the co-occurrence matrix for this selected vocabulary?",
+    "options": [
+      "4 × 5",
+      "5 × 5",
+      "5 × 4",
+      "25 × 25"
+    ],
+    "correctAnswerIndex": 1,
+    "answerSource": "PDF",
+    "isApproved": true,
+    "explanation": "With five target words and the same five context words, the matrix has size 5 × 5."
+  },
+  {
+    "id": "q-dl-w9-7",
+    "courseId": "course-deep-learning-master",
+    "weekNumber": 9,
+    "originalQuestionNumber": 7,
+    "sourcePdfName": "DeepLearning_July_Oct_2026_Week9.pdf",
+    "questionText": "Case Study 2\nProduct Review Term Analysis\nAn online retailer studies product reviews using word co-occurrence statistics.\nThe\ncleaned toy corpus contains four review fragments:\nbattery lasts long\nscreen looks bright\nbattery charges fast\nbright screen response\nThe selected vocabulary is ordered as\n[battery, screen, bright, long, fast].\nThe team uses a context window of 1, so only the immediate left and right words are counted\nas context. The co-occurrence matrix C has one row per target word and one column per\ncontext word.\n\nQuestion 7: What does a context window of 1 mean?",
+    "options": [
+      "Only the target word is counted.",
+      "All words in the corpus are counted as context.",
+      "The vocabulary is reduced to one word.",
+      "Only immediate neighboring words are counted."
+    ],
+    "correctAnswerIndex": 3,
+    "answerSource": "PDF",
+    "isApproved": true,
+    "explanation": "Window size 1 uses the immediate left and right neighbors as context."
+  },
+  {
+    "id": "q-dl-w9-8",
+    "courseId": "course-deep-learning-master",
+    "weekNumber": 9,
+    "originalQuestionNumber": 8,
+    "sourcePdfName": "DeepLearning_July_Oct_2026_Week9.pdf",
+    "questionText": "Case Study 2\nProduct Review Term Analysis\nAn online retailer studies product reviews using word co-occurrence statistics.\nThe\ncleaned toy corpus contains four review fragments:\nbattery lasts long\nscreen looks bright\nbattery charges fast\nbright screen response\nThe selected vocabulary is ordered as\n[battery, screen, bright, long, fast].\nThe team uses a context window of 1, so only the immediate left and right words are counted\nas context. The co-occurrence matrix C has one row per target word and one column per\ncontext word.\n\nQuestion 8: In the fragment “battery lasts long”, how many context contributions does “lasts” receive with window size 1?",
+    "options": [
+      "2",
+      "1",
+      "0",
+      "3"
+    ],
+    "correctAnswerIndex": 0,
+    "answerSource": "PDF",
+    "isApproved": true,
+    "explanation": "The word “lasts” has “battery” on the left and “long” on the right."
+  },
+  {
+    "id": "q-dl-w9-9",
+    "courseId": "course-deep-learning-master",
+    "weekNumber": 9,
+    "originalQuestionNumber": 9,
+    "sourcePdfName": "DeepLearning_July_Oct_2026_Week9.pdf",
+    "questionText": "Case Study 2\nProduct Review Term Analysis\nAn online retailer studies product reviews using word co-occurrence statistics.\nThe\ncleaned toy corpus contains four review fragments:\nbattery lasts long\nscreen looks bright\nbattery charges fast\nbright screen response\nThe selected vocabulary is ordered as\n[battery, screen, bright, long, fast].\nThe team uses a context window of 1, so only the immediate left and right words are counted\nas context. The co-occurrence matrix C has one row per target word and one column per\ncontext word.\n\nQuestion 9: How many times are “screen” and “bright” adjacent in the toy corpus?",
+    "options": [
+      "0",
+      "2",
+      "1",
+      "3"
+    ],
+    "correctAnswerIndex": 2,
+    "answerSource": "PDF",
+    "isApproved": true,
+    "explanation": "They are immediately adjacent only in “bright screen re- sponse”, so the count is 1."
+  },
+  {
+    "id": "q-dl-w9-10",
+    "courseId": "course-deep-learning-master",
+    "weekNumber": 9,
+    "originalQuestionNumber": 10,
+    "sourcePdfName": "DeepLearning_July_Oct_2026_Week9.pdf",
+    "questionText": "Case Study 2\nProduct Review Term Analysis\nAn online retailer studies product reviews using word co-occurrence statistics.\nThe\ncleaned toy corpus contains four review fragments:\nbattery lasts long\nscreen looks bright\nbattery charges fast\nbright screen response\nThe selected vocabulary is ordered as\n[battery, screen, bright, long, fast].\nThe team uses a context window of 1, so only the immediate left and right words are counted\nas context. The co-occurrence matrix C has one row per target word and one column per\ncontext word.\n\nQuestion 10: What does a row of the co-occurrence matrix represent?",
+    "options": [
+      "The number of labels in the classifier under the case assumptions.",
+      "The vectorial representation of a target word based on its context counts.",
+      "The one-hot position of a document category in the downstream product- review classifier.",
+      "The learning rate selected for truncated SVD."
+    ],
+    "correctAnswerIndex": 1,
+    "answerSource": "PDF",
+    "isApproved": true,
+    "explanation": "Each row stores the target word’s co-occurrence counts with context words."
+  },
+  {
+    "id": "q-dl-w9-11",
+    "courseId": "course-deep-learning-master",
+    "weekNumber": 9,
+    "originalQuestionNumber": 11,
+    "sourcePdfName": "DeepLearning_July_Oct_2026_Week9.pdf",
+    "questionText": "Case Study 3\nLegal Search Term Representation\nA legal search platform builds a word-context co-occurrence matrix from court-order\nsummaries. The cleaned vocabulary has 6,000 words, so the square co-occurrence matrix X\nhas size 6000 × 6000. The matrix is sparse and high-dimensional. To obtain compact dense\nword representations, the team applies truncated SVD:\nX ≈UkΣkV ⊤\nk ,\nwith k = 200. The rows of UkΣk are used as dense word vectors for search and clustering. The\nplatform wants related legal terms to be compared through shared context patterns rather\nthan exact word overlap alone, which makes dimensionality reduction useful for retrieval.\n\nQuestion 11: Why is truncated SVD applied here?",
+    "options": [
+      "To increase the vocabulary size in the stated case setting.",
+      "To make every context vector one-hot.",
+      "To reduce dimensionality while preserving important structure.",
+      "To remove the need for context words in every downstream search task."
+    ],
+    "correctAnswerIndex": 2,
+    "answerSource": "PDF",
+    "isApproved": true,
+    "explanation": "Truncated SVD gives compact dense vectors that retain im- portant latent co-occurrence structure."
+  },
+  {
+    "id": "q-dl-w9-12",
+    "courseId": "course-deep-learning-master",
+    "weekNumber": 9,
+    "originalQuestionNumber": 12,
+    "sourcePdfName": "DeepLearning_July_Oct_2026_Week9.pdf",
+    "questionText": "Case Study 3\nLegal Search Term Representation\nA legal search platform builds a word-context co-occurrence matrix from court-order\nsummaries. The cleaned vocabulary has 6,000 words, so the square co-occurrence matrix X\nhas size 6000 × 6000. The matrix is sparse and high-dimensional. To obtain compact dense\nword representations, the team applies truncated SVD:\nX ≈UkΣkV ⊤\nk ,\nwith k = 200. The rows of UkΣk are used as dense word vectors for search and clustering. The\nplatform wants related legal terms to be compared through shared context patterns rather\nthan exact word overlap alone, which makes dimensionality reduction useful for retrieval.\n\nQuestion 12: What is the dimension of each reduced word vector when k = 200?",
+    "options": [
+      "6000",
+      "36,000,000",
+      "400",
+      "200"
+    ],
+    "correctAnswerIndex": 3,
+    "answerSource": "PDF",
+    "isApproved": true,
+    "explanation": "The reduced representation has dimension k = 200."
+  },
+  {
+    "id": "q-dl-w9-13",
+    "courseId": "course-deep-learning-master",
+    "weekNumber": 9,
+    "originalQuestionNumber": 13,
+    "sourcePdfName": "DeepLearning_July_Oct_2026_Week9.pdf",
+    "questionText": "Case Study 3\nLegal Search Term Representation\nA legal search platform builds a word-context co-occurrence matrix from court-order\nsummaries. The cleaned vocabulary has 6,000 words, so the square co-occurrence matrix X\nhas size 6000 × 6000. The matrix is sparse and high-dimensional. To obtain compact dense\nword representations, the team applies truncated SVD:\nX ≈UkΣkV ⊤\nk ,\nwith k = 200. The rows of UkΣk are used as dense word vectors for search and clustering. The\nplatform wants related legal terms to be compared through shared context patterns rather\nthan exact word overlap alone, which makes dimensionality reduction useful for retrieval.\n\nQuestion 13: What is the size of Uk in this case?",
+    "options": [
+      "6000 × 200",
+      "200 × 200",
+      "200 × 6000",
+      "6000 × 6000"
+    ],
+    "correctAnswerIndex": 0,
+    "answerSource": "PDF",
+    "isApproved": true,
+    "explanation": "Uk has one row per word and k columns, so its size is 6000×200."
+  },
+  {
+    "id": "q-dl-w9-14",
+    "courseId": "course-deep-learning-master",
+    "weekNumber": 9,
+    "originalQuestionNumber": 14,
+    "sourcePdfName": "DeepLearning_July_Oct_2026_Week9.pdf",
+    "questionText": "Case Study 3\nLegal Search Term Representation\nA legal search platform builds a word-context co-occurrence matrix from court-order\nsummaries. The cleaned vocabulary has 6,000 words, so the square co-occurrence matrix X\nhas size 6000 × 6000. The matrix is sparse and high-dimensional. To obtain compact dense\nword representations, the team applies truncated SVD:\nX ≈UkΣkV ⊤\nk ,\nwith k = 200. The rows of UkΣk are used as dense word vectors for search and clustering. The\nplatform wants related legal terms to be compared through shared context patterns rather\nthan exact word overlap alone, which makes dimensionality reduction useful for retrieval.\n\nQuestion 14: Which advantage does the reduced representation provide?",
+    "options": [
+      "It makes all unrelated words identical under the given conditions.",
+      "It can make similarity computation more efficient.",
+      "It prevents any word from appearing in context.",
+      "It removes all latent semantic structure."
+    ],
+    "correctAnswerIndex": 1,
+    "answerSource": "PDF",
+    "isApproved": true,
+    "explanation": "Comparing 200-dimensional dense vectors is more efficient than using full 6000-dimensional sparse rows."
+  },
+  {
+    "id": "q-dl-w9-15",
+    "courseId": "course-deep-learning-master",
+    "weekNumber": 9,
+    "originalQuestionNumber": 15,
+    "sourcePdfName": "DeepLearning_July_Oct_2026_Week9.pdf",
+    "questionText": "Case Study 3\nLegal Search Term Representation\nA legal search platform builds a word-context co-occurrence matrix from court-order\nsummaries. The cleaned vocabulary has 6,000 words, so the square co-occurrence matrix X\nhas size 6000 × 6000. The matrix is sparse and high-dimensional. To obtain compact dense\nword representations, the team applies truncated SVD:\nX ≈UkΣkV ⊤\nk ,\nwith k = 200. The rows of UkΣk are used as dense word vectors for search and clustering. The\nplatform wants related legal terms to be compared through shared context patterns rather\nthan exact word overlap alone, which makes dimensionality reduction useful for retrieval.\n\nQuestion 15: What kind of information can SVD help uncover?",
+    "options": [
+      "The number of documents in chronological order.",
+      "The exact spelling of every rare word.",
+      "The chronological order of every document.",
+      "Latent patterns in word-context usage."
+    ],
+    "correctAnswerIndex": 3,
+    "answerSource": "PDF",
+    "isApproved": true,
+    "explanation": "SVD can expose latent dimensions that summarize word- context usage patterns."
+  },
+  {
+    "id": "q-dl-w9-16",
+    "courseId": "course-deep-learning-master",
+    "weekNumber": 9,
+    "originalQuestionNumber": 16,
+    "sourcePdfName": "DeepLearning_July_Oct_2026_Week9.pdf",
+    "questionText": "Case Study 4\nSearch Term Similarity Evaluation\nA technical support company compares two word-representation models for query expan-\nsion. For a set of word pairs, human annotators assign relatedness scores. The company\ncomputes cosine similarity between the learned word vectors and then measures how well\nmodel similarities correlate with human scores.\nThe same vectors are also tested on a\nsynonym selection task: given a query word and four candidates, the system chooses the\ncandidate with the highest cosine similarity. For analogy checks of the form a : b :: c :?, the\ncommon search vector is vb −va + vc.\nFor one query word q, cosine similarities to four candidates are:\nA : 0.18,\nB : 0.74,\nC : 0.41,\nD : 0.62.\n\nQuestion 16: Which candidate is selected by the synonym rule?",
+    "options": [
+      "A",
+      "B",
+      "C",
+      "D"
+    ],
+    "correctAnswerIndex": 1,
+    "answerSource": "PDF",
+    "isApproved": true,
+    "explanation": "Candidate B has the largest cosine similarity, 0.74."
+  },
+  {
+    "id": "q-dl-w9-17",
+    "courseId": "course-deep-learning-master",
+    "weekNumber": 9,
+    "originalQuestionNumber": 17,
+    "sourcePdfName": "DeepLearning_July_Oct_2026_Week9.pdf",
+    "questionText": "Case Study 4\nSearch Term Similarity Evaluation\nA technical support company compares two word-representation models for query expan-\nsion. For a set of word pairs, human annotators assign relatedness scores. The company\ncomputes cosine similarity between the learned word vectors and then measures how well\nmodel similarities correlate with human scores.\nThe same vectors are also tested on a\nsynonym selection task: given a query word and four candidates, the system chooses the\ncandidate with the highest cosine similarity. For analogy checks of the form a : b :: c :?, the\ncommon search vector is vb −va + vc.\nFor one query word q, cosine similarities to four candidates are:\nA : 0.18,\nB : 0.74,\nC : 0.41,\nD : 0.62.\n\nQuestion 17: What does a high correlation with human relatedness scores indicate?",
+    "options": [
+      "The model’s similarity judgments agree well with human judgments.",
+      "The vectors remain one-hot after training.",
+      "The vocabulary has only one word under the given conditions.",
+      "The model ignores cosine similarity during all human-score evaluations."
+    ],
+    "correctAnswerIndex": 0,
+    "answerSource": "PDF",
+    "isApproved": true,
+    "explanation": "Higher correlation means model similarities align better with human relatedness ratings."
+  },
+  {
+    "id": "q-dl-w9-18",
+    "courseId": "course-deep-learning-master",
+    "weekNumber": 9,
+    "originalQuestionNumber": 18,
+    "sourcePdfName": "DeepLearning_July_Oct_2026_Week9.pdf",
+    "questionText": "Case Study 4\nSearch Term Similarity Evaluation\nA technical support company compares two word-representation models for query expan-\nsion. For a set of word pairs, human annotators assign relatedness scores. The company\ncomputes cosine similarity between the learned word vectors and then measures how well\nmodel similarities correlate with human scores.\nThe same vectors are also tested on a\nsynonym selection task: given a query word and four candidates, the system chooses the\ncandidate with the highest cosine similarity. For analogy checks of the form a : b :: c :?, the\ncommon search vector is vb −va + vc.\nFor one query word q, cosine similarities to four candidates are:\nA : 0.18,\nB : 0.74,\nC : 0.41,\nD : 0.62.\n\nQuestion 18: In an analogy task a : b :: c :?, what vector operation is commonly used?",
+    "options": [
+      "va + vb + vc only",
+      "va −vb −vc",
+      "vb −va + vc",
+      "va/vb"
+    ],
+    "correctAnswerIndex": 2,
+    "answerSource": "PDF",
+    "isApproved": true,
+    "explanation": "A common analogy query searches near vb −va + vc."
+  },
+  {
+    "id": "q-dl-w9-19",
+    "courseId": "course-deep-learning-master",
+    "weekNumber": 9,
+    "originalQuestionNumber": 19,
+    "sourcePdfName": "DeepLearning_July_Oct_2026_Week9.pdf",
+    "questionText": "Case Study 4\nSearch Term Similarity Evaluation\nA technical support company compares two word-representation models for query expan-\nsion. For a set of word pairs, human annotators assign relatedness scores. The company\ncomputes cosine similarity between the learned word vectors and then measures how well\nmodel similarities correlate with human scores.\nThe same vectors are also tested on a\nsynonym selection task: given a query word and four candidates, the system chooses the\ncandidate with the highest cosine similarity. For analogy checks of the form a : b :: c :?, the\ncommon search vector is vb −va + vc.\nFor one query word q, cosine similarities to four candidates are:\nA : 0.18,\nB : 0.74,\nC : 0.41,\nD : 0.62.\n\nQuestion 19: Why are dense word vectors useful for query expansion?",
+    "options": [
+      "They make every vector a one-hot vector under the given conditions.",
+      "They require no training corpus under the given conditions.",
+      "They make every pair of different words orthogonal.",
+      "They can place related words near each other in vector space."
+    ],
+    "correctAnswerIndex": 3,
+    "answerSource": "PDF",
+    "isApproved": true,
+    "explanation": "Dense embeddings can encode distributional similarity, making related terms closer."
+  },
+  {
+    "id": "q-dl-w9-20",
+    "courseId": "course-deep-learning-master",
+    "weekNumber": 9,
+    "originalQuestionNumber": 20,
+    "sourcePdfName": "DeepLearning_July_Oct_2026_Week9.pdf",
+    "questionText": "Case Study 4\nSearch Term Similarity Evaluation\nA technical support company compares two word-representation models for query expan-\nsion. For a set of word pairs, human annotators assign relatedness scores. The company\ncomputes cosine similarity between the learned word vectors and then measures how well\nmodel similarities correlate with human scores.\nThe same vectors are also tested on a\nsynonym selection task: given a query word and four candidates, the system chooses the\ncandidate with the highest cosine similarity. For analogy checks of the form a : b :: c :?, the\ncommon search vector is vb −va + vc.\nFor one query word q, cosine similarities to four candidates are:\nA : 0.18,\nB : 0.74,\nC : 0.41,\nD : 0.62.\n\nQuestion 20: What metric is used in the synonym rule described in the case?",
+    "options": [
+      "Training loss under the given conditions",
+      "Matrix rank only",
+      "Cosine similarity",
+      "Vocabulary size"
+    ],
+    "correctAnswerIndex": 2,
+    "answerSource": "PDF",
+    "isApproved": true,
+    "explanation": "The case chooses the candidate with the highest cosine simi- larity."
+  }
+]

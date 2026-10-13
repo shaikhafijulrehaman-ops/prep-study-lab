@@ -1,0 +1,362 @@
+[
+  {
+    "id": "q-dl-w8-1",
+    "courseId": "course-deep-learning-master",
+    "weekNumber": 8,
+    "originalQuestionNumber": 1,
+    "sourcePdfName": "DeepLearning_July_Oct_2026_Week8.pdf",
+    "questionText": "Case Study 1\nInsurance Claim Approval Prediction\nAn insurance analytics team builds a deep feedforward network to classify whether a\nhealth insurance claim needs manual review. Each record contains numerical features such as\nclaim amount, hospital-risk score, patient-age group, policy duration, and number of previous\nclaims. The output layer uses a sigmoid unit because the final output is a probability.\nIn the first version, the team also uses sigmoid activations in all eight hidden layers.\nTraining starts normally but soon becomes very slow. The gradients reaching early layers\nbecome very small, especially when hidden pre-activation values are large in magnitude. The\nteam replaces the hidden activations with ReLU:\nReLU(x) = max(0, x),\nwhile keeping the sigmoid output layer.\nFor analysis, they compare sigmoid and ReLU\noutputs at x = −4 and x = 2. Use σ(2) ≈0.88 and σ(−4) ≈0.018.\n\nQuestion 1: Why can sigmoid hidden layers slow down training in a deep network?",
+    "options": [
+      "They can saturate and produce very small gradients.",
+      "They always output negative values under the given conditions.",
+      "They remove all nonlinear behavior.",
+      "They force every weight to become zero."
+    ],
+    "correctAnswerIndex": 0,
+    "answerSource": "PDF",
+    "isApproved": true,
+    "explanation": "Sigmoid units saturate for large positive or negative inputs, making derivatives small and causing vanishing gradients."
+  },
+  {
+    "id": "q-dl-w8-2",
+    "courseId": "course-deep-learning-master",
+    "weekNumber": 8,
+    "originalQuestionNumber": 2,
+    "sourcePdfName": "DeepLearning_July_Oct_2026_Week8.pdf",
+    "questionText": "Case Study 1\nInsurance Claim Approval Prediction\nAn insurance analytics team builds a deep feedforward network to classify whether a\nhealth insurance claim needs manual review. Each record contains numerical features such as\nclaim amount, hospital-risk score, patient-age group, policy duration, and number of previous\nclaims. The output layer uses a sigmoid unit because the final output is a probability.\nIn the first version, the team also uses sigmoid activations in all eight hidden layers.\nTraining starts normally but soon becomes very slow. The gradients reaching early layers\nbecome very small, especially when hidden pre-activation values are large in magnitude. The\nteam replaces the hidden activations with ReLU:\nReLU(x) = max(0, x),\nwhile keeping the sigmoid output layer.\nFor analysis, they compare sigmoid and ReLU\noutputs at x = −4 and x = 2. Use σ(2) ≈0.88 and σ(−4) ≈0.018.\n\nQuestion 2: What is ReLU(−4)?",
+    "options": [
+      "-4",
+      "-1",
+      "0",
+      "4"
+    ],
+    "correctAnswerIndex": 2,
+    "answerSource": "PDF",
+    "isApproved": true,
+    "explanation": "ReLU outputs zero for negative inputs, so max(0, −4) = 0."
+  },
+  {
+    "id": "q-dl-w8-3",
+    "courseId": "course-deep-learning-master",
+    "weekNumber": 8,
+    "originalQuestionNumber": 3,
+    "sourcePdfName": "DeepLearning_July_Oct_2026_Week8.pdf",
+    "questionText": "Case Study 1\nInsurance Claim Approval Prediction\nAn insurance analytics team builds a deep feedforward network to classify whether a\nhealth insurance claim needs manual review. Each record contains numerical features such as\nclaim amount, hospital-risk score, patient-age group, policy duration, and number of previous\nclaims. The output layer uses a sigmoid unit because the final output is a probability.\nIn the first version, the team also uses sigmoid activations in all eight hidden layers.\nTraining starts normally but soon becomes very slow. The gradients reaching early layers\nbecome very small, especially when hidden pre-activation values are large in magnitude. The\nteam replaces the hidden activations with ReLU:\nReLU(x) = max(0, x),\nwhile keeping the sigmoid output layer.\nFor analysis, they compare sigmoid and ReLU\noutputs at x = −4 and x = 2. Use σ(2) ≈0.88 and σ(−4) ≈0.018.\n\nQuestion 3: What is ReLU(2)?",
+    "options": [
+      "0",
+      "-2",
+      "1",
+      "2"
+    ],
+    "correctAnswerIndex": 3,
+    "answerSource": "PDF",
+    "isApproved": true,
+    "explanation": "For positive inputs, ReLU returns the input itself."
+  },
+  {
+    "id": "q-dl-w8-4",
+    "courseId": "course-deep-learning-master",
+    "weekNumber": 8,
+    "originalQuestionNumber": 4,
+    "sourcePdfName": "DeepLearning_July_Oct_2026_Week8.pdf",
+    "questionText": "Case Study 1\nInsurance Claim Approval Prediction\nAn insurance analytics team builds a deep feedforward network to classify whether a\nhealth insurance claim needs manual review. Each record contains numerical features such as\nclaim amount, hospital-risk score, patient-age group, policy duration, and number of previous\nclaims. The output layer uses a sigmoid unit because the final output is a probability.\nIn the first version, the team also uses sigmoid activations in all eight hidden layers.\nTraining starts normally but soon becomes very slow. The gradients reaching early layers\nbecome very small, especially when hidden pre-activation values are large in magnitude. The\nteam replaces the hidden activations with ReLU:\nReLU(x) = max(0, x),\nwhile keeping the sigmoid output layer.\nFor analysis, they compare sigmoid and ReLU\noutputs at x = −4 and x = 2. Use σ(2) ≈0.88 and σ(−4) ≈0.018.\n\nQuestion 4: Which property makes ReLU helpful for positive pre-activation values?",
+    "options": [
+      "It bounds hidden outputs between 0 and 1, as sigmoid would.",
+      "It avoids saturation and keeps a useful gradient.",
+      "It converts classification into clustering.",
+      "It makes the loss function unnecessary."
+    ],
+    "correctAnswerIndex": 1,
+    "answerSource": "PDF",
+    "isApproved": true,
+    "explanation": "ReLU has derivative 1 for positive inputs, so gradients can flow more effectively."
+  },
+  {
+    "id": "q-dl-w8-5",
+    "courseId": "course-deep-learning-master",
+    "weekNumber": 8,
+    "originalQuestionNumber": 5,
+    "sourcePdfName": "DeepLearning_July_Oct_2026_Week8.pdf",
+    "questionText": "Case Study 1\nInsurance Claim Approval Prediction\nAn insurance analytics team builds a deep feedforward network to classify whether a\nhealth insurance claim needs manual review. Each record contains numerical features such as\nclaim amount, hospital-risk score, patient-age group, policy duration, and number of previous\nclaims. The output layer uses a sigmoid unit because the final output is a probability.\nIn the first version, the team also uses sigmoid activations in all eight hidden layers.\nTraining starts normally but soon becomes very slow. The gradients reaching early layers\nbecome very small, especially when hidden pre-activation values are large in magnitude. The\nteam replaces the hidden activations with ReLU:\nReLU(x) = max(0, x),\nwhile keeping the sigmoid output layer.\nFor analysis, they compare sigmoid and ReLU\noutputs at x = −4 and x = 2. Use σ(2) ≈0.88 and σ(−4) ≈0.018.\n\nQuestion 5: Why is the output layer still kept as sigmoid in this binary classifier?",
+    "options": [
+      "It maps the final score to a probability-like value between 0 and 1.",
+      "It is required for every hidden layer for the described model.",
+      "It guarantees no validation error after training on every future test case.",
+      "It prevents all negative input features for the data shown here."
+    ],
+    "correctAnswerIndex": 0,
+    "answerSource": "PDF",
+    "isApproved": true,
+    "explanation": "A sigmoid output is suitable for binary probability prediction."
+  },
+  {
+    "id": "q-dl-w8-6",
+    "courseId": "course-deep-learning-master",
+    "weekNumber": 8,
+    "originalQuestionNumber": 6,
+    "sourcePdfName": "DeepLearning_July_Oct_2026_Week8.pdf",
+    "questionText": "Case Study 2\nSolar Power Forecasting for a Rooftop Plant\nA renewable-energy company predicts next-hour solar generation from irradiance, tem-\nperature, cloud-cover index, panel age, and previous-hour generation. The network has seven\nhidden layers with ReLU activations. When weights are initialized with a variance of 1, ac-\ntivations in later layers become unstable and the loss oscillates. The team compares Xavier\nand He initialization:\nXavier: Var(w) = 1\nn,\nHe: Var(w) = 2\nn,\nwhere n is the number of input connections to a neuron.\nConsider a hidden layer with\nn = 200 inputs.\n\nQuestion 6: What problem can poor initialization create in a deep network?",
+    "options": [
+      "It automatically removes all noise from data.",
+      "It can cause activations or gradients to explode or vanish.",
+      "It guarantees underfitting only under the given conditions.",
+      "It changes regression targets into class labels."
+    ],
+    "correctAnswerIndex": 1,
+    "answerSource": "PDF",
+    "isApproved": true,
+    "explanation": "Poor initialization can make signal variance grow or shrink across layers, destabilizing training."
+  },
+  {
+    "id": "q-dl-w8-7",
+    "courseId": "course-deep-learning-master",
+    "weekNumber": 8,
+    "originalQuestionNumber": 7,
+    "sourcePdfName": "DeepLearning_July_Oct_2026_Week8.pdf",
+    "questionText": "Case Study 2\nSolar Power Forecasting for a Rooftop Plant\nA renewable-energy company predicts next-hour solar generation from irradiance, tem-\nperature, cloud-cover index, panel age, and previous-hour generation. The network has seven\nhidden layers with ReLU activations. When weights are initialized with a variance of 1, ac-\ntivations in later layers become unstable and the loss oscillates. The team compares Xavier\nand He initialization:\nXavier: Var(w) = 1\nn,\nHe: Var(w) = 2\nn,\nwhere n is the number of input connections to a neuron.\nConsider a hidden layer with\nn = 200 inputs.\n\nQuestion 7: What is the Xavier variance for n = 200?",
+    "options": [
+      "0.020",
+      "0.200",
+      "0.100",
+      "0.005"
+    ],
+    "correctAnswerIndex": 3,
+    "answerSource": "PDF",
+    "isApproved": true,
+    "explanation": "Xavier variance is 1/200 = 0.005."
+  },
+  {
+    "id": "q-dl-w8-8",
+    "courseId": "course-deep-learning-master",
+    "weekNumber": 8,
+    "originalQuestionNumber": 8,
+    "sourcePdfName": "DeepLearning_July_Oct_2026_Week8.pdf",
+    "questionText": "Case Study 2\nSolar Power Forecasting for a Rooftop Plant\nA renewable-energy company predicts next-hour solar generation from irradiance, tem-\nperature, cloud-cover index, panel age, and previous-hour generation. The network has seven\nhidden layers with ReLU activations. When weights are initialized with a variance of 1, ac-\ntivations in later layers become unstable and the loss oscillates. The team compares Xavier\nand He initialization:\nXavier: Var(w) = 1\nn,\nHe: Var(w) = 2\nn,\nwhere n is the number of input connections to a neuron.\nConsider a hidden layer with\nn = 200 inputs.\n\nQuestion 8: What is the He variance for n = 200?",
+    "options": [
+      "0.010",
+      "0.005",
+      "0.020",
+      "0.100"
+    ],
+    "correctAnswerIndex": 0,
+    "answerSource": "PDF",
+    "isApproved": true,
+    "explanation": "He variance is 2/200 = 0.01."
+  },
+  {
+    "id": "q-dl-w8-9",
+    "courseId": "course-deep-learning-master",
+    "weekNumber": 8,
+    "originalQuestionNumber": 9,
+    "sourcePdfName": "DeepLearning_July_Oct_2026_Week8.pdf",
+    "questionText": "Case Study 2\nSolar Power Forecasting for a Rooftop Plant\nA renewable-energy company predicts next-hour solar generation from irradiance, tem-\nperature, cloud-cover index, panel age, and previous-hour generation. The network has seven\nhidden layers with ReLU activations. When weights are initialized with a variance of 1, ac-\ntivations in later layers become unstable and the loss oscillates. The team compares Xavier\nand He initialization:\nXavier: Var(w) = 1\nn,\nHe: Var(w) = 2\nn,\nwhere n is the number of input connections to a neuron.\nConsider a hidden layer with\nn = 200 inputs.\n\nQuestion 9: Why is He initialization more suitable for these hidden layers?",
+    "options": [
+      "The output layer uses no activation.",
+      "The network has only one layer.",
+      "The hidden layers use ReLU activations.",
+      "The target variable is binary in the stated case setting."
+    ],
+    "correctAnswerIndex": 2,
+    "answerSource": "PDF",
+    "isApproved": true,
+    "explanation": "He initialization includes the factor of 2 used for ReLU-style activations."
+  },
+  {
+    "id": "q-dl-w8-10",
+    "courseId": "course-deep-learning-master",
+    "weekNumber": 8,
+    "originalQuestionNumber": 10,
+    "sourcePdfName": "DeepLearning_July_Oct_2026_Week8.pdf",
+    "questionText": "Case Study 2\nSolar Power Forecasting for a Rooftop Plant\nA renewable-energy company predicts next-hour solar generation from irradiance, tem-\nperature, cloud-cover index, panel age, and previous-hour generation. The network has seven\nhidden layers with ReLU activations. When weights are initialized with a variance of 1, ac-\ntivations in later layers become unstable and the loss oscillates. The team compares Xavier\nand He initialization:\nXavier: Var(w) = 1\nn,\nHe: Var(w) = 2\nn,\nwhere n is the number of input connections to a neuron.\nConsider a hidden layer with\nn = 200 inputs.\n\nQuestion 10: Which observation suggests the new initialization improved training stability?",
+    "options": [
+      "Hidden activations are all forced to zero.",
+      "Loss decreases more smoothly across epochs.",
+      "No validation set is needed in the stated case setting.",
+      "All weights become identical."
+    ],
+    "correctAnswerIndex": 1,
+    "answerSource": "PDF",
+    "isApproved": true,
+    "explanation": "Smoothly decreasing loss is evidence that the optimization is more stable."
+  },
+  {
+    "id": "q-dl-w8-11",
+    "courseId": "course-deep-learning-master",
+    "weekNumber": 8,
+    "originalQuestionNumber": 11,
+    "sourcePdfName": "DeepLearning_July_Oct_2026_Week8.pdf",
+    "questionText": "Case Study 3\nWarehouse Sensor Fault Detection\nA logistics company trains a deep network to detect abnormal warehouse conditions from\ntemperature, vibration, humidity, door-event, and power-consumption sensors. The model\nhas ten hidden layers. Direct end-to-end supervised training is slow, and the earliest layers\nlearn weak representations because gradients reaching them are small.\nThe team adopts greedy layer-wise pretraining. First, the layer closest to the input is\ntrained with an unsupervised reconstruction objective.\nIts weights are then frozen, and\nthe next layer is trained using the previous layer’s representation as input. This process\ncontinues until all hidden layers are pretrained. Finally, the output layer is added and the\nfull network is fine-tuned using the labeled abnormal-condition task.\n\nQuestion 11: What is the main goal of greedy layer-wise pretraining here?",
+    "options": [
+      "To delete the hidden layers before training.",
+      "To avoid using input features during both unsupervised pretraining and fine-tuning.",
+      "To give each layer a useful initialization before supervised fine-tuning.",
+      "To guarantee zero test error in this specific scenario."
+    ],
+    "correctAnswerIndex": 2,
+    "answerSource": "PDF",
+    "isApproved": true,
+    "explanation": "Layer-wise pretraining initializes hidden layers so supervised fine-tuning starts from useful representations."
+  },
+  {
+    "id": "q-dl-w8-12",
+    "courseId": "course-deep-learning-master",
+    "weekNumber": 8,
+    "originalQuestionNumber": 12,
+    "sourcePdfName": "DeepLearning_July_Oct_2026_Week8.pdf",
+    "questionText": "Case Study 3\nWarehouse Sensor Fault Detection\nA logistics company trains a deep network to detect abnormal warehouse conditions from\ntemperature, vibration, humidity, door-event, and power-consumption sensors. The model\nhas ten hidden layers. Direct end-to-end supervised training is slow, and the earliest layers\nlearn weak representations because gradients reaching them are small.\nThe team adopts greedy layer-wise pretraining. First, the layer closest to the input is\ntrained with an unsupervised reconstruction objective.\nIts weights are then frozen, and\nthe next layer is trained using the previous layer’s representation as input. This process\ncontinues until all hidden layers are pretrained. Finally, the output layer is added and the\nfull network is fine-tuned using the labeled abnormal-condition task.\n\nQuestion 12: During pretraining of the second hidden layer, what happens to the already trained first layer?",
+    "options": [
+      "It is randomly reinitialized in the stated case setting.",
+      "It is removed from the model.",
+      "It is trained with the output labels only.",
+      "It is kept fixed while the next layer is trained."
+    ],
+    "correctAnswerIndex": 3,
+    "answerSource": "PDF",
+    "isApproved": true,
+    "explanation": "Greedy layer-wise pretraining freezes earlier trained layers be- fore training the next layer."
+  },
+  {
+    "id": "q-dl-w8-13",
+    "courseId": "course-deep-learning-master",
+    "weekNumber": 8,
+    "originalQuestionNumber": 13,
+    "sourcePdfName": "DeepLearning_July_Oct_2026_Week8.pdf",
+    "questionText": "Case Study 3\nWarehouse Sensor Fault Detection\nA logistics company trains a deep network to detect abnormal warehouse conditions from\ntemperature, vibration, humidity, door-event, and power-consumption sensors. The model\nhas ten hidden layers. Direct end-to-end supervised training is slow, and the earliest layers\nlearn weak representations because gradients reaching them are small.\nThe team adopts greedy layer-wise pretraining. First, the layer closest to the input is\ntrained with an unsupervised reconstruction objective.\nIts weights are then frozen, and\nthe next layer is trained using the previous layer’s representation as input. This process\ncontinues until all hidden layers are pretrained. Finally, the output layer is added and the\nfull network is fine-tuned using the labeled abnormal-condition task.\n\nQuestion 13: Why is the first pretraining objective described as unsupervised?",
+    "options": [
+      "It uses the input data without using the abnormal-condition labels.",
+      "It uses no numerical features under the given conditions.",
+      "It uses only the final classifier output for the data shown here.",
+      "It requires the validation labels to be hidden in the stated case setting."
+    ],
+    "correctAnswerIndex": 0,
+    "answerSource": "PDF",
+    "isApproved": true,
+    "explanation": "Reconstruction-based pretraining uses inputs as training sig- nals rather than class labels."
+  },
+  {
+    "id": "q-dl-w8-14",
+    "courseId": "course-deep-learning-master",
+    "weekNumber": 8,
+    "originalQuestionNumber": 14,
+    "sourcePdfName": "DeepLearning_July_Oct_2026_Week8.pdf",
+    "questionText": "Case Study 3\nWarehouse Sensor Fault Detection\nA logistics company trains a deep network to detect abnormal warehouse conditions from\ntemperature, vibration, humidity, door-event, and power-consumption sensors. The model\nhas ten hidden layers. Direct end-to-end supervised training is slow, and the earliest layers\nlearn weak representations because gradients reaching them are small.\nThe team adopts greedy layer-wise pretraining. First, the layer closest to the input is\ntrained with an unsupervised reconstruction objective.\nIts weights are then frozen, and\nthe next layer is trained using the previous layer’s representation as input. This process\ncontinues until all hidden layers are pretrained. Finally, the output layer is added and the\nfull network is fine-tuned using the labeled abnormal-condition task.\n\nQuestion 14: What happens after all hidden layers have been pretrained?",
+    "options": [
+      "The network is discarded under the given conditions.",
+      "The full model is fine-tuned with the supervised task objective.",
+      "The input features are replaced by random values.",
+      "The loss function is no longer required in the stated case setting."
+    ],
+    "correctAnswerIndex": 1,
+    "answerSource": "PDF",
+    "isApproved": true,
+    "explanation": "After pretraining, the complete network is trained end-to-end on the labeled objective."
+  },
+  {
+    "id": "q-dl-w8-15",
+    "courseId": "course-deep-learning-master",
+    "weekNumber": 8,
+    "originalQuestionNumber": 15,
+    "sourcePdfName": "DeepLearning_July_Oct_2026_Week8.pdf",
+    "questionText": "Case Study 3\nWarehouse Sensor Fault Detection\nA logistics company trains a deep network to detect abnormal warehouse conditions from\ntemperature, vibration, humidity, door-event, and power-consumption sensors. The model\nhas ten hidden layers. Direct end-to-end supervised training is slow, and the earliest layers\nlearn weak representations because gradients reaching them are small.\nThe team adopts greedy layer-wise pretraining. First, the layer closest to the input is\ntrained with an unsupervised reconstruction objective.\nIts weights are then frozen, and\nthe next layer is trained using the previous layer’s representation as input. This process\ncontinues until all hidden layers are pretrained. Finally, the output layer is added and the\nfull network is fine-tuned using the labeled abnormal-condition task.\n\nQuestion 15: Which issue is layer-wise pretraining intended to reduce?",
+    "options": [
+      "The need to store data files in this specific scenario.",
+      "The number of output classes under the case assumptions.",
+      "The difficulty of training early layers in a very deep network.",
+      "The existence of nonlinear activations under the given conditions."
+    ],
+    "correctAnswerIndex": 2,
+    "answerSource": "PDF",
+    "isApproved": true,
+    "explanation": "Pretraining helps early layers learn useful representations be- fore full supervised fine-tuning."
+  },
+  {
+    "id": "q-dl-w8-16",
+    "courseId": "course-deep-learning-master",
+    "weekNumber": 8,
+    "originalQuestionNumber": 16,
+    "sourcePdfName": "DeepLearning_July_Oct_2026_Week8.pdf",
+    "questionText": "Case Study 4\nLaboratory Test Result Prediction\nA diagnostic laboratory predicts whether a sample needs repeat testing based on numer-\nical features such as machine confidence score, reagent age, sample temperature, processing\ntime, and previous calibration drift. The network has six hidden layers. Without batch\nnormalization, training is very sensitive to learning-rate changes because layer input distri-\nbutions shift during training.\nThe team inserts batch normalization after each linear transformation and before ReLU.\nFor one mini-batch, a neuron’s pre-activation values are\n1,\n3,\n5,\n7.\nIgnore learnable scale and shift for the numerical questions.\n\nQuestion 16: What problem does batch normalization primarily address?",
+    "options": [
+      "It changes labels from binary to continuous.",
+      "It removes the need for backpropagation.",
+      "It guarantees a perfect classifier in the stated case setting.",
+      "It reduces shifting layer-input distributions during training."
+    ],
+    "correctAnswerIndex": 3,
+    "answerSource": "PDF",
+    "isApproved": true,
+    "explanation": "Batch normalization stabilizes layer input distributions across mini-batches."
+  },
+  {
+    "id": "q-dl-w8-17",
+    "courseId": "course-deep-learning-master",
+    "weekNumber": 8,
+    "originalQuestionNumber": 17,
+    "sourcePdfName": "DeepLearning_July_Oct_2026_Week8.pdf",
+    "questionText": "Case Study 4\nLaboratory Test Result Prediction\nA diagnostic laboratory predicts whether a sample needs repeat testing based on numer-\nical features such as machine confidence score, reagent age, sample temperature, processing\ntime, and previous calibration drift. The network has six hidden layers. Without batch\nnormalization, training is very sensitive to learning-rate changes because layer input distri-\nbutions shift during training.\nThe team inserts batch normalization after each linear transformation and before ReLU.\nFor one mini-batch, a neuron’s pre-activation values are\n1,\n3,\n5,\n7.\nIgnore learnable scale and shift for the numerical questions.\n\nQuestion 17: What is the mean of the mini-batch values 1, 3, 5, 7?",
+    "options": [
+      "3",
+      "4",
+      "5",
+      "16"
+    ],
+    "correctAnswerIndex": 1,
+    "answerSource": "PDF",
+    "isApproved": true,
+    "explanation": "The mean is (1 + 3 + 5 + 7)/4 = 4."
+  },
+  {
+    "id": "q-dl-w8-18",
+    "courseId": "course-deep-learning-master",
+    "weekNumber": 8,
+    "originalQuestionNumber": 18,
+    "sourcePdfName": "DeepLearning_July_Oct_2026_Week8.pdf",
+    "questionText": "Case Study 4\nLaboratory Test Result Prediction\nA diagnostic laboratory predicts whether a sample needs repeat testing based on numer-\nical features such as machine confidence score, reagent age, sample temperature, processing\ntime, and previous calibration drift. The network has six hidden layers. Without batch\nnormalization, training is very sensitive to learning-rate changes because layer input distri-\nbutions shift during training.\nThe team inserts batch normalization after each linear transformation and before ReLU.\nFor one mini-batch, a neuron’s pre-activation values are\n1,\n3,\n5,\n7.\nIgnore learnable scale and shift for the numerical questions.\n\nQuestion 18: What is the batch variance using the average squared deviation?",
+    "options": [
+      "4",
+      "6",
+      "3",
+      "5"
+    ],
+    "correctAnswerIndex": 3,
+    "answerSource": "PDF",
+    "isApproved": true,
+    "explanation": "The squared deviations are 9, 1, 1, 9, so the variance is 20/4 = 5."
+  },
+  {
+    "id": "q-dl-w8-19",
+    "courseId": "course-deep-learning-master",
+    "weekNumber": 8,
+    "originalQuestionNumber": 19,
+    "sourcePdfName": "DeepLearning_July_Oct_2026_Week8.pdf",
+    "questionText": "Case Study 4\nLaboratory Test Result Prediction\nA diagnostic laboratory predicts whether a sample needs repeat testing based on numer-\nical features such as machine confidence score, reagent age, sample temperature, processing\ntime, and previous calibration drift. The network has six hidden layers. Without batch\nnormalization, training is very sensitive to learning-rate changes because layer input distri-\nbutions shift during training.\nThe team inserts batch normalization after each linear transformation and before ReLU.\nFor one mini-batch, a neuron’s pre-activation values are\n1,\n3,\n5,\n7.\nIgnore learnable scale and shift for the numerical questions.\n\nQuestion 19: Where is batch normalization placed in this case?",
+    "options": [
+      "Only after the output probability for the described model.",
+      "Before every input feature is collected.",
+      "Between the linear transformation and ReLU activation.",
+      "After the final prediction is thresholded."
+    ],
+    "correctAnswerIndex": 2,
+    "answerSource": "PDF",
+    "isApproved": true,
+    "explanation": "The case places batch normalization after the linear operation and before ReLU."
+  },
+  {
+    "id": "q-dl-w8-20",
+    "courseId": "course-deep-learning-master",
+    "weekNumber": 8,
+    "originalQuestionNumber": 20,
+    "sourcePdfName": "DeepLearning_July_Oct_2026_Week8.pdf",
+    "questionText": "Case Study 4\nLaboratory Test Result Prediction\nA diagnostic laboratory predicts whether a sample needs repeat testing based on numer-\nical features such as machine confidence score, reagent age, sample temperature, processing\ntime, and previous calibration drift. The network has six hidden layers. Without batch\nnormalization, training is very sensitive to learning-rate changes because layer input distri-\nbutions shift during training.\nThe team inserts batch normalization after each linear transformation and before ReLU.\nFor one mini-batch, a neuron’s pre-activation values are\n1,\n3,\n5,\n7.\nIgnore learnable scale and shift for the numerical questions.\n\nQuestion 20: Why are learnable scale and shift parameters useful in batch normalization?",
+    "options": [
+      "They allow the network to choose an appropriate normalized representa- tion.",
+      "They delete the mini-batch statistics in this specific scenario.",
+      "They prevent gradients from being computed under the case assumptions.",
+      "They force every activation to remain exactly zero for the described model."
+    ],
+    "correctAnswerIndex": 0,
+    "answerSource": "PDF",
+    "isApproved": true,
+    "explanation": "The scale and shift parameters let the network learn the rep- resentation that works best after normalization."
+  }
+]

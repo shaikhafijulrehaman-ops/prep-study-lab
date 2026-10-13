@@ -1,0 +1,362 @@
+[
+  {
+    "id": "q-dl-w4-1",
+    "courseId": "course-deep-learning-master",
+    "weekNumber": 4,
+    "originalQuestionNumber": 1,
+    "sourcePdfName": "DeepLearning_July_Oct_2026_Week4.pdf",
+    "questionText": "Case Study 1\nDelivery Delay Parameter Tuning\nA logistics team is tuning a simple delay model used to estimate whether a shipment\nroute is running slower than expected. To make the first gradient descent step auditable,\nthe team reduces the training exercise to one parameter w, where smaller loss means the\nparameter is closer to the best delay setting. For one training example, the loss as a function\nof parameter w is\nL(w) = (w −4)2.\nThe team uses gradient descent:\nwt+1 = wt −η dL\ndw.\nAt the current step, wt = 1 and η = 0.1. The team wants to know not only the next numerical\nvalue of w, but also why the sign of the gradient determines the direction of movement.\n\nQuestion 1: What is dL dw at w = 1?",
+    "options": [
+      "6",
+      "−3",
+      "3",
+      "−6"
+    ],
+    "correctAnswerIndex": 3,
+    "answerSource": "PDF",
+    "isApproved": true,
+    "explanation": "dL dw = 2(w −4). At w = 1, the gradient is −6."
+  },
+  {
+    "id": "q-dl-w4-2",
+    "courseId": "course-deep-learning-master",
+    "weekNumber": 4,
+    "originalQuestionNumber": 2,
+    "sourcePdfName": "DeepLearning_July_Oct_2026_Week4.pdf",
+    "questionText": "Case Study 1\nDelivery Delay Parameter Tuning\nA logistics team is tuning a simple delay model used to estimate whether a shipment\nroute is running slower than expected. To make the first gradient descent step auditable,\nthe team reduces the training exercise to one parameter w, where smaller loss means the\nparameter is closer to the best delay setting. For one training example, the loss as a function\nof parameter w is\nL(w) = (w −4)2.\nThe team uses gradient descent:\nwt+1 = wt −η dL\ndw.\nAt the current step, wt = 1 and η = 0.1. The team wants to know not only the next numerical\nvalue of w, but also why the sign of the gradient determines the direction of movement.\n\nQuestion 2: What is the next value of w?",
+    "options": [
+      "1.3",
+      "1.6",
+      "0.4",
+      "2.0"
+    ],
+    "correctAnswerIndex": 1,
+    "answerSource": "PDF",
+    "isApproved": true,
+    "explanation": "wt+1 = 1 −0.1(−6) = 1.6."
+  },
+  {
+    "id": "q-dl-w4-3",
+    "courseId": "course-deep-learning-master",
+    "weekNumber": 4,
+    "originalQuestionNumber": 3,
+    "sourcePdfName": "DeepLearning_July_Oct_2026_Week4.pdf",
+    "questionText": "Case Study 1\nDelivery Delay Parameter Tuning\nA logistics team is tuning a simple delay model used to estimate whether a shipment\nroute is running slower than expected. To make the first gradient descent step auditable,\nthe team reduces the training exercise to one parameter w, where smaller loss means the\nparameter is closer to the best delay setting. For one training example, the loss as a function\nof parameter w is\nL(w) = (w −4)2.\nThe team uses gradient descent:\nwt+1 = wt −η dL\ndw.\nAt the current step, wt = 1 and η = 0.1. The team wants to know not only the next numerical\nvalue of w, but also why the sign of the gradient determines the direction of movement.\n\nQuestion 3: Why does w increase in this update?",
+    "options": [
+      "The learning rate is negative.",
+      "The loss is already zero.",
+      "The gradient at w = 1 is negative.",
+      "The update ignores the derivative."
+    ],
+    "correctAnswerIndex": 2,
+    "answerSource": "PDF",
+    "isApproved": true,
+    "explanation": "Gradient descent subtracts the gradient. Subtracting a nega- tive value increases w."
+  },
+  {
+    "id": "q-dl-w4-4",
+    "courseId": "course-deep-learning-master",
+    "weekNumber": 4,
+    "originalQuestionNumber": 4,
+    "sourcePdfName": "DeepLearning_July_Oct_2026_Week4.pdf",
+    "questionText": "Case Study 1\nDelivery Delay Parameter Tuning\nA logistics team is tuning a simple delay model used to estimate whether a shipment\nroute is running slower than expected. To make the first gradient descent step auditable,\nthe team reduces the training exercise to one parameter w, where smaller loss means the\nparameter is closer to the best delay setting. For one training example, the loss as a function\nof parameter w is\nL(w) = (w −4)2.\nThe team uses gradient descent:\nwt+1 = wt −η dL\ndw.\nAt the current step, wt = 1 and η = 0.1. The team wants to know not only the next numerical\nvalue of w, but also why the sign of the gradient determines the direction of movement.\n\nQuestion 4: Which value of w minimizes this loss?",
+    "options": [
+      "1",
+      "2",
+      "3",
+      "4"
+    ],
+    "correctAnswerIndex": 3,
+    "answerSource": "PDF",
+    "isApproved": true,
+    "explanation": "L(w) = (w −4)2 is minimized when w = 4."
+  },
+  {
+    "id": "q-dl-w4-5",
+    "courseId": "course-deep-learning-master",
+    "weekNumber": 4,
+    "originalQuestionNumber": 5,
+    "sourcePdfName": "DeepLearning_July_Oct_2026_Week4.pdf",
+    "questionText": "Case Study 1\nDelivery Delay Parameter Tuning\nA logistics team is tuning a simple delay model used to estimate whether a shipment\nroute is running slower than expected. To make the first gradient descent step auditable,\nthe team reduces the training exercise to one parameter w, where smaller loss means the\nparameter is closer to the best delay setting. For one training example, the loss as a function\nof parameter w is\nL(w) = (w −4)2.\nThe team uses gradient descent:\nwt+1 = wt −η dL\ndw.\nAt the current step, wt = 1 and η = 0.1. The team wants to know not only the next numerical\nvalue of w, but also why the sign of the gradient determines the direction of movement.\n\nQuestion 5: What is the role of the learning rate η?",
+    "options": [
+      "It controls the update step size.",
+      "It stores the final target value.",
+      "It removes the need for a gradient.",
+      "It makes every loss value equal."
+    ],
+    "correctAnswerIndex": 0,
+    "answerSource": "PDF",
+    "isApproved": true,
+    "explanation": "The learning rate scales how far the parameter moves in the negative gradient direction."
+  },
+  {
+    "id": "q-dl-w4-6",
+    "courseId": "course-deep-learning-master",
+    "weekNumber": 4,
+    "originalQuestionNumber": 6,
+    "sourcePdfName": "DeepLearning_July_Oct_2026_Week4.pdf",
+    "questionText": "Case Study 2\nEnergy Forecast Training Schedule\nA campus energy group trains a neural network to forecast short-term electricity demand\nfor academic buildings. The full dataset is small enough for classroom discussion, but the\nteam still wants to compare the update behavior of batch, stochastic, and mini-batch gradient\ndescent. It has 12 training records, and in one experiment the mini-batch size is 3. One\nepoch means that all 12 records have been used once. The group records the gradient from\neach mini-batch so it can reason about the tradeoff between noisy single-record updates and\nmore expensive full-batch updates.\n\nQuestion 6: How many mini-batches are processed in one epoch?",
+    "options": [
+      "3",
+      "4",
+      "6",
+      "12"
+    ],
+    "correctAnswerIndex": 1,
+    "answerSource": "PDF",
+    "isApproved": true,
+    "explanation": "With 12 records and mini-batches of size 3, the number of mini-batches is 12/3 = 4."
+  },
+  {
+    "id": "q-dl-w4-7",
+    "courseId": "course-deep-learning-master",
+    "weekNumber": 4,
+    "originalQuestionNumber": 7,
+    "sourcePdfName": "DeepLearning_July_Oct_2026_Week4.pdf",
+    "questionText": "Case Study 2\nEnergy Forecast Training Schedule\nA campus energy group trains a neural network to forecast short-term electricity demand\nfor academic buildings. The full dataset is small enough for classroom discussion, but the\nteam still wants to compare the update behavior of batch, stochastic, and mini-batch gradient\ndescent. It has 12 training records, and in one experiment the mini-batch size is 3. One\nepoch means that all 12 records have been used once. The group records the gradient from\neach mini-batch so it can reason about the tradeoff between noisy single-record updates and\nmore expensive full-batch updates.\n\nQuestion 7: Which method uses all 12 records for each parameter update?",
+    "options": [
+      "Stochastic gradient descent",
+      "Mini-batch gradient descent",
+      "Batch gradient descent",
+      "Momentum-only update"
+    ],
+    "correctAnswerIndex": 2,
+    "answerSource": "PDF",
+    "isApproved": true,
+    "explanation": "Batch gradient descent computes each update using the full training set."
+  },
+  {
+    "id": "q-dl-w4-8",
+    "courseId": "course-deep-learning-master",
+    "weekNumber": 4,
+    "originalQuestionNumber": 8,
+    "sourcePdfName": "DeepLearning_July_Oct_2026_Week4.pdf",
+    "questionText": "Case Study 2\nEnergy Forecast Training Schedule\nA campus energy group trains a neural network to forecast short-term electricity demand\nfor academic buildings. The full dataset is small enough for classroom discussion, but the\nteam still wants to compare the update behavior of batch, stochastic, and mini-batch gradient\ndescent. It has 12 training records, and in one experiment the mini-batch size is 3. One\nepoch means that all 12 records have been used once. The group records the gradient from\neach mini-batch so it can reason about the tradeoff between noisy single-record updates and\nmore expensive full-batch updates.\n\nQuestion 8: Which method uses one record per parameter update?",
+    "options": [
+      "Batch gradient descent",
+      "Adam without gradients or single-example updates",
+      "Full-batch averaging",
+      "Stochastic gradient descent"
+    ],
+    "correctAnswerIndex": 3,
+    "answerSource": "PDF",
+    "isApproved": true,
+    "explanation": "Stochastic gradient descent updates parameters using one ex- ample at a time."
+  },
+  {
+    "id": "q-dl-w4-9",
+    "courseId": "course-deep-learning-master",
+    "weekNumber": 4,
+    "originalQuestionNumber": 9,
+    "sourcePdfName": "DeepLearning_July_Oct_2026_Week4.pdf",
+    "questionText": "Case Study 2\nEnergy Forecast Training Schedule\nA campus energy group trains a neural network to forecast short-term electricity demand\nfor academic buildings. The full dataset is small enough for classroom discussion, but the\nteam still wants to compare the update behavior of batch, stochastic, and mini-batch gradient\ndescent. It has 12 training records, and in one experiment the mini-batch size is 3. One\nepoch means that all 12 records have been used once. The group records the gradient from\neach mini-batch so it can reason about the tradeoff between noisy single-record updates and\nmore expensive full-batch updates.\n\nQuestion 9: If the mini-batch gradients for four batches are 2, 4, 6, 8, what is their average?",
+    "options": [
+      "5",
+      "4",
+      "6",
+      "8"
+    ],
+    "correctAnswerIndex": 0,
+    "answerSource": "PDF",
+    "isApproved": true,
+    "explanation": "The average is (2 + 4 + 6 + 8)/4 = 5."
+  },
+  {
+    "id": "q-dl-w4-10",
+    "courseId": "course-deep-learning-master",
+    "weekNumber": 4,
+    "originalQuestionNumber": 10,
+    "sourcePdfName": "DeepLearning_July_Oct_2026_Week4.pdf",
+    "questionText": "Case Study 2\nEnergy Forecast Training Schedule\nA campus energy group trains a neural network to forecast short-term electricity demand\nfor academic buildings. The full dataset is small enough for classroom discussion, but the\nteam still wants to compare the update behavior of batch, stochastic, and mini-batch gradient\ndescent. It has 12 training records, and in one experiment the mini-batch size is 3. One\nepoch means that all 12 records have been used once. The group records the gradient from\neach mini-batch so it can reason about the tradeoff between noisy single-record updates and\nmore expensive full-batch updates.\n\nQuestion 10: Why might mini-batch gradient descent be preferred in practice?",
+    "options": [
+      "It never uses gradients.",
+      "It balances noisy updates and computational efficiency.",
+      "It requires the loss to be exactly zero before every mini-batch update.",
+      "It updates only after training is complete."
+    ],
+    "correctAnswerIndex": 1,
+    "answerSource": "PDF",
+    "isApproved": true,
+    "explanation": "Mini-batches often provide a practical tradeoff between noisy stochastic updates and expensive full-batch updates."
+  },
+  {
+    "id": "q-dl-w4-11",
+    "courseId": "course-deep-learning-master",
+    "weekNumber": 4,
+    "originalQuestionNumber": 11,
+    "sourcePdfName": "DeepLearning_July_Oct_2026_Week4.pdf",
+    "questionText": "Case Study 3\nQueue Prediction Parameter Update\nA service desk predicts queue length so it can decide when to open additional support\ncounters. During training, successive gradients often point in similar directions but vary in\nmagnitude from one mini-batch to the next. To smooth the parameter movement, the team\ntrains a model using momentum. The update is\nvt = βvt−1 + ηgt,\nwt = wt−1 −vt.\nAt the current step, vt−1 = 0.5, β = 0.8, η = 0.1, and the gradient is gt = 3. The previous\nparameter is wt−1 = 5.\nHere, vt stores a running update direction, so the current step\ndepends on both the new gradient and part of the previous movement.\n\nQuestion 11: What is the new velocity vt?",
+    "options": [
+      "0.5",
+      "0.6",
+      "0.7",
+      "0.8"
+    ],
+    "correctAnswerIndex": 2,
+    "answerSource": "PDF",
+    "isApproved": true,
+    "explanation": "vt = 0.8(0.5) + 0.1(3) = 0.4 + 0.3 = 0.7."
+  },
+  {
+    "id": "q-dl-w4-12",
+    "courseId": "course-deep-learning-master",
+    "weekNumber": 4,
+    "originalQuestionNumber": 12,
+    "sourcePdfName": "DeepLearning_July_Oct_2026_Week4.pdf",
+    "questionText": "Case Study 3\nQueue Prediction Parameter Update\nA service desk predicts queue length so it can decide when to open additional support\ncounters. During training, successive gradients often point in similar directions but vary in\nmagnitude from one mini-batch to the next. To smooth the parameter movement, the team\ntrains a model using momentum. The update is\nvt = βvt−1 + ηgt,\nwt = wt−1 −vt.\nAt the current step, vt−1 = 0.5, β = 0.8, η = 0.1, and the gradient is gt = 3. The previous\nparameter is wt−1 = 5.\nHere, vt stores a running update direction, so the current step\ndepends on both the new gradient and part of the previous movement.\n\nQuestion 12: What is the updated parameter wt?",
+    "options": [
+      "4.3",
+      "5.7",
+      "4.7",
+      "5.3"
+    ],
+    "correctAnswerIndex": 0,
+    "answerSource": "PDF",
+    "isApproved": true,
+    "explanation": "wt = wt−1 −vt = 5 −0.7 = 4.3."
+  },
+  {
+    "id": "q-dl-w4-13",
+    "courseId": "course-deep-learning-master",
+    "weekNumber": 4,
+    "originalQuestionNumber": 13,
+    "sourcePdfName": "DeepLearning_July_Oct_2026_Week4.pdf",
+    "questionText": "Case Study 3\nQueue Prediction Parameter Update\nA service desk predicts queue length so it can decide when to open additional support\ncounters. During training, successive gradients often point in similar directions but vary in\nmagnitude from one mini-batch to the next. To smooth the parameter movement, the team\ntrains a model using momentum. The update is\nvt = βvt−1 + ηgt,\nwt = wt−1 −vt.\nAt the current step, vt−1 = 0.5, β = 0.8, η = 0.1, and the gradient is gt = 3. The previous\nparameter is wt−1 = 5.\nHere, vt stores a running update direction, so the current step\ndepends on both the new gradient and part of the previous movement.\n\nQuestion 13: What does the momentum term βvt−1 represent?",
+    "options": [
+      "It removes all history from the update and uses only the current gradient.",
+      "It sets the learning rate to zero for every future update.",
+      "It replaces the loss function.",
+      "It carries part of the previous update direction."
+    ],
+    "correctAnswerIndex": 3,
+    "answerSource": "PDF",
+    "isApproved": true,
+    "explanation": "Momentum keeps a decayed contribution from the previous velocity."
+  },
+  {
+    "id": "q-dl-w4-14",
+    "courseId": "course-deep-learning-master",
+    "weekNumber": 4,
+    "originalQuestionNumber": 14,
+    "sourcePdfName": "DeepLearning_July_Oct_2026_Week4.pdf",
+    "questionText": "Case Study 3\nQueue Prediction Parameter Update\nA service desk predicts queue length so it can decide when to open additional support\ncounters. During training, successive gradients often point in similar directions but vary in\nmagnitude from one mini-batch to the next. To smooth the parameter movement, the team\ntrains a model using momentum. The update is\nvt = βvt−1 + ηgt,\nwt = wt−1 −vt.\nAt the current step, vt−1 = 0.5, β = 0.8, η = 0.1, and the gradient is gt = 3. The previous\nparameter is wt−1 = 5.\nHere, vt stores a running update direction, so the current step\ndepends on both the new gradient and part of the previous movement.\n\nQuestion 14: If β = 0, what would vt be for the same gradient and learning rate?",
+    "options": [
+      "0.3",
+      "0.1",
+      "0.2",
+      "0.4"
+    ],
+    "correctAnswerIndex": 0,
+    "answerSource": "PDF",
+    "isApproved": true,
+    "explanation": "With β = 0, vt = ηgt = 0.1(3) = 0.3."
+  },
+  {
+    "id": "q-dl-w4-15",
+    "courseId": "course-deep-learning-master",
+    "weekNumber": 4,
+    "originalQuestionNumber": 15,
+    "sourcePdfName": "DeepLearning_July_Oct_2026_Week4.pdf",
+    "questionText": "Case Study 3\nQueue Prediction Parameter Update\nA service desk predicts queue length so it can decide when to open additional support\ncounters. During training, successive gradients often point in similar directions but vary in\nmagnitude from one mini-batch to the next. To smooth the parameter movement, the team\ntrains a model using momentum. The update is\nvt = βvt−1 + ηgt,\nwt = wt−1 −vt.\nAt the current step, vt−1 = 0.5, β = 0.8, η = 0.1, and the gradient is gt = 3. The previous\nparameter is wt−1 = 5.\nHere, vt stores a running update direction, so the current step\ndepends on both the new gradient and part of the previous movement.\n\nQuestion 15: Why can momentum help optimization?",
+    "options": [
+      "It makes gradients unnecessary.",
+      "It always increases the loss.",
+      "It can smooth updates across steps.",
+      "It forces all parameters to be equal."
+    ],
+    "correctAnswerIndex": 2,
+    "answerSource": "PDF",
+    "isApproved": true,
+    "explanation": "Momentum can reduce oscillations and carry useful update direction across iterations."
+  },
+  {
+    "id": "q-dl-w4-16",
+    "courseId": "course-deep-learning-master",
+    "weekNumber": 4,
+    "originalQuestionNumber": 16,
+    "sourcePdfName": "DeepLearning_July_Oct_2026_Week4.pdf",
+    "questionText": "Case Study 4\nDemand Prediction Step-Size Analysis\nA retail analytics group trains a demand prediction model whose parameters do not all\nreceive gradients of the same scale. To understand adaptive learning rates, the team isolates\none parameter and tracks how its accumulated squared gradient changes the update size. For\nthis parameter, the current gradient is g = 4. In an AdaGrad-style update, the accumulated\nsquared gradient is\nrt = rt−1 + g2.\nAt the current step, rt−1 = 9.\nThe learning rate is η = 0.5, and the simplified update\nmagnitude is\nηg\n√rt\n.\nThis simplified calculation helps the team compare a plain gradient step with an adaptive\nstep that becomes smaller when the accumulated squared gradient is large.\n\nQuestion 16: What is rt?",
+    "options": [
+      "16",
+      "25",
+      "13",
+      "9"
+    ],
+    "correctAnswerIndex": 1,
+    "answerSource": "PDF",
+    "isApproved": true,
+    "explanation": "rt = 9 + 42 = 25."
+  },
+  {
+    "id": "q-dl-w4-17",
+    "courseId": "course-deep-learning-master",
+    "weekNumber": 4,
+    "originalQuestionNumber": 17,
+    "sourcePdfName": "DeepLearning_July_Oct_2026_Week4.pdf",
+    "questionText": "Case Study 4\nDemand Prediction Step-Size Analysis\nA retail analytics group trains a demand prediction model whose parameters do not all\nreceive gradients of the same scale. To understand adaptive learning rates, the team isolates\none parameter and tracks how its accumulated squared gradient changes the update size. For\nthis parameter, the current gradient is g = 4. In an AdaGrad-style update, the accumulated\nsquared gradient is\nrt = rt−1 + g2.\nAt the current step, rt−1 = 9.\nThe learning rate is η = 0.5, and the simplified update\nmagnitude is\nηg\n√rt\n.\nThis simplified calculation helps the team compare a plain gradient step with an adaptive\nstep that becomes smaller when the accumulated squared gradient is large.\n\nQuestion 17: What is √rt?",
+    "options": [
+      "3",
+      "4",
+      "5",
+      "6"
+    ],
+    "correctAnswerIndex": 2,
+    "answerSource": "PDF",
+    "isApproved": true,
+    "explanation": "Since rt = 25, √rt = 5."
+  },
+  {
+    "id": "q-dl-w4-18",
+    "courseId": "course-deep-learning-master",
+    "weekNumber": 4,
+    "originalQuestionNumber": 18,
+    "sourcePdfName": "DeepLearning_July_Oct_2026_Week4.pdf",
+    "questionText": "Case Study 4\nDemand Prediction Step-Size Analysis\nA retail analytics group trains a demand prediction model whose parameters do not all\nreceive gradients of the same scale. To understand adaptive learning rates, the team isolates\none parameter and tracks how its accumulated squared gradient changes the update size. For\nthis parameter, the current gradient is g = 4. In an AdaGrad-style update, the accumulated\nsquared gradient is\nrt = rt−1 + g2.\nAt the current step, rt−1 = 9.\nThe learning rate is η = 0.5, and the simplified update\nmagnitude is\nηg\n√rt\n.\nThis simplified calculation helps the team compare a plain gradient step with an adaptive\nstep that becomes smaller when the accumulated squared gradient is large.\n\nQuestion 18: What is the update magnitude?",
+    "options": [
+      "0.2",
+      "0.4",
+      "0.8",
+      "0.6"
+    ],
+    "correctAnswerIndex": 1,
+    "answerSource": "PDF",
+    "isApproved": true,
+    "explanation": "ηg/√rt = 0.5(4)/5 = 0.4."
+  },
+  {
+    "id": "q-dl-w4-19",
+    "courseId": "course-deep-learning-master",
+    "weekNumber": 4,
+    "originalQuestionNumber": 19,
+    "sourcePdfName": "DeepLearning_July_Oct_2026_Week4.pdf",
+    "questionText": "Case Study 4\nDemand Prediction Step-Size Analysis\nA retail analytics group trains a demand prediction model whose parameters do not all\nreceive gradients of the same scale. To understand adaptive learning rates, the team isolates\none parameter and tracks how its accumulated squared gradient changes the update size. For\nthis parameter, the current gradient is g = 4. In an AdaGrad-style update, the accumulated\nsquared gradient is\nrt = rt−1 + g2.\nAt the current step, rt−1 = 9.\nThe learning rate is η = 0.5, and the simplified update\nmagnitude is\nηg\n√rt\n.\nThis simplified calculation helps the team compare a plain gradient step with an adaptive\nstep that becomes smaller when the accumulated squared gradient is large.\n\nQuestion 19: What is the main idea behind AdaGrad-style scaling?",
+    "options": [
+      "It ignores all previous gradient information while claiming to adapt steps.",
+      "It requires the same update for every parameter.",
+      "It removes the need for a loss function.",
+      "It adapts the step size using accumulated squared gradients."
+    ],
+    "correctAnswerIndex": 3,
+    "answerSource": "PDF",
+    "isApproved": true,
+    "explanation": "AdaGrad scales updates using accumulated squared gradients, giving parameter-specific effective step sizes."
+  },
+  {
+    "id": "q-dl-w4-20",
+    "courseId": "course-deep-learning-master",
+    "weekNumber": 4,
+    "originalQuestionNumber": 20,
+    "sourcePdfName": "DeepLearning_July_Oct_2026_Week4.pdf",
+    "questionText": "Case Study 4\nDemand Prediction Step-Size Analysis\nA retail analytics group trains a demand prediction model whose parameters do not all\nreceive gradients of the same scale. To understand adaptive learning rates, the team isolates\none parameter and tracks how its accumulated squared gradient changes the update size. For\nthis parameter, the current gradient is g = 4. In an AdaGrad-style update, the accumulated\nsquared gradient is\nrt = rt−1 + g2.\nAt the current step, rt−1 = 9.\nThe learning rate is η = 0.5, and the simplified update\nmagnitude is\nηg\n√rt\n.\nThis simplified calculation helps the team compare a plain gradient step with an adaptive\nstep that becomes smaller when the accumulated squared gradient is large.\n\nQuestion 20: Which optimizer combines momentum-like averaging with adaptive scaling?",
+    "options": [
+      "Adam",
+      "Plain batch gradient descent",
+      "Stochastic gradient descent without memory",
+      "A zero-learning-rate update"
+    ],
+    "correctAnswerIndex": 0,
+    "answerSource": "PDF",
+    "isApproved": true,
+    "explanation": "Adam uses moving averages of gradients and squared gradi- ents."
+  }
+]

@@ -2,6 +2,18 @@ import { Course, Question } from '../types';
 
 export const INITIAL_COURSES: Course[] = [
   {
+    id: 'course-deep-learning-master',
+    code: 'DL-101',
+    name: 'Deep Learning',
+    description: 'Comprehensive Question Bank covering Deep Learning foundations, neural networks, optimization, autoencoders, regularizations, and CNN architectures.',
+    totalQuestions: 200,
+    weeks: [1, 2, 3, 4, 5, 6, 7, 8, 9, 10],
+    status: 'published',
+    sourcePdfName: 'DeepLearning_July_Oct_2026_Week1.pdf - DeepLearning_July_Oct_2026_Week10.pdf',
+    createdAt: '2026-10-13T13:00:00.000Z',
+    publishedAt: '2026-10-13T13:00:00.000Z',
+  },
+  {
     id: 'course-hrm-master',
     code: 'HRM-101',
     name: 'HUMAN RESOURCE MANAGEMENT',
@@ -5516,9 +5528,3814 @@ const HRM_QUESTIONS: Question[] = [
   }
 ];
 
+
+const DL_QUESTIONS: Question[] = [
+  {
+    "id": "q-dl-w1-1",
+    "courseId": "course-deep-learning-master",
+    "weekNumber": 1,
+    "originalQuestionNumber": 1,
+    "sourcePdfName": "DeepLearning_July_Oct_2026_Week1.pdf",
+    "questionText": "Case Study 1\nSmart Classroom Ventilation Control\nA university building uses a simple automatic ventilation controller for a smart classroom.\nThe controller is intended to be transparent enough for maintenance staff to verify without\nrunning a learning algorithm. At the beginning of every class interval, the controller reads\nfour binary indicators:\nx1 : carbon dioxide level is high,\nx2 : room occupancy is high,\nx3 : indoor temperature is above the comfort limit,\nx4 : outside air quality is acceptable.\nEach indicator is 1 when the condition is true and 0 otherwise.\nThe ventilation fan is\ncontrolled by a McCulloch-Pitts style threshold unit:\ny =\n\n\n\n1,\nif x1 + x2 + x3 + x4 \u2265\u03b8,\n0,\notherwise.\nHere, y = 1 means that the fan is switched on. The facilities team wants the fan to switch\non only when at least three of the four indicators are active. Each class interval is evaluated\nindependently.\n\nQuestion 1: Which threshold value implements the desired fan-control rule?",
+    "options": [
+      "\u03b8 = 1",
+      "\u03b8 = 2",
+      "\u03b8 = 3",
+      "\u03b8 = 4"
+    ],
+    "correctAnswerIndex": 2,
+    "answerSource": "PDF",
+    "isApproved": true,
+    "explanation": "The fan should switch on when at least three indicators are active, so the threshold must be 3.",
+    "createdAt": "2026-10-13T13:00:00.000Z"
+  },
+  {
+    "id": "q-dl-w1-2",
+    "courseId": "course-deep-learning-master",
+    "weekNumber": 1,
+    "originalQuestionNumber": 2,
+    "sourcePdfName": "DeepLearning_July_Oct_2026_Week1.pdf",
+    "questionText": "Case Study 1\nSmart Classroom Ventilation Control\nA university building uses a simple automatic ventilation controller for a smart classroom.\nThe controller is intended to be transparent enough for maintenance staff to verify without\nrunning a learning algorithm. At the beginning of every class interval, the controller reads\nfour binary indicators:\nx1 : carbon dioxide level is high,\nx2 : room occupancy is high,\nx3 : indoor temperature is above the comfort limit,\nx4 : outside air quality is acceptable.\nEach indicator is 1 when the condition is true and 0 otherwise.\nThe ventilation fan is\ncontrolled by a McCulloch-Pitts style threshold unit:\ny =\n\n\n\n1,\nif x1 + x2 + x3 + x4 \u2265\u03b8,\n0,\notherwise.\nHere, y = 1 means that the fan is switched on. The facilities team wants the fan to switch\non only when at least three of the four indicators are active. Each class interval is evaluated\nindependently.\n\nQuestion 2: For input (1, 0, 1, 1), what output does the controller produce?",
+    "options": [
+      "y = 0, because only one condition is absent",
+      "y = 1, because three indicators are active",
+      "y = 0, because all four indicators must be active",
+      "y = 1, because the first indicator is active"
+    ],
+    "correctAnswerIndex": 1,
+    "answerSource": "PDF",
+    "isApproved": true,
+    "explanation": "The input contains three 1s. Since 3 \u2265\u03b8, the output is y = 1.",
+    "createdAt": "2026-10-13T13:00:00.000Z"
+  },
+  {
+    "id": "q-dl-w1-3",
+    "courseId": "course-deep-learning-master",
+    "weekNumber": 1,
+    "originalQuestionNumber": 3,
+    "sourcePdfName": "DeepLearning_July_Oct_2026_Week1.pdf",
+    "questionText": "Case Study 1\nSmart Classroom Ventilation Control\nA university building uses a simple automatic ventilation controller for a smart classroom.\nThe controller is intended to be transparent enough for maintenance staff to verify without\nrunning a learning algorithm. At the beginning of every class interval, the controller reads\nfour binary indicators:\nx1 : carbon dioxide level is high,\nx2 : room occupancy is high,\nx3 : indoor temperature is above the comfort limit,\nx4 : outside air quality is acceptable.\nEach indicator is 1 when the condition is true and 0 otherwise.\nThe ventilation fan is\ncontrolled by a McCulloch-Pitts style threshold unit:\ny =\n\n\n\n1,\nif x1 + x2 + x3 + x4 \u2265\u03b8,\n0,\notherwise.\nHere, y = 1 means that the fan is switched on. The facilities team wants the fan to switch\non only when at least three of the four indicators are active. Each class interval is evaluated\nindependently.\n\nQuestion 3: How many binary input patterns switch on the fan?",
+    "options": [
+      "5",
+      "4",
+      "6",
+      "8"
+    ],
+    "correctAnswerIndex": 0,
+    "answerSource": "PDF",
+    "isApproved": true,
+    "explanation": "The fan switches on for exactly three active indicators or four active indicators. The number of patterns is 4 3 \u0001 + 4 4 \u0001 = 4 + 1 = 5.",
+    "createdAt": "2026-10-13T13:00:00.000Z"
+  },
+  {
+    "id": "q-dl-w1-4",
+    "courseId": "course-deep-learning-master",
+    "weekNumber": 1,
+    "originalQuestionNumber": 4,
+    "sourcePdfName": "DeepLearning_July_Oct_2026_Week1.pdf",
+    "questionText": "Case Study 1\nSmart Classroom Ventilation Control\nA university building uses a simple automatic ventilation controller for a smart classroom.\nThe controller is intended to be transparent enough for maintenance staff to verify without\nrunning a learning algorithm. At the beginning of every class interval, the controller reads\nfour binary indicators:\nx1 : carbon dioxide level is high,\nx2 : room occupancy is high,\nx3 : indoor temperature is above the comfort limit,\nx4 : outside air quality is acceptable.\nEach indicator is 1 when the condition is true and 0 otherwise.\nThe ventilation fan is\ncontrolled by a McCulloch-Pitts style threshold unit:\ny =\n\n\n\n1,\nif x1 + x2 + x3 + x4 \u2265\u03b8,\n0,\notherwise.\nHere, y = 1 means that the fan is switched on. The facilities team wants the fan to switch\non only when at least three of the four indicators are active. Each class interval is evaluated\nindependently.\n\nQuestion 4: If the threshold is accidentally changed to \u03b8 = 2, what happens?",
+    "options": [
+      "The fan switches on less often than intended.",
+      "The fan switches on when two or more indicators are active.",
+      "The fan switches on only when all inputs are 1, making activation too strict.",
+      "The fan never switches on."
+    ],
+    "correctAnswerIndex": 1,
+    "answerSource": "PDF",
+    "isApproved": true,
+    "explanation": "With \u03b8 = 2, any pattern with two, three, or four active indi- cators produces y = 1, so activation becomes more frequent.",
+    "createdAt": "2026-10-13T13:00:00.000Z"
+  },
+  {
+    "id": "q-dl-w1-5",
+    "courseId": "course-deep-learning-master",
+    "weekNumber": 1,
+    "originalQuestionNumber": 5,
+    "sourcePdfName": "DeepLearning_July_Oct_2026_Week1.pdf",
+    "questionText": "Case Study 1\nSmart Classroom Ventilation Control\nA university building uses a simple automatic ventilation controller for a smart classroom.\nThe controller is intended to be transparent enough for maintenance staff to verify without\nrunning a learning algorithm. At the beginning of every class interval, the controller reads\nfour binary indicators:\nx1 : carbon dioxide level is high,\nx2 : room occupancy is high,\nx3 : indoor temperature is above the comfort limit,\nx4 : outside air quality is acceptable.\nEach indicator is 1 when the condition is true and 0 otherwise.\nThe ventilation fan is\ncontrolled by a McCulloch-Pitts style threshold unit:\ny =\n\n\n\n1,\nif x1 + x2 + x3 + x4 \u2265\u03b8,\n0,\notherwise.\nHere, y = 1 means that the fan is switched on. The facilities team wants the fan to switch\non only when at least three of the four indicators are active. Each class interval is evaluated\nindependently.\n\nQuestion 5: Which property makes this controller a threshold-logic system?",
+    "options": [
+      "It predicts future classroom occupancy states.",
+      "It updates weights after every incorrect output during a training process.",
+      "It requires a hidden layer to make a decision.",
+      "It compares a summed input value with a fixed threshold."
+    ],
+    "correctAnswerIndex": 3,
+    "answerSource": "PDF",
+    "isApproved": true,
+    "explanation": "A threshold unit computes a weighted or unweighted sum and compares that sum with a threshold.",
+    "createdAt": "2026-10-13T13:00:00.000Z"
+  },
+  {
+    "id": "q-dl-w1-6",
+    "courseId": "course-deep-learning-master",
+    "weekNumber": 1,
+    "originalQuestionNumber": 6,
+    "sourcePdfName": "DeepLearning_July_Oct_2026_Week1.pdf",
+    "questionText": "Case Study 2\nScholarship Application Screening\nA scholarship office builds a first-stage screening aid. The aid does not make the final\naward decision; it only flags applications that satisfy a simple rule for immediate review.\nEach application is represented by two binary features:\nx1 : academic score is above the cutoff,\nx2 : financial-need certificate is verified.\nThe office wants the system to flag an application when at least one of these two conditions\nis true. A perceptron with weights w1, w2, bias b, and decision rule\n\u02c6y =\n\n\n\n1,\nif w1x1 + w2x2 + b \u22650,\n0,\notherwise\nis tested for this screening rule.\n\nQuestion 6: Which logical behavior is described by the desired screening rule?",
+    "options": [
+      "AND",
+      "XOR",
+      "OR",
+      "XNOR"
+    ],
+    "correctAnswerIndex": 2,
+    "answerSource": "PDF",
+    "isApproved": true,
+    "explanation": "The output is 1 when x1 = 1, or x2 = 1, or both. This is the OR operation.",
+    "createdAt": "2026-10-13T13:00:00.000Z"
+  },
+  {
+    "id": "q-dl-w1-7",
+    "courseId": "course-deep-learning-master",
+    "weekNumber": 1,
+    "originalQuestionNumber": 7,
+    "sourcePdfName": "DeepLearning_July_Oct_2026_Week1.pdf",
+    "questionText": "Case Study 2\nScholarship Application Screening\nA scholarship office builds a first-stage screening aid. The aid does not make the final\naward decision; it only flags applications that satisfy a simple rule for immediate review.\nEach application is represented by two binary features:\nx1 : academic score is above the cutoff,\nx2 : financial-need certificate is verified.\nThe office wants the system to flag an application when at least one of these two conditions\nis true. A perceptron with weights w1, w2, bias b, and decision rule\n\u02c6y =\n\n\n\n1,\nif w1x1 + w2x2 + b \u22650,\n0,\notherwise\nis tested for this screening rule.\n\nQuestion 7: Which parameter setting correctly implements this rule?",
+    "options": [
+      "w1 = 1, w2 = 1, b = \u22121.5",
+      "w1 = 1, w2 = 1, b = \u22120.5",
+      "w1 = \u22121, w2 = \u22121, b = 0.5",
+      "w1 = 1, w2 = \u22121, b = 0"
+    ],
+    "correctAnswerIndex": 1,
+    "answerSource": "PDF",
+    "isApproved": true,
+    "explanation": "With w1 = w2 = 1 and b = \u22120.5, the score is negative only for (0, 0). All other input patterns produce a non-negative score.",
+    "createdAt": "2026-10-13T13:00:00.000Z"
+  },
+  {
+    "id": "q-dl-w1-8",
+    "courseId": "course-deep-learning-master",
+    "weekNumber": 1,
+    "originalQuestionNumber": 8,
+    "sourcePdfName": "DeepLearning_July_Oct_2026_Week1.pdf",
+    "questionText": "Case Study 2\nScholarship Application Screening\nA scholarship office builds a first-stage screening aid. The aid does not make the final\naward decision; it only flags applications that satisfy a simple rule for immediate review.\nEach application is represented by two binary features:\nx1 : academic score is above the cutoff,\nx2 : financial-need certificate is verified.\nThe office wants the system to flag an application when at least one of these two conditions\nis true. A perceptron with weights w1, w2, bias b, and decision rule\n\u02c6y =\n\n\n\n1,\nif w1x1 + w2x2 + b \u22650,\n0,\notherwise\nis tested for this screening rule.\n\nQuestion 8: For w1 = 1, w2 = 1, b = \u22120.5, what is the score for input (0, 1)?",
+    "options": [
+      "0.5",
+      "\u22120.5",
+      "0",
+      "1.5"
+    ],
+    "correctAnswerIndex": 0,
+    "answerSource": "PDF",
+    "isApproved": true,
+    "explanation": "The score is 1(0) + 1(1) \u22120.5 = 0.5, so the perceptron outputs 1.",
+    "createdAt": "2026-10-13T13:00:00.000Z"
+  },
+  {
+    "id": "q-dl-w1-9",
+    "courseId": "course-deep-learning-master",
+    "weekNumber": 1,
+    "originalQuestionNumber": 9,
+    "sourcePdfName": "DeepLearning_July_Oct_2026_Week1.pdf",
+    "questionText": "Case Study 2\nScholarship Application Screening\nA scholarship office builds a first-stage screening aid. The aid does not make the final\naward decision; it only flags applications that satisfy a simple rule for immediate review.\nEach application is represented by two binary features:\nx1 : academic score is above the cutoff,\nx2 : financial-need certificate is verified.\nThe office wants the system to flag an application when at least one of these two conditions\nis true. A perceptron with weights w1, w2, bias b, and decision rule\n\u02c6y =\n\n\n\n1,\nif w1x1 + w2x2 + b \u22650,\n0,\notherwise\nis tested for this screening rule.\n\nQuestion 9: What is the decision boundary for the parameter setting w1 = 1, w2 = 1, b = \u22120.5?",
+    "options": [
+      "x1 \u2212x2 \u22120.5 = 0",
+      "x1 + x2 + 0.5 = 0",
+      "2x1 + x2 = 0",
+      "x1 + x2 \u22120.5 = 0"
+    ],
+    "correctAnswerIndex": 3,
+    "answerSource": "PDF",
+    "isApproved": true,
+    "explanation": "The boundary is where the perceptron score equals zero: x1 + x2 \u22120.5 = 0.",
+    "createdAt": "2026-10-13T13:00:00.000Z"
+  },
+  {
+    "id": "q-dl-w1-10",
+    "courseId": "course-deep-learning-master",
+    "weekNumber": 1,
+    "originalQuestionNumber": 10,
+    "sourcePdfName": "DeepLearning_July_Oct_2026_Week1.pdf",
+    "questionText": "Case Study 2\nScholarship Application Screening\nA scholarship office builds a first-stage screening aid. The aid does not make the final\naward decision; it only flags applications that satisfy a simple rule for immediate review.\nEach application is represented by two binary features:\nx1 : academic score is above the cutoff,\nx2 : financial-need certificate is verified.\nThe office wants the system to flag an application when at least one of these two conditions\nis true. A perceptron with weights w1, w2, bias b, and decision rule\n\u02c6y =\n\n\n\n1,\nif w1x1 + w2x2 + b \u22650,\n0,\notherwise\nis tested for this screening rule.\n\nQuestion 10: Why can a single perceptron represent this screening rule?",
+    "options": [
+      "The positive and negative cases are linearly separable.",
+      "The rule requires remembering earlier applications before deciding the next output.",
+      "The rule has no decision boundary.",
+      "The output changes randomly for the same input."
+    ],
+    "correctAnswerIndex": 0,
+    "answerSource": "PDF",
+    "isApproved": true,
+    "explanation": "OR is linearly separable because one straight line can separate (0, 0) from the three positive input patterns.",
+    "createdAt": "2026-10-13T13:00:00.000Z"
+  },
+  {
+    "id": "q-dl-w1-11",
+    "courseId": "course-deep-learning-master",
+    "weekNumber": 1,
+    "originalQuestionNumber": 11,
+    "sourcePdfName": "DeepLearning_July_Oct_2026_Week1.pdf",
+    "questionText": "Case Study 3\nEquipment Handover Record Review\nAn engineering lab tracks two binary checks before handing over a portable measurement\nkit:\nx1 : battery pack has been returned,\nx2 : sensor module has been returned.\nFor audit purposes, the lab wants to flag a handover record when exactly one of the two\nitems has been returned. If neither item has been returned or both items have been returned,\nthe record is not flagged. The desired output table is:\nx1\nx2\ny\n0\n0\n0\n0\n1\n1\n1\n0\n1\n1\n1\n0\nThe lab initially tries to implement this rule with a single perceptron.\n\nQuestion 11: Which logical behavior does the handover rule represent?",
+    "options": [
+      "AND",
+      "OR",
+      "XOR",
+      "NAND"
+    ],
+    "correctAnswerIndex": 2,
+    "answerSource": "PDF",
+    "isApproved": true,
+    "explanation": "The output is 1 exactly when the two binary inputs are differ- ent, which is the XOR rule.",
+    "createdAt": "2026-10-13T13:00:00.000Z"
+  },
+  {
+    "id": "q-dl-w1-12",
+    "courseId": "course-deep-learning-master",
+    "weekNumber": 1,
+    "originalQuestionNumber": 12,
+    "sourcePdfName": "DeepLearning_July_Oct_2026_Week1.pdf",
+    "questionText": "Case Study 3\nEquipment Handover Record Review\nAn engineering lab tracks two binary checks before handing over a portable measurement\nkit:\nx1 : battery pack has been returned,\nx2 : sensor module has been returned.\nFor audit purposes, the lab wants to flag a handover record when exactly one of the two\nitems has been returned. If neither item has been returned or both items have been returned,\nthe record is not flagged. The desired output table is:\nx1\nx2\ny\n0\n0\n0\n0\n1\n1\n1\n0\n1\n1\n1\n0\nThe lab initially tries to implement this rule with a single perceptron.\n\nQuestion 12: What output is assigned to the input pattern (1, 1)?",
+    "options": [
+      "y = 1, because one item has been returned",
+      "y = 0, because exactly one item has not been returned",
+      "y = 1, because both checks are complete",
+      "y = 0, because both values are the same"
+    ],
+    "correctAnswerIndex": 3,
+    "answerSource": "PDF",
+    "isApproved": true,
+    "explanation": "The rule flags only records with exactly one returned item. For (1, 1), both items have been returned, so y = 0.",
+    "createdAt": "2026-10-13T13:00:00.000Z"
+  },
+  {
+    "id": "q-dl-w1-13",
+    "courseId": "course-deep-learning-master",
+    "weekNumber": 1,
+    "originalQuestionNumber": 13,
+    "sourcePdfName": "DeepLearning_July_Oct_2026_Week1.pdf",
+    "questionText": "Case Study 3\nEquipment Handover Record Review\nAn engineering lab tracks two binary checks before handing over a portable measurement\nkit:\nx1 : battery pack has been returned,\nx2 : sensor module has been returned.\nFor audit purposes, the lab wants to flag a handover record when exactly one of the two\nitems has been returned. If neither item has been returned or both items have been returned,\nthe record is not flagged. The desired output table is:\nx1\nx2\ny\n0\n0\n0\n0\n1\n1\n1\n0\n1\n1\n1\n0\nThe lab initially tries to implement this rule with a single perceptron.\n\nQuestion 13: Which geometric property prevents a single perceptron from representing this rule?",
+    "options": [
+      "The positive cases lie on opposite corners of the input square.",
+      "The inputs are binary rather than real valued, so the rule cannot use a separator.",
+      "The output has only two possible labels.",
+      "The rule uses two input variables."
+    ],
+    "correctAnswerIndex": 0,
+    "answerSource": "PDF",
+    "isApproved": true,
+    "explanation": "The positive cases (0, 1) and (1, 0) are diagonally opposite, so a single straight line cannot separate them from the two negative cases.",
+    "createdAt": "2026-10-13T13:00:00.000Z"
+  },
+  {
+    "id": "q-dl-w1-14",
+    "courseId": "course-deep-learning-master",
+    "weekNumber": 1,
+    "originalQuestionNumber": 14,
+    "sourcePdfName": "DeepLearning_July_Oct_2026_Week1.pdf",
+    "questionText": "Case Study 3\nEquipment Handover Record Review\nAn engineering lab tracks two binary checks before handing over a portable measurement\nkit:\nx1 : battery pack has been returned,\nx2 : sensor module has been returned.\nFor audit purposes, the lab wants to flag a handover record when exactly one of the two\nitems has been returned. If neither item has been returned or both items have been returned,\nthe record is not flagged. The desired output table is:\nx1\nx2\ny\n0\n0\n0\n0\n1\n1\n1\n0\n1\n1\n1\n0\nThe lab initially tries to implement this rule with a single perceptron.\n\nQuestion 14: Which modified lab rule would be linearly separable?",
+    "options": [
+      "Flag exactly one returned item.",
+      "Flag when the two item statuses are different.",
+      "Flag only when both items have been returned.",
+      "Flag when neither or both items have been returned."
+    ],
+    "correctAnswerIndex": 2,
+    "answerSource": "PDF",
+    "isApproved": true,
+    "explanation": "Flagging only (1, 1) is the AND rule, which is linearly separa- ble.",
+    "createdAt": "2026-10-13T13:00:00.000Z"
+  },
+  {
+    "id": "q-dl-w1-15",
+    "courseId": "course-deep-learning-master",
+    "weekNumber": 1,
+    "originalQuestionNumber": 15,
+    "sourcePdfName": "DeepLearning_July_Oct_2026_Week1.pdf",
+    "questionText": "Case Study 3\nEquipment Handover Record Review\nAn engineering lab tracks two binary checks before handing over a portable measurement\nkit:\nx1 : battery pack has been returned,\nx2 : sensor module has been returned.\nFor audit purposes, the lab wants to flag a handover record when exactly one of the two\nitems has been returned. If neither item has been returned or both items have been returned,\nthe record is not flagged. The desired output table is:\nx1\nx2\ny\n0\n0\n0\n0\n1\n1\n1\n0\n1\n1\n1\n0\nThe lab initially tries to implement this rule with a single perceptron.\n\nQuestion 15: What does linear separability mean in this setting?",
+    "options": [
+      "Every input must have label 1 before a straight boundary can be checked.",
+      "A line can separate the 1-labeled and 0-labeled inputs.",
+      "The perceptron must avoid using weights.",
+      "The input values must be stored in a sequence."
+    ],
+    "correctAnswerIndex": 1,
+    "answerSource": "PDF",
+    "isApproved": true,
+    "explanation": "Linear separability means that a line can place all positive examples on one side and all negative examples on the other side.",
+    "createdAt": "2026-10-13T13:00:00.000Z"
+  },
+  {
+    "id": "q-dl-w1-16",
+    "courseId": "course-deep-learning-master",
+    "weekNumber": 1,
+    "originalQuestionNumber": 16,
+    "sourcePdfName": "DeepLearning_July_Oct_2026_Week1.pdf",
+    "questionText": "Case Study 4\nParcel Routing Decision Review\nA courier service trains a perceptron to classify parcels into \u201cexpress\u201d and \u201cstandard\u201d\nrouting. Each parcel is described by two numerical features:\nx1 : compactness score,\nx2 : priority-label score.\nThe label is y = 1 for express routing and y = \u22121 for standard routing. The perceptron has\nno bias term and uses the update rule\nw \u2190w + yx\nwhenever y(w\u22a4x) \u22640. The training samples are processed in the following order:\nParcel\nx1\nx2\ny\nP1\n2\n1\n1\nP2\n1\n2\n1\nP3\n\u22121\n\u22121\n\u22121\nTraining starts with w = (0, 0).\n\nQuestion 16: What is the weight vector after processing P1 once?",
+    "options": [
+      "w = (2, 1)",
+      "w = (1, 2)",
+      "w = (\u22121, \u22121)",
+      "w = (0, 0)"
+    ],
+    "correctAnswerIndex": 0,
+    "answerSource": "PDF",
+    "isApproved": true,
+    "explanation": "Initially w\u22a4x = 0, so y(w\u22a4x) = 0 and an update is made. The new vector is w = (0, 0) + 1(2, 1) = (2, 1).",
+    "createdAt": "2026-10-13T13:00:00.000Z"
+  },
+  {
+    "id": "q-dl-w1-17",
+    "courseId": "course-deep-learning-master",
+    "weekNumber": 1,
+    "originalQuestionNumber": 17,
+    "sourcePdfName": "DeepLearning_July_Oct_2026_Week1.pdf",
+    "questionText": "Case Study 4\nParcel Routing Decision Review\nA courier service trains a perceptron to classify parcels into \u201cexpress\u201d and \u201cstandard\u201d\nrouting. Each parcel is described by two numerical features:\nx1 : compactness score,\nx2 : priority-label score.\nThe label is y = 1 for express routing and y = \u22121 for standard routing. The perceptron has\nno bias term and uses the update rule\nw \u2190w + yx\nwhenever y(w\u22a4x) \u22640. The training samples are processed in the following order:\nParcel\nx1\nx2\ny\nP1\n2\n1\n1\nP2\n1\n2\n1\nP3\n\u22121\n\u22121\n\u22121\nTraining starts with w = (0, 0).\n\nQuestion 17: After the update from P1, what is w\u22a4x for P2?",
+    "options": [
+      "2",
+      "3",
+      "4",
+      "5"
+    ],
+    "correctAnswerIndex": 2,
+    "answerSource": "PDF",
+    "isApproved": true,
+    "explanation": "With w = (2, 1) and x = (1, 2), the score is 2(1) + 1(2) = 4.",
+    "createdAt": "2026-10-13T13:00:00.000Z"
+  },
+  {
+    "id": "q-dl-w1-18",
+    "courseId": "course-deep-learning-master",
+    "weekNumber": 1,
+    "originalQuestionNumber": 18,
+    "sourcePdfName": "DeepLearning_July_Oct_2026_Week1.pdf",
+    "questionText": "Case Study 4\nParcel Routing Decision Review\nA courier service trains a perceptron to classify parcels into \u201cexpress\u201d and \u201cstandard\u201d\nrouting. Each parcel is described by two numerical features:\nx1 : compactness score,\nx2 : priority-label score.\nThe label is y = 1 for express routing and y = \u22121 for standard routing. The perceptron has\nno bias term and uses the update rule\nw \u2190w + yx\nwhenever y(w\u22a4x) \u22640. The training samples are processed in the following order:\nParcel\nx1\nx2\ny\nP1\n2\n1\n1\nP2\n1\n2\n1\nP3\n\u22121\n\u22121\n\u22121\nTraining starts with w = (0, 0).\n\nQuestion 18: With w = (2, 1), is P3 correctly classified?",
+    "options": [
+      "No, because the raw score w\u22a4x is greater than zero.",
+      "No, because y(w\u22a4x) < 0.",
+      "Yes, because w\u22a4x = 0.",
+      "Yes, because y(w\u22a4x) > 0."
+    ],
+    "correctAnswerIndex": 3,
+    "answerSource": "PDF",
+    "isApproved": true,
+    "explanation": "For P3 = (\u22121, \u22121), w\u22a4x = \u22123. Since y = \u22121, y(w\u22a4x) = 3 > 0, so it is correctly classified.",
+    "createdAt": "2026-10-13T13:00:00.000Z"
+  },
+  {
+    "id": "q-dl-w1-19",
+    "courseId": "course-deep-learning-master",
+    "weekNumber": 1,
+    "originalQuestionNumber": 19,
+    "sourcePdfName": "DeepLearning_July_Oct_2026_Week1.pdf",
+    "questionText": "Case Study 4\nParcel Routing Decision Review\nA courier service trains a perceptron to classify parcels into \u201cexpress\u201d and \u201cstandard\u201d\nrouting. Each parcel is described by two numerical features:\nx1 : compactness score,\nx2 : priority-label score.\nThe label is y = 1 for express routing and y = \u22121 for standard routing. The perceptron has\nno bias term and uses the update rule\nw \u2190w + yx\nwhenever y(w\u22a4x) \u22640. The training samples are processed in the following order:\nParcel\nx1\nx2\ny\nP1\n2\n1\n1\nP2\n1\n2\n1\nP3\n\u22121\n\u22121\n\u22121\nTraining starts with w = (0, 0).\n\nQuestion 19: Which condition is needed for the perceptron convergence guarantee?",
+    "options": [
+      "Every feature must be binary.",
+      "The data must be linearly separable.",
+      "The learning rate must be zero throughout all training updates.",
+      "All labels must be positive."
+    ],
+    "correctAnswerIndex": 1,
+    "answerSource": "PDF",
+    "isApproved": true,
+    "explanation": "The perceptron convergence theorem applies when the training data is linearly separable.",
+    "createdAt": "2026-10-13T13:00:00.000Z"
+  },
+  {
+    "id": "q-dl-w1-20",
+    "courseId": "course-deep-learning-master",
+    "weekNumber": 1,
+    "originalQuestionNumber": 20,
+    "sourcePdfName": "DeepLearning_July_Oct_2026_Week1.pdf",
+    "questionText": "Case Study 4\nParcel Routing Decision Review\nA courier service trains a perceptron to classify parcels into \u201cexpress\u201d and \u201cstandard\u201d\nrouting. Each parcel is described by two numerical features:\nx1 : compactness score,\nx2 : priority-label score.\nThe label is y = 1 for express routing and y = \u22121 for standard routing. The perceptron has\nno bias term and uses the update rule\nw \u2190w + yx\nwhenever y(w\u22a4x) \u22640. The training samples are processed in the following order:\nParcel\nx1\nx2\ny\nP1\n2\n1\n1\nP2\n1\n2\n1\nP3\n\u22121\n\u22121\n\u22121\nTraining starts with w = (0, 0).\n\nQuestion 20: Which vector separates the three listed parcels?",
+    "options": [
+      "w = (\u22121, 1)",
+      "w = (1, \u22121)",
+      "w = (\u22121, \u22121)",
+      "w = (1, 1)"
+    ],
+    "correctAnswerIndex": 3,
+    "answerSource": "PDF",
+    "isApproved": true,
+    "explanation": "With w = (1, 1), P1 and P2 have positive scores, while P3 has a negative score, matching the labels.",
+    "createdAt": "2026-10-13T13:00:00.000Z"
+  },
+  {
+    "id": "q-dl-w2-1",
+    "courseId": "course-deep-learning-master",
+    "weekNumber": 2,
+    "originalQuestionNumber": 1,
+    "sourcePdfName": "DeepLearning_July_Oct_2026_Week2.pdf",
+    "questionText": "Case Study 1\nClinic Follow-up Priority Scoring\nA clinic uses a simple model to assign a follow-up priority score after remote consultation.\nThe model does not make a diagnosis; it only produces a probability-like score for staff review.\nEach patient record is represented by two normalized inputs:\nx1 : symptom persistence score,\nx2 : abnormal reading score.\nThe model computes\nz = 3x1 + 2x2 \u22122,\n\u02c6p = \u03c3(z) =\n1\n1 + e\u2212z .\nA record is sent for priority follow-up when \u02c6p \u22650.5. For the sigmoid function, \u03c3(0) = 0.5,\npositive z gives an output above 0.5, and negative z gives an output below 0.5.\n\nQuestion 1: Why is the sigmoid function suitable for this priority score?",
+    "options": [
+      "It maps a real-valued input to a value between 0 and 1.",
+      "It removes the need to compute any weighted input value.",
+      "It always gives a hard class label before thresholding.",
+      "It forces both input features to have identical weights."
+    ],
+    "correctAnswerIndex": 0,
+    "answerSource": "PDF",
+    "isApproved": true,
+    "explanation": "A sigmoid maps any real number to a smooth output in (0, 1), which can be used as a probability-like score.",
+    "createdAt": "2026-10-13T13:00:00.000Z"
+  },
+  {
+    "id": "q-dl-w2-2",
+    "courseId": "course-deep-learning-master",
+    "weekNumber": 2,
+    "originalQuestionNumber": 2,
+    "sourcePdfName": "DeepLearning_July_Oct_2026_Week2.pdf",
+    "questionText": "Case Study 1\nClinic Follow-up Priority Scoring\nA clinic uses a simple model to assign a follow-up priority score after remote consultation.\nThe model does not make a diagnosis; it only produces a probability-like score for staff review.\nEach patient record is represented by two normalized inputs:\nx1 : symptom persistence score,\nx2 : abnormal reading score.\nThe model computes\nz = 3x1 + 2x2 \u22122,\n\u02c6p = \u03c3(z) =\n1\n1 + e\u2212z .\nA record is sent for priority follow-up when \u02c6p \u22650.5. For the sigmoid function, \u03c3(0) = 0.5,\npositive z gives an output above 0.5, and negative z gives an output below 0.5.\n\nQuestion 2: For x1 = 0.4 and x2 = 0.6, what is the value of z?",
+    "options": [
+      "0.2",
+      "0.6",
+      "0.4",
+      "0.8"
+    ],
+    "correctAnswerIndex": 2,
+    "answerSource": "PDF",
+    "isApproved": true,
+    "explanation": "z = 3(0.4) + 2(0.6) \u22122 = 1.2 + 1.2 \u22122 = 0.4.",
+    "createdAt": "2026-10-13T13:00:00.000Z"
+  },
+  {
+    "id": "q-dl-w2-3",
+    "courseId": "course-deep-learning-master",
+    "weekNumber": 2,
+    "originalQuestionNumber": 3,
+    "sourcePdfName": "DeepLearning_July_Oct_2026_Week2.pdf",
+    "questionText": "Case Study 1\nClinic Follow-up Priority Scoring\nA clinic uses a simple model to assign a follow-up priority score after remote consultation.\nThe model does not make a diagnosis; it only produces a probability-like score for staff review.\nEach patient record is represented by two normalized inputs:\nx1 : symptom persistence score,\nx2 : abnormal reading score.\nThe model computes\nz = 3x1 + 2x2 \u22122,\n\u02c6p = \u03c3(z) =\n1\n1 + e\u2212z .\nA record is sent for priority follow-up when \u02c6p \u22650.5. For the sigmoid function, \u03c3(0) = 0.5,\npositive z gives an output above 0.5, and negative z gives an output below 0.5.\n\nQuestion 3: The rule \u02c6p \u22650.5 is equivalent to which condition?",
+    "options": [
+      "z < 0",
+      "z \u22650",
+      "z > 1",
+      "z \u2264\u22121"
+    ],
+    "correctAnswerIndex": 1,
+    "answerSource": "PDF",
+    "isApproved": true,
+    "explanation": "Since \u03c3(0) = 0.5 and sigmoid is increasing, \u02c6p \u22650.5 exactly when z \u22650.",
+    "createdAt": "2026-10-13T13:00:00.000Z"
+  },
+  {
+    "id": "q-dl-w2-4",
+    "courseId": "course-deep-learning-master",
+    "weekNumber": 2,
+    "originalQuestionNumber": 4,
+    "sourcePdfName": "DeepLearning_July_Oct_2026_Week2.pdf",
+    "questionText": "Case Study 1\nClinic Follow-up Priority Scoring\nA clinic uses a simple model to assign a follow-up priority score after remote consultation.\nThe model does not make a diagnosis; it only produces a probability-like score for staff review.\nEach patient record is represented by two normalized inputs:\nx1 : symptom persistence score,\nx2 : abnormal reading score.\nThe model computes\nz = 3x1 + 2x2 \u22122,\n\u02c6p = \u03c3(z) =\n1\n1 + e\u2212z .\nA record is sent for priority follow-up when \u02c6p \u22650.5. For the sigmoid function, \u03c3(0) = 0.5,\npositive z gives an output above 0.5, and negative z gives an output below 0.5.\n\nQuestion 4: Which input is not sent for priority follow-up?",
+    "options": [
+      "x1 = 0.8, x2 = 0.1",
+      "x1 = 0.2, x2 = 0.8",
+      "x1 = 0.5, x2 = 0.4",
+      "x1 = 0.1, x2 = 0.4"
+    ],
+    "correctAnswerIndex": 3,
+    "answerSource": "PDF",
+    "isApproved": true,
+    "explanation": "For x1 = 0.1, x2 = 0.4, z = 0.3 + 0.8 \u22122 = \u22120.9, so \u02c6p < 0.5.",
+    "createdAt": "2026-10-13T13:00:00.000Z"
+  },
+  {
+    "id": "q-dl-w2-5",
+    "courseId": "course-deep-learning-master",
+    "weekNumber": 2,
+    "originalQuestionNumber": 5,
+    "sourcePdfName": "DeepLearning_July_Oct_2026_Week2.pdf",
+    "questionText": "Case Study 1\nClinic Follow-up Priority Scoring\nA clinic uses a simple model to assign a follow-up priority score after remote consultation.\nThe model does not make a diagnosis; it only produces a probability-like score for staff review.\nEach patient record is represented by two normalized inputs:\nx1 : symptom persistence score,\nx2 : abnormal reading score.\nThe model computes\nz = 3x1 + 2x2 \u22122,\n\u02c6p = \u03c3(z) =\n1\n1 + e\u2212z .\nA record is sent for priority follow-up when \u02c6p \u22650.5. For the sigmoid function, \u03c3(0) = 0.5,\npositive z gives an output above 0.5, and negative z gives an output below 0.5.\n\nQuestion 5: If the clinic wants fewer records to satisfy \u02c6p \u22650.5, what should happen to the bias term \u22122?",
+    "options": [
+      "It should become more negative.",
+      "It should be removed from the model entirely.",
+      "It should be made equal to x1 + x2.",
+      "It should be increased to make every score larger."
+    ],
+    "correctAnswerIndex": 0,
+    "answerSource": "PDF",
+    "isApproved": true,
+    "explanation": "Making the bias more negative lowers z for the same inputs, so fewer records reach the decision threshold.",
+    "createdAt": "2026-10-13T13:00:00.000Z"
+  },
+  {
+    "id": "q-dl-w2-6",
+    "courseId": "course-deep-learning-master",
+    "weekNumber": 2,
+    "originalQuestionNumber": 6,
+    "sourcePdfName": "DeepLearning_July_Oct_2026_Week2.pdf",
+    "questionText": "Case Study 2\nDelivery Time Prediction Review\nA logistics team trains a regression model to predict delivery delay in minutes. For four\nvalidation orders, the actual delay y and predicted delay \u02c6y are:\nOrder\ny\n\u02c6y\n1\n12\n10\n2\n20\n24\n3\n15\n13\n4\n18\n21\nThe team uses squared error\nL = (y \u2212\u02c6y)2,\nMSE = 1\nn\nn\nX\ni=1\n(yi \u2212\u02c6yi)2.\nFor gradient-based updates with respect to the prediction,\n\u2202L\n\u2202\u02c6y = 2(\u02c6y \u2212y).\n\nQuestion 6: What is the squared error for Order 2?",
+    "options": [
+      "4",
+      "16",
+      "9",
+      "25"
+    ],
+    "correctAnswerIndex": 1,
+    "answerSource": "PDF",
+    "isApproved": true,
+    "explanation": "For Order 2, the error is 20 \u221224 = \u22124, so the squared error is 16.",
+    "createdAt": "2026-10-13T13:00:00.000Z"
+  },
+  {
+    "id": "q-dl-w2-7",
+    "courseId": "course-deep-learning-master",
+    "weekNumber": 2,
+    "originalQuestionNumber": 7,
+    "sourcePdfName": "DeepLearning_July_Oct_2026_Week2.pdf",
+    "questionText": "Case Study 2\nDelivery Time Prediction Review\nA logistics team trains a regression model to predict delivery delay in minutes. For four\nvalidation orders, the actual delay y and predicted delay \u02c6y are:\nOrder\ny\n\u02c6y\n1\n12\n10\n2\n20\n24\n3\n15\n13\n4\n18\n21\nThe team uses squared error\nL = (y \u2212\u02c6y)2,\nMSE = 1\nn\nn\nX\ni=1\n(yi \u2212\u02c6yi)2.\nFor gradient-based updates with respect to the prediction,\n\u2202L\n\u2202\u02c6y = 2(\u02c6y \u2212y).\n\nQuestion 7: What is the mean squared error over the four orders?",
+    "options": [
+      "7.25",
+      "8.00",
+      "9.50",
+      "8.25"
+    ],
+    "correctAnswerIndex": 3,
+    "answerSource": "PDF",
+    "isApproved": true,
+    "explanation": "The squared errors are 4, 16, 4, 9. Their sum is 33, so the MSE is 33/4 = 8.25.",
+    "createdAt": "2026-10-13T13:00:00.000Z"
+  },
+  {
+    "id": "q-dl-w2-8",
+    "courseId": "course-deep-learning-master",
+    "weekNumber": 2,
+    "originalQuestionNumber": 8,
+    "sourcePdfName": "DeepLearning_July_Oct_2026_Week2.pdf",
+    "questionText": "Case Study 2\nDelivery Time Prediction Review\nA logistics team trains a regression model to predict delivery delay in minutes. For four\nvalidation orders, the actual delay y and predicted delay \u02c6y are:\nOrder\ny\n\u02c6y\n1\n12\n10\n2\n20\n24\n3\n15\n13\n4\n18\n21\nThe team uses squared error\nL = (y \u2212\u02c6y)2,\nMSE = 1\nn\nn\nX\ni=1\n(yi \u2212\u02c6yi)2.\nFor gradient-based updates with respect to the prediction,\n\u2202L\n\u2202\u02c6y = 2(\u02c6y \u2212y).\n\nQuestion 8: Which order contributes the largest squared error?",
+    "options": [
+      "Order 1",
+      "Order 3",
+      "Order 2",
+      "Order 4"
+    ],
+    "correctAnswerIndex": 2,
+    "answerSource": "PDF",
+    "isApproved": true,
+    "explanation": "The largest squared error is 16, which occurs for Order 2.",
+    "createdAt": "2026-10-13T13:00:00.000Z"
+  },
+  {
+    "id": "q-dl-w2-9",
+    "courseId": "course-deep-learning-master",
+    "weekNumber": 2,
+    "originalQuestionNumber": 9,
+    "sourcePdfName": "DeepLearning_July_Oct_2026_Week2.pdf",
+    "questionText": "Case Study 2\nDelivery Time Prediction Review\nA logistics team trains a regression model to predict delivery delay in minutes. For four\nvalidation orders, the actual delay y and predicted delay \u02c6y are:\nOrder\ny\n\u02c6y\n1\n12\n10\n2\n20\n24\n3\n15\n13\n4\n18\n21\nThe team uses squared error\nL = (y \u2212\u02c6y)2,\nMSE = 1\nn\nn\nX\ni=1\n(yi \u2212\u02c6yi)2.\nFor gradient-based updates with respect to the prediction,\n\u2202L\n\u2202\u02c6y = 2(\u02c6y \u2212y).\n\nQuestion 9: If y = 20 and \u02c6y = 24, what is \u2202L \u2202\u02c6y ?",
+    "options": [
+      "8",
+      "\u22128",
+      "4",
+      "\u22124"
+    ],
+    "correctAnswerIndex": 0,
+    "answerSource": "PDF",
+    "isApproved": true,
+    "explanation": "\u2202L \u2202\u02c6y = 2(\u02c6y \u2212y) = 2(24 \u221220) = 8.",
+    "createdAt": "2026-10-13T13:00:00.000Z"
+  },
+  {
+    "id": "q-dl-w2-10",
+    "courseId": "course-deep-learning-master",
+    "weekNumber": 2,
+    "originalQuestionNumber": 10,
+    "sourcePdfName": "DeepLearning_July_Oct_2026_Week2.pdf",
+    "questionText": "Case Study 2\nDelivery Time Prediction Review\nA logistics team trains a regression model to predict delivery delay in minutes. For four\nvalidation orders, the actual delay y and predicted delay \u02c6y are:\nOrder\ny\n\u02c6y\n1\n12\n10\n2\n20\n24\n3\n15\n13\n4\n18\n21\nThe team uses squared error\nL = (y \u2212\u02c6y)2,\nMSE = 1\nn\nn\nX\ni=1\n(yi \u2212\u02c6yi)2.\nFor gradient-based updates with respect to the prediction,\n\u2202L\n\u2202\u02c6y = 2(\u02c6y \u2212y).\n\nQuestion 10: A second model predicts 11, 21, 14, 19. Which model has lower MSE?",
+    "options": [
+      "The original model, because its MSE is 8.25.",
+      "The second model, because its MSE is 1.00.",
+      "Both models, because their errors are identical.",
+      "Neither model, because MSE cannot be computed here."
+    ],
+    "correctAnswerIndex": 1,
+    "answerSource": "PDF",
+    "isApproved": true,
+    "explanation": "The second model has squared errors 1, 1, 1, 1, so its MSE is 1.00.",
+    "createdAt": "2026-10-13T13:00:00.000Z"
+  },
+  {
+    "id": "q-dl-w2-11",
+    "courseId": "course-deep-learning-master",
+    "weekNumber": 2,
+    "originalQuestionNumber": 11,
+    "sourcePdfName": "DeepLearning_July_Oct_2026_Week2.pdf",
+    "questionText": "Case Study 3\nMachine Energy Use Prediction\nA facilities team monitors configurable machines in a shared workshop where different\noperating choices lead to different electricity usage patterns. Before deploying a larger model,\nthe team studies one small feedforward network so that engineers can trace every intermediate\nvalue by hand. The system uses two real-valued inputs:\nx1 : duration score,\nx2 : load score.\nThe team uses a small feedforward network:\nh1 = \u03c3(x1 + x2 \u22121),\nh2 = \u03c3(2x1 \u2212x2),\n\u02c6y = \u03c3(3h1 + 2h2 \u22122).\nThe hidden layer transforms the original features before the final output is computed. This\nlets the team discuss the order of computation, the role of nonlinear hidden units, and why\nthe final sigmoid produces a bounded score rather than an unrestricted energy value.\n\nQuestion 11: Which quantities are computed first in the feedforward direction?",
+    "options": [
+      "The final loss value",
+      "The parameter update",
+      "The hidden units h1 and h2",
+      "The target label chosen by the model"
+    ],
+    "correctAnswerIndex": 2,
+    "answerSource": "PDF",
+    "isApproved": true,
+    "explanation": "In a feedforward network, the input layer is transformed into hidden unit values before computing the output.",
+    "createdAt": "2026-10-13T13:00:00.000Z"
+  },
+  {
+    "id": "q-dl-w2-12",
+    "courseId": "course-deep-learning-master",
+    "weekNumber": 2,
+    "originalQuestionNumber": 12,
+    "sourcePdfName": "DeepLearning_July_Oct_2026_Week2.pdf",
+    "questionText": "Case Study 3\nMachine Energy Use Prediction\nA facilities team monitors configurable machines in a shared workshop where different\noperating choices lead to different electricity usage patterns. Before deploying a larger model,\nthe team studies one small feedforward network so that engineers can trace every intermediate\nvalue by hand. The system uses two real-valued inputs:\nx1 : duration score,\nx2 : load score.\nThe team uses a small feedforward network:\nh1 = \u03c3(x1 + x2 \u22121),\nh2 = \u03c3(2x1 \u2212x2),\n\u02c6y = \u03c3(3h1 + 2h2 \u22122).\nThe hidden layer transforms the original features before the final output is computed. This\nlets the team discuss the order of computation, the role of nonlinear hidden units, and why\nthe final sigmoid produces a bounded score rather than an unrestricted energy value.\n\nQuestion 12: For x1 = 1 and x2 = 1, what is the input to the sigmoid in h1?",
+    "options": [
+      "1",
+      "0",
+      "2",
+      "3"
+    ],
+    "correctAnswerIndex": 0,
+    "answerSource": "PDF",
+    "isApproved": true,
+    "explanation": "The input to h1 is x1 + x2 \u22121 = 1 + 1 \u22121 = 1.",
+    "createdAt": "2026-10-13T13:00:00.000Z"
+  },
+  {
+    "id": "q-dl-w2-13",
+    "courseId": "course-deep-learning-master",
+    "weekNumber": 2,
+    "originalQuestionNumber": 13,
+    "sourcePdfName": "DeepLearning_July_Oct_2026_Week2.pdf",
+    "questionText": "Case Study 3\nMachine Energy Use Prediction\nA facilities team monitors configurable machines in a shared workshop where different\noperating choices lead to different electricity usage patterns. Before deploying a larger model,\nthe team studies one small feedforward network so that engineers can trace every intermediate\nvalue by hand. The system uses two real-valued inputs:\nx1 : duration score,\nx2 : load score.\nThe team uses a small feedforward network:\nh1 = \u03c3(x1 + x2 \u22121),\nh2 = \u03c3(2x1 \u2212x2),\n\u02c6y = \u03c3(3h1 + 2h2 \u22122).\nThe hidden layer transforms the original features before the final output is computed. This\nlets the team discuss the order of computation, the role of nonlinear hidden units, and why\nthe final sigmoid produces a bounded score rather than an unrestricted energy value.\n\nQuestion 13: For x1 = 1 and x2 = 0, what is the input to the sigmoid in h2?",
+    "options": [
+      "\u22122",
+      "\u22121",
+      "1",
+      "2"
+    ],
+    "correctAnswerIndex": 3,
+    "answerSource": "PDF",
+    "isApproved": true,
+    "explanation": "The input to h2 is 2x1 \u2212x2 = 2(1) \u22120 = 2.",
+    "createdAt": "2026-10-13T13:00:00.000Z"
+  },
+  {
+    "id": "q-dl-w2-14",
+    "courseId": "course-deep-learning-master",
+    "weekNumber": 2,
+    "originalQuestionNumber": 14,
+    "sourcePdfName": "DeepLearning_July_Oct_2026_Week2.pdf",
+    "questionText": "Case Study 3\nMachine Energy Use Prediction\nA facilities team monitors configurable machines in a shared workshop where different\noperating choices lead to different electricity usage patterns. Before deploying a larger model,\nthe team studies one small feedforward network so that engineers can trace every intermediate\nvalue by hand. The system uses two real-valued inputs:\nx1 : duration score,\nx2 : load score.\nThe team uses a small feedforward network:\nh1 = \u03c3(x1 + x2 \u22121),\nh2 = \u03c3(2x1 \u2212x2),\n\u02c6y = \u03c3(3h1 + 2h2 \u22122).\nThe hidden layer transforms the original features before the final output is computed. This\nlets the team discuss the order of computation, the role of nonlinear hidden units, and why\nthe final sigmoid produces a bounded score rather than an unrestricted energy value.\n\nQuestion 14: Why can sigmoid hidden units introduce nonlinearity?",
+    "options": [
+      "They copy inputs without changing any value.",
+      "They apply a nonlinear function to weighted input combinations.",
+      "They remove all weights from the network.",
+      "They force the output to be exactly linear for all possible inputs."
+    ],
+    "correctAnswerIndex": 1,
+    "answerSource": "PDF",
+    "isApproved": true,
+    "explanation": "A sigmoid is nonlinear, so applying it in hidden units lets the network represent nonlinear transformations.",
+    "createdAt": "2026-10-13T13:00:00.000Z"
+  },
+  {
+    "id": "q-dl-w2-15",
+    "courseId": "course-deep-learning-master",
+    "weekNumber": 2,
+    "originalQuestionNumber": 15,
+    "sourcePdfName": "DeepLearning_July_Oct_2026_Week2.pdf",
+    "questionText": "Case Study 3\nMachine Energy Use Prediction\nA facilities team monitors configurable machines in a shared workshop where different\noperating choices lead to different electricity usage patterns. Before deploying a larger model,\nthe team studies one small feedforward network so that engineers can trace every intermediate\nvalue by hand. The system uses two real-valued inputs:\nx1 : duration score,\nx2 : load score.\nThe team uses a small feedforward network:\nh1 = \u03c3(x1 + x2 \u22121),\nh2 = \u03c3(2x1 \u2212x2),\n\u02c6y = \u03c3(3h1 + 2h2 \u22122).\nThe hidden layer transforms the original features before the final output is computed. This\nlets the team discuss the order of computation, the role of nonlinear hidden units, and why\nthe final sigmoid produces a bounded score rather than an unrestricted energy value.\n\nQuestion 15: What is the final output range of \u02c6y?",
+    "options": [
+      "Any real number from \u2212\u221eto \u221e",
+      "Only the two values \u22121 and 1",
+      "A value between 0 and 1",
+      "A value greater than 1 for all inputs"
+    ],
+    "correctAnswerIndex": 2,
+    "answerSource": "PDF",
+    "isApproved": true,
+    "explanation": "The final output applies a sigmoid, so \u02c6y lies in (0, 1).",
+    "createdAt": "2026-10-13T13:00:00.000Z"
+  },
+  {
+    "id": "q-dl-w2-16",
+    "courseId": "course-deep-learning-master",
+    "weekNumber": 2,
+    "originalQuestionNumber": 16,
+    "sourcePdfName": "DeepLearning_July_Oct_2026_Week2.pdf",
+    "questionText": "Case Study 4\nWarehouse Routing Time Analysis\nA warehouse studies how a single routing coefficient affects the predicted travel time of\na cart inside a storage aisle. The operations team first analyzes one clean training example\nso that the direction of a gradient descent step is easy to verify before the method is used\non many routes. The one-parameter model is\n\u02c6y = wx.\nFor one training example, x = 3 and y = 15. The squared error loss is\nL(w) = (15 \u22123w)2.\nThe team studies this loss before using gradient descent on a larger training set. In this\nsimplified setting, the parameter w controls how strongly the route length x affects the\npredicted time, and the squared loss measures how far the prediction is from the observed\nrouting time.\n\nQuestion 16: What is L(w) when w = 4?",
+    "options": [
+      "6",
+      "4",
+      "12",
+      "9"
+    ],
+    "correctAnswerIndex": 3,
+    "answerSource": "PDF",
+    "isApproved": true,
+    "explanation": "When w = 4, \u02c6y = 3(4) = 12, so L = (15 \u221212)2 = 9.",
+    "createdAt": "2026-10-13T13:00:00.000Z"
+  },
+  {
+    "id": "q-dl-w2-17",
+    "courseId": "course-deep-learning-master",
+    "weekNumber": 2,
+    "originalQuestionNumber": 17,
+    "sourcePdfName": "DeepLearning_July_Oct_2026_Week2.pdf",
+    "questionText": "Case Study 4\nWarehouse Routing Time Analysis\nA warehouse studies how a single routing coefficient affects the predicted travel time of\na cart inside a storage aisle. The operations team first analyzes one clean training example\nso that the direction of a gradient descent step is easy to verify before the method is used\non many routes. The one-parameter model is\n\u02c6y = wx.\nFor one training example, x = 3 and y = 15. The squared error loss is\nL(w) = (15 \u22123w)2.\nThe team studies this loss before using gradient descent on a larger training set. In this\nsimplified setting, the parameter w controls how strongly the route length x affects the\npredicted time, and the squared loss measures how far the prediction is from the observed\nrouting time.\n\nQuestion 17: Which value of w gives zero loss?",
+    "options": [
+      "w = 4",
+      "w = 5",
+      "w = 6",
+      "w = 3"
+    ],
+    "correctAnswerIndex": 1,
+    "answerSource": "PDF",
+    "isApproved": true,
+    "explanation": "Zero loss requires 15 \u22123w = 0, so w = 5.",
+    "createdAt": "2026-10-13T13:00:00.000Z"
+  },
+  {
+    "id": "q-dl-w2-18",
+    "courseId": "course-deep-learning-master",
+    "weekNumber": 2,
+    "originalQuestionNumber": 18,
+    "sourcePdfName": "DeepLearning_July_Oct_2026_Week2.pdf",
+    "questionText": "Case Study 4\nWarehouse Routing Time Analysis\nA warehouse studies how a single routing coefficient affects the predicted travel time of\na cart inside a storage aisle. The operations team first analyzes one clean training example\nso that the direction of a gradient descent step is easy to verify before the method is used\non many routes. The one-parameter model is\n\u02c6y = wx.\nFor one training example, x = 3 and y = 15. The squared error loss is\nL(w) = (15 \u22123w)2.\nThe team studies this loss before using gradient descent on a larger training set. In this\nsimplified setting, the parameter w controls how strongly the route length x affects the\npredicted time, and the squared loss measures how far the prediction is from the observed\nrouting time.\n\nQuestion 18: What is dL dw at w = 4?",
+    "options": [
+      "\u221218",
+      "\u22126",
+      "18.0",
+      "6"
+    ],
+    "correctAnswerIndex": 0,
+    "answerSource": "PDF",
+    "isApproved": true,
+    "explanation": "L = (15 \u22123w)2, so dL dw = \u22126(15 \u22123w). At w = 4, this is \u221218.",
+    "createdAt": "2026-10-13T13:00:00.000Z"
+  },
+  {
+    "id": "q-dl-w2-19",
+    "courseId": "course-deep-learning-master",
+    "weekNumber": 2,
+    "originalQuestionNumber": 19,
+    "sourcePdfName": "DeepLearning_July_Oct_2026_Week2.pdf",
+    "questionText": "Case Study 4\nWarehouse Routing Time Analysis\nA warehouse studies how a single routing coefficient affects the predicted travel time of\na cart inside a storage aisle. The operations team first analyzes one clean training example\nso that the direction of a gradient descent step is easy to verify before the method is used\non many routes. The one-parameter model is\n\u02c6y = wx.\nFor one training example, x = 3 and y = 15. The squared error loss is\nL(w) = (15 \u22123w)2.\nThe team studies this loss before using gradient descent on a larger training set. In this\nsimplified setting, the parameter w controls how strongly the route length x affects the\npredicted time, and the squared loss measures how far the prediction is from the observed\nrouting time.\n\nQuestion 19: If gradient descent uses w \u2190w \u2212\u03b7 dL dw with \u03b7 = 0.1, what is the next value from w = 4?",
+    "options": [
+      "3.2",
+      "4.6",
+      "5.8",
+      "2.2"
+    ],
+    "correctAnswerIndex": 2,
+    "answerSource": "PDF",
+    "isApproved": true,
+    "explanation": "The update is w = 4 \u22120.1(\u221218) = 5.8.",
+    "createdAt": "2026-10-13T13:00:00.000Z"
+  },
+  {
+    "id": "q-dl-w2-20",
+    "courseId": "course-deep-learning-master",
+    "weekNumber": 2,
+    "originalQuestionNumber": 20,
+    "sourcePdfName": "DeepLearning_July_Oct_2026_Week2.pdf",
+    "questionText": "Case Study 4\nWarehouse Routing Time Analysis\nA warehouse studies how a single routing coefficient affects the predicted travel time of\na cart inside a storage aisle. The operations team first analyzes one clean training example\nso that the direction of a gradient descent step is easy to verify before the method is used\non many routes. The one-parameter model is\n\u02c6y = wx.\nFor one training example, x = 3 and y = 15. The squared error loss is\nL(w) = (15 \u22123w)2.\nThe team studies this loss before using gradient descent on a larger training set. In this\nsimplified setting, the parameter w controls how strongly the route length x affects the\npredicted time, and the squared loss measures how far the prediction is from the observed\nrouting time.\n\nQuestion 20: What does the gradient indicate in this example?",
+    "options": [
+      "It gives the class label directly without a model.",
+      "It removes the input feature from the prediction.",
+      "It makes the squared error impossible to compute.",
+      "It shows how the loss changes as w changes."
+    ],
+    "correctAnswerIndex": 3,
+    "answerSource": "PDF",
+    "isApproved": true,
+    "explanation": "The gradient describes the local rate of change of the loss with respect to the parameter.",
+    "createdAt": "2026-10-13T13:00:00.000Z"
+  },
+  {
+    "id": "q-dl-w3-1",
+    "courseId": "course-deep-learning-master",
+    "weekNumber": 3,
+    "originalQuestionNumber": 1,
+    "sourcePdfName": "DeepLearning_July_Oct_2026_Week3.pdf",
+    "questionText": "Case Study 1\nTutoring Session Readiness Score\nAn online tutoring platform uses a small feedforward network to estimate a session-\nreadiness score before assigning a tutor. The model uses two input features:\nx1 : student preparation score,\nx2 : topic difficulty score.\nFor one session, x1 = 2 and x2 = 1. The network computes hidden quantities first and then\ncombines them:\nz1 = 2x1 + x2,\nz2 = x1 \u2212x2 + 1,\n\u02c6y = z1 + 2z2.\nThe computation is feedforward: inputs are used to compute z1, z2, and these hidden quan-\ntities are then used to compute \u02c6y.\n\nQuestion 1: What is the value of z1 for this session?",
+    "options": [
+      "6",
+      "5",
+      "4",
+      "3"
+    ],
+    "correctAnswerIndex": 1,
+    "answerSource": "PDF",
+    "isApproved": true,
+    "explanation": "z1 = 2x1 + x2 = 2(2) + 1 = 5.",
+    "createdAt": "2026-10-13T13:00:00.000Z"
+  },
+  {
+    "id": "q-dl-w3-2",
+    "courseId": "course-deep-learning-master",
+    "weekNumber": 3,
+    "originalQuestionNumber": 2,
+    "sourcePdfName": "DeepLearning_July_Oct_2026_Week3.pdf",
+    "questionText": "Case Study 1\nTutoring Session Readiness Score\nAn online tutoring platform uses a small feedforward network to estimate a session-\nreadiness score before assigning a tutor. The model uses two input features:\nx1 : student preparation score,\nx2 : topic difficulty score.\nFor one session, x1 = 2 and x2 = 1. The network computes hidden quantities first and then\ncombines them:\nz1 = 2x1 + x2,\nz2 = x1 \u2212x2 + 1,\n\u02c6y = z1 + 2z2.\nThe computation is feedforward: inputs are used to compute z1, z2, and these hidden quan-\ntities are then used to compute \u02c6y.\n\nQuestion 2: What is the value of z2?",
+    "options": [
+      "0",
+      "1",
+      "3",
+      "2"
+    ],
+    "correctAnswerIndex": 3,
+    "answerSource": "PDF",
+    "isApproved": true,
+    "explanation": "z2 = x1 \u2212x2 + 1 = 2 \u22121 + 1 = 2.",
+    "createdAt": "2026-10-13T13:00:00.000Z"
+  },
+  {
+    "id": "q-dl-w3-3",
+    "courseId": "course-deep-learning-master",
+    "weekNumber": 3,
+    "originalQuestionNumber": 3,
+    "sourcePdfName": "DeepLearning_July_Oct_2026_Week3.pdf",
+    "questionText": "Case Study 1\nTutoring Session Readiness Score\nAn online tutoring platform uses a small feedforward network to estimate a session-\nreadiness score before assigning a tutor. The model uses two input features:\nx1 : student preparation score,\nx2 : topic difficulty score.\nFor one session, x1 = 2 and x2 = 1. The network computes hidden quantities first and then\ncombines them:\nz1 = 2x1 + x2,\nz2 = x1 \u2212x2 + 1,\n\u02c6y = z1 + 2z2.\nThe computation is feedforward: inputs are used to compute z1, z2, and these hidden quan-\ntities are then used to compute \u02c6y.\n\nQuestion 3: What is the final value of \u02c6y?",
+    "options": [
+      "9",
+      "7",
+      "8",
+      "6"
+    ],
+    "correctAnswerIndex": 0,
+    "answerSource": "PDF",
+    "isApproved": true,
+    "explanation": "\u02c6y = z1 + 2z2 = 5 + 2(2) = 9.",
+    "createdAt": "2026-10-13T13:00:00.000Z"
+  },
+  {
+    "id": "q-dl-w3-4",
+    "courseId": "course-deep-learning-master",
+    "weekNumber": 3,
+    "originalQuestionNumber": 4,
+    "sourcePdfName": "DeepLearning_July_Oct_2026_Week3.pdf",
+    "questionText": "Case Study 1\nTutoring Session Readiness Score\nAn online tutoring platform uses a small feedforward network to estimate a session-\nreadiness score before assigning a tutor. The model uses two input features:\nx1 : student preparation score,\nx2 : topic difficulty score.\nFor one session, x1 = 2 and x2 = 1. The network computes hidden quantities first and then\ncombines them:\nz1 = 2x1 + x2,\nz2 = x1 \u2212x2 + 1,\n\u02c6y = z1 + 2z2.\nThe computation is feedforward: inputs are used to compute z1, z2, and these hidden quan-\ntities are then used to compute \u02c6y.\n\nQuestion 4: Which computation must be completed before \u02c6y is evaluated?",
+    "options": [
+      "The loss must be minimized over all stored tutoring sessions.",
+      "The target value must be changed by the model before scoring.",
+      "The hidden quantities z1 and z2 must be computed.",
+      "The learning rate must be set to zero."
+    ],
+    "correctAnswerIndex": 2,
+    "answerSource": "PDF",
+    "isApproved": true,
+    "explanation": "The output depends directly on z1 and z2, so they must be computed first.",
+    "createdAt": "2026-10-13T13:00:00.000Z"
+  },
+  {
+    "id": "q-dl-w3-5",
+    "courseId": "course-deep-learning-master",
+    "weekNumber": 3,
+    "originalQuestionNumber": 5,
+    "sourcePdfName": "DeepLearning_July_Oct_2026_Week3.pdf",
+    "questionText": "Case Study 1\nTutoring Session Readiness Score\nAn online tutoring platform uses a small feedforward network to estimate a session-\nreadiness score before assigning a tutor. The model uses two input features:\nx1 : student preparation score,\nx2 : topic difficulty score.\nFor one session, x1 = 2 and x2 = 1. The network computes hidden quantities first and then\ncombines them:\nz1 = 2x1 + x2,\nz2 = x1 \u2212x2 + 1,\n\u02c6y = z1 + 2z2.\nThe computation is feedforward: inputs are used to compute z1, z2, and these hidden quan-\ntities are then used to compute \u02c6y.\n\nQuestion 5: What makes this a feedforward computation?",
+    "options": [
+      "The output is repeatedly fed back as a new input.",
+      "Information flows from inputs to hidden quantities to output.",
+      "The target label is used before the input features.",
+      "The network stores a separate state for each previous session."
+    ],
+    "correctAnswerIndex": 1,
+    "answerSource": "PDF",
+    "isApproved": true,
+    "explanation": "In a feedforward network, values are computed in one direction from inputs through intermediate units to the output.",
+    "createdAt": "2026-10-13T13:00:00.000Z"
+  },
+  {
+    "id": "q-dl-w3-6",
+    "courseId": "course-deep-learning-master",
+    "weekNumber": 3,
+    "originalQuestionNumber": 6,
+    "sourcePdfName": "DeepLearning_July_Oct_2026_Week3.pdf",
+    "questionText": "Case Study 2\nInventory Forecast Calculation Review\nA store wants to understand how a change in one product-level input can affect a final\nforecasting loss. Before training the full inventory model, the analytics team writes a small\ncomputational graph on a whiteboard and follows both the forward values and the local\nderivatives. For one product, the graph is\nu = 2x,\nv = u + 3,\nL = v2.\nFor the current product, x = 1. The team computes local derivatives using the chain rule.\nHere, x is a simplified demand signal, u and v are intermediate quantities, and L is the scalar\nloss that would be reduced during training.\n\nQuestion 6: What is the value of u?",
+    "options": [
+      "2",
+      "1",
+      "3",
+      "4"
+    ],
+    "correctAnswerIndex": 0,
+    "answerSource": "PDF",
+    "isApproved": true,
+    "explanation": "Since u = 2x and x = 1, u = 2.",
+    "createdAt": "2026-10-13T13:00:00.000Z"
+  },
+  {
+    "id": "q-dl-w3-7",
+    "courseId": "course-deep-learning-master",
+    "weekNumber": 3,
+    "originalQuestionNumber": 7,
+    "sourcePdfName": "DeepLearning_July_Oct_2026_Week3.pdf",
+    "questionText": "Case Study 2\nInventory Forecast Calculation Review\nA store wants to understand how a change in one product-level input can affect a final\nforecasting loss. Before training the full inventory model, the analytics team writes a small\ncomputational graph on a whiteboard and follows both the forward values and the local\nderivatives. For one product, the graph is\nu = 2x,\nv = u + 3,\nL = v2.\nFor the current product, x = 1. The team computes local derivatives using the chain rule.\nHere, x is a simplified demand signal, u and v are intermediate quantities, and L is the scalar\nloss that would be reduced during training.\n\nQuestion 7: What is the value of v?",
+    "options": [
+      "3",
+      "4",
+      "6",
+      "5"
+    ],
+    "correctAnswerIndex": 3,
+    "answerSource": "PDF",
+    "isApproved": true,
+    "explanation": "v = u + 3 = 2 + 3 = 5.",
+    "createdAt": "2026-10-13T13:00:00.000Z"
+  },
+  {
+    "id": "q-dl-w3-8",
+    "courseId": "course-deep-learning-master",
+    "weekNumber": 3,
+    "originalQuestionNumber": 8,
+    "sourcePdfName": "DeepLearning_July_Oct_2026_Week3.pdf",
+    "questionText": "Case Study 2\nInventory Forecast Calculation Review\nA store wants to understand how a change in one product-level input can affect a final\nforecasting loss. Before training the full inventory model, the analytics team writes a small\ncomputational graph on a whiteboard and follows both the forward values and the local\nderivatives. For one product, the graph is\nu = 2x,\nv = u + 3,\nL = v2.\nFor the current product, x = 1. The team computes local derivatives using the chain rule.\nHere, x is a simplified demand signal, u and v are intermediate quantities, and L is the scalar\nloss that would be reduced during training.\n\nQuestion 8: What is the loss L?",
+    "options": [
+      "20",
+      "15",
+      "25",
+      "10"
+    ],
+    "correctAnswerIndex": 2,
+    "answerSource": "PDF",
+    "isApproved": true,
+    "explanation": "L = v2 = 52 = 25.",
+    "createdAt": "2026-10-13T13:00:00.000Z"
+  },
+  {
+    "id": "q-dl-w3-9",
+    "courseId": "course-deep-learning-master",
+    "weekNumber": 3,
+    "originalQuestionNumber": 9,
+    "sourcePdfName": "DeepLearning_July_Oct_2026_Week3.pdf",
+    "questionText": "Case Study 2\nInventory Forecast Calculation Review\nA store wants to understand how a change in one product-level input can affect a final\nforecasting loss. Before training the full inventory model, the analytics team writes a small\ncomputational graph on a whiteboard and follows both the forward values and the local\nderivatives. For one product, the graph is\nu = 2x,\nv = u + 3,\nL = v2.\nFor the current product, x = 1. The team computes local derivatives using the chain rule.\nHere, x is a simplified demand signal, u and v are intermediate quantities, and L is the scalar\nloss that would be reduced during training.\n\nQuestion 9: What is \u2202L \u2202v at v = 5?",
+    "options": [
+      "5",
+      "10",
+      "25",
+      "2"
+    ],
+    "correctAnswerIndex": 1,
+    "answerSource": "PDF",
+    "isApproved": true,
+    "explanation": "Since L = v2, \u2202L \u2202v = 2v = 10.",
+    "createdAt": "2026-10-13T13:00:00.000Z"
+  },
+  {
+    "id": "q-dl-w3-10",
+    "courseId": "course-deep-learning-master",
+    "weekNumber": 3,
+    "originalQuestionNumber": 10,
+    "sourcePdfName": "DeepLearning_July_Oct_2026_Week3.pdf",
+    "questionText": "Case Study 2\nInventory Forecast Calculation Review\nA store wants to understand how a change in one product-level input can affect a final\nforecasting loss. Before training the full inventory model, the analytics team writes a small\ncomputational graph on a whiteboard and follows both the forward values and the local\nderivatives. For one product, the graph is\nu = 2x,\nv = u + 3,\nL = v2.\nFor the current product, x = 1. The team computes local derivatives using the chain rule.\nHere, x is a simplified demand signal, u and v are intermediate quantities, and L is the scalar\nloss that would be reduced during training.\n\nQuestion 10: What is \u2202L \u2202x?",
+    "options": [
+      "10",
+      "5",
+      "40",
+      "20"
+    ],
+    "correctAnswerIndex": 3,
+    "answerSource": "PDF",
+    "isApproved": true,
+    "explanation": "By the chain rule, \u2202L \u2202x = \u2202L \u2202v \u2202v \u2202u \u2202u \u2202x = 10(1)(2) = 20.",
+    "createdAt": "2026-10-13T13:00:00.000Z"
+  },
+  {
+    "id": "q-dl-w3-11",
+    "courseId": "course-deep-learning-master",
+    "weekNumber": 3,
+    "originalQuestionNumber": 11,
+    "sourcePdfName": "DeepLearning_July_Oct_2026_Week3.pdf",
+    "questionText": "Case Study 3\nSensor Calibration Error Analysis\nA lab calibrates a sensor whose raw reading must be converted into a corrected mea-\nsurement. To check the backpropagation calculations before using many sensor logs, the\nengineers use a one-hidden-unit model and one training example. For this example,\nx = 2,\ny = 5.\nThe model is\nh = w1x + b,\n\u02c6y = w2h,\nwith w1 = 1, b = 0, w2 = 2. The loss is\nL = 1\n2(\u02c6y \u2212y)2.\nBackpropagation computes gradients from the loss back through the output and hidden\ncomputations. The goal is not to build a production sensor model from one example, but to\nverify how the prediction error is assigned to w2, then passed backward through h to w1.\n\nQuestion 11: What is the hidden value h?",
+    "options": [
+      "1",
+      "4",
+      "2",
+      "5"
+    ],
+    "correctAnswerIndex": 2,
+    "answerSource": "PDF",
+    "isApproved": true,
+    "explanation": "h = w1x + b = 1(2) + 0 = 2.",
+    "createdAt": "2026-10-13T13:00:00.000Z"
+  },
+  {
+    "id": "q-dl-w3-12",
+    "courseId": "course-deep-learning-master",
+    "weekNumber": 3,
+    "originalQuestionNumber": 12,
+    "sourcePdfName": "DeepLearning_July_Oct_2026_Week3.pdf",
+    "questionText": "Case Study 3\nSensor Calibration Error Analysis\nA lab calibrates a sensor whose raw reading must be converted into a corrected mea-\nsurement. To check the backpropagation calculations before using many sensor logs, the\nengineers use a one-hidden-unit model and one training example. For this example,\nx = 2,\ny = 5.\nThe model is\nh = w1x + b,\n\u02c6y = w2h,\nwith w1 = 1, b = 0, w2 = 2. The loss is\nL = 1\n2(\u02c6y \u2212y)2.\nBackpropagation computes gradients from the loss back through the output and hidden\ncomputations. The goal is not to build a production sensor model from one example, but to\nverify how the prediction error is assigned to w2, then passed backward through h to w1.\n\nQuestion 12: What is the prediction \u02c6y?",
+    "options": [
+      "3",
+      "5",
+      "2",
+      "4"
+    ],
+    "correctAnswerIndex": 3,
+    "answerSource": "PDF",
+    "isApproved": true,
+    "explanation": "\u02c6y = w2h = 2(2) = 4.",
+    "createdAt": "2026-10-13T13:00:00.000Z"
+  },
+  {
+    "id": "q-dl-w3-13",
+    "courseId": "course-deep-learning-master",
+    "weekNumber": 3,
+    "originalQuestionNumber": 13,
+    "sourcePdfName": "DeepLearning_July_Oct_2026_Week3.pdf",
+    "questionText": "Case Study 3\nSensor Calibration Error Analysis\nA lab calibrates a sensor whose raw reading must be converted into a corrected mea-\nsurement. To check the backpropagation calculations before using many sensor logs, the\nengineers use a one-hidden-unit model and one training example. For this example,\nx = 2,\ny = 5.\nThe model is\nh = w1x + b,\n\u02c6y = w2h,\nwith w1 = 1, b = 0, w2 = 2. The loss is\nL = 1\n2(\u02c6y \u2212y)2.\nBackpropagation computes gradients from the loss back through the output and hidden\ncomputations. The goal is not to build a production sensor model from one example, but to\nverify how the prediction error is assigned to w2, then passed backward through h to w1.\n\nQuestion 13: What is \u2202L \u2202\u02c6y ?",
+    "options": [
+      "\u22121",
+      "1",
+      "\u22122",
+      "2"
+    ],
+    "correctAnswerIndex": 0,
+    "answerSource": "PDF",
+    "isApproved": true,
+    "explanation": "\u2202L \u2202\u02c6y = \u02c6y \u2212y = 4 \u22125 = \u22121.",
+    "createdAt": "2026-10-13T13:00:00.000Z"
+  },
+  {
+    "id": "q-dl-w3-14",
+    "courseId": "course-deep-learning-master",
+    "weekNumber": 3,
+    "originalQuestionNumber": 14,
+    "sourcePdfName": "DeepLearning_July_Oct_2026_Week3.pdf",
+    "questionText": "Case Study 3\nSensor Calibration Error Analysis\nA lab calibrates a sensor whose raw reading must be converted into a corrected mea-\nsurement. To check the backpropagation calculations before using many sensor logs, the\nengineers use a one-hidden-unit model and one training example. For this example,\nx = 2,\ny = 5.\nThe model is\nh = w1x + b,\n\u02c6y = w2h,\nwith w1 = 1, b = 0, w2 = 2. The loss is\nL = 1\n2(\u02c6y \u2212y)2.\nBackpropagation computes gradients from the loss back through the output and hidden\ncomputations. The goal is not to build a production sensor model from one example, but to\nverify how the prediction error is assigned to w2, then passed backward through h to w1.\n\nQuestion 14: What is \u2202L \u2202w2?",
+    "options": [
+      "\u22121",
+      "\u22122",
+      "2",
+      "1"
+    ],
+    "correctAnswerIndex": 1,
+    "answerSource": "PDF",
+    "isApproved": true,
+    "explanation": "Since \u02c6y = w2h, \u2202L \u2202w2 = \u2202L \u2202\u02c6y h = (\u22121)(2) = \u22122.",
+    "createdAt": "2026-10-13T13:00:00.000Z"
+  },
+  {
+    "id": "q-dl-w3-15",
+    "courseId": "course-deep-learning-master",
+    "weekNumber": 3,
+    "originalQuestionNumber": 15,
+    "sourcePdfName": "DeepLearning_July_Oct_2026_Week3.pdf",
+    "questionText": "Case Study 3\nSensor Calibration Error Analysis\nA lab calibrates a sensor whose raw reading must be converted into a corrected mea-\nsurement. To check the backpropagation calculations before using many sensor logs, the\nengineers use a one-hidden-unit model and one training example. For this example,\nx = 2,\ny = 5.\nThe model is\nh = w1x + b,\n\u02c6y = w2h,\nwith w1 = 1, b = 0, w2 = 2. The loss is\nL = 1\n2(\u02c6y \u2212y)2.\nBackpropagation computes gradients from the loss back through the output and hidden\ncomputations. The goal is not to build a production sensor model from one example, but to\nverify how the prediction error is assigned to w2, then passed backward through h to w1.\n\nQuestion 15: What is \u2202L \u2202w1?",
+    "options": [
+      "\u22121",
+      "1",
+      "\u22124",
+      "4"
+    ],
+    "correctAnswerIndex": 2,
+    "answerSource": "PDF",
+    "isApproved": true,
+    "explanation": "\u2202L \u2202h = (\u22121)w2 = \u22122, and \u2202h \u2202w1 = x = 2, so \u2202L \u2202w1 = \u22124.",
+    "createdAt": "2026-10-13T13:00:00.000Z"
+  },
+  {
+    "id": "q-dl-w3-16",
+    "courseId": "course-deep-learning-master",
+    "weekNumber": 3,
+    "originalQuestionNumber": 16,
+    "sourcePdfName": "DeepLearning_July_Oct_2026_Week3.pdf",
+    "questionText": "Case Study 4\nCourse Recommendation Score Update\nA course platform tracks whether a learner is likely to engage with a recommended\nmodule. For an internal training exercise, the team uses a simple linear prediction model so\nthat each gradient and parameter update can be inspected. The model predicts a learner\u2019s\ninterest score as\n\u02c6y = w1x1 + w2x2 + b.\nFor one learner,\nx1 = 1,\nx2 = 2,\ny = 6.\nInitially, w1 = 1, w2 = 1, b = 0. The loss is\nL = 1\n2(\u02c6y \u2212y)2.\nThe learning rate is \u03b7 = 0.1, and parameters are updated using\nw \u2190w \u2212\u03b7 \u2202L\n\u2202w.\nThe two inputs summarize recent activity and topic match, while the bias accounts for a\nbaseline interest level. The questions focus on how one observed error changes the weights\nand bias after a gradient descent update.\n\nQuestion 16: What is the initial prediction \u02c6y?",
+    "options": [
+      "4",
+      "3",
+      "5",
+      "2"
+    ],
+    "correctAnswerIndex": 1,
+    "answerSource": "PDF",
+    "isApproved": true,
+    "explanation": "\u02c6y = 1(1) + 1(2) + 0 = 3.",
+    "createdAt": "2026-10-13T13:00:00.000Z"
+  },
+  {
+    "id": "q-dl-w3-17",
+    "courseId": "course-deep-learning-master",
+    "weekNumber": 3,
+    "originalQuestionNumber": 17,
+    "sourcePdfName": "DeepLearning_July_Oct_2026_Week3.pdf",
+    "questionText": "Case Study 4\nCourse Recommendation Score Update\nA course platform tracks whether a learner is likely to engage with a recommended\nmodule. For an internal training exercise, the team uses a simple linear prediction model so\nthat each gradient and parameter update can be inspected. The model predicts a learner\u2019s\ninterest score as\n\u02c6y = w1x1 + w2x2 + b.\nFor one learner,\nx1 = 1,\nx2 = 2,\ny = 6.\nInitially, w1 = 1, w2 = 1, b = 0. The loss is\nL = 1\n2(\u02c6y \u2212y)2.\nThe learning rate is \u03b7 = 0.1, and parameters are updated using\nw \u2190w \u2212\u03b7 \u2202L\n\u2202w.\nThe two inputs summarize recent activity and topic match, while the bias accounts for a\nbaseline interest level. The questions focus on how one observed error changes the weights\nand bias after a gradient descent update.\n\nQuestion 17: What is \u2202L \u2202\u02c6y ?",
+    "options": [
+      "\u22123",
+      "3",
+      "\u22126",
+      "6"
+    ],
+    "correctAnswerIndex": 0,
+    "answerSource": "PDF",
+    "isApproved": true,
+    "explanation": "\u2202L \u2202\u02c6y = \u02c6y \u2212y = 3 \u22126 = \u22123.",
+    "createdAt": "2026-10-13T13:00:00.000Z"
+  },
+  {
+    "id": "q-dl-w3-18",
+    "courseId": "course-deep-learning-master",
+    "weekNumber": 3,
+    "originalQuestionNumber": 18,
+    "sourcePdfName": "DeepLearning_July_Oct_2026_Week3.pdf",
+    "questionText": "Case Study 4\nCourse Recommendation Score Update\nA course platform tracks whether a learner is likely to engage with a recommended\nmodule. For an internal training exercise, the team uses a simple linear prediction model so\nthat each gradient and parameter update can be inspected. The model predicts a learner\u2019s\ninterest score as\n\u02c6y = w1x1 + w2x2 + b.\nFor one learner,\nx1 = 1,\nx2 = 2,\ny = 6.\nInitially, w1 = 1, w2 = 1, b = 0. The loss is\nL = 1\n2(\u02c6y \u2212y)2.\nThe learning rate is \u03b7 = 0.1, and parameters are updated using\nw \u2190w \u2212\u03b7 \u2202L\n\u2202w.\nThe two inputs summarize recent activity and topic match, while the bias accounts for a\nbaseline interest level. The questions focus on how one observed error changes the weights\nand bias after a gradient descent update.\n\nQuestion 18: What is \u2202L \u2202w2?",
+    "options": [
+      "3",
+      "\u22123",
+      "6",
+      "\u22126"
+    ],
+    "correctAnswerIndex": 3,
+    "answerSource": "PDF",
+    "isApproved": true,
+    "explanation": "\u2202L \u2202w2 = (\u02c6y \u2212y)x2 = (\u22123)(2) = \u22126.",
+    "createdAt": "2026-10-13T13:00:00.000Z"
+  },
+  {
+    "id": "q-dl-w3-19",
+    "courseId": "course-deep-learning-master",
+    "weekNumber": 3,
+    "originalQuestionNumber": 19,
+    "sourcePdfName": "DeepLearning_July_Oct_2026_Week3.pdf",
+    "questionText": "Case Study 4\nCourse Recommendation Score Update\nA course platform tracks whether a learner is likely to engage with a recommended\nmodule. For an internal training exercise, the team uses a simple linear prediction model so\nthat each gradient and parameter update can be inspected. The model predicts a learner\u2019s\ninterest score as\n\u02c6y = w1x1 + w2x2 + b.\nFor one learner,\nx1 = 1,\nx2 = 2,\ny = 6.\nInitially, w1 = 1, w2 = 1, b = 0. The loss is\nL = 1\n2(\u02c6y \u2212y)2.\nThe learning rate is \u03b7 = 0.1, and parameters are updated using\nw \u2190w \u2212\u03b7 \u2202L\n\u2202w.\nThe two inputs summarize recent activity and topic match, while the bias accounts for a\nbaseline interest level. The questions focus on how one observed error changes the weights\nand bias after a gradient descent update.\n\nQuestion 19: What is the updated value of w1?",
+    "options": [
+      "0.7",
+      "1.6",
+      "1.3",
+      "0.4"
+    ],
+    "correctAnswerIndex": 2,
+    "answerSource": "PDF",
+    "isApproved": true,
+    "explanation": "\u2202L \u2202w1 = (\u22123)(1) = \u22123, so w1 = 1 \u22120.1(\u22123) = 1.3.",
+    "createdAt": "2026-10-13T13:00:00.000Z"
+  },
+  {
+    "id": "q-dl-w3-20",
+    "courseId": "course-deep-learning-master",
+    "weekNumber": 3,
+    "originalQuestionNumber": 20,
+    "sourcePdfName": "DeepLearning_July_Oct_2026_Week3.pdf",
+    "questionText": "Case Study 4\nCourse Recommendation Score Update\nA course platform tracks whether a learner is likely to engage with a recommended\nmodule. For an internal training exercise, the team uses a simple linear prediction model so\nthat each gradient and parameter update can be inspected. The model predicts a learner\u2019s\ninterest score as\n\u02c6y = w1x1 + w2x2 + b.\nFor one learner,\nx1 = 1,\nx2 = 2,\ny = 6.\nInitially, w1 = 1, w2 = 1, b = 0. The loss is\nL = 1\n2(\u02c6y \u2212y)2.\nThe learning rate is \u03b7 = 0.1, and parameters are updated using\nw \u2190w \u2212\u03b7 \u2202L\n\u2202w.\nThe two inputs summarize recent activity and topic match, while the bias accounts for a\nbaseline interest level. The questions focus on how one observed error changes the weights\nand bias after a gradient descent update.\n\nQuestion 20: What is the updated value of b?",
+    "options": [
+      "0.3",
+      "\u22120.3",
+      "0.6",
+      "\u22120.6"
+    ],
+    "correctAnswerIndex": 0,
+    "answerSource": "PDF",
+    "isApproved": true,
+    "explanation": "\u2202L \u2202b = \u22123, so b = 0 \u22120.1(\u22123) = 0.3.",
+    "createdAt": "2026-10-13T13:00:00.000Z"
+  },
+  {
+    "id": "q-dl-w4-1",
+    "courseId": "course-deep-learning-master",
+    "weekNumber": 4,
+    "originalQuestionNumber": 1,
+    "sourcePdfName": "DeepLearning_July_Oct_2026_Week4.pdf",
+    "questionText": "Case Study 1\nDelivery Delay Parameter Tuning\nA logistics team is tuning a simple delay model used to estimate whether a shipment\nroute is running slower than expected. To make the first gradient descent step auditable,\nthe team reduces the training exercise to one parameter w, where smaller loss means the\nparameter is closer to the best delay setting. For one training example, the loss as a function\nof parameter w is\nL(w) = (w \u22124)2.\nThe team uses gradient descent:\nwt+1 = wt \u2212\u03b7 dL\ndw.\nAt the current step, wt = 1 and \u03b7 = 0.1. The team wants to know not only the next numerical\nvalue of w, but also why the sign of the gradient determines the direction of movement.\n\nQuestion 1: What is dL dw at w = 1?",
+    "options": [
+      "6",
+      "\u22123",
+      "3",
+      "\u22126"
+    ],
+    "correctAnswerIndex": 3,
+    "answerSource": "PDF",
+    "isApproved": true,
+    "explanation": "dL dw = 2(w \u22124). At w = 1, the gradient is \u22126.",
+    "createdAt": "2026-10-13T13:00:00.000Z"
+  },
+  {
+    "id": "q-dl-w4-2",
+    "courseId": "course-deep-learning-master",
+    "weekNumber": 4,
+    "originalQuestionNumber": 2,
+    "sourcePdfName": "DeepLearning_July_Oct_2026_Week4.pdf",
+    "questionText": "Case Study 1\nDelivery Delay Parameter Tuning\nA logistics team is tuning a simple delay model used to estimate whether a shipment\nroute is running slower than expected. To make the first gradient descent step auditable,\nthe team reduces the training exercise to one parameter w, where smaller loss means the\nparameter is closer to the best delay setting. For one training example, the loss as a function\nof parameter w is\nL(w) = (w \u22124)2.\nThe team uses gradient descent:\nwt+1 = wt \u2212\u03b7 dL\ndw.\nAt the current step, wt = 1 and \u03b7 = 0.1. The team wants to know not only the next numerical\nvalue of w, but also why the sign of the gradient determines the direction of movement.\n\nQuestion 2: What is the next value of w?",
+    "options": [
+      "1.3",
+      "1.6",
+      "0.4",
+      "2.0"
+    ],
+    "correctAnswerIndex": 1,
+    "answerSource": "PDF",
+    "isApproved": true,
+    "explanation": "wt+1 = 1 \u22120.1(\u22126) = 1.6.",
+    "createdAt": "2026-10-13T13:00:00.000Z"
+  },
+  {
+    "id": "q-dl-w4-3",
+    "courseId": "course-deep-learning-master",
+    "weekNumber": 4,
+    "originalQuestionNumber": 3,
+    "sourcePdfName": "DeepLearning_July_Oct_2026_Week4.pdf",
+    "questionText": "Case Study 1\nDelivery Delay Parameter Tuning\nA logistics team is tuning a simple delay model used to estimate whether a shipment\nroute is running slower than expected. To make the first gradient descent step auditable,\nthe team reduces the training exercise to one parameter w, where smaller loss means the\nparameter is closer to the best delay setting. For one training example, the loss as a function\nof parameter w is\nL(w) = (w \u22124)2.\nThe team uses gradient descent:\nwt+1 = wt \u2212\u03b7 dL\ndw.\nAt the current step, wt = 1 and \u03b7 = 0.1. The team wants to know not only the next numerical\nvalue of w, but also why the sign of the gradient determines the direction of movement.\n\nQuestion 3: Why does w increase in this update?",
+    "options": [
+      "The learning rate is negative.",
+      "The loss is already zero.",
+      "The gradient at w = 1 is negative.",
+      "The update ignores the derivative."
+    ],
+    "correctAnswerIndex": 2,
+    "answerSource": "PDF",
+    "isApproved": true,
+    "explanation": "Gradient descent subtracts the gradient. Subtracting a nega- tive value increases w.",
+    "createdAt": "2026-10-13T13:00:00.000Z"
+  },
+  {
+    "id": "q-dl-w4-4",
+    "courseId": "course-deep-learning-master",
+    "weekNumber": 4,
+    "originalQuestionNumber": 4,
+    "sourcePdfName": "DeepLearning_July_Oct_2026_Week4.pdf",
+    "questionText": "Case Study 1\nDelivery Delay Parameter Tuning\nA logistics team is tuning a simple delay model used to estimate whether a shipment\nroute is running slower than expected. To make the first gradient descent step auditable,\nthe team reduces the training exercise to one parameter w, where smaller loss means the\nparameter is closer to the best delay setting. For one training example, the loss as a function\nof parameter w is\nL(w) = (w \u22124)2.\nThe team uses gradient descent:\nwt+1 = wt \u2212\u03b7 dL\ndw.\nAt the current step, wt = 1 and \u03b7 = 0.1. The team wants to know not only the next numerical\nvalue of w, but also why the sign of the gradient determines the direction of movement.\n\nQuestion 4: Which value of w minimizes this loss?",
+    "options": [
+      "1",
+      "2",
+      "3",
+      "4"
+    ],
+    "correctAnswerIndex": 3,
+    "answerSource": "PDF",
+    "isApproved": true,
+    "explanation": "L(w) = (w \u22124)2 is minimized when w = 4.",
+    "createdAt": "2026-10-13T13:00:00.000Z"
+  },
+  {
+    "id": "q-dl-w4-5",
+    "courseId": "course-deep-learning-master",
+    "weekNumber": 4,
+    "originalQuestionNumber": 5,
+    "sourcePdfName": "DeepLearning_July_Oct_2026_Week4.pdf",
+    "questionText": "Case Study 1\nDelivery Delay Parameter Tuning\nA logistics team is tuning a simple delay model used to estimate whether a shipment\nroute is running slower than expected. To make the first gradient descent step auditable,\nthe team reduces the training exercise to one parameter w, where smaller loss means the\nparameter is closer to the best delay setting. For one training example, the loss as a function\nof parameter w is\nL(w) = (w \u22124)2.\nThe team uses gradient descent:\nwt+1 = wt \u2212\u03b7 dL\ndw.\nAt the current step, wt = 1 and \u03b7 = 0.1. The team wants to know not only the next numerical\nvalue of w, but also why the sign of the gradient determines the direction of movement.\n\nQuestion 5: What is the role of the learning rate \u03b7?",
+    "options": [
+      "It controls the update step size.",
+      "It stores the final target value.",
+      "It removes the need for a gradient.",
+      "It makes every loss value equal."
+    ],
+    "correctAnswerIndex": 0,
+    "answerSource": "PDF",
+    "isApproved": true,
+    "explanation": "The learning rate scales how far the parameter moves in the negative gradient direction.",
+    "createdAt": "2026-10-13T13:00:00.000Z"
+  },
+  {
+    "id": "q-dl-w4-6",
+    "courseId": "course-deep-learning-master",
+    "weekNumber": 4,
+    "originalQuestionNumber": 6,
+    "sourcePdfName": "DeepLearning_July_Oct_2026_Week4.pdf",
+    "questionText": "Case Study 2\nEnergy Forecast Training Schedule\nA campus energy group trains a neural network to forecast short-term electricity demand\nfor academic buildings. The full dataset is small enough for classroom discussion, but the\nteam still wants to compare the update behavior of batch, stochastic, and mini-batch gradient\ndescent. It has 12 training records, and in one experiment the mini-batch size is 3. One\nepoch means that all 12 records have been used once. The group records the gradient from\neach mini-batch so it can reason about the tradeoff between noisy single-record updates and\nmore expensive full-batch updates.\n\nQuestion 6: How many mini-batches are processed in one epoch?",
+    "options": [
+      "3",
+      "4",
+      "6",
+      "12"
+    ],
+    "correctAnswerIndex": 1,
+    "answerSource": "PDF",
+    "isApproved": true,
+    "explanation": "With 12 records and mini-batches of size 3, the number of mini-batches is 12/3 = 4.",
+    "createdAt": "2026-10-13T13:00:00.000Z"
+  },
+  {
+    "id": "q-dl-w4-7",
+    "courseId": "course-deep-learning-master",
+    "weekNumber": 4,
+    "originalQuestionNumber": 7,
+    "sourcePdfName": "DeepLearning_July_Oct_2026_Week4.pdf",
+    "questionText": "Case Study 2\nEnergy Forecast Training Schedule\nA campus energy group trains a neural network to forecast short-term electricity demand\nfor academic buildings. The full dataset is small enough for classroom discussion, but the\nteam still wants to compare the update behavior of batch, stochastic, and mini-batch gradient\ndescent. It has 12 training records, and in one experiment the mini-batch size is 3. One\nepoch means that all 12 records have been used once. The group records the gradient from\neach mini-batch so it can reason about the tradeoff between noisy single-record updates and\nmore expensive full-batch updates.\n\nQuestion 7: Which method uses all 12 records for each parameter update?",
+    "options": [
+      "Stochastic gradient descent",
+      "Mini-batch gradient descent",
+      "Batch gradient descent",
+      "Momentum-only update"
+    ],
+    "correctAnswerIndex": 2,
+    "answerSource": "PDF",
+    "isApproved": true,
+    "explanation": "Batch gradient descent computes each update using the full training set.",
+    "createdAt": "2026-10-13T13:00:00.000Z"
+  },
+  {
+    "id": "q-dl-w4-8",
+    "courseId": "course-deep-learning-master",
+    "weekNumber": 4,
+    "originalQuestionNumber": 8,
+    "sourcePdfName": "DeepLearning_July_Oct_2026_Week4.pdf",
+    "questionText": "Case Study 2\nEnergy Forecast Training Schedule\nA campus energy group trains a neural network to forecast short-term electricity demand\nfor academic buildings. The full dataset is small enough for classroom discussion, but the\nteam still wants to compare the update behavior of batch, stochastic, and mini-batch gradient\ndescent. It has 12 training records, and in one experiment the mini-batch size is 3. One\nepoch means that all 12 records have been used once. The group records the gradient from\neach mini-batch so it can reason about the tradeoff between noisy single-record updates and\nmore expensive full-batch updates.\n\nQuestion 8: Which method uses one record per parameter update?",
+    "options": [
+      "Batch gradient descent",
+      "Adam without gradients or single-example updates",
+      "Full-batch averaging",
+      "Stochastic gradient descent"
+    ],
+    "correctAnswerIndex": 3,
+    "answerSource": "PDF",
+    "isApproved": true,
+    "explanation": "Stochastic gradient descent updates parameters using one ex- ample at a time.",
+    "createdAt": "2026-10-13T13:00:00.000Z"
+  },
+  {
+    "id": "q-dl-w4-9",
+    "courseId": "course-deep-learning-master",
+    "weekNumber": 4,
+    "originalQuestionNumber": 9,
+    "sourcePdfName": "DeepLearning_July_Oct_2026_Week4.pdf",
+    "questionText": "Case Study 2\nEnergy Forecast Training Schedule\nA campus energy group trains a neural network to forecast short-term electricity demand\nfor academic buildings. The full dataset is small enough for classroom discussion, but the\nteam still wants to compare the update behavior of batch, stochastic, and mini-batch gradient\ndescent. It has 12 training records, and in one experiment the mini-batch size is 3. One\nepoch means that all 12 records have been used once. The group records the gradient from\neach mini-batch so it can reason about the tradeoff between noisy single-record updates and\nmore expensive full-batch updates.\n\nQuestion 9: If the mini-batch gradients for four batches are 2, 4, 6, 8, what is their average?",
+    "options": [
+      "5",
+      "4",
+      "6",
+      "8"
+    ],
+    "correctAnswerIndex": 0,
+    "answerSource": "PDF",
+    "isApproved": true,
+    "explanation": "The average is (2 + 4 + 6 + 8)/4 = 5.",
+    "createdAt": "2026-10-13T13:00:00.000Z"
+  },
+  {
+    "id": "q-dl-w4-10",
+    "courseId": "course-deep-learning-master",
+    "weekNumber": 4,
+    "originalQuestionNumber": 10,
+    "sourcePdfName": "DeepLearning_July_Oct_2026_Week4.pdf",
+    "questionText": "Case Study 2\nEnergy Forecast Training Schedule\nA campus energy group trains a neural network to forecast short-term electricity demand\nfor academic buildings. The full dataset is small enough for classroom discussion, but the\nteam still wants to compare the update behavior of batch, stochastic, and mini-batch gradient\ndescent. It has 12 training records, and in one experiment the mini-batch size is 3. One\nepoch means that all 12 records have been used once. The group records the gradient from\neach mini-batch so it can reason about the tradeoff between noisy single-record updates and\nmore expensive full-batch updates.\n\nQuestion 10: Why might mini-batch gradient descent be preferred in practice?",
+    "options": [
+      "It never uses gradients.",
+      "It balances noisy updates and computational efficiency.",
+      "It requires the loss to be exactly zero before every mini-batch update.",
+      "It updates only after training is complete."
+    ],
+    "correctAnswerIndex": 1,
+    "answerSource": "PDF",
+    "isApproved": true,
+    "explanation": "Mini-batches often provide a practical tradeoff between noisy stochastic updates and expensive full-batch updates.",
+    "createdAt": "2026-10-13T13:00:00.000Z"
+  },
+  {
+    "id": "q-dl-w4-11",
+    "courseId": "course-deep-learning-master",
+    "weekNumber": 4,
+    "originalQuestionNumber": 11,
+    "sourcePdfName": "DeepLearning_July_Oct_2026_Week4.pdf",
+    "questionText": "Case Study 3\nQueue Prediction Parameter Update\nA service desk predicts queue length so it can decide when to open additional support\ncounters. During training, successive gradients often point in similar directions but vary in\nmagnitude from one mini-batch to the next. To smooth the parameter movement, the team\ntrains a model using momentum. The update is\nvt = \u03b2vt\u22121 + \u03b7gt,\nwt = wt\u22121 \u2212vt.\nAt the current step, vt\u22121 = 0.5, \u03b2 = 0.8, \u03b7 = 0.1, and the gradient is gt = 3. The previous\nparameter is wt\u22121 = 5.\nHere, vt stores a running update direction, so the current step\ndepends on both the new gradient and part of the previous movement.\n\nQuestion 11: What is the new velocity vt?",
+    "options": [
+      "0.5",
+      "0.6",
+      "0.7",
+      "0.8"
+    ],
+    "correctAnswerIndex": 2,
+    "answerSource": "PDF",
+    "isApproved": true,
+    "explanation": "vt = 0.8(0.5) + 0.1(3) = 0.4 + 0.3 = 0.7.",
+    "createdAt": "2026-10-13T13:00:00.000Z"
+  },
+  {
+    "id": "q-dl-w4-12",
+    "courseId": "course-deep-learning-master",
+    "weekNumber": 4,
+    "originalQuestionNumber": 12,
+    "sourcePdfName": "DeepLearning_July_Oct_2026_Week4.pdf",
+    "questionText": "Case Study 3\nQueue Prediction Parameter Update\nA service desk predicts queue length so it can decide when to open additional support\ncounters. During training, successive gradients often point in similar directions but vary in\nmagnitude from one mini-batch to the next. To smooth the parameter movement, the team\ntrains a model using momentum. The update is\nvt = \u03b2vt\u22121 + \u03b7gt,\nwt = wt\u22121 \u2212vt.\nAt the current step, vt\u22121 = 0.5, \u03b2 = 0.8, \u03b7 = 0.1, and the gradient is gt = 3. The previous\nparameter is wt\u22121 = 5.\nHere, vt stores a running update direction, so the current step\ndepends on both the new gradient and part of the previous movement.\n\nQuestion 12: What is the updated parameter wt?",
+    "options": [
+      "4.3",
+      "5.7",
+      "4.7",
+      "5.3"
+    ],
+    "correctAnswerIndex": 0,
+    "answerSource": "PDF",
+    "isApproved": true,
+    "explanation": "wt = wt\u22121 \u2212vt = 5 \u22120.7 = 4.3.",
+    "createdAt": "2026-10-13T13:00:00.000Z"
+  },
+  {
+    "id": "q-dl-w4-13",
+    "courseId": "course-deep-learning-master",
+    "weekNumber": 4,
+    "originalQuestionNumber": 13,
+    "sourcePdfName": "DeepLearning_July_Oct_2026_Week4.pdf",
+    "questionText": "Case Study 3\nQueue Prediction Parameter Update\nA service desk predicts queue length so it can decide when to open additional support\ncounters. During training, successive gradients often point in similar directions but vary in\nmagnitude from one mini-batch to the next. To smooth the parameter movement, the team\ntrains a model using momentum. The update is\nvt = \u03b2vt\u22121 + \u03b7gt,\nwt = wt\u22121 \u2212vt.\nAt the current step, vt\u22121 = 0.5, \u03b2 = 0.8, \u03b7 = 0.1, and the gradient is gt = 3. The previous\nparameter is wt\u22121 = 5.\nHere, vt stores a running update direction, so the current step\ndepends on both the new gradient and part of the previous movement.\n\nQuestion 13: What does the momentum term \u03b2vt\u22121 represent?",
+    "options": [
+      "It removes all history from the update and uses only the current gradient.",
+      "It sets the learning rate to zero for every future update.",
+      "It replaces the loss function.",
+      "It carries part of the previous update direction."
+    ],
+    "correctAnswerIndex": 3,
+    "answerSource": "PDF",
+    "isApproved": true,
+    "explanation": "Momentum keeps a decayed contribution from the previous velocity.",
+    "createdAt": "2026-10-13T13:00:00.000Z"
+  },
+  {
+    "id": "q-dl-w4-14",
+    "courseId": "course-deep-learning-master",
+    "weekNumber": 4,
+    "originalQuestionNumber": 14,
+    "sourcePdfName": "DeepLearning_July_Oct_2026_Week4.pdf",
+    "questionText": "Case Study 3\nQueue Prediction Parameter Update\nA service desk predicts queue length so it can decide when to open additional support\ncounters. During training, successive gradients often point in similar directions but vary in\nmagnitude from one mini-batch to the next. To smooth the parameter movement, the team\ntrains a model using momentum. The update is\nvt = \u03b2vt\u22121 + \u03b7gt,\nwt = wt\u22121 \u2212vt.\nAt the current step, vt\u22121 = 0.5, \u03b2 = 0.8, \u03b7 = 0.1, and the gradient is gt = 3. The previous\nparameter is wt\u22121 = 5.\nHere, vt stores a running update direction, so the current step\ndepends on both the new gradient and part of the previous movement.\n\nQuestion 14: If \u03b2 = 0, what would vt be for the same gradient and learning rate?",
+    "options": [
+      "0.3",
+      "0.1",
+      "0.2",
+      "0.4"
+    ],
+    "correctAnswerIndex": 0,
+    "answerSource": "PDF",
+    "isApproved": true,
+    "explanation": "With \u03b2 = 0, vt = \u03b7gt = 0.1(3) = 0.3.",
+    "createdAt": "2026-10-13T13:00:00.000Z"
+  },
+  {
+    "id": "q-dl-w4-15",
+    "courseId": "course-deep-learning-master",
+    "weekNumber": 4,
+    "originalQuestionNumber": 15,
+    "sourcePdfName": "DeepLearning_July_Oct_2026_Week4.pdf",
+    "questionText": "Case Study 3\nQueue Prediction Parameter Update\nA service desk predicts queue length so it can decide when to open additional support\ncounters. During training, successive gradients often point in similar directions but vary in\nmagnitude from one mini-batch to the next. To smooth the parameter movement, the team\ntrains a model using momentum. The update is\nvt = \u03b2vt\u22121 + \u03b7gt,\nwt = wt\u22121 \u2212vt.\nAt the current step, vt\u22121 = 0.5, \u03b2 = 0.8, \u03b7 = 0.1, and the gradient is gt = 3. The previous\nparameter is wt\u22121 = 5.\nHere, vt stores a running update direction, so the current step\ndepends on both the new gradient and part of the previous movement.\n\nQuestion 15: Why can momentum help optimization?",
+    "options": [
+      "It makes gradients unnecessary.",
+      "It always increases the loss.",
+      "It can smooth updates across steps.",
+      "It forces all parameters to be equal."
+    ],
+    "correctAnswerIndex": 2,
+    "answerSource": "PDF",
+    "isApproved": true,
+    "explanation": "Momentum can reduce oscillations and carry useful update direction across iterations.",
+    "createdAt": "2026-10-13T13:00:00.000Z"
+  },
+  {
+    "id": "q-dl-w4-16",
+    "courseId": "course-deep-learning-master",
+    "weekNumber": 4,
+    "originalQuestionNumber": 16,
+    "sourcePdfName": "DeepLearning_July_Oct_2026_Week4.pdf",
+    "questionText": "Case Study 4\nDemand Prediction Step-Size Analysis\nA retail analytics group trains a demand prediction model whose parameters do not all\nreceive gradients of the same scale. To understand adaptive learning rates, the team isolates\none parameter and tracks how its accumulated squared gradient changes the update size. For\nthis parameter, the current gradient is g = 4. In an AdaGrad-style update, the accumulated\nsquared gradient is\nrt = rt\u22121 + g2.\nAt the current step, rt\u22121 = 9.\nThe learning rate is \u03b7 = 0.5, and the simplified update\nmagnitude is\n\u03b7g\n\u221art\n.\nThis simplified calculation helps the team compare a plain gradient step with an adaptive\nstep that becomes smaller when the accumulated squared gradient is large.\n\nQuestion 16: What is rt?",
+    "options": [
+      "16",
+      "25",
+      "13",
+      "9"
+    ],
+    "correctAnswerIndex": 1,
+    "answerSource": "PDF",
+    "isApproved": true,
+    "explanation": "rt = 9 + 42 = 25.",
+    "createdAt": "2026-10-13T13:00:00.000Z"
+  },
+  {
+    "id": "q-dl-w4-17",
+    "courseId": "course-deep-learning-master",
+    "weekNumber": 4,
+    "originalQuestionNumber": 17,
+    "sourcePdfName": "DeepLearning_July_Oct_2026_Week4.pdf",
+    "questionText": "Case Study 4\nDemand Prediction Step-Size Analysis\nA retail analytics group trains a demand prediction model whose parameters do not all\nreceive gradients of the same scale. To understand adaptive learning rates, the team isolates\none parameter and tracks how its accumulated squared gradient changes the update size. For\nthis parameter, the current gradient is g = 4. In an AdaGrad-style update, the accumulated\nsquared gradient is\nrt = rt\u22121 + g2.\nAt the current step, rt\u22121 = 9.\nThe learning rate is \u03b7 = 0.5, and the simplified update\nmagnitude is\n\u03b7g\n\u221art\n.\nThis simplified calculation helps the team compare a plain gradient step with an adaptive\nstep that becomes smaller when the accumulated squared gradient is large.\n\nQuestion 17: What is \u221art?",
+    "options": [
+      "3",
+      "4",
+      "5",
+      "6"
+    ],
+    "correctAnswerIndex": 2,
+    "answerSource": "PDF",
+    "isApproved": true,
+    "explanation": "Since rt = 25, \u221art = 5.",
+    "createdAt": "2026-10-13T13:00:00.000Z"
+  },
+  {
+    "id": "q-dl-w4-18",
+    "courseId": "course-deep-learning-master",
+    "weekNumber": 4,
+    "originalQuestionNumber": 18,
+    "sourcePdfName": "DeepLearning_July_Oct_2026_Week4.pdf",
+    "questionText": "Case Study 4\nDemand Prediction Step-Size Analysis\nA retail analytics group trains a demand prediction model whose parameters do not all\nreceive gradients of the same scale. To understand adaptive learning rates, the team isolates\none parameter and tracks how its accumulated squared gradient changes the update size. For\nthis parameter, the current gradient is g = 4. In an AdaGrad-style update, the accumulated\nsquared gradient is\nrt = rt\u22121 + g2.\nAt the current step, rt\u22121 = 9.\nThe learning rate is \u03b7 = 0.5, and the simplified update\nmagnitude is\n\u03b7g\n\u221art\n.\nThis simplified calculation helps the team compare a plain gradient step with an adaptive\nstep that becomes smaller when the accumulated squared gradient is large.\n\nQuestion 18: What is the update magnitude?",
+    "options": [
+      "0.2",
+      "0.4",
+      "0.8",
+      "0.6"
+    ],
+    "correctAnswerIndex": 1,
+    "answerSource": "PDF",
+    "isApproved": true,
+    "explanation": "\u03b7g/\u221art = 0.5(4)/5 = 0.4.",
+    "createdAt": "2026-10-13T13:00:00.000Z"
+  },
+  {
+    "id": "q-dl-w4-19",
+    "courseId": "course-deep-learning-master",
+    "weekNumber": 4,
+    "originalQuestionNumber": 19,
+    "sourcePdfName": "DeepLearning_July_Oct_2026_Week4.pdf",
+    "questionText": "Case Study 4\nDemand Prediction Step-Size Analysis\nA retail analytics group trains a demand prediction model whose parameters do not all\nreceive gradients of the same scale. To understand adaptive learning rates, the team isolates\none parameter and tracks how its accumulated squared gradient changes the update size. For\nthis parameter, the current gradient is g = 4. In an AdaGrad-style update, the accumulated\nsquared gradient is\nrt = rt\u22121 + g2.\nAt the current step, rt\u22121 = 9.\nThe learning rate is \u03b7 = 0.5, and the simplified update\nmagnitude is\n\u03b7g\n\u221art\n.\nThis simplified calculation helps the team compare a plain gradient step with an adaptive\nstep that becomes smaller when the accumulated squared gradient is large.\n\nQuestion 19: What is the main idea behind AdaGrad-style scaling?",
+    "options": [
+      "It ignores all previous gradient information while claiming to adapt steps.",
+      "It requires the same update for every parameter.",
+      "It removes the need for a loss function.",
+      "It adapts the step size using accumulated squared gradients."
+    ],
+    "correctAnswerIndex": 3,
+    "answerSource": "PDF",
+    "isApproved": true,
+    "explanation": "AdaGrad scales updates using accumulated squared gradients, giving parameter-specific effective step sizes.",
+    "createdAt": "2026-10-13T13:00:00.000Z"
+  },
+  {
+    "id": "q-dl-w4-20",
+    "courseId": "course-deep-learning-master",
+    "weekNumber": 4,
+    "originalQuestionNumber": 20,
+    "sourcePdfName": "DeepLearning_July_Oct_2026_Week4.pdf",
+    "questionText": "Case Study 4\nDemand Prediction Step-Size Analysis\nA retail analytics group trains a demand prediction model whose parameters do not all\nreceive gradients of the same scale. To understand adaptive learning rates, the team isolates\none parameter and tracks how its accumulated squared gradient changes the update size. For\nthis parameter, the current gradient is g = 4. In an AdaGrad-style update, the accumulated\nsquared gradient is\nrt = rt\u22121 + g2.\nAt the current step, rt\u22121 = 9.\nThe learning rate is \u03b7 = 0.5, and the simplified update\nmagnitude is\n\u03b7g\n\u221art\n.\nThis simplified calculation helps the team compare a plain gradient step with an adaptive\nstep that becomes smaller when the accumulated squared gradient is large.\n\nQuestion 20: Which optimizer combines momentum-like averaging with adaptive scaling?",
+    "options": [
+      "Adam",
+      "Plain batch gradient descent",
+      "Stochastic gradient descent without memory",
+      "A zero-learning-rate update"
+    ],
+    "correctAnswerIndex": 0,
+    "answerSource": "PDF",
+    "isApproved": true,
+    "explanation": "Adam uses moving averages of gradients and squared gradi- ents.",
+    "createdAt": "2026-10-13T13:00:00.000Z"
+  },
+  {
+    "id": "q-dl-w5-1",
+    "courseId": "course-deep-learning-master",
+    "weekNumber": 5,
+    "originalQuestionNumber": 1,
+    "sourcePdfName": "DeepLearning_July_Oct_2026_Week5.pdf",
+    "questionText": "Case Study 1\nSensor Direction Scaling\nA factory uses two calibrated sensors to monitor vibration and heat on a production line.\nDuring a preprocessing audit, engineers examine a linear transformation that scales the two\nsensor directions differently but does not mix them. The transformation is\nA =\n\"\n3\n0\n0\n2\n#\n.\nThe vectors u1 = (1, 0)\u22a4and u2 = (0, 1)\u22a4represent two independent sensor directions. A\nvector is an eigenvector of A if multiplying by A only scales the vector without changing\nits direction. The team wants to identify which directions keep their orientation after the\ntransformation and how the scale factors appear as eigenvalues.\n\nQuestion 1: What is Au1?",
+    "options": [
+      "(3, 0)\u22a4",
+      "(0, 3)\u22a4",
+      "(2, 0)\u22a4",
+      "(1, 3)\u22a4"
+    ],
+    "correctAnswerIndex": 0,
+    "answerSource": "PDF",
+    "isApproved": true,
+    "explanation": "A(1, 0)\u22a4= (3, 0)\u22a4.",
+    "createdAt": "2026-10-13T13:00:00.000Z"
+  },
+  {
+    "id": "q-dl-w5-2",
+    "courseId": "course-deep-learning-master",
+    "weekNumber": 5,
+    "originalQuestionNumber": 2,
+    "sourcePdfName": "DeepLearning_July_Oct_2026_Week5.pdf",
+    "questionText": "Case Study 1\nSensor Direction Scaling\nA factory uses two calibrated sensors to monitor vibration and heat on a production line.\nDuring a preprocessing audit, engineers examine a linear transformation that scales the two\nsensor directions differently but does not mix them. The transformation is\nA =\n\"\n3\n0\n0\n2\n#\n.\nThe vectors u1 = (1, 0)\u22a4and u2 = (0, 1)\u22a4represent two independent sensor directions. A\nvector is an eigenvector of A if multiplying by A only scales the vector without changing\nits direction. The team wants to identify which directions keep their orientation after the\ntransformation and how the scale factors appear as eigenvalues.\n\nQuestion 2: What eigenvalue corresponds to u2?",
+    "options": [
+      "1",
+      "3",
+      "2",
+      "0"
+    ],
+    "correctAnswerIndex": 2,
+    "answerSource": "PDF",
+    "isApproved": true,
+    "explanation": "Au2 = (0, 2)\u22a4= 2u2, so the eigenvalue is 2.",
+    "createdAt": "2026-10-13T13:00:00.000Z"
+  },
+  {
+    "id": "q-dl-w5-3",
+    "courseId": "course-deep-learning-master",
+    "weekNumber": 5,
+    "originalQuestionNumber": 3,
+    "sourcePdfName": "DeepLearning_July_Oct_2026_Week5.pdf",
+    "questionText": "Case Study 1\nSensor Direction Scaling\nA factory uses two calibrated sensors to monitor vibration and heat on a production line.\nDuring a preprocessing audit, engineers examine a linear transformation that scales the two\nsensor directions differently but does not mix them. The transformation is\nA =\n\"\n3\n0\n0\n2\n#\n.\nThe vectors u1 = (1, 0)\u22a4and u2 = (0, 1)\u22a4represent two independent sensor directions. A\nvector is an eigenvector of A if multiplying by A only scales the vector without changing\nits direction. The team wants to identify which directions keep their orientation after the\ntransformation and how the scale factors appear as eigenvalues.\n\nQuestion 3: Which statement is true about u1?",
+    "options": [
+      "It is not changed by A for any input scale.",
+      "It is rotated by 90 degrees after multiplication by A.",
+      "It becomes the zero vector.",
+      "It is scaled by a factor of 3."
+    ],
+    "correctAnswerIndex": 3,
+    "answerSource": "PDF",
+    "isApproved": true,
+    "explanation": "Au1 = 3u1, so the direction is unchanged and the scale factor is 3.",
+    "createdAt": "2026-10-13T13:00:00.000Z"
+  },
+  {
+    "id": "q-dl-w5-4",
+    "courseId": "course-deep-learning-master",
+    "weekNumber": 5,
+    "originalQuestionNumber": 4,
+    "sourcePdfName": "DeepLearning_July_Oct_2026_Week5.pdf",
+    "questionText": "Case Study 1\nSensor Direction Scaling\nA factory uses two calibrated sensors to monitor vibration and heat on a production line.\nDuring a preprocessing audit, engineers examine a linear transformation that scales the two\nsensor directions differently but does not mix them. The transformation is\nA =\n\"\n3\n0\n0\n2\n#\n.\nThe vectors u1 = (1, 0)\u22a4and u2 = (0, 1)\u22a4represent two independent sensor directions. A\nvector is an eigenvector of A if multiplying by A only scales the vector without changing\nits direction. The team wants to identify which directions keep their orientation after the\ntransformation and how the scale factors appear as eigenvalues.\n\nQuestion 4: What is the trace of A?",
+    "options": [
+      "6",
+      "5",
+      "1",
+      "3"
+    ],
+    "correctAnswerIndex": 1,
+    "answerSource": "PDF",
+    "isApproved": true,
+    "explanation": "The trace is the sum of diagonal entries: 3 + 2 = 5.",
+    "createdAt": "2026-10-13T13:00:00.000Z"
+  },
+  {
+    "id": "q-dl-w5-5",
+    "courseId": "course-deep-learning-master",
+    "weekNumber": 5,
+    "originalQuestionNumber": 5,
+    "sourcePdfName": "DeepLearning_July_Oct_2026_Week5.pdf",
+    "questionText": "Case Study 1\nSensor Direction Scaling\nA factory uses two calibrated sensors to monitor vibration and heat on a production line.\nDuring a preprocessing audit, engineers examine a linear transformation that scales the two\nsensor directions differently but does not mix them. The transformation is\nA =\n\"\n3\n0\n0\n2\n#\n.\nThe vectors u1 = (1, 0)\u22a4and u2 = (0, 1)\u22a4represent two independent sensor directions. A\nvector is an eigenvector of A if multiplying by A only scales the vector without changing\nits direction. The team wants to identify which directions keep their orientation after the\ntransformation and how the scale factors appear as eigenvalues.\n\nQuestion 5: How are the eigenvalues related to the diagonal entries in this matrix?",
+    "options": [
+      "They are equal to the diagonal entries for this diagonal matrix.",
+      "They must both be zero for every diagonal matrix in this setting.",
+      "They are found by adding all entries in each row.",
+      "They depend only on the off-diagonal entries here."
+    ],
+    "correctAnswerIndex": 0,
+    "answerSource": "PDF",
+    "isApproved": true,
+    "explanation": "For this diagonal matrix, the eigenvalues are the diagonal entries 3 and 2.",
+    "createdAt": "2026-10-13T13:00:00.000Z"
+  },
+  {
+    "id": "q-dl-w5-6",
+    "courseId": "course-deep-learning-master",
+    "weekNumber": 5,
+    "originalQuestionNumber": 6,
+    "sourcePdfName": "DeepLearning_July_Oct_2026_Week5.pdf",
+    "questionText": "Case Study 2\nCustomer Feature Coordinate Review\nA data analyst is comparing customers using two centered features: response to discounts\nand preference for premium products. Instead of using the original axes directly, the analyst\nrepresents each customer vector in a new basis that separates common movement from\nopposite movement across the two features. The basis is\nb1 = (1, 1)\u22a4,\nb2 = (1, \u22121)\u22a4.\nA customer vector is\nx = (4, 2)\u22a4.\nThe analyst wants coefficients c1, c2 such that\nx = c1b1 + c2b2.\nFinding these coefficients shows how the same customer can be described using basis direc-\ntions rather than raw feature coordinates.\n\nQuestion 6: Which equation is obtained from the first coordinate?",
+    "options": [
+      "c1 \u2212c2 = 4",
+      "c1 + c2 = 4",
+      "2c1 = 4",
+      "c2 = 4"
+    ],
+    "correctAnswerIndex": 1,
+    "answerSource": "PDF",
+    "isApproved": true,
+    "explanation": "The first coordinate of c1(1, 1) + c2(1, \u22121) is c1 + c2.",
+    "createdAt": "2026-10-13T13:00:00.000Z"
+  },
+  {
+    "id": "q-dl-w5-7",
+    "courseId": "course-deep-learning-master",
+    "weekNumber": 5,
+    "originalQuestionNumber": 7,
+    "sourcePdfName": "DeepLearning_July_Oct_2026_Week5.pdf",
+    "questionText": "Case Study 2\nCustomer Feature Coordinate Review\nA data analyst is comparing customers using two centered features: response to discounts\nand preference for premium products. Instead of using the original axes directly, the analyst\nrepresents each customer vector in a new basis that separates common movement from\nopposite movement across the two features. The basis is\nb1 = (1, 1)\u22a4,\nb2 = (1, \u22121)\u22a4.\nA customer vector is\nx = (4, 2)\u22a4.\nThe analyst wants coefficients c1, c2 such that\nx = c1b1 + c2b2.\nFinding these coefficients shows how the same customer can be described using basis direc-\ntions rather than raw feature coordinates.\n\nQuestion 7: Which equation is obtained from the second coordinate?",
+    "options": [
+      "c1 + c2 = 2",
+      "c1 = 2",
+      "c1 \u2212c2 = 2",
+      "2c2 = 2"
+    ],
+    "correctAnswerIndex": 2,
+    "answerSource": "PDF",
+    "isApproved": true,
+    "explanation": "The second coordinate is c1 \u2212c2, so c1 \u2212c2 = 2.",
+    "createdAt": "2026-10-13T13:00:00.000Z"
+  },
+  {
+    "id": "q-dl-w5-8",
+    "courseId": "course-deep-learning-master",
+    "weekNumber": 5,
+    "originalQuestionNumber": 8,
+    "sourcePdfName": "DeepLearning_July_Oct_2026_Week5.pdf",
+    "questionText": "Case Study 2\nCustomer Feature Coordinate Review\nA data analyst is comparing customers using two centered features: response to discounts\nand preference for premium products. Instead of using the original axes directly, the analyst\nrepresents each customer vector in a new basis that separates common movement from\nopposite movement across the two features. The basis is\nb1 = (1, 1)\u22a4,\nb2 = (1, \u22121)\u22a4.\nA customer vector is\nx = (4, 2)\u22a4.\nThe analyst wants coefficients c1, c2 such that\nx = c1b1 + c2b2.\nFinding these coefficients shows how the same customer can be described using basis direc-\ntions rather than raw feature coordinates.\n\nQuestion 8: What is c1?",
+    "options": [
+      "3",
+      "1",
+      "4",
+      "2"
+    ],
+    "correctAnswerIndex": 0,
+    "answerSource": "PDF",
+    "isApproved": true,
+    "explanation": "Adding c1 + c2 = 4 and c1 \u2212c2 = 2 gives 2c1 = 6, so c1 = 3.",
+    "createdAt": "2026-10-13T13:00:00.000Z"
+  },
+  {
+    "id": "q-dl-w5-9",
+    "courseId": "course-deep-learning-master",
+    "weekNumber": 5,
+    "originalQuestionNumber": 9,
+    "sourcePdfName": "DeepLearning_July_Oct_2026_Week5.pdf",
+    "questionText": "Case Study 2\nCustomer Feature Coordinate Review\nA data analyst is comparing customers using two centered features: response to discounts\nand preference for premium products. Instead of using the original axes directly, the analyst\nrepresents each customer vector in a new basis that separates common movement from\nopposite movement across the two features. The basis is\nb1 = (1, 1)\u22a4,\nb2 = (1, \u22121)\u22a4.\nA customer vector is\nx = (4, 2)\u22a4.\nThe analyst wants coefficients c1, c2 such that\nx = c1b1 + c2b2.\nFinding these coefficients shows how the same customer can be described using basis direc-\ntions rather than raw feature coordinates.\n\nQuestion 9: What is c2?",
+    "options": [
+      "0",
+      "1",
+      "3",
+      "2"
+    ],
+    "correctAnswerIndex": 1,
+    "answerSource": "PDF",
+    "isApproved": true,
+    "explanation": "Since c1 + c2 = 4 and c1 = 3, c2 = 1.",
+    "createdAt": "2026-10-13T13:00:00.000Z"
+  },
+  {
+    "id": "q-dl-w5-10",
+    "courseId": "course-deep-learning-master",
+    "weekNumber": 5,
+    "originalQuestionNumber": 10,
+    "sourcePdfName": "DeepLearning_July_Oct_2026_Week5.pdf",
+    "questionText": "Case Study 2\nCustomer Feature Coordinate Review\nA data analyst is comparing customers using two centered features: response to discounts\nand preference for premium products. Instead of using the original axes directly, the analyst\nrepresents each customer vector in a new basis that separates common movement from\nopposite movement across the two features. The basis is\nb1 = (1, 1)\u22a4,\nb2 = (1, \u22121)\u22a4.\nA customer vector is\nx = (4, 2)\u22a4.\nThe analyst wants coefficients c1, c2 such that\nx = c1b1 + c2b2.\nFinding these coefficients shows how the same customer can be described using basis direc-\ntions rather than raw feature coordinates.\n\nQuestion 10: Why do b1 and b2 form a basis for R2?",
+    "options": [
+      "They point in the same direction.",
+      "They both have zero length.",
+      "They always produce only positive coordinates.",
+      "They are linearly independent and span R2."
+    ],
+    "correctAnswerIndex": 3,
+    "answerSource": "PDF",
+    "isApproved": true,
+    "explanation": "Two linearly independent vectors in R2 form a basis.",
+    "createdAt": "2026-10-13T13:00:00.000Z"
+  },
+  {
+    "id": "q-dl-w5-11",
+    "courseId": "course-deep-learning-master",
+    "weekNumber": 5,
+    "originalQuestionNumber": 11,
+    "sourcePdfName": "DeepLearning_July_Oct_2026_Week5.pdf",
+    "questionText": "Case Study 3\nStore Performance Feature Reduction\nA retail team measures two centered features for stores: weekly footfall variation and\naverage basket variation. The covariance matrix is\n\u03a3 =\n\"\n4\n0\n0\n1\n#\n.\nPCA selects directions of maximum variance.\nFor this diagonal covariance matrix, the\ncoordinate axes are principal directions. The team wants to reduce the two-feature store\nsummary to a smaller representation while retaining most of the variation across stores.\nBecause the features have already been centered, the covariance entries describe variation\naround the average store behavior.\n\nQuestion 11: What is the variance along the first coordinate direction?",
+    "options": [
+      "1",
+      "2",
+      "4",
+      "0"
+    ],
+    "correctAnswerIndex": 2,
+    "answerSource": "PDF",
+    "isApproved": true,
+    "explanation": "The first diagonal entry of the covariance matrix is 4.",
+    "createdAt": "2026-10-13T13:00:00.000Z"
+  },
+  {
+    "id": "q-dl-w5-12",
+    "courseId": "course-deep-learning-master",
+    "weekNumber": 5,
+    "originalQuestionNumber": 12,
+    "sourcePdfName": "DeepLearning_July_Oct_2026_Week5.pdf",
+    "questionText": "Case Study 3\nStore Performance Feature Reduction\nA retail team measures two centered features for stores: weekly footfall variation and\naverage basket variation. The covariance matrix is\n\u03a3 =\n\"\n4\n0\n0\n1\n#\n.\nPCA selects directions of maximum variance.\nFor this diagonal covariance matrix, the\ncoordinate axes are principal directions. The team wants to reduce the two-feature store\nsummary to a smaller representation while retaining most of the variation across stores.\nBecause the features have already been centered, the covariance entries describe variation\naround the average store behavior.\n\nQuestion 12: Which direction is the first principal component?",
+    "options": [
+      "The second coordinate direction",
+      "The direction (1, 1)\u22a4",
+      "The zero vector direction",
+      "The first coordinate direction"
+    ],
+    "correctAnswerIndex": 3,
+    "answerSource": "PDF",
+    "isApproved": true,
+    "explanation": "The first coordinate has the largest variance, 4, so it is the first principal component direction.",
+    "createdAt": "2026-10-13T13:00:00.000Z"
+  },
+  {
+    "id": "q-dl-w5-13",
+    "courseId": "course-deep-learning-master",
+    "weekNumber": 5,
+    "originalQuestionNumber": 13,
+    "sourcePdfName": "DeepLearning_July_Oct_2026_Week5.pdf",
+    "questionText": "Case Study 3\nStore Performance Feature Reduction\nA retail team measures two centered features for stores: weekly footfall variation and\naverage basket variation. The covariance matrix is\n\u03a3 =\n\"\n4\n0\n0\n1\n#\n.\nPCA selects directions of maximum variance.\nFor this diagonal covariance matrix, the\ncoordinate axes are principal directions. The team wants to reduce the two-feature store\nsummary to a smaller representation while retaining most of the variation across stores.\nBecause the features have already been centered, the covariance entries describe variation\naround the average store behavior.\n\nQuestion 13: What fraction of total variance is explained by the first principal component?",
+    "options": [
+      "4/5",
+      "1/5",
+      "1/4",
+      "5/4"
+    ],
+    "correctAnswerIndex": 0,
+    "answerSource": "PDF",
+    "isApproved": true,
+    "explanation": "The total variance is 4 + 1 = 5, and the first component explains 4.",
+    "createdAt": "2026-10-13T13:00:00.000Z"
+  },
+  {
+    "id": "q-dl-w5-14",
+    "courseId": "course-deep-learning-master",
+    "weekNumber": 5,
+    "originalQuestionNumber": 14,
+    "sourcePdfName": "DeepLearning_July_Oct_2026_Week5.pdf",
+    "questionText": "Case Study 3\nStore Performance Feature Reduction\nA retail team measures two centered features for stores: weekly footfall variation and\naverage basket variation. The covariance matrix is\n\u03a3 =\n\"\n4\n0\n0\n1\n#\n.\nPCA selects directions of maximum variance.\nFor this diagonal covariance matrix, the\ncoordinate axes are principal directions. The team wants to reduce the two-feature store\nsummary to a smaller representation while retaining most of the variation across stores.\nBecause the features have already been centered, the covariance entries describe variation\naround the average store behavior.\n\nQuestion 14: If the data is projected onto the first principal component only, how many dimensions remain?",
+    "options": [
+      "0",
+      "1",
+      "2",
+      "4"
+    ],
+    "correctAnswerIndex": 1,
+    "answerSource": "PDF",
+    "isApproved": true,
+    "explanation": "Keeping one principal component reduces the representation to one dimension.",
+    "createdAt": "2026-10-13T13:00:00.000Z"
+  },
+  {
+    "id": "q-dl-w5-15",
+    "courseId": "course-deep-learning-master",
+    "weekNumber": 5,
+    "originalQuestionNumber": 15,
+    "sourcePdfName": "DeepLearning_July_Oct_2026_Week5.pdf",
+    "questionText": "Case Study 3\nStore Performance Feature Reduction\nA retail team measures two centered features for stores: weekly footfall variation and\naverage basket variation. The covariance matrix is\n\u03a3 =\n\"\n4\n0\n0\n1\n#\n.\nPCA selects directions of maximum variance.\nFor this diagonal covariance matrix, the\ncoordinate axes are principal directions. The team wants to reduce the two-feature store\nsummary to a smaller representation while retaining most of the variation across stores.\nBecause the features have already been centered, the covariance entries describe variation\naround the average store behavior.\n\nQuestion 15: What is the purpose of centering data before PCA?",
+    "options": [
+      "To make every covariance value negative after centering.",
+      "To remove all variance from the dataset before PCA.",
+      "To force all eigenvalues to be equal.",
+      "To express variation relative to the mean."
+    ],
+    "correctAnswerIndex": 3,
+    "answerSource": "PDF",
+    "isApproved": true,
+    "explanation": "Centering subtracts the mean so PCA analyzes variation around the mean.",
+    "createdAt": "2026-10-13T13:00:00.000Z"
+  },
+  {
+    "id": "q-dl-w5-16",
+    "courseId": "course-deep-learning-master",
+    "weekNumber": 5,
+    "originalQuestionNumber": 16,
+    "sourcePdfName": "DeepLearning_July_Oct_2026_Week5.pdf",
+    "questionText": "Case Study 4\nProduct-User Interaction Compression\nA recommendation team studies a small product-user interaction matrix before applying\nmatrix factorization to a larger catalog. The rows can be viewed as products and the columns\nas user groups, with larger entries indicating stronger interaction. The simplified matrix is\nM =\n\"\n3\n0\n0\n1\n#\n.\nFor this diagonal matrix, an SVD can be written as\nM = U\u03a3V \u22a4\nwith U = I, V = I, and singular values 3 and 1. The team uses this small diagonal example\nto discuss rank, dominant singular directions, and how keeping only the largest singular\nvalue produces a low-rank approximation.\n\nQuestion 16: What is the largest singular value?",
+    "options": [
+      "1",
+      "2",
+      "3",
+      "0"
+    ],
+    "correctAnswerIndex": 2,
+    "answerSource": "PDF",
+    "isApproved": true,
+    "explanation": "The singular values listed are 3 and 1, so the largest is 3.",
+    "createdAt": "2026-10-13T13:00:00.000Z"
+  },
+  {
+    "id": "q-dl-w5-17",
+    "courseId": "course-deep-learning-master",
+    "weekNumber": 5,
+    "originalQuestionNumber": 17,
+    "sourcePdfName": "DeepLearning_July_Oct_2026_Week5.pdf",
+    "questionText": "Case Study 4\nProduct-User Interaction Compression\nA recommendation team studies a small product-user interaction matrix before applying\nmatrix factorization to a larger catalog. The rows can be viewed as products and the columns\nas user groups, with larger entries indicating stronger interaction. The simplified matrix is\nM =\n\"\n3\n0\n0\n1\n#\n.\nFor this diagonal matrix, an SVD can be written as\nM = U\u03a3V \u22a4\nwith U = I, V = I, and singular values 3 and 1. The team uses this small diagonal example\nto discuss rank, dominant singular directions, and how keeping only the largest singular\nvalue produces a low-rank approximation.\n\nQuestion 17: What does V \u22a4represent in the SVD expression?",
+    "options": [
+      "The transpose of the right singular-vector matrix.",
+      "The loss value of the recommendation model after a full training step.",
+      "The number of users in every batch.",
+      "The covariance matrix after centering."
+    ],
+    "correctAnswerIndex": 0,
+    "answerSource": "PDF",
+    "isApproved": true,
+    "explanation": "In M = U\u03a3V \u22a4, V \u22a4is the transpose of the right singular vector matrix.",
+    "createdAt": "2026-10-13T13:00:00.000Z"
+  },
+  {
+    "id": "q-dl-w5-18",
+    "courseId": "course-deep-learning-master",
+    "weekNumber": 5,
+    "originalQuestionNumber": 18,
+    "sourcePdfName": "DeepLearning_July_Oct_2026_Week5.pdf",
+    "questionText": "Case Study 4\nProduct-User Interaction Compression\nA recommendation team studies a small product-user interaction matrix before applying\nmatrix factorization to a larger catalog. The rows can be viewed as products and the columns\nas user groups, with larger entries indicating stronger interaction. The simplified matrix is\nM =\n\"\n3\n0\n0\n1\n#\n.\nFor this diagonal matrix, an SVD can be written as\nM = U\u03a3V \u22a4\nwith U = I, V = I, and singular values 3 and 1. The team uses this small diagonal example\nto discuss rank, dominant singular directions, and how keeping only the largest singular\nvalue produces a low-rank approximation.\n\nQuestion 18: What rank-one approximation keeps only the largest singular value?",
+    "options": [
+      "\" 0 0 0 1 #",
+      "\" 3 0 0 0 #",
+      "\" 3 1 1 3 #",
+      "\" 0 3 1 0 #"
+    ],
+    "correctAnswerIndex": 1,
+    "answerSource": "PDF",
+    "isApproved": true,
+    "explanation": "Keeping only singular value 3 preserves the first diagonal com- ponent and drops the second.",
+    "createdAt": "2026-10-13T13:00:00.000Z"
+  },
+  {
+    "id": "q-dl-w5-19",
+    "courseId": "course-deep-learning-master",
+    "weekNumber": 5,
+    "originalQuestionNumber": 19,
+    "sourcePdfName": "DeepLearning_July_Oct_2026_Week5.pdf",
+    "questionText": "Case Study 4\nProduct-User Interaction Compression\nA recommendation team studies a small product-user interaction matrix before applying\nmatrix factorization to a larger catalog. The rows can be viewed as products and the columns\nas user groups, with larger entries indicating stronger interaction. The simplified matrix is\nM =\n\"\n3\n0\n0\n1\n#\n.\nFor this diagonal matrix, an SVD can be written as\nM = U\u03a3V \u22a4\nwith U = I, V = I, and singular values 3 and 1. The team uses this small diagonal example\nto discuss rank, dominant singular directions, and how keeping only the largest singular\nvalue produces a low-rank approximation.\n\nQuestion 19: What is the rank of M?",
+    "options": [
+      "0",
+      "1",
+      "2",
+      "3"
+    ],
+    "correctAnswerIndex": 2,
+    "answerSource": "PDF",
+    "isApproved": true,
+    "explanation": "Both diagonal entries are nonzero, so the matrix has rank 2.",
+    "createdAt": "2026-10-13T13:00:00.000Z"
+  },
+  {
+    "id": "q-dl-w5-20",
+    "courseId": "course-deep-learning-master",
+    "weekNumber": 5,
+    "originalQuestionNumber": 20,
+    "sourcePdfName": "DeepLearning_July_Oct_2026_Week5.pdf",
+    "questionText": "Case Study 4\nProduct-User Interaction Compression\nA recommendation team studies a small product-user interaction matrix before applying\nmatrix factorization to a larger catalog. The rows can be viewed as products and the columns\nas user groups, with larger entries indicating stronger interaction. The simplified matrix is\nM =\n\"\n3\n0\n0\n1\n#\n.\nFor this diagonal matrix, an SVD can be written as\nM = U\u03a3V \u22a4\nwith U = I, V = I, and singular values 3 and 1. The team uses this small diagonal example\nto discuss rank, dominant singular directions, and how keeping only the largest singular\nvalue produces a low-rank approximation.\n\nQuestion 20: Why is SVD useful for dimensionality reduction?",
+    "options": [
+      "It requires every matrix entry to be exactly zero before the factorization.",
+      "It removes the need for any matrix factorization.",
+      "It changes all singular values to negative values.",
+      "It can keep dominant singular directions and discard smaller ones."
+    ],
+    "correctAnswerIndex": 3,
+    "answerSource": "PDF",
+    "isApproved": true,
+    "explanation": "Keeping the largest singular values gives a lower-dimensional approximation that preserves dominant structure.",
+    "createdAt": "2026-10-13T13:00:00.000Z"
+  },
+  {
+    "id": "q-dl-w6-1",
+    "courseId": "course-deep-learning-master",
+    "weekNumber": 6,
+    "originalQuestionNumber": 1,
+    "sourcePdfName": "DeepLearning_July_Oct_2026_Week6.pdf",
+    "questionText": "Case Study 1\nMachine Reading Compression\nA maintenance team receives pairs of machine readings from an industrial unit and\nwants a compact summary that can still reconstruct the original reading reasonably well.\nTo understand the mechanics of an autoencoder, the team studies one two-feature reading\nx = (4, 2)\u22a4and compresses it into one latent value using an encoder\nz = 0.5x1 + 0.5x2.\nThe decoder reconstructs\n\u02c6x1 = z,\n\u02c6x2 = z.\nThe reconstruction loss is\nL = (x1 \u2212\u02c6x1)2 + (x2 \u2212\u02c6x2)2.\nThis example lets the team separate the encoder, decoder, and reconstruction-loss roles\nbefore moving to higher-dimensional machine logs.\n\nQuestion 1: What is the latent value z?",
+    "options": [
+      "3",
+      "2",
+      "4",
+      "1"
+    ],
+    "correctAnswerIndex": 0,
+    "answerSource": "PDF",
+    "isApproved": true,
+    "explanation": "z = 0.5(4) + 0.5(2) = 3.",
+    "createdAt": "2026-10-13T13:00:00.000Z"
+  },
+  {
+    "id": "q-dl-w6-2",
+    "courseId": "course-deep-learning-master",
+    "weekNumber": 6,
+    "originalQuestionNumber": 2,
+    "sourcePdfName": "DeepLearning_July_Oct_2026_Week6.pdf",
+    "questionText": "Case Study 1\nMachine Reading Compression\nA maintenance team receives pairs of machine readings from an industrial unit and\nwants a compact summary that can still reconstruct the original reading reasonably well.\nTo understand the mechanics of an autoencoder, the team studies one two-feature reading\nx = (4, 2)\u22a4and compresses it into one latent value using an encoder\nz = 0.5x1 + 0.5x2.\nThe decoder reconstructs\n\u02c6x1 = z,\n\u02c6x2 = z.\nThe reconstruction loss is\nL = (x1 \u2212\u02c6x1)2 + (x2 \u2212\u02c6x2)2.\nThis example lets the team separate the encoder, decoder, and reconstruction-loss roles\nbefore moving to higher-dimensional machine logs.\n\nQuestion 2: What is the reconstructed vector \u02c6x?",
+    "options": [
+      "(2, 2)\u22a4",
+      "(3, 3)\u22a4",
+      "(4, 4)\u22a4",
+      "(3, 2)\u22a4"
+    ],
+    "correctAnswerIndex": 1,
+    "answerSource": "PDF",
+    "isApproved": true,
+    "explanation": "The decoder sets both reconstructed coordinates equal to z = 3.",
+    "createdAt": "2026-10-13T13:00:00.000Z"
+  },
+  {
+    "id": "q-dl-w6-3",
+    "courseId": "course-deep-learning-master",
+    "weekNumber": 6,
+    "originalQuestionNumber": 3,
+    "sourcePdfName": "DeepLearning_July_Oct_2026_Week6.pdf",
+    "questionText": "Case Study 1\nMachine Reading Compression\nA maintenance team receives pairs of machine readings from an industrial unit and\nwants a compact summary that can still reconstruct the original reading reasonably well.\nTo understand the mechanics of an autoencoder, the team studies one two-feature reading\nx = (4, 2)\u22a4and compresses it into one latent value using an encoder\nz = 0.5x1 + 0.5x2.\nThe decoder reconstructs\n\u02c6x1 = z,\n\u02c6x2 = z.\nThe reconstruction loss is\nL = (x1 \u2212\u02c6x1)2 + (x2 \u2212\u02c6x2)2.\nThis example lets the team separate the encoder, decoder, and reconstruction-loss roles\nbefore moving to higher-dimensional machine logs.\n\nQuestion 3: What is the reconstruction loss?",
+    "options": [
+      "4",
+      "1",
+      "2",
+      "0"
+    ],
+    "correctAnswerIndex": 2,
+    "answerSource": "PDF",
+    "isApproved": true,
+    "explanation": "L = (4 \u22123)2 + (2 \u22123)2 = 1 + 1 = 2.",
+    "createdAt": "2026-10-13T13:00:00.000Z"
+  },
+  {
+    "id": "q-dl-w6-4",
+    "courseId": "course-deep-learning-master",
+    "weekNumber": 6,
+    "originalQuestionNumber": 4,
+    "sourcePdfName": "DeepLearning_July_Oct_2026_Week6.pdf",
+    "questionText": "Case Study 1\nMachine Reading Compression\nA maintenance team receives pairs of machine readings from an industrial unit and\nwants a compact summary that can still reconstruct the original reading reasonably well.\nTo understand the mechanics of an autoencoder, the team studies one two-feature reading\nx = (4, 2)\u22a4and compresses it into one latent value using an encoder\nz = 0.5x1 + 0.5x2.\nThe decoder reconstructs\n\u02c6x1 = z,\n\u02c6x2 = z.\nThe reconstruction loss is\nL = (x1 \u2212\u02c6x1)2 + (x2 \u2212\u02c6x2)2.\nThis example lets the team separate the encoder, decoder, and reconstruction-loss roles\nbefore moving to higher-dimensional machine logs.\n\nQuestion 4: Which part of the autoencoder creates the latent representation?",
+    "options": [
+      "The decoder output layer",
+      "The reconstruction loss",
+      "The target label table",
+      "The encoder layer"
+    ],
+    "correctAnswerIndex": 3,
+    "answerSource": "PDF",
+    "isApproved": true,
+    "explanation": "The encoder maps the input x into the latent value z.",
+    "createdAt": "2026-10-13T13:00:00.000Z"
+  },
+  {
+    "id": "q-dl-w6-5",
+    "courseId": "course-deep-learning-master",
+    "weekNumber": 6,
+    "originalQuestionNumber": 5,
+    "sourcePdfName": "DeepLearning_July_Oct_2026_Week6.pdf",
+    "questionText": "Case Study 1\nMachine Reading Compression\nA maintenance team receives pairs of machine readings from an industrial unit and\nwants a compact summary that can still reconstruct the original reading reasonably well.\nTo understand the mechanics of an autoencoder, the team studies one two-feature reading\nx = (4, 2)\u22a4and compresses it into one latent value using an encoder\nz = 0.5x1 + 0.5x2.\nThe decoder reconstructs\n\u02c6x1 = z,\n\u02c6x2 = z.\nThe reconstruction loss is\nL = (x1 \u2212\u02c6x1)2 + (x2 \u2212\u02c6x2)2.\nThis example lets the team separate the encoder, decoder, and reconstruction-loss roles\nbefore moving to higher-dimensional machine logs.\n\nQuestion 5: What is the training objective of this autoencoder?",
+    "options": [
+      "To minimize reconstruction error.",
+      "To assign external class labels before any reconstruction is attempted.",
+      "To ignore the input features.",
+      "To make every latent value zero."
+    ],
+    "correctAnswerIndex": 0,
+    "answerSource": "PDF",
+    "isApproved": true,
+    "explanation": "Autoencoders are trained to reconstruct their inputs with small error.",
+    "createdAt": "2026-10-13T13:00:00.000Z"
+  },
+  {
+    "id": "q-dl-w6-6",
+    "courseId": "course-deep-learning-master",
+    "weekNumber": 6,
+    "originalQuestionNumber": 6,
+    "sourcePdfName": "DeepLearning_July_Oct_2026_Week6.pdf",
+    "questionText": "Case Study 2\nReport Feature Compression\nA document system summarizes operational reports using five numerical features such\nas length, keyword density, and section-level counts. The team wants a compact represen-\ntation that captures the main structure without storing all five features directly. It uses 5\ninput features and compresses them into a latent representation with 2 hidden units before\nreconstructing the 5 features. The model is undercomplete because the latent dimension is\nsmaller than the input dimension. The setup is used to discuss why compression can force\nthe model to learn useful structure instead of simply copying every input coordinate.\n\nQuestion 6: What is the input dimension?",
+    "options": [
+      "2",
+      "5",
+      "7",
+      "10"
+    ],
+    "correctAnswerIndex": 1,
+    "answerSource": "PDF",
+    "isApproved": true,
+    "explanation": "The case study states that there are 5 input features.",
+    "createdAt": "2026-10-13T13:00:00.000Z"
+  },
+  {
+    "id": "q-dl-w6-7",
+    "courseId": "course-deep-learning-master",
+    "weekNumber": 6,
+    "originalQuestionNumber": 7,
+    "sourcePdfName": "DeepLearning_July_Oct_2026_Week6.pdf",
+    "questionText": "Case Study 2\nReport Feature Compression\nA document system summarizes operational reports using five numerical features such\nas length, keyword density, and section-level counts. The team wants a compact represen-\ntation that captures the main structure without storing all five features directly. It uses 5\ninput features and compresses them into a latent representation with 2 hidden units before\nreconstructing the 5 features. The model is undercomplete because the latent dimension is\nsmaller than the input dimension. The setup is used to discuss why compression can force\nthe model to learn useful structure instead of simply copying every input coordinate.\n\nQuestion 7: What is the latent dimension?",
+    "options": [
+      "1",
+      "5",
+      "2",
+      "7"
+    ],
+    "correctAnswerIndex": 2,
+    "answerSource": "PDF",
+    "isApproved": true,
+    "explanation": "The latent layer has 2 hidden units.",
+    "createdAt": "2026-10-13T13:00:00.000Z"
+  },
+  {
+    "id": "q-dl-w6-8",
+    "courseId": "course-deep-learning-master",
+    "weekNumber": 6,
+    "originalQuestionNumber": 8,
+    "sourcePdfName": "DeepLearning_July_Oct_2026_Week6.pdf",
+    "questionText": "Case Study 2\nReport Feature Compression\nA document system summarizes operational reports using five numerical features such\nas length, keyword density, and section-level counts. The team wants a compact represen-\ntation that captures the main structure without storing all five features directly. It uses 5\ninput features and compresses them into a latent representation with 2 hidden units before\nreconstructing the 5 features. The model is undercomplete because the latent dimension is\nsmaller than the input dimension. The setup is used to discuss why compression can force\nthe model to learn useful structure instead of simply copying every input coordinate.\n\nQuestion 8: Why is the model undercomplete?",
+    "options": [
+      "The decoder has no reconstruction target.",
+      "The output layer ignores all reconstructed features during training.",
+      "The input has fewer features than the latent layer.",
+      "The latent dimension is smaller than the input dimension."
+    ],
+    "correctAnswerIndex": 3,
+    "answerSource": "PDF",
+    "isApproved": true,
+    "explanation": "An undercomplete autoencoder compresses inputs into a lower- dimensional latent representation.",
+    "createdAt": "2026-10-13T13:00:00.000Z"
+  },
+  {
+    "id": "q-dl-w6-9",
+    "courseId": "course-deep-learning-master",
+    "weekNumber": 6,
+    "originalQuestionNumber": 9,
+    "sourcePdfName": "DeepLearning_July_Oct_2026_Week6.pdf",
+    "questionText": "Case Study 2\nReport Feature Compression\nA document system summarizes operational reports using five numerical features such\nas length, keyword density, and section-level counts. The team wants a compact represen-\ntation that captures the main structure without storing all five features directly. It uses 5\ninput features and compresses them into a latent representation with 2 hidden units before\nreconstructing the 5 features. The model is undercomplete because the latent dimension is\nsmaller than the input dimension. The setup is used to discuss why compression can force\nthe model to learn useful structure instead of simply copying every input coordinate.\n\nQuestion 9: Which output dimension is required to reconstruct the original input?",
+    "options": [
+      "5",
+      "1",
+      "2",
+      "3"
+    ],
+    "correctAnswerIndex": 0,
+    "answerSource": "PDF",
+    "isApproved": true,
+    "explanation": "The reconstruction must have the same dimension as the 5- feature input.",
+    "createdAt": "2026-10-13T13:00:00.000Z"
+  },
+  {
+    "id": "q-dl-w6-10",
+    "courseId": "course-deep-learning-master",
+    "weekNumber": 6,
+    "originalQuestionNumber": 10,
+    "sourcePdfName": "DeepLearning_July_Oct_2026_Week6.pdf",
+    "questionText": "Case Study 2\nReport Feature Compression\nA document system summarizes operational reports using five numerical features such\nas length, keyword density, and section-level counts. The team wants a compact represen-\ntation that captures the main structure without storing all five features directly. It uses 5\ninput features and compresses them into a latent representation with 2 hidden units before\nreconstructing the 5 features. The model is undercomplete because the latent dimension is\nsmaller than the input dimension. The setup is used to discuss why compression can force\nthe model to learn useful structure instead of simply copying every input coordinate.\n\nQuestion 10: How is this related to PCA in the linear case?",
+    "options": [
+      "It must always produce a one-hot class label.",
+      "It can learn a low-dimensional representation similar to PCA.",
+      "It removes the need for reconstruction in every training example.",
+      "It makes every component have zero variance."
+    ],
+    "correctAnswerIndex": 1,
+    "answerSource": "PDF",
+    "isApproved": true,
+    "explanation": "A linear undercomplete autoencoder can learn a subspace re- lated to PCA.",
+    "createdAt": "2026-10-13T13:00:00.000Z"
+  },
+  {
+    "id": "q-dl-w6-11",
+    "courseId": "course-deep-learning-master",
+    "weekNumber": 6,
+    "originalQuestionNumber": 11,
+    "sourcePdfName": "DeepLearning_July_Oct_2026_Week6.pdf",
+    "questionText": "Case Study 3\nMeter Reading Recovery\nA utility company receives meter readings that sometimes lose one coordinate because of\ntemporary communication noise. To make the representation robust, it trains an autoencoder\nusing corrupted inputs but clean targets. For one example, the clean reading is\nx = (5, 1)\u22a4,\nand the corrupted input is\n\u02dcx = (5, 0)\u22a4.\nThe model outputs \u02c6x = (4, 1)\u22a4, and the loss is\nL = (x1 \u2212\u02c6x1)2 + (x2 \u2212\u02c6x2)2.\nDuring training, the encoder sees the corrupted vector, but the loss is measured against the\nclean reading so the model learns to recover stable structure.\n\nQuestion 11: Which vector is given to the encoder during training?",
+    "options": [
+      "x = (5, 1)\u22a4",
+      "\u02c6x = (4, 1)\u22a4",
+      "(0, 0)\u22a4",
+      "\u02dcx = (5, 0)\u22a4"
+    ],
+    "correctAnswerIndex": 3,
+    "answerSource": "PDF",
+    "isApproved": true,
+    "explanation": "A denoising autoencoder receives the corrupted input \u02dcx.",
+    "createdAt": "2026-10-13T13:00:00.000Z"
+  },
+  {
+    "id": "q-dl-w6-12",
+    "courseId": "course-deep-learning-master",
+    "weekNumber": 6,
+    "originalQuestionNumber": 12,
+    "sourcePdfName": "DeepLearning_July_Oct_2026_Week6.pdf",
+    "questionText": "Case Study 3\nMeter Reading Recovery\nA utility company receives meter readings that sometimes lose one coordinate because of\ntemporary communication noise. To make the representation robust, it trains an autoencoder\nusing corrupted inputs but clean targets. For one example, the clean reading is\nx = (5, 1)\u22a4,\nand the corrupted input is\n\u02dcx = (5, 0)\u22a4.\nThe model outputs \u02c6x = (4, 1)\u22a4, and the loss is\nL = (x1 \u2212\u02c6x1)2 + (x2 \u2212\u02c6x2)2.\nDuring training, the encoder sees the corrupted vector, but the loss is measured against the\nclean reading so the model learns to recover stable structure.\n\nQuestion 12: Which vector is the clean reconstruction target?",
+    "options": [
+      "(4, 1)\u22a4",
+      "(5, 0)\u22a4",
+      "(5, 1)\u22a4",
+      "(0, 1)\u22a4"
+    ],
+    "correctAnswerIndex": 2,
+    "answerSource": "PDF",
+    "isApproved": true,
+    "explanation": "The clean target is x = (5, 1)\u22a4.",
+    "createdAt": "2026-10-13T13:00:00.000Z"
+  },
+  {
+    "id": "q-dl-w6-13",
+    "courseId": "course-deep-learning-master",
+    "weekNumber": 6,
+    "originalQuestionNumber": 13,
+    "sourcePdfName": "DeepLearning_July_Oct_2026_Week6.pdf",
+    "questionText": "Case Study 3\nMeter Reading Recovery\nA utility company receives meter readings that sometimes lose one coordinate because of\ntemporary communication noise. To make the representation robust, it trains an autoencoder\nusing corrupted inputs but clean targets. For one example, the clean reading is\nx = (5, 1)\u22a4,\nand the corrupted input is\n\u02dcx = (5, 0)\u22a4.\nThe model outputs \u02c6x = (4, 1)\u22a4, and the loss is\nL = (x1 \u2212\u02c6x1)2 + (x2 \u2212\u02c6x2)2.\nDuring training, the encoder sees the corrupted vector, but the loss is measured against the\nclean reading so the model learns to recover stable structure.\n\nQuestion 13: What is the reconstruction loss?",
+    "options": [
+      "0",
+      "2",
+      "4",
+      "1"
+    ],
+    "correctAnswerIndex": 3,
+    "answerSource": "PDF",
+    "isApproved": true,
+    "explanation": "L = (5 \u22124)2 + (1 \u22121)2 = 1.",
+    "createdAt": "2026-10-13T13:00:00.000Z"
+  },
+  {
+    "id": "q-dl-w6-14",
+    "courseId": "course-deep-learning-master",
+    "weekNumber": 6,
+    "originalQuestionNumber": 14,
+    "sourcePdfName": "DeepLearning_July_Oct_2026_Week6.pdf",
+    "questionText": "Case Study 3\nMeter Reading Recovery\nA utility company receives meter readings that sometimes lose one coordinate because of\ntemporary communication noise. To make the representation robust, it trains an autoencoder\nusing corrupted inputs but clean targets. For one example, the clean reading is\nx = (5, 1)\u22a4,\nand the corrupted input is\n\u02dcx = (5, 0)\u22a4.\nThe model outputs \u02c6x = (4, 1)\u22a4, and the loss is\nL = (x1 \u2212\u02c6x1)2 + (x2 \u2212\u02c6x2)2.\nDuring training, the encoder sees the corrupted vector, but the loss is measured against the\nclean reading so the model learns to recover stable structure.\n\nQuestion 14: What is the purpose of using corrupted inputs?",
+    "options": [
+      "To train the model to recover clean structure.",
+      "To remove the decoder from the network before training begins.",
+      "To force every output to equal zero.",
+      "To avoid computing any reconstruction loss."
+    ],
+    "correctAnswerIndex": 0,
+    "answerSource": "PDF",
+    "isApproved": true,
+    "explanation": "Denoising autoencoders learn to reconstruct clean inputs from corrupted versions.",
+    "createdAt": "2026-10-13T13:00:00.000Z"
+  },
+  {
+    "id": "q-dl-w6-15",
+    "courseId": "course-deep-learning-master",
+    "weekNumber": 6,
+    "originalQuestionNumber": 15,
+    "sourcePdfName": "DeepLearning_July_Oct_2026_Week6.pdf",
+    "questionText": "Case Study 3\nMeter Reading Recovery\nA utility company receives meter readings that sometimes lose one coordinate because of\ntemporary communication noise. To make the representation robust, it trains an autoencoder\nusing corrupted inputs but clean targets. For one example, the clean reading is\nx = (5, 1)\u22a4,\nand the corrupted input is\n\u02dcx = (5, 0)\u22a4.\nThe model outputs \u02c6x = (4, 1)\u22a4, and the loss is\nL = (x1 \u2212\u02c6x1)2 + (x2 \u2212\u02c6x2)2.\nDuring training, the encoder sees the corrupted vector, but the loss is measured against the\nclean reading so the model learns to recover stable structure.\n\nQuestion 15: Which statement best describes this training setup?",
+    "options": [
+      "The model ignores all input values.",
+      "The model maps noisy input toward a clean target.",
+      "The target is the corrupted vector only.",
+      "The encoder output is used as the final label for every noisy example."
+    ],
+    "correctAnswerIndex": 1,
+    "answerSource": "PDF",
+    "isApproved": true,
+    "explanation": "The corrupted vector is input, while the clean vector is the target.",
+    "createdAt": "2026-10-13T13:00:00.000Z"
+  },
+  {
+    "id": "q-dl-w6-16",
+    "courseId": "course-deep-learning-master",
+    "weekNumber": 6,
+    "originalQuestionNumber": 16,
+    "sourcePdfName": "DeepLearning_July_Oct_2026_Week6.pdf",
+    "questionText": "Case Study 4\nCompact Representation Control\nA research group trains an autoencoder for compact feature learning, but plain recon-\nstruction alone produces representations that are too active and sensitive for the intended\nanalysis.\nTo shape the latent representation, the group starts with reconstruction loss\nLrec = 0.8. It adds a sparsity penalty of 0.3 with weight \u03bb = 2, so\nLsparse = Lrec + \u03bb(0.3).\nIn a second experiment, the group uses a contractive penalty to make the representation\nless sensitive to small input changes. The two penalties illustrate different regularization\ngoals: sparsity encourages only a few hidden units to respond strongly, while contractive\nregularization encourages stability.\n\nQuestion 16: What is the sparsity penalty contribution?",
+    "options": [
+      "0.3",
+      "0.8",
+      "0.6",
+      "1.1"
+    ],
+    "correctAnswerIndex": 2,
+    "answerSource": "PDF",
+    "isApproved": true,
+    "explanation": "The weighted penalty is \u03bb(0.3) = 2(0.3) = 0.6.",
+    "createdAt": "2026-10-13T13:00:00.000Z"
+  },
+  {
+    "id": "q-dl-w6-17",
+    "courseId": "course-deep-learning-master",
+    "weekNumber": 6,
+    "originalQuestionNumber": 17,
+    "sourcePdfName": "DeepLearning_July_Oct_2026_Week6.pdf",
+    "questionText": "Case Study 4\nCompact Representation Control\nA research group trains an autoencoder for compact feature learning, but plain recon-\nstruction alone produces representations that are too active and sensitive for the intended\nanalysis.\nTo shape the latent representation, the group starts with reconstruction loss\nLrec = 0.8. It adds a sparsity penalty of 0.3 with weight \u03bb = 2, so\nLsparse = Lrec + \u03bb(0.3).\nIn a second experiment, the group uses a contractive penalty to make the representation\nless sensitive to small input changes. The two penalties illustrate different regularization\ngoals: sparsity encourages only a few hidden units to respond strongly, while contractive\nregularization encourages stability.\n\nQuestion 17: What is Lsparse?",
+    "options": [
+      "1.4",
+      "1.1",
+      "0.8",
+      "0.6"
+    ],
+    "correctAnswerIndex": 0,
+    "answerSource": "PDF",
+    "isApproved": true,
+    "explanation": "Lsparse = 0.8 + 0.6 = 1.4.",
+    "createdAt": "2026-10-13T13:00:00.000Z"
+  },
+  {
+    "id": "q-dl-w6-18",
+    "courseId": "course-deep-learning-master",
+    "weekNumber": 6,
+    "originalQuestionNumber": 18,
+    "sourcePdfName": "DeepLearning_July_Oct_2026_Week6.pdf",
+    "questionText": "Case Study 4\nCompact Representation Control\nA research group trains an autoencoder for compact feature learning, but plain recon-\nstruction alone produces representations that are too active and sensitive for the intended\nanalysis.\nTo shape the latent representation, the group starts with reconstruction loss\nLrec = 0.8. It adds a sparsity penalty of 0.3 with weight \u03bb = 2, so\nLsparse = Lrec + \u03bb(0.3).\nIn a second experiment, the group uses a contractive penalty to make the representation\nless sensitive to small input changes. The two penalties illustrate different regularization\ngoals: sparsity encourages only a few hidden units to respond strongly, while contractive\nregularization encourages stability.\n\nQuestion 18: What does sparse regularization encourage?",
+    "options": [
+      "Every hidden unit must always be active during the full reconstruction process.",
+      "The decoder is removed from the model.",
+      "Only a small number of hidden units should be active.",
+      "The input dimension must equal zero."
+    ],
+    "correctAnswerIndex": 2,
+    "answerSource": "PDF",
+    "isApproved": true,
+    "explanation": "Sparse autoencoders encourage most hidden activations to be small or inactive.",
+    "createdAt": "2026-10-13T13:00:00.000Z"
+  },
+  {
+    "id": "q-dl-w6-19",
+    "courseId": "course-deep-learning-master",
+    "weekNumber": 6,
+    "originalQuestionNumber": 19,
+    "sourcePdfName": "DeepLearning_July_Oct_2026_Week6.pdf",
+    "questionText": "Case Study 4\nCompact Representation Control\nA research group trains an autoencoder for compact feature learning, but plain recon-\nstruction alone produces representations that are too active and sensitive for the intended\nanalysis.\nTo shape the latent representation, the group starts with reconstruction loss\nLrec = 0.8. It adds a sparsity penalty of 0.3 with weight \u03bb = 2, so\nLsparse = Lrec + \u03bb(0.3).\nIn a second experiment, the group uses a contractive penalty to make the representation\nless sensitive to small input changes. The two penalties illustrate different regularization\ngoals: sparsity encourages only a few hidden units to respond strongly, while contractive\nregularization encourages stability.\n\nQuestion 19: What is the goal of a contractive penalty?",
+    "options": [
+      "To force reconstruction loss to be ignored throughout all training.",
+      "To make all weights increase without bound after every input change.",
+      "To replace the encoder with class labels.",
+      "To make the representation less sensitive to small input changes."
+    ],
+    "correctAnswerIndex": 3,
+    "answerSource": "PDF",
+    "isApproved": true,
+    "explanation": "Contractive penalties encourage stable representations under small input perturbations.",
+    "createdAt": "2026-10-13T13:00:00.000Z"
+  },
+  {
+    "id": "q-dl-w6-20",
+    "courseId": "course-deep-learning-master",
+    "weekNumber": 6,
+    "originalQuestionNumber": 20,
+    "sourcePdfName": "DeepLearning_July_Oct_2026_Week6.pdf",
+    "questionText": "Case Study 4\nCompact Representation Control\nA research group trains an autoencoder for compact feature learning, but plain recon-\nstruction alone produces representations that are too active and sensitive for the intended\nanalysis.\nTo shape the latent representation, the group starts with reconstruction loss\nLrec = 0.8. It adds a sparsity penalty of 0.3 with weight \u03bb = 2, so\nLsparse = Lrec + \u03bb(0.3).\nIn a second experiment, the group uses a contractive penalty to make the representation\nless sensitive to small input changes. The two penalties illustrate different regularization\ngoals: sparsity encourages only a few hidden units to respond strongly, while contractive\nregularization encourages stability.\n\nQuestion 20: Why are such penalties added to the reconstruction loss?",
+    "options": [
+      "To remove all training data from the objective.",
+      "To control the learned representation beyond plain reconstruction.",
+      "To stop the model from producing reconstructions.",
+      "To make every feature identical to every other feature before encoding."
+    ],
+    "correctAnswerIndex": 1,
+    "answerSource": "PDF",
+    "isApproved": true,
+    "explanation": "Regularization shapes what the autoencoder learns in addition to minimizing reconstruction error.",
+    "createdAt": "2026-10-13T13:00:00.000Z"
+  },
+  {
+    "id": "q-dl-w7-1",
+    "courseId": "course-deep-learning-master",
+    "weekNumber": 7,
+    "originalQuestionNumber": 1,
+    "sourcePdfName": "DeepLearning_July_Oct_2026_Week7.pdf",
+    "questionText": "Case Study 1\nWater Demand Forecasting for a Residential Zone\nA municipal analytics team builds models to predict next-day water demand for a res-\nidential zone. Each input contains temperature, weekday indicator, previous-day demand,\nand a local festival indicator. The team compares a simple linear model and a highly flex-\nible neural network. The simple model gives similar predictions when trained on different\nsamples, but its average prediction is far from the true demand. The neural network fits the\ntraining data very closely, but its predictions change substantially when trained on different\nsamples.\nFor one input condition, the neural network predictions from four training subsets are\n41,\n49,\n45,\n53\nthousand liters, while the true demand is 48 thousand liters. The expected test error for this\ncondition is decomposed as\nE\nh\n(y \u2212\u02c6f(x))2i\n= Bias2 + Variance + \u03c32.\n\nQuestion 1: Which description best matches the simple linear model?",
+    "options": [
+      "High bias and low variance",
+      "Low bias and high variance",
+      "Low bias and low variance",
+      "High variance and zero bias"
+    ],
+    "correctAnswerIndex": 0,
+    "answerSource": "PDF",
+    "isApproved": true,
+    "explanation": "Similar predictions across samples indicate low variance, while being far from the true demand indicates high bias.",
+    "createdAt": "2026-10-13T13:00:00.000Z"
+  },
+  {
+    "id": "q-dl-w7-2",
+    "courseId": "course-deep-learning-master",
+    "weekNumber": 7,
+    "originalQuestionNumber": 2,
+    "sourcePdfName": "DeepLearning_July_Oct_2026_Week7.pdf",
+    "questionText": "Case Study 1\nWater Demand Forecasting for a Residential Zone\nA municipal analytics team builds models to predict next-day water demand for a res-\nidential zone. Each input contains temperature, weekday indicator, previous-day demand,\nand a local festival indicator. The team compares a simple linear model and a highly flex-\nible neural network. The simple model gives similar predictions when trained on different\nsamples, but its average prediction is far from the true demand. The neural network fits the\ntraining data very closely, but its predictions change substantially when trained on different\nsamples.\nFor one input condition, the neural network predictions from four training subsets are\n41,\n49,\n45,\n53\nthousand liters, while the true demand is 48 thousand liters. The expected test error for this\ncondition is decomposed as\nE\nh\n(y \u2212\u02c6f(x))2i\n= Bias2 + Variance + \u03c32.\n\nQuestion 2: What is the average neural-network prediction for the given input?",
+    "options": [
+      "46",
+      "48",
+      "47",
+      "50"
+    ],
+    "correctAnswerIndex": 2,
+    "answerSource": "PDF",
+    "isApproved": true,
+    "explanation": "The average is (41 + 49 + 45 + 53)/4 = 188/4 = 47.",
+    "createdAt": "2026-10-13T13:00:00.000Z"
+  },
+  {
+    "id": "q-dl-w7-3",
+    "courseId": "course-deep-learning-master",
+    "weekNumber": 7,
+    "originalQuestionNumber": 3,
+    "sourcePdfName": "DeepLearning_July_Oct_2026_Week7.pdf",
+    "questionText": "Case Study 1\nWater Demand Forecasting for a Residential Zone\nA municipal analytics team builds models to predict next-day water demand for a res-\nidential zone. Each input contains temperature, weekday indicator, previous-day demand,\nand a local festival indicator. The team compares a simple linear model and a highly flex-\nible neural network. The simple model gives similar predictions when trained on different\nsamples, but its average prediction is far from the true demand. The neural network fits the\ntraining data very closely, but its predictions change substantially when trained on different\nsamples.\nFor one input condition, the neural network predictions from four training subsets are\n41,\n49,\n45,\n53\nthousand liters, while the true demand is 48 thousand liters. The expected test error for this\ncondition is decomposed as\nE\nh\n(y \u2212\u02c6f(x))2i\n= Bias2 + Variance + \u03c32.\n\nQuestion 3: What is the squared bias of the neural-network predictions for this input?",
+    "options": [
+      "4",
+      "9",
+      "0",
+      "1"
+    ],
+    "correctAnswerIndex": 3,
+    "answerSource": "PDF",
+    "isApproved": true,
+    "explanation": "The squared bias is (48 \u221247)2 = 1.",
+    "createdAt": "2026-10-13T13:00:00.000Z"
+  },
+  {
+    "id": "q-dl-w7-4",
+    "courseId": "course-deep-learning-master",
+    "weekNumber": 7,
+    "originalQuestionNumber": 4,
+    "sourcePdfName": "DeepLearning_July_Oct_2026_Week7.pdf",
+    "questionText": "Case Study 1\nWater Demand Forecasting for a Residential Zone\nA municipal analytics team builds models to predict next-day water demand for a res-\nidential zone. Each input contains temperature, weekday indicator, previous-day demand,\nand a local festival indicator. The team compares a simple linear model and a highly flex-\nible neural network. The simple model gives similar predictions when trained on different\nsamples, but its average prediction is far from the true demand. The neural network fits the\ntraining data very closely, but its predictions change substantially when trained on different\nsamples.\nFor one input condition, the neural network predictions from four training subsets are\n41,\n49,\n45,\n53\nthousand liters, while the true demand is 48 thousand liters. The expected test error for this\ncondition is decomposed as\nE\nh\n(y \u2212\u02c6f(x))2i\n= Bias2 + Variance + \u03c32.\n\nQuestion 4: What does the large variation among the neural-network predictions indicate?",
+    "options": [
+      "The model has no irreducible error.",
+      "The model has high variance under the case assumptions.",
+      "The output labels are unavailable for the described model.",
+      "The model is too simple for the data."
+    ],
+    "correctAnswerIndex": 1,
+    "answerSource": "PDF",
+    "isApproved": true,
+    "explanation": "Predictions changing strongly across training subsets are a symptom of high variance.",
+    "createdAt": "2026-10-13T13:00:00.000Z"
+  },
+  {
+    "id": "q-dl-w7-5",
+    "courseId": "course-deep-learning-master",
+    "weekNumber": 7,
+    "originalQuestionNumber": 5,
+    "sourcePdfName": "DeepLearning_July_Oct_2026_Week7.pdf",
+    "questionText": "Case Study 1\nWater Demand Forecasting for a Residential Zone\nA municipal analytics team builds models to predict next-day water demand for a res-\nidential zone. Each input contains temperature, weekday indicator, previous-day demand,\nand a local festival indicator. The team compares a simple linear model and a highly flex-\nible neural network. The simple model gives similar predictions when trained on different\nsamples, but its average prediction is far from the true demand. The neural network fits the\ntraining data very closely, but its predictions change substantially when trained on different\nsamples.\nFor one input condition, the neural network predictions from four training subsets are\n41,\n49,\n45,\n53\nthousand liters, while the true demand is 48 thousand liters. The expected test error for this\ncondition is decomposed as\nE\nh\n(y \u2212\u02c6f(x))2i\n= Bias2 + Variance + \u03c32.\n\nQuestion 5: Which action is most directly aimed at reducing the neural network\u2019s variance?",
+    "options": [
+      "Add a suitable regularization method.",
+      "Remove the validation set entirely.",
+      "Increase model depth without constraints.",
+      "Train until training loss becomes zero."
+    ],
+    "correctAnswerIndex": 0,
+    "answerSource": "PDF",
+    "isApproved": true,
+    "explanation": "Regularization methods constrain the model and help reduce overfitting-related variance.",
+    "createdAt": "2026-10-13T13:00:00.000Z"
+  },
+  {
+    "id": "q-dl-w7-6",
+    "courseId": "course-deep-learning-master",
+    "weekNumber": 7,
+    "originalQuestionNumber": 6,
+    "sourcePdfName": "DeepLearning_July_Oct_2026_Week7.pdf",
+    "questionText": "Case Study 2\nSmall-Business Loan Risk Scoring\nA cooperative bank trains a logistic-regression model to predict whether a small-business\nloan application is risky. The model uses standardized features such as debt ratio, monthly\nrevenue, repayment history score, and business age.\nWithout regularization, the model\nreaches very high training accuracy but noticeably lower validation accuracy. Several learned\nweights also have large magnitudes, making the model sensitive to small feature changes.\nThe team adds L2 regularization to the objective:\nJtotal(w) = Jdata(w) + \u03b1\nX\ni\nw2\ni .\nFor one parameter, the current value is w = 3. The data-loss gradient for that parameter is\n4, the regularization strength is \u03b1 = 2, and the learning rate is \u03b7 = 0.1. For this case, use\nthe regularized gradient\n\u2202Jtotal\n\u2202w\n= 4 + 2\u03b1w.\n\nQuestion 6: What is the main purpose of adding L2 regularization here?",
+    "options": [
+      "To remove the need for training data for the described model",
+      "To discourage large weights for the described model",
+      "To guarantee perfect validation accuracy",
+      "To convert logistic regression into clustering"
+    ],
+    "correctAnswerIndex": 1,
+    "answerSource": "PDF",
+    "isApproved": true,
+    "explanation": "L2 regularization penalizes large squared weights and reduces model complexity.",
+    "createdAt": "2026-10-13T13:00:00.000Z"
+  },
+  {
+    "id": "q-dl-w7-7",
+    "courseId": "course-deep-learning-master",
+    "weekNumber": 7,
+    "originalQuestionNumber": 7,
+    "sourcePdfName": "DeepLearning_July_Oct_2026_Week7.pdf",
+    "questionText": "Case Study 2\nSmall-Business Loan Risk Scoring\nA cooperative bank trains a logistic-regression model to predict whether a small-business\nloan application is risky. The model uses standardized features such as debt ratio, monthly\nrevenue, repayment history score, and business age.\nWithout regularization, the model\nreaches very high training accuracy but noticeably lower validation accuracy. Several learned\nweights also have large magnitudes, making the model sensitive to small feature changes.\nThe team adds L2 regularization to the objective:\nJtotal(w) = Jdata(w) + \u03b1\nX\ni\nw2\ni .\nFor one parameter, the current value is w = 3. The data-loss gradient for that parameter is\n4, the regularization strength is \u03b1 = 2, and the learning rate is \u03b7 = 0.1. For this case, use\nthe regularized gradient\n\u2202Jtotal\n\u2202w\n= 4 + 2\u03b1w.\n\nQuestion 7: What is the regularization contribution 2\u03b1w to the gradient?",
+    "options": [
+      "10",
+      "6",
+      "8",
+      "12"
+    ],
+    "correctAnswerIndex": 3,
+    "answerSource": "PDF",
+    "isApproved": true,
+    "explanation": "The contribution is 2\u03b1w = 2(2)(3) = 12.",
+    "createdAt": "2026-10-13T13:00:00.000Z"
+  },
+  {
+    "id": "q-dl-w7-8",
+    "courseId": "course-deep-learning-master",
+    "weekNumber": 7,
+    "originalQuestionNumber": 8,
+    "sourcePdfName": "DeepLearning_July_Oct_2026_Week7.pdf",
+    "questionText": "Case Study 2\nSmall-Business Loan Risk Scoring\nA cooperative bank trains a logistic-regression model to predict whether a small-business\nloan application is risky. The model uses standardized features such as debt ratio, monthly\nrevenue, repayment history score, and business age.\nWithout regularization, the model\nreaches very high training accuracy but noticeably lower validation accuracy. Several learned\nweights also have large magnitudes, making the model sensitive to small feature changes.\nThe team adds L2 regularization to the objective:\nJtotal(w) = Jdata(w) + \u03b1\nX\ni\nw2\ni .\nFor one parameter, the current value is w = 3. The data-loss gradient for that parameter is\n4, the regularization strength is \u03b1 = 2, and the learning rate is \u03b7 = 0.1. For this case, use\nthe regularized gradient\n\u2202Jtotal\n\u2202w\n= 4 + 2\u03b1w.\n\nQuestion 8: What is the full regularized gradient for this parameter?",
+    "options": [
+      "16",
+      "12",
+      "10",
+      "14"
+    ],
+    "correctAnswerIndex": 0,
+    "answerSource": "PDF",
+    "isApproved": true,
+    "explanation": "The full gradient is 4 + 12 = 16.",
+    "createdAt": "2026-10-13T13:00:00.000Z"
+  },
+  {
+    "id": "q-dl-w7-9",
+    "courseId": "course-deep-learning-master",
+    "weekNumber": 7,
+    "originalQuestionNumber": 9,
+    "sourcePdfName": "DeepLearning_July_Oct_2026_Week7.pdf",
+    "questionText": "Case Study 2\nSmall-Business Loan Risk Scoring\nA cooperative bank trains a logistic-regression model to predict whether a small-business\nloan application is risky. The model uses standardized features such as debt ratio, monthly\nrevenue, repayment history score, and business age.\nWithout regularization, the model\nreaches very high training accuracy but noticeably lower validation accuracy. Several learned\nweights also have large magnitudes, making the model sensitive to small feature changes.\nThe team adds L2 regularization to the objective:\nJtotal(w) = Jdata(w) + \u03b1\nX\ni\nw2\ni .\nFor one parameter, the current value is w = 3. The data-loss gradient for that parameter is\n4, the regularization strength is \u03b1 = 2, and the learning rate is \u03b7 = 0.1. For this case, use\nthe regularized gradient\n\u2202Jtotal\n\u2202w\n= 4 + 2\u03b1w.\n\nQuestion 9: What is the updated value of w after one gradient-descent step?",
+    "options": [
+      "2.0",
+      "2.6",
+      "1.4",
+      "3.6"
+    ],
+    "correctAnswerIndex": 2,
+    "answerSource": "PDF",
+    "isApproved": true,
+    "explanation": "wnew = 3 \u22120.1(16) = 1.4.",
+    "createdAt": "2026-10-13T13:00:00.000Z"
+  },
+  {
+    "id": "q-dl-w7-10",
+    "courseId": "course-deep-learning-master",
+    "weekNumber": 7,
+    "originalQuestionNumber": 10,
+    "sourcePdfName": "DeepLearning_July_Oct_2026_Week7.pdf",
+    "questionText": "Case Study 2\nSmall-Business Loan Risk Scoring\nA cooperative bank trains a logistic-regression model to predict whether a small-business\nloan application is risky. The model uses standardized features such as debt ratio, monthly\nrevenue, repayment history score, and business age.\nWithout regularization, the model\nreaches very high training accuracy but noticeably lower validation accuracy. Several learned\nweights also have large magnitudes, making the model sensitive to small feature changes.\nThe team adds L2 regularization to the objective:\nJtotal(w) = Jdata(w) + \u03b1\nX\ni\nw2\ni .\nFor one parameter, the current value is w = 3. The data-loss gradient for that parameter is\n4, the regularization strength is \u03b1 = 2, and the learning rate is \u03b7 = 0.1. For this case, use\nthe regularized gradient\n\u2202Jtotal\n\u2202w\n= 4 + 2\u03b1w.\n\nQuestion 10: Which outcome is expected after applying an appropriate L2 penalty?",
+    "options": [
+      "Training accuracy must become zero for the data shown here.",
+      "Validation performance may improve due to reduced overfitting.",
+      "All feature weights must become exactly zero.",
+      "The model stops using gradient descent under the given conditions."
+    ],
+    "correctAnswerIndex": 1,
+    "answerSource": "PDF",
+    "isApproved": true,
+    "explanation": "L2 regularization can reduce overfitting and improve validation performance, even if training accuracy decreases slightly.",
+    "createdAt": "2026-10-13T13:00:00.000Z"
+  },
+  {
+    "id": "q-dl-w7-11",
+    "courseId": "course-deep-learning-master",
+    "weekNumber": 7,
+    "originalQuestionNumber": 11,
+    "sourcePdfName": "DeepLearning_July_Oct_2026_Week7.pdf",
+    "questionText": "Case Study 3\nEnergy Consumption Prediction for an Office Campus\nA facility-management company trains a neural network to predict hourly electricity\nconsumption in an office campus.\nInputs include outside temperature, hour of day, day\ntype, and previous-hour load. The model is trained for many epochs, and both training and\nvalidation loss are monitored after every five epochs.\nEpoch\nTraining Loss\nValidation Loss\n5\n0.62\n0.70\n10\n0.44\n0.52\n15\n0.31\n0.43\n20\n0.22\n0.46\n25\n0.16\n0.51\nThe team uses early stopping because the deployed model must generalize to future days,\nnot only memorize historical operating patterns.\n\nQuestion 11: At which epoch is the validation loss minimum?",
+    "options": [
+      "Epoch 10",
+      "Epoch 20",
+      "Epoch 15",
+      "Epoch 25"
+    ],
+    "correctAnswerIndex": 2,
+    "answerSource": "PDF",
+    "isApproved": true,
+    "explanation": "The smallest validation loss is 0.43, which occurs at epoch 15.",
+    "createdAt": "2026-10-13T13:00:00.000Z"
+  },
+  {
+    "id": "q-dl-w7-12",
+    "courseId": "course-deep-learning-master",
+    "weekNumber": 7,
+    "originalQuestionNumber": 12,
+    "sourcePdfName": "DeepLearning_July_Oct_2026_Week7.pdf",
+    "questionText": "Case Study 3\nEnergy Consumption Prediction for an Office Campus\nA facility-management company trains a neural network to predict hourly electricity\nconsumption in an office campus.\nInputs include outside temperature, hour of day, day\ntype, and previous-hour load. The model is trained for many epochs, and both training and\nvalidation loss are monitored after every five epochs.\nEpoch\nTraining Loss\nValidation Loss\n5\n0.62\n0.70\n10\n0.44\n0.52\n15\n0.31\n0.43\n20\n0.22\n0.46\n25\n0.16\n0.51\nThe team uses early stopping because the deployed model must generalize to future days,\nnot only memorize historical operating patterns.\n\nQuestion 12: What pattern after epoch 15 suggests overfitting?",
+    "options": [
+      "Both losses increase together.",
+      "Training loss increases while validation loss decreases.",
+      "Training loss becomes exactly zero.",
+      "Training loss decreases while validation loss increases."
+    ],
+    "correctAnswerIndex": 3,
+    "answerSource": "PDF",
+    "isApproved": true,
+    "explanation": "After epoch 15, training loss continues decreasing but valida- tion loss increases, indicating worsening generalization.",
+    "createdAt": "2026-10-13T13:00:00.000Z"
+  },
+  {
+    "id": "q-dl-w7-13",
+    "courseId": "course-deep-learning-master",
+    "weekNumber": 7,
+    "originalQuestionNumber": 13,
+    "sourcePdfName": "DeepLearning_July_Oct_2026_Week7.pdf",
+    "questionText": "Case Study 3\nEnergy Consumption Prediction for an Office Campus\nA facility-management company trains a neural network to predict hourly electricity\nconsumption in an office campus.\nInputs include outside temperature, hour of day, day\ntype, and previous-hour load. The model is trained for many epochs, and both training and\nvalidation loss are monitored after every five epochs.\nEpoch\nTraining Loss\nValidation Loss\n5\n0.62\n0.70\n10\n0.44\n0.52\n15\n0.31\n0.43\n20\n0.22\n0.46\n25\n0.16\n0.51\nThe team uses early stopping because the deployed model must generalize to future days,\nnot only memorize historical operating patterns.\n\nQuestion 13: Why should early stopping monitor validation loss rather than only training loss?",
+    "options": [
+      "Validation loss reflects performance on unseen data.",
+      "Training loss is not computed during neural-network training.",
+      "Validation loss is always exactly equal to test loss.",
+      "Training loss cannot decrease across epochs."
+    ],
+    "correctAnswerIndex": 0,
+    "answerSource": "PDF",
+    "isApproved": true,
+    "explanation": "Validation loss is used as a proxy for generalization to data not used for weight updates.",
+    "createdAt": "2026-10-13T13:00:00.000Z"
+  },
+  {
+    "id": "q-dl-w7-14",
+    "courseId": "course-deep-learning-master",
+    "weekNumber": 7,
+    "originalQuestionNumber": 14,
+    "sourcePdfName": "DeepLearning_July_Oct_2026_Week7.pdf",
+    "questionText": "Case Study 3\nEnergy Consumption Prediction for an Office Campus\nA facility-management company trains a neural network to predict hourly electricity\nconsumption in an office campus.\nInputs include outside temperature, hour of day, day\ntype, and previous-hour load. The model is trained for many epochs, and both training and\nvalidation loss are monitored after every five epochs.\nEpoch\nTraining Loss\nValidation Loss\n5\n0.62\n0.70\n10\n0.44\n0.52\n15\n0.31\n0.43\n20\n0.22\n0.46\n25\n0.16\n0.51\nThe team uses early stopping because the deployed model must generalize to future days,\nnot only memorize historical operating patterns.\n\nQuestion 14: Which statement about early stopping is correct?",
+    "options": [
+      "It guarantees the globally optimal weights.",
+      "It acts as a regularization method by limiting over-training.",
+      "It prevents all forms of noise in input data.",
+      "It removes the need for a validation set under the case assumptions."
+    ],
+    "correctAnswerIndex": 1,
+    "answerSource": "PDF",
+    "isApproved": true,
+    "explanation": "Early stopping limits over-training and therefore acts as a regularization method.",
+    "createdAt": "2026-10-13T13:00:00.000Z"
+  },
+  {
+    "id": "q-dl-w7-15",
+    "courseId": "course-deep-learning-master",
+    "weekNumber": 7,
+    "originalQuestionNumber": 15,
+    "sourcePdfName": "DeepLearning_July_Oct_2026_Week7.pdf",
+    "questionText": "Case Study 3\nEnergy Consumption Prediction for an Office Campus\nA facility-management company trains a neural network to predict hourly electricity\nconsumption in an office campus.\nInputs include outside temperature, hour of day, day\ntype, and previous-hour load. The model is trained for many epochs, and both training and\nvalidation loss are monitored after every five epochs.\nEpoch\nTraining Loss\nValidation Loss\n5\n0.62\n0.70\n10\n0.44\n0.52\n15\n0.31\n0.43\n20\n0.22\n0.46\n25\n0.16\n0.51\nThe team uses early stopping because the deployed model must generalize to future days,\nnot only memorize historical operating patterns.\n\nQuestion 15: If the team keeps the model from epoch 25 instead of epoch 15, what is the main risk?",
+    "options": [
+      "The training set becomes larger automatically.",
+      "The model cannot produce numerical predictions.",
+      "The validation loss is ignored by definition under the case assumptions.",
+      "The model may generalize worse despite lower training loss."
+    ],
+    "correctAnswerIndex": 3,
+    "answerSource": "PDF",
+    "isApproved": true,
+    "explanation": "Selecting epoch 25 may overfit the training data and generalize worse than the epoch with minimum validation loss.",
+    "createdAt": "2026-10-13T13:00:00.000Z"
+  },
+  {
+    "id": "q-dl-w7-16",
+    "courseId": "course-deep-learning-master",
+    "weekNumber": 7,
+    "originalQuestionNumber": 16,
+    "sourcePdfName": "DeepLearning_July_Oct_2026_Week7.pdf",
+    "questionText": "Case Study 4\nProduct-Surface Image Quality Inspection\nA quality-control team trains a CNN to classify product-surface images into acceptable\nand defective classes. Only 900 labeled images are available. The training split is 70validation\nsplit is 30validation accuracy. The team applies image augmentation during training using\nsmall rotations, horizontal shifts, brightness changes, and mild zooms. Each original training\nimage generates two additional augmented images.\nThe team also adds dropout to a hidden layer. During training, each hidden unit is kept\nwith probability p = 0.8. At test time, the full network is used with appropriate scaling.\nFinally, three independently trained CNNs are averaged to create an ensemble.\n\nQuestion 16: How many original images are in the training split before augmentation?",
+    "options": [
+      "270",
+      "900",
+      "630",
+      "450"
+    ],
+    "correctAnswerIndex": 2,
+    "answerSource": "PDF",
+    "isApproved": true,
+    "explanation": "The training split contains 0.70 \u00d7 900 = 630 images.",
+    "createdAt": "2026-10-13T13:00:00.000Z"
+  },
+  {
+    "id": "q-dl-w7-17",
+    "courseId": "course-deep-learning-master",
+    "weekNumber": 7,
+    "originalQuestionNumber": 17,
+    "sourcePdfName": "DeepLearning_July_Oct_2026_Week7.pdf",
+    "questionText": "Case Study 4\nProduct-Surface Image Quality Inspection\nA quality-control team trains a CNN to classify product-surface images into acceptable\nand defective classes. Only 900 labeled images are available. The training split is 70validation\nsplit is 30validation accuracy. The team applies image augmentation during training using\nsmall rotations, horizontal shifts, brightness changes, and mild zooms. Each original training\nimage generates two additional augmented images.\nThe team also adds dropout to a hidden layer. During training, each hidden unit is kept\nwith probability p = 0.8. At test time, the full network is used with appropriate scaling.\nFinally, three independently trained CNNs are averaged to create an ensemble.\n\nQuestion 17: What is the effective training-set size after adding two augmented images per original training image?",
+    "options": [
+      "1890",
+      "1260",
+      "630",
+      "1530"
+    ],
+    "correctAnswerIndex": 0,
+    "answerSource": "PDF",
+    "isApproved": true,
+    "explanation": "Each original contributes one original plus two augmented versions, so 630 \u00d7 3 = 1890.",
+    "createdAt": "2026-10-13T13:00:00.000Z"
+  },
+  {
+    "id": "q-dl-w7-18",
+    "courseId": "course-deep-learning-master",
+    "weekNumber": 7,
+    "originalQuestionNumber": 18,
+    "sourcePdfName": "DeepLearning_July_Oct_2026_Week7.pdf",
+    "questionText": "Case Study 4\nProduct-Surface Image Quality Inspection\nA quality-control team trains a CNN to classify product-surface images into acceptable\nand defective classes. Only 900 labeled images are available. The training split is 70validation\nsplit is 30validation accuracy. The team applies image augmentation during training using\nsmall rotations, horizontal shifts, brightness changes, and mild zooms. Each original training\nimage generates two additional augmented images.\nThe team also adds dropout to a hidden layer. During training, each hidden unit is kept\nwith probability p = 0.8. At test time, the full network is used with appropriate scaling.\nFinally, three independently trained CNNs are averaged to create an ensemble.\n\nQuestion 18: What is the main reason augmentation can improve validation accuracy?",
+    "options": [
+      "It changes all class labels randomly in the stated case setting.",
+      "It removes the need to learn features.",
+      "It guarantees that training loss is zero.",
+      "It exposes the model to realistic input variations."
+    ],
+    "correctAnswerIndex": 3,
+    "answerSource": "PDF",
+    "isApproved": true,
+    "explanation": "Augmentation improves robustness by exposing the model to realistic transformations of the inputs.",
+    "createdAt": "2026-10-13T13:00:00.000Z"
+  },
+  {
+    "id": "q-dl-w7-19",
+    "courseId": "course-deep-learning-master",
+    "weekNumber": 7,
+    "originalQuestionNumber": 19,
+    "sourcePdfName": "DeepLearning_July_Oct_2026_Week7.pdf",
+    "questionText": "Case Study 4\nProduct-Surface Image Quality Inspection\nA quality-control team trains a CNN to classify product-surface images into acceptable\nand defective classes. Only 900 labeled images are available. The training split is 70validation\nsplit is 30validation accuracy. The team applies image augmentation during training using\nsmall rotations, horizontal shifts, brightness changes, and mild zooms. Each original training\nimage generates two additional augmented images.\nThe team also adds dropout to a hidden layer. During training, each hidden unit is kept\nwith probability p = 0.8. At test time, the full network is used with appropriate scaling.\nFinally, three independently trained CNNs are averaged to create an ensemble.\n\nQuestion 19: During dropout training with keep probability p = 0.8, approximately how many units remain active in a layer of 50 hidden units?",
+    "options": [
+      "25",
+      "10",
+      "40",
+      "50"
+    ],
+    "correctAnswerIndex": 2,
+    "answerSource": "PDF",
+    "isApproved": true,
+    "explanation": "The expected active units are 0.8 \u00d7 50 = 40.",
+    "createdAt": "2026-10-13T13:00:00.000Z"
+  },
+  {
+    "id": "q-dl-w7-20",
+    "courseId": "course-deep-learning-master",
+    "weekNumber": 7,
+    "originalQuestionNumber": 20,
+    "sourcePdfName": "DeepLearning_July_Oct_2026_Week7.pdf",
+    "questionText": "Case Study 4\nProduct-Surface Image Quality Inspection\nA quality-control team trains a CNN to classify product-surface images into acceptable\nand defective classes. Only 900 labeled images are available. The training split is 70validation\nsplit is 30validation accuracy. The team applies image augmentation during training using\nsmall rotations, horizontal shifts, brightness changes, and mild zooms. Each original training\nimage generates two additional augmented images.\nThe team also adds dropout to a hidden layer. During training, each hidden unit is kept\nwith probability p = 0.8. At test time, the full network is used with appropriate scaling.\nFinally, three independently trained CNNs are averaged to create an ensemble.\n\nQuestion 20: Why can averaging three independently trained CNNs improve reliability?",
+    "options": [
+      "It increases the learning rate of each CNN.",
+      "It can reduce variance by combining diverse predictions.",
+      "It removes all bias from every CNN for the data shown here.",
+      "It makes the dataset labels unnecessary."
+    ],
+    "correctAnswerIndex": 1,
+    "answerSource": "PDF",
+    "isApproved": true,
+    "explanation": "Averaging diverse models can cancel some individual errors and reduce prediction variance.",
+    "createdAt": "2026-10-13T13:00:00.000Z"
+  },
+  {
+    "id": "q-dl-w8-1",
+    "courseId": "course-deep-learning-master",
+    "weekNumber": 8,
+    "originalQuestionNumber": 1,
+    "sourcePdfName": "DeepLearning_July_Oct_2026_Week8.pdf",
+    "questionText": "Case Study 1\nInsurance Claim Approval Prediction\nAn insurance analytics team builds a deep feedforward network to classify whether a\nhealth insurance claim needs manual review. Each record contains numerical features such as\nclaim amount, hospital-risk score, patient-age group, policy duration, and number of previous\nclaims. The output layer uses a sigmoid unit because the final output is a probability.\nIn the first version, the team also uses sigmoid activations in all eight hidden layers.\nTraining starts normally but soon becomes very slow. The gradients reaching early layers\nbecome very small, especially when hidden pre-activation values are large in magnitude. The\nteam replaces the hidden activations with ReLU:\nReLU(x) = max(0, x),\nwhile keeping the sigmoid output layer.\nFor analysis, they compare sigmoid and ReLU\noutputs at x = \u22124 and x = 2. Use \u03c3(2) \u22480.88 and \u03c3(\u22124) \u22480.018.\n\nQuestion 1: Why can sigmoid hidden layers slow down training in a deep network?",
+    "options": [
+      "They can saturate and produce very small gradients.",
+      "They always output negative values under the given conditions.",
+      "They remove all nonlinear behavior.",
+      "They force every weight to become zero."
+    ],
+    "correctAnswerIndex": 0,
+    "answerSource": "PDF",
+    "isApproved": true,
+    "explanation": "Sigmoid units saturate for large positive or negative inputs, making derivatives small and causing vanishing gradients.",
+    "createdAt": "2026-10-13T13:00:00.000Z"
+  },
+  {
+    "id": "q-dl-w8-2",
+    "courseId": "course-deep-learning-master",
+    "weekNumber": 8,
+    "originalQuestionNumber": 2,
+    "sourcePdfName": "DeepLearning_July_Oct_2026_Week8.pdf",
+    "questionText": "Case Study 1\nInsurance Claim Approval Prediction\nAn insurance analytics team builds a deep feedforward network to classify whether a\nhealth insurance claim needs manual review. Each record contains numerical features such as\nclaim amount, hospital-risk score, patient-age group, policy duration, and number of previous\nclaims. The output layer uses a sigmoid unit because the final output is a probability.\nIn the first version, the team also uses sigmoid activations in all eight hidden layers.\nTraining starts normally but soon becomes very slow. The gradients reaching early layers\nbecome very small, especially when hidden pre-activation values are large in magnitude. The\nteam replaces the hidden activations with ReLU:\nReLU(x) = max(0, x),\nwhile keeping the sigmoid output layer.\nFor analysis, they compare sigmoid and ReLU\noutputs at x = \u22124 and x = 2. Use \u03c3(2) \u22480.88 and \u03c3(\u22124) \u22480.018.\n\nQuestion 2: What is ReLU(\u22124)?",
+    "options": [
+      "-4",
+      "-1",
+      "0",
+      "4"
+    ],
+    "correctAnswerIndex": 2,
+    "answerSource": "PDF",
+    "isApproved": true,
+    "explanation": "ReLU outputs zero for negative inputs, so max(0, \u22124) = 0.",
+    "createdAt": "2026-10-13T13:00:00.000Z"
+  },
+  {
+    "id": "q-dl-w8-3",
+    "courseId": "course-deep-learning-master",
+    "weekNumber": 8,
+    "originalQuestionNumber": 3,
+    "sourcePdfName": "DeepLearning_July_Oct_2026_Week8.pdf",
+    "questionText": "Case Study 1\nInsurance Claim Approval Prediction\nAn insurance analytics team builds a deep feedforward network to classify whether a\nhealth insurance claim needs manual review. Each record contains numerical features such as\nclaim amount, hospital-risk score, patient-age group, policy duration, and number of previous\nclaims. The output layer uses a sigmoid unit because the final output is a probability.\nIn the first version, the team also uses sigmoid activations in all eight hidden layers.\nTraining starts normally but soon becomes very slow. The gradients reaching early layers\nbecome very small, especially when hidden pre-activation values are large in magnitude. The\nteam replaces the hidden activations with ReLU:\nReLU(x) = max(0, x),\nwhile keeping the sigmoid output layer.\nFor analysis, they compare sigmoid and ReLU\noutputs at x = \u22124 and x = 2. Use \u03c3(2) \u22480.88 and \u03c3(\u22124) \u22480.018.\n\nQuestion 3: What is ReLU(2)?",
+    "options": [
+      "0",
+      "-2",
+      "1",
+      "2"
+    ],
+    "correctAnswerIndex": 3,
+    "answerSource": "PDF",
+    "isApproved": true,
+    "explanation": "For positive inputs, ReLU returns the input itself.",
+    "createdAt": "2026-10-13T13:00:00.000Z"
+  },
+  {
+    "id": "q-dl-w8-4",
+    "courseId": "course-deep-learning-master",
+    "weekNumber": 8,
+    "originalQuestionNumber": 4,
+    "sourcePdfName": "DeepLearning_July_Oct_2026_Week8.pdf",
+    "questionText": "Case Study 1\nInsurance Claim Approval Prediction\nAn insurance analytics team builds a deep feedforward network to classify whether a\nhealth insurance claim needs manual review. Each record contains numerical features such as\nclaim amount, hospital-risk score, patient-age group, policy duration, and number of previous\nclaims. The output layer uses a sigmoid unit because the final output is a probability.\nIn the first version, the team also uses sigmoid activations in all eight hidden layers.\nTraining starts normally but soon becomes very slow. The gradients reaching early layers\nbecome very small, especially when hidden pre-activation values are large in magnitude. The\nteam replaces the hidden activations with ReLU:\nReLU(x) = max(0, x),\nwhile keeping the sigmoid output layer.\nFor analysis, they compare sigmoid and ReLU\noutputs at x = \u22124 and x = 2. Use \u03c3(2) \u22480.88 and \u03c3(\u22124) \u22480.018.\n\nQuestion 4: Which property makes ReLU helpful for positive pre-activation values?",
+    "options": [
+      "It bounds hidden outputs between 0 and 1, as sigmoid would.",
+      "It avoids saturation and keeps a useful gradient.",
+      "It converts classification into clustering.",
+      "It makes the loss function unnecessary."
+    ],
+    "correctAnswerIndex": 1,
+    "answerSource": "PDF",
+    "isApproved": true,
+    "explanation": "ReLU has derivative 1 for positive inputs, so gradients can flow more effectively.",
+    "createdAt": "2026-10-13T13:00:00.000Z"
+  },
+  {
+    "id": "q-dl-w8-5",
+    "courseId": "course-deep-learning-master",
+    "weekNumber": 8,
+    "originalQuestionNumber": 5,
+    "sourcePdfName": "DeepLearning_July_Oct_2026_Week8.pdf",
+    "questionText": "Case Study 1\nInsurance Claim Approval Prediction\nAn insurance analytics team builds a deep feedforward network to classify whether a\nhealth insurance claim needs manual review. Each record contains numerical features such as\nclaim amount, hospital-risk score, patient-age group, policy duration, and number of previous\nclaims. The output layer uses a sigmoid unit because the final output is a probability.\nIn the first version, the team also uses sigmoid activations in all eight hidden layers.\nTraining starts normally but soon becomes very slow. The gradients reaching early layers\nbecome very small, especially when hidden pre-activation values are large in magnitude. The\nteam replaces the hidden activations with ReLU:\nReLU(x) = max(0, x),\nwhile keeping the sigmoid output layer.\nFor analysis, they compare sigmoid and ReLU\noutputs at x = \u22124 and x = 2. Use \u03c3(2) \u22480.88 and \u03c3(\u22124) \u22480.018.\n\nQuestion 5: Why is the output layer still kept as sigmoid in this binary classifier?",
+    "options": [
+      "It maps the final score to a probability-like value between 0 and 1.",
+      "It is required for every hidden layer for the described model.",
+      "It guarantees no validation error after training on every future test case.",
+      "It prevents all negative input features for the data shown here."
+    ],
+    "correctAnswerIndex": 0,
+    "answerSource": "PDF",
+    "isApproved": true,
+    "explanation": "A sigmoid output is suitable for binary probability prediction.",
+    "createdAt": "2026-10-13T13:00:00.000Z"
+  },
+  {
+    "id": "q-dl-w8-6",
+    "courseId": "course-deep-learning-master",
+    "weekNumber": 8,
+    "originalQuestionNumber": 6,
+    "sourcePdfName": "DeepLearning_July_Oct_2026_Week8.pdf",
+    "questionText": "Case Study 2\nSolar Power Forecasting for a Rooftop Plant\nA renewable-energy company predicts next-hour solar generation from irradiance, tem-\nperature, cloud-cover index, panel age, and previous-hour generation. The network has seven\nhidden layers with ReLU activations. When weights are initialized with a variance of 1, ac-\ntivations in later layers become unstable and the loss oscillates. The team compares Xavier\nand He initialization:\nXavier: Var(w) = 1\nn,\nHe: Var(w) = 2\nn,\nwhere n is the number of input connections to a neuron.\nConsider a hidden layer with\nn = 200 inputs.\n\nQuestion 6: What problem can poor initialization create in a deep network?",
+    "options": [
+      "It automatically removes all noise from data.",
+      "It can cause activations or gradients to explode or vanish.",
+      "It guarantees underfitting only under the given conditions.",
+      "It changes regression targets into class labels."
+    ],
+    "correctAnswerIndex": 1,
+    "answerSource": "PDF",
+    "isApproved": true,
+    "explanation": "Poor initialization can make signal variance grow or shrink across layers, destabilizing training.",
+    "createdAt": "2026-10-13T13:00:00.000Z"
+  },
+  {
+    "id": "q-dl-w8-7",
+    "courseId": "course-deep-learning-master",
+    "weekNumber": 8,
+    "originalQuestionNumber": 7,
+    "sourcePdfName": "DeepLearning_July_Oct_2026_Week8.pdf",
+    "questionText": "Case Study 2\nSolar Power Forecasting for a Rooftop Plant\nA renewable-energy company predicts next-hour solar generation from irradiance, tem-\nperature, cloud-cover index, panel age, and previous-hour generation. The network has seven\nhidden layers with ReLU activations. When weights are initialized with a variance of 1, ac-\ntivations in later layers become unstable and the loss oscillates. The team compares Xavier\nand He initialization:\nXavier: Var(w) = 1\nn,\nHe: Var(w) = 2\nn,\nwhere n is the number of input connections to a neuron.\nConsider a hidden layer with\nn = 200 inputs.\n\nQuestion 7: What is the Xavier variance for n = 200?",
+    "options": [
+      "0.020",
+      "0.200",
+      "0.100",
+      "0.005"
+    ],
+    "correctAnswerIndex": 3,
+    "answerSource": "PDF",
+    "isApproved": true,
+    "explanation": "Xavier variance is 1/200 = 0.005.",
+    "createdAt": "2026-10-13T13:00:00.000Z"
+  },
+  {
+    "id": "q-dl-w8-8",
+    "courseId": "course-deep-learning-master",
+    "weekNumber": 8,
+    "originalQuestionNumber": 8,
+    "sourcePdfName": "DeepLearning_July_Oct_2026_Week8.pdf",
+    "questionText": "Case Study 2\nSolar Power Forecasting for a Rooftop Plant\nA renewable-energy company predicts next-hour solar generation from irradiance, tem-\nperature, cloud-cover index, panel age, and previous-hour generation. The network has seven\nhidden layers with ReLU activations. When weights are initialized with a variance of 1, ac-\ntivations in later layers become unstable and the loss oscillates. The team compares Xavier\nand He initialization:\nXavier: Var(w) = 1\nn,\nHe: Var(w) = 2\nn,\nwhere n is the number of input connections to a neuron.\nConsider a hidden layer with\nn = 200 inputs.\n\nQuestion 8: What is the He variance for n = 200?",
+    "options": [
+      "0.010",
+      "0.005",
+      "0.020",
+      "0.100"
+    ],
+    "correctAnswerIndex": 0,
+    "answerSource": "PDF",
+    "isApproved": true,
+    "explanation": "He variance is 2/200 = 0.01.",
+    "createdAt": "2026-10-13T13:00:00.000Z"
+  },
+  {
+    "id": "q-dl-w8-9",
+    "courseId": "course-deep-learning-master",
+    "weekNumber": 8,
+    "originalQuestionNumber": 9,
+    "sourcePdfName": "DeepLearning_July_Oct_2026_Week8.pdf",
+    "questionText": "Case Study 2\nSolar Power Forecasting for a Rooftop Plant\nA renewable-energy company predicts next-hour solar generation from irradiance, tem-\nperature, cloud-cover index, panel age, and previous-hour generation. The network has seven\nhidden layers with ReLU activations. When weights are initialized with a variance of 1, ac-\ntivations in later layers become unstable and the loss oscillates. The team compares Xavier\nand He initialization:\nXavier: Var(w) = 1\nn,\nHe: Var(w) = 2\nn,\nwhere n is the number of input connections to a neuron.\nConsider a hidden layer with\nn = 200 inputs.\n\nQuestion 9: Why is He initialization more suitable for these hidden layers?",
+    "options": [
+      "The output layer uses no activation.",
+      "The network has only one layer.",
+      "The hidden layers use ReLU activations.",
+      "The target variable is binary in the stated case setting."
+    ],
+    "correctAnswerIndex": 2,
+    "answerSource": "PDF",
+    "isApproved": true,
+    "explanation": "He initialization includes the factor of 2 used for ReLU-style activations.",
+    "createdAt": "2026-10-13T13:00:00.000Z"
+  },
+  {
+    "id": "q-dl-w8-10",
+    "courseId": "course-deep-learning-master",
+    "weekNumber": 8,
+    "originalQuestionNumber": 10,
+    "sourcePdfName": "DeepLearning_July_Oct_2026_Week8.pdf",
+    "questionText": "Case Study 2\nSolar Power Forecasting for a Rooftop Plant\nA renewable-energy company predicts next-hour solar generation from irradiance, tem-\nperature, cloud-cover index, panel age, and previous-hour generation. The network has seven\nhidden layers with ReLU activations. When weights are initialized with a variance of 1, ac-\ntivations in later layers become unstable and the loss oscillates. The team compares Xavier\nand He initialization:\nXavier: Var(w) = 1\nn,\nHe: Var(w) = 2\nn,\nwhere n is the number of input connections to a neuron.\nConsider a hidden layer with\nn = 200 inputs.\n\nQuestion 10: Which observation suggests the new initialization improved training stability?",
+    "options": [
+      "Hidden activations are all forced to zero.",
+      "Loss decreases more smoothly across epochs.",
+      "No validation set is needed in the stated case setting.",
+      "All weights become identical."
+    ],
+    "correctAnswerIndex": 1,
+    "answerSource": "PDF",
+    "isApproved": true,
+    "explanation": "Smoothly decreasing loss is evidence that the optimization is more stable.",
+    "createdAt": "2026-10-13T13:00:00.000Z"
+  },
+  {
+    "id": "q-dl-w8-11",
+    "courseId": "course-deep-learning-master",
+    "weekNumber": 8,
+    "originalQuestionNumber": 11,
+    "sourcePdfName": "DeepLearning_July_Oct_2026_Week8.pdf",
+    "questionText": "Case Study 3\nWarehouse Sensor Fault Detection\nA logistics company trains a deep network to detect abnormal warehouse conditions from\ntemperature, vibration, humidity, door-event, and power-consumption sensors. The model\nhas ten hidden layers. Direct end-to-end supervised training is slow, and the earliest layers\nlearn weak representations because gradients reaching them are small.\nThe team adopts greedy layer-wise pretraining. First, the layer closest to the input is\ntrained with an unsupervised reconstruction objective.\nIts weights are then frozen, and\nthe next layer is trained using the previous layer\u2019s representation as input. This process\ncontinues until all hidden layers are pretrained. Finally, the output layer is added and the\nfull network is fine-tuned using the labeled abnormal-condition task.\n\nQuestion 11: What is the main goal of greedy layer-wise pretraining here?",
+    "options": [
+      "To delete the hidden layers before training.",
+      "To avoid using input features during both unsupervised pretraining and fine-tuning.",
+      "To give each layer a useful initialization before supervised fine-tuning.",
+      "To guarantee zero test error in this specific scenario."
+    ],
+    "correctAnswerIndex": 2,
+    "answerSource": "PDF",
+    "isApproved": true,
+    "explanation": "Layer-wise pretraining initializes hidden layers so supervised fine-tuning starts from useful representations.",
+    "createdAt": "2026-10-13T13:00:00.000Z"
+  },
+  {
+    "id": "q-dl-w8-12",
+    "courseId": "course-deep-learning-master",
+    "weekNumber": 8,
+    "originalQuestionNumber": 12,
+    "sourcePdfName": "DeepLearning_July_Oct_2026_Week8.pdf",
+    "questionText": "Case Study 3\nWarehouse Sensor Fault Detection\nA logistics company trains a deep network to detect abnormal warehouse conditions from\ntemperature, vibration, humidity, door-event, and power-consumption sensors. The model\nhas ten hidden layers. Direct end-to-end supervised training is slow, and the earliest layers\nlearn weak representations because gradients reaching them are small.\nThe team adopts greedy layer-wise pretraining. First, the layer closest to the input is\ntrained with an unsupervised reconstruction objective.\nIts weights are then frozen, and\nthe next layer is trained using the previous layer\u2019s representation as input. This process\ncontinues until all hidden layers are pretrained. Finally, the output layer is added and the\nfull network is fine-tuned using the labeled abnormal-condition task.\n\nQuestion 12: During pretraining of the second hidden layer, what happens to the already trained first layer?",
+    "options": [
+      "It is randomly reinitialized in the stated case setting.",
+      "It is removed from the model.",
+      "It is trained with the output labels only.",
+      "It is kept fixed while the next layer is trained."
+    ],
+    "correctAnswerIndex": 3,
+    "answerSource": "PDF",
+    "isApproved": true,
+    "explanation": "Greedy layer-wise pretraining freezes earlier trained layers be- fore training the next layer.",
+    "createdAt": "2026-10-13T13:00:00.000Z"
+  },
+  {
+    "id": "q-dl-w8-13",
+    "courseId": "course-deep-learning-master",
+    "weekNumber": 8,
+    "originalQuestionNumber": 13,
+    "sourcePdfName": "DeepLearning_July_Oct_2026_Week8.pdf",
+    "questionText": "Case Study 3\nWarehouse Sensor Fault Detection\nA logistics company trains a deep network to detect abnormal warehouse conditions from\ntemperature, vibration, humidity, door-event, and power-consumption sensors. The model\nhas ten hidden layers. Direct end-to-end supervised training is slow, and the earliest layers\nlearn weak representations because gradients reaching them are small.\nThe team adopts greedy layer-wise pretraining. First, the layer closest to the input is\ntrained with an unsupervised reconstruction objective.\nIts weights are then frozen, and\nthe next layer is trained using the previous layer\u2019s representation as input. This process\ncontinues until all hidden layers are pretrained. Finally, the output layer is added and the\nfull network is fine-tuned using the labeled abnormal-condition task.\n\nQuestion 13: Why is the first pretraining objective described as unsupervised?",
+    "options": [
+      "It uses the input data without using the abnormal-condition labels.",
+      "It uses no numerical features under the given conditions.",
+      "It uses only the final classifier output for the data shown here.",
+      "It requires the validation labels to be hidden in the stated case setting."
+    ],
+    "correctAnswerIndex": 0,
+    "answerSource": "PDF",
+    "isApproved": true,
+    "explanation": "Reconstruction-based pretraining uses inputs as training sig- nals rather than class labels.",
+    "createdAt": "2026-10-13T13:00:00.000Z"
+  },
+  {
+    "id": "q-dl-w8-14",
+    "courseId": "course-deep-learning-master",
+    "weekNumber": 8,
+    "originalQuestionNumber": 14,
+    "sourcePdfName": "DeepLearning_July_Oct_2026_Week8.pdf",
+    "questionText": "Case Study 3\nWarehouse Sensor Fault Detection\nA logistics company trains a deep network to detect abnormal warehouse conditions from\ntemperature, vibration, humidity, door-event, and power-consumption sensors. The model\nhas ten hidden layers. Direct end-to-end supervised training is slow, and the earliest layers\nlearn weak representations because gradients reaching them are small.\nThe team adopts greedy layer-wise pretraining. First, the layer closest to the input is\ntrained with an unsupervised reconstruction objective.\nIts weights are then frozen, and\nthe next layer is trained using the previous layer\u2019s representation as input. This process\ncontinues until all hidden layers are pretrained. Finally, the output layer is added and the\nfull network is fine-tuned using the labeled abnormal-condition task.\n\nQuestion 14: What happens after all hidden layers have been pretrained?",
+    "options": [
+      "The network is discarded under the given conditions.",
+      "The full model is fine-tuned with the supervised task objective.",
+      "The input features are replaced by random values.",
+      "The loss function is no longer required in the stated case setting."
+    ],
+    "correctAnswerIndex": 1,
+    "answerSource": "PDF",
+    "isApproved": true,
+    "explanation": "After pretraining, the complete network is trained end-to-end on the labeled objective.",
+    "createdAt": "2026-10-13T13:00:00.000Z"
+  },
+  {
+    "id": "q-dl-w8-15",
+    "courseId": "course-deep-learning-master",
+    "weekNumber": 8,
+    "originalQuestionNumber": 15,
+    "sourcePdfName": "DeepLearning_July_Oct_2026_Week8.pdf",
+    "questionText": "Case Study 3\nWarehouse Sensor Fault Detection\nA logistics company trains a deep network to detect abnormal warehouse conditions from\ntemperature, vibration, humidity, door-event, and power-consumption sensors. The model\nhas ten hidden layers. Direct end-to-end supervised training is slow, and the earliest layers\nlearn weak representations because gradients reaching them are small.\nThe team adopts greedy layer-wise pretraining. First, the layer closest to the input is\ntrained with an unsupervised reconstruction objective.\nIts weights are then frozen, and\nthe next layer is trained using the previous layer\u2019s representation as input. This process\ncontinues until all hidden layers are pretrained. Finally, the output layer is added and the\nfull network is fine-tuned using the labeled abnormal-condition task.\n\nQuestion 15: Which issue is layer-wise pretraining intended to reduce?",
+    "options": [
+      "The need to store data files in this specific scenario.",
+      "The number of output classes under the case assumptions.",
+      "The difficulty of training early layers in a very deep network.",
+      "The existence of nonlinear activations under the given conditions."
+    ],
+    "correctAnswerIndex": 2,
+    "answerSource": "PDF",
+    "isApproved": true,
+    "explanation": "Pretraining helps early layers learn useful representations be- fore full supervised fine-tuning.",
+    "createdAt": "2026-10-13T13:00:00.000Z"
+  },
+  {
+    "id": "q-dl-w8-16",
+    "courseId": "course-deep-learning-master",
+    "weekNumber": 8,
+    "originalQuestionNumber": 16,
+    "sourcePdfName": "DeepLearning_July_Oct_2026_Week8.pdf",
+    "questionText": "Case Study 4\nLaboratory Test Result Prediction\nA diagnostic laboratory predicts whether a sample needs repeat testing based on numer-\nical features such as machine confidence score, reagent age, sample temperature, processing\ntime, and previous calibration drift. The network has six hidden layers. Without batch\nnormalization, training is very sensitive to learning-rate changes because layer input distri-\nbutions shift during training.\nThe team inserts batch normalization after each linear transformation and before ReLU.\nFor one mini-batch, a neuron\u2019s pre-activation values are\n1,\n3,\n5,\n7.\nIgnore learnable scale and shift for the numerical questions.\n\nQuestion 16: What problem does batch normalization primarily address?",
+    "options": [
+      "It changes labels from binary to continuous.",
+      "It removes the need for backpropagation.",
+      "It guarantees a perfect classifier in the stated case setting.",
+      "It reduces shifting layer-input distributions during training."
+    ],
+    "correctAnswerIndex": 3,
+    "answerSource": "PDF",
+    "isApproved": true,
+    "explanation": "Batch normalization stabilizes layer input distributions across mini-batches.",
+    "createdAt": "2026-10-13T13:00:00.000Z"
+  },
+  {
+    "id": "q-dl-w8-17",
+    "courseId": "course-deep-learning-master",
+    "weekNumber": 8,
+    "originalQuestionNumber": 17,
+    "sourcePdfName": "DeepLearning_July_Oct_2026_Week8.pdf",
+    "questionText": "Case Study 4\nLaboratory Test Result Prediction\nA diagnostic laboratory predicts whether a sample needs repeat testing based on numer-\nical features such as machine confidence score, reagent age, sample temperature, processing\ntime, and previous calibration drift. The network has six hidden layers. Without batch\nnormalization, training is very sensitive to learning-rate changes because layer input distri-\nbutions shift during training.\nThe team inserts batch normalization after each linear transformation and before ReLU.\nFor one mini-batch, a neuron\u2019s pre-activation values are\n1,\n3,\n5,\n7.\nIgnore learnable scale and shift for the numerical questions.\n\nQuestion 17: What is the mean of the mini-batch values 1, 3, 5, 7?",
+    "options": [
+      "3",
+      "4",
+      "5",
+      "16"
+    ],
+    "correctAnswerIndex": 1,
+    "answerSource": "PDF",
+    "isApproved": true,
+    "explanation": "The mean is (1 + 3 + 5 + 7)/4 = 4.",
+    "createdAt": "2026-10-13T13:00:00.000Z"
+  },
+  {
+    "id": "q-dl-w8-18",
+    "courseId": "course-deep-learning-master",
+    "weekNumber": 8,
+    "originalQuestionNumber": 18,
+    "sourcePdfName": "DeepLearning_July_Oct_2026_Week8.pdf",
+    "questionText": "Case Study 4\nLaboratory Test Result Prediction\nA diagnostic laboratory predicts whether a sample needs repeat testing based on numer-\nical features such as machine confidence score, reagent age, sample temperature, processing\ntime, and previous calibration drift. The network has six hidden layers. Without batch\nnormalization, training is very sensitive to learning-rate changes because layer input distri-\nbutions shift during training.\nThe team inserts batch normalization after each linear transformation and before ReLU.\nFor one mini-batch, a neuron\u2019s pre-activation values are\n1,\n3,\n5,\n7.\nIgnore learnable scale and shift for the numerical questions.\n\nQuestion 18: What is the batch variance using the average squared deviation?",
+    "options": [
+      "4",
+      "6",
+      "3",
+      "5"
+    ],
+    "correctAnswerIndex": 3,
+    "answerSource": "PDF",
+    "isApproved": true,
+    "explanation": "The squared deviations are 9, 1, 1, 9, so the variance is 20/4 = 5.",
+    "createdAt": "2026-10-13T13:00:00.000Z"
+  },
+  {
+    "id": "q-dl-w8-19",
+    "courseId": "course-deep-learning-master",
+    "weekNumber": 8,
+    "originalQuestionNumber": 19,
+    "sourcePdfName": "DeepLearning_July_Oct_2026_Week8.pdf",
+    "questionText": "Case Study 4\nLaboratory Test Result Prediction\nA diagnostic laboratory predicts whether a sample needs repeat testing based on numer-\nical features such as machine confidence score, reagent age, sample temperature, processing\ntime, and previous calibration drift. The network has six hidden layers. Without batch\nnormalization, training is very sensitive to learning-rate changes because layer input distri-\nbutions shift during training.\nThe team inserts batch normalization after each linear transformation and before ReLU.\nFor one mini-batch, a neuron\u2019s pre-activation values are\n1,\n3,\n5,\n7.\nIgnore learnable scale and shift for the numerical questions.\n\nQuestion 19: Where is batch normalization placed in this case?",
+    "options": [
+      "Only after the output probability for the described model.",
+      "Before every input feature is collected.",
+      "Between the linear transformation and ReLU activation.",
+      "After the final prediction is thresholded."
+    ],
+    "correctAnswerIndex": 2,
+    "answerSource": "PDF",
+    "isApproved": true,
+    "explanation": "The case places batch normalization after the linear operation and before ReLU.",
+    "createdAt": "2026-10-13T13:00:00.000Z"
+  },
+  {
+    "id": "q-dl-w8-20",
+    "courseId": "course-deep-learning-master",
+    "weekNumber": 8,
+    "originalQuestionNumber": 20,
+    "sourcePdfName": "DeepLearning_July_Oct_2026_Week8.pdf",
+    "questionText": "Case Study 4\nLaboratory Test Result Prediction\nA diagnostic laboratory predicts whether a sample needs repeat testing based on numer-\nical features such as machine confidence score, reagent age, sample temperature, processing\ntime, and previous calibration drift. The network has six hidden layers. Without batch\nnormalization, training is very sensitive to learning-rate changes because layer input distri-\nbutions shift during training.\nThe team inserts batch normalization after each linear transformation and before ReLU.\nFor one mini-batch, a neuron\u2019s pre-activation values are\n1,\n3,\n5,\n7.\nIgnore learnable scale and shift for the numerical questions.\n\nQuestion 20: Why are learnable scale and shift parameters useful in batch normalization?",
+    "options": [
+      "They allow the network to choose an appropriate normalized representa- tion.",
+      "They delete the mini-batch statistics in this specific scenario.",
+      "They prevent gradients from being computed under the case assumptions.",
+      "They force every activation to remain exactly zero for the described model."
+    ],
+    "correctAnswerIndex": 0,
+    "answerSource": "PDF",
+    "isApproved": true,
+    "explanation": "The scale and shift parameters let the network learn the rep- resentation that works best after normalization.",
+    "createdAt": "2026-10-13T13:00:00.000Z"
+  },
+  {
+    "id": "q-dl-w9-1",
+    "courseId": "course-deep-learning-master",
+    "weekNumber": 9,
+    "originalQuestionNumber": 1,
+    "sourcePdfName": "DeepLearning_July_Oct_2026_Week9.pdf",
+    "questionText": "Case Study 1\nCustomer Support Ticket Classification\nA telecom company classifies customer support tickets into billing, network, plan-change,\nand device-support categories. After preprocessing 50,000 historical tickets, the team obtains\na vocabulary of 12,000 unique words. As a baseline, every word is represented using a one-\nhot vector of length equal to the vocabulary size. Each vector has exactly one entry equal\nto 1 and all other entries equal to 0. A ticket is represented using a bag-of-words vector\nobtained by adding the one-hot vectors of the words present in it.\nConsider two short processed tickets:\nTicket A: recharge failed refund\nTicket B: recharge plan refund\nBoth tickets are represented using bag-of-words vectors over the same 12,000-word vocabu-\nlary.\n\nQuestion 1: What is the length of each one-hot word vector?",
+    "options": [
+      "12,000",
+      "50,000",
+      "3",
+      "4"
+    ],
+    "correctAnswerIndex": 0,
+    "answerSource": "PDF",
+    "isApproved": true,
+    "explanation": "A one-hot word vector has length equal to the vocabulary size, which is 12,000.",
+    "createdAt": "2026-10-13T13:00:00.000Z"
+  },
+  {
+    "id": "q-dl-w9-2",
+    "courseId": "course-deep-learning-master",
+    "weekNumber": 9,
+    "originalQuestionNumber": 2,
+    "sourcePdfName": "DeepLearning_July_Oct_2026_Week9.pdf",
+    "questionText": "Case Study 1\nCustomer Support Ticket Classification\nA telecom company classifies customer support tickets into billing, network, plan-change,\nand device-support categories. After preprocessing 50,000 historical tickets, the team obtains\na vocabulary of 12,000 unique words. As a baseline, every word is represented using a one-\nhot vector of length equal to the vocabulary size. Each vector has exactly one entry equal\nto 1 and all other entries equal to 0. A ticket is represented using a bag-of-words vector\nobtained by adding the one-hot vectors of the words present in it.\nConsider two short processed tickets:\nTicket A: recharge failed refund\nTicket B: recharge plan refund\nBoth tickets are represented using bag-of-words vectors over the same 12,000-word vocabu-\nlary.\n\nQuestion 2: How many non-zero entries does a single one-hot word vector contain?",
+    "options": [
+      "12,000",
+      "0",
+      "1",
+      "3"
+    ],
+    "correctAnswerIndex": 2,
+    "answerSource": "PDF",
+    "isApproved": true,
+    "explanation": "A one-hot vector has exactly one position set to 1.",
+    "createdAt": "2026-10-13T13:00:00.000Z"
+  },
+  {
+    "id": "q-dl-w9-3",
+    "courseId": "course-deep-learning-master",
+    "weekNumber": 9,
+    "originalQuestionNumber": 3,
+    "sourcePdfName": "DeepLearning_July_Oct_2026_Week9.pdf",
+    "questionText": "Case Study 1\nCustomer Support Ticket Classification\nA telecom company classifies customer support tickets into billing, network, plan-change,\nand device-support categories. After preprocessing 50,000 historical tickets, the team obtains\na vocabulary of 12,000 unique words. As a baseline, every word is represented using a one-\nhot vector of length equal to the vocabulary size. Each vector has exactly one entry equal\nto 1 and all other entries equal to 0. A ticket is represented using a bag-of-words vector\nobtained by adding the one-hot vectors of the words present in it.\nConsider two short processed tickets:\nTicket A: recharge failed refund\nTicket B: recharge plan refund\nBoth tickets are represented using bag-of-words vectors over the same 12,000-word vocabu-\nlary.\n\nQuestion 3: How many shared words appear in Ticket A and Ticket B?",
+    "options": [
+      "1",
+      "3",
+      "0",
+      "2"
+    ],
+    "correctAnswerIndex": 3,
+    "answerSource": "PDF",
+    "isApproved": true,
+    "explanation": "The shared words are \u201crecharge\u201d and \u201crefund\u201d, so there are 2 shared words.",
+    "createdAt": "2026-10-13T13:00:00.000Z"
+  },
+  {
+    "id": "q-dl-w9-4",
+    "courseId": "course-deep-learning-master",
+    "weekNumber": 9,
+    "originalQuestionNumber": 4,
+    "sourcePdfName": "DeepLearning_July_Oct_2026_Week9.pdf",
+    "questionText": "Case Study 1\nCustomer Support Ticket Classification\nA telecom company classifies customer support tickets into billing, network, plan-change,\nand device-support categories. After preprocessing 50,000 historical tickets, the team obtains\na vocabulary of 12,000 unique words. As a baseline, every word is represented using a one-\nhot vector of length equal to the vocabulary size. Each vector has exactly one entry equal\nto 1 and all other entries equal to 0. A ticket is represented using a bag-of-words vector\nobtained by adding the one-hot vectors of the words present in it.\nConsider two short processed tickets:\nTicket A: recharge failed refund\nTicket B: recharge plan refund\nBoth tickets are represented using bag-of-words vectors over the same 12,000-word vocabu-\nlary.\n\nQuestion 4: What is a major limitation of one-hot word vectors?",
+    "options": [
+      "They are always dense for the data shown here.",
+      "They do not directly capture semantic similarity between words.",
+      "They require labels for every context window for the described model.",
+      "They have variable length for the same vocabulary."
+    ],
+    "correctAnswerIndex": 1,
+    "answerSource": "PDF",
+    "isApproved": true,
+    "explanation": "Distinct one-hot vectors are orthogonal, so they do not encode semantic relatedness.",
+    "createdAt": "2026-10-13T13:00:00.000Z"
+  },
+  {
+    "id": "q-dl-w9-5",
+    "courseId": "course-deep-learning-master",
+    "weekNumber": 9,
+    "originalQuestionNumber": 5,
+    "sourcePdfName": "DeepLearning_July_Oct_2026_Week9.pdf",
+    "questionText": "Case Study 1\nCustomer Support Ticket Classification\nA telecom company classifies customer support tickets into billing, network, plan-change,\nand device-support categories. After preprocessing 50,000 historical tickets, the team obtains\na vocabulary of 12,000 unique words. As a baseline, every word is represented using a one-\nhot vector of length equal to the vocabulary size. Each vector has exactly one entry equal\nto 1 and all other entries equal to 0. A ticket is represented using a bag-of-words vector\nobtained by adding the one-hot vectors of the words present in it.\nConsider two short processed tickets:\nTicket A: recharge failed refund\nTicket B: recharge plan refund\nBoth tickets are represented using bag-of-words vectors over the same 12,000-word vocabu-\nlary.\n\nQuestion 5: Why can cosine similarity still be useful for bag-of-words ticket vectors?",
+    "options": [
+      "It measures overlap in word usage while reducing sensitivity to length.",
+      "It learns neural hidden layers automatically from the sparse ticket vectors.",
+      "It converts sparse vectors into images in this specific scenario.",
+      "It guarantees semantic understanding under the given conditions."
+    ],
+    "correctAnswerIndex": 0,
+    "answerSource": "PDF",
+    "isApproved": true,
+    "explanation": "Cosine similarity compares vector direction, which reflects word-overlap patterns in bag-of-words vectors.",
+    "createdAt": "2026-10-13T13:00:00.000Z"
+  },
+  {
+    "id": "q-dl-w9-6",
+    "courseId": "course-deep-learning-master",
+    "weekNumber": 9,
+    "originalQuestionNumber": 6,
+    "sourcePdfName": "DeepLearning_July_Oct_2026_Week9.pdf",
+    "questionText": "Case Study 2\nProduct Review Term Analysis\nAn online retailer studies product reviews using word co-occurrence statistics.\nThe\ncleaned toy corpus contains four review fragments:\nbattery lasts long\nscreen looks bright\nbattery charges fast\nbright screen response\nThe selected vocabulary is ordered as\n[battery, screen, bright, long, fast].\nThe team uses a context window of 1, so only the immediate left and right words are counted\nas context. The co-occurrence matrix C has one row per target word and one column per\ncontext word.\n\nQuestion 6: What is the size of the co-occurrence matrix for this selected vocabulary?",
+    "options": [
+      "4 \u00d7 5",
+      "5 \u00d7 5",
+      "5 \u00d7 4",
+      "25 \u00d7 25"
+    ],
+    "correctAnswerIndex": 1,
+    "answerSource": "PDF",
+    "isApproved": true,
+    "explanation": "With five target words and the same five context words, the matrix has size 5 \u00d7 5.",
+    "createdAt": "2026-10-13T13:00:00.000Z"
+  },
+  {
+    "id": "q-dl-w9-7",
+    "courseId": "course-deep-learning-master",
+    "weekNumber": 9,
+    "originalQuestionNumber": 7,
+    "sourcePdfName": "DeepLearning_July_Oct_2026_Week9.pdf",
+    "questionText": "Case Study 2\nProduct Review Term Analysis\nAn online retailer studies product reviews using word co-occurrence statistics.\nThe\ncleaned toy corpus contains four review fragments:\nbattery lasts long\nscreen looks bright\nbattery charges fast\nbright screen response\nThe selected vocabulary is ordered as\n[battery, screen, bright, long, fast].\nThe team uses a context window of 1, so only the immediate left and right words are counted\nas context. The co-occurrence matrix C has one row per target word and one column per\ncontext word.\n\nQuestion 7: What does a context window of 1 mean?",
+    "options": [
+      "Only the target word is counted.",
+      "All words in the corpus are counted as context.",
+      "The vocabulary is reduced to one word.",
+      "Only immediate neighboring words are counted."
+    ],
+    "correctAnswerIndex": 3,
+    "answerSource": "PDF",
+    "isApproved": true,
+    "explanation": "Window size 1 uses the immediate left and right neighbors as context.",
+    "createdAt": "2026-10-13T13:00:00.000Z"
+  },
+  {
+    "id": "q-dl-w9-8",
+    "courseId": "course-deep-learning-master",
+    "weekNumber": 9,
+    "originalQuestionNumber": 8,
+    "sourcePdfName": "DeepLearning_July_Oct_2026_Week9.pdf",
+    "questionText": "Case Study 2\nProduct Review Term Analysis\nAn online retailer studies product reviews using word co-occurrence statistics.\nThe\ncleaned toy corpus contains four review fragments:\nbattery lasts long\nscreen looks bright\nbattery charges fast\nbright screen response\nThe selected vocabulary is ordered as\n[battery, screen, bright, long, fast].\nThe team uses a context window of 1, so only the immediate left and right words are counted\nas context. The co-occurrence matrix C has one row per target word and one column per\ncontext word.\n\nQuestion 8: In the fragment \u201cbattery lasts long\u201d, how many context contributions does \u201clasts\u201d receive with window size 1?",
+    "options": [
+      "2",
+      "1",
+      "0",
+      "3"
+    ],
+    "correctAnswerIndex": 0,
+    "answerSource": "PDF",
+    "isApproved": true,
+    "explanation": "The word \u201clasts\u201d has \u201cbattery\u201d on the left and \u201clong\u201d on the right.",
+    "createdAt": "2026-10-13T13:00:00.000Z"
+  },
+  {
+    "id": "q-dl-w9-9",
+    "courseId": "course-deep-learning-master",
+    "weekNumber": 9,
+    "originalQuestionNumber": 9,
+    "sourcePdfName": "DeepLearning_July_Oct_2026_Week9.pdf",
+    "questionText": "Case Study 2\nProduct Review Term Analysis\nAn online retailer studies product reviews using word co-occurrence statistics.\nThe\ncleaned toy corpus contains four review fragments:\nbattery lasts long\nscreen looks bright\nbattery charges fast\nbright screen response\nThe selected vocabulary is ordered as\n[battery, screen, bright, long, fast].\nThe team uses a context window of 1, so only the immediate left and right words are counted\nas context. The co-occurrence matrix C has one row per target word and one column per\ncontext word.\n\nQuestion 9: How many times are \u201cscreen\u201d and \u201cbright\u201d adjacent in the toy corpus?",
+    "options": [
+      "0",
+      "2",
+      "1",
+      "3"
+    ],
+    "correctAnswerIndex": 2,
+    "answerSource": "PDF",
+    "isApproved": true,
+    "explanation": "They are immediately adjacent only in \u201cbright screen re- sponse\u201d, so the count is 1.",
+    "createdAt": "2026-10-13T13:00:00.000Z"
+  },
+  {
+    "id": "q-dl-w9-10",
+    "courseId": "course-deep-learning-master",
+    "weekNumber": 9,
+    "originalQuestionNumber": 10,
+    "sourcePdfName": "DeepLearning_July_Oct_2026_Week9.pdf",
+    "questionText": "Case Study 2\nProduct Review Term Analysis\nAn online retailer studies product reviews using word co-occurrence statistics.\nThe\ncleaned toy corpus contains four review fragments:\nbattery lasts long\nscreen looks bright\nbattery charges fast\nbright screen response\nThe selected vocabulary is ordered as\n[battery, screen, bright, long, fast].\nThe team uses a context window of 1, so only the immediate left and right words are counted\nas context. The co-occurrence matrix C has one row per target word and one column per\ncontext word.\n\nQuestion 10: What does a row of the co-occurrence matrix represent?",
+    "options": [
+      "The number of labels in the classifier under the case assumptions.",
+      "The vectorial representation of a target word based on its context counts.",
+      "The one-hot position of a document category in the downstream product- review classifier.",
+      "The learning rate selected for truncated SVD."
+    ],
+    "correctAnswerIndex": 1,
+    "answerSource": "PDF",
+    "isApproved": true,
+    "explanation": "Each row stores the target word\u2019s co-occurrence counts with context words.",
+    "createdAt": "2026-10-13T13:00:00.000Z"
+  },
+  {
+    "id": "q-dl-w9-11",
+    "courseId": "course-deep-learning-master",
+    "weekNumber": 9,
+    "originalQuestionNumber": 11,
+    "sourcePdfName": "DeepLearning_July_Oct_2026_Week9.pdf",
+    "questionText": "Case Study 3\nLegal Search Term Representation\nA legal search platform builds a word-context co-occurrence matrix from court-order\nsummaries. The cleaned vocabulary has 6,000 words, so the square co-occurrence matrix X\nhas size 6000 \u00d7 6000. The matrix is sparse and high-dimensional. To obtain compact dense\nword representations, the team applies truncated SVD:\nX \u2248Uk\u03a3kV \u22a4\nk ,\nwith k = 200. The rows of Uk\u03a3k are used as dense word vectors for search and clustering. The\nplatform wants related legal terms to be compared through shared context patterns rather\nthan exact word overlap alone, which makes dimensionality reduction useful for retrieval.\n\nQuestion 11: Why is truncated SVD applied here?",
+    "options": [
+      "To increase the vocabulary size in the stated case setting.",
+      "To make every context vector one-hot.",
+      "To reduce dimensionality while preserving important structure.",
+      "To remove the need for context words in every downstream search task."
+    ],
+    "correctAnswerIndex": 2,
+    "answerSource": "PDF",
+    "isApproved": true,
+    "explanation": "Truncated SVD gives compact dense vectors that retain im- portant latent co-occurrence structure.",
+    "createdAt": "2026-10-13T13:00:00.000Z"
+  },
+  {
+    "id": "q-dl-w9-12",
+    "courseId": "course-deep-learning-master",
+    "weekNumber": 9,
+    "originalQuestionNumber": 12,
+    "sourcePdfName": "DeepLearning_July_Oct_2026_Week9.pdf",
+    "questionText": "Case Study 3\nLegal Search Term Representation\nA legal search platform builds a word-context co-occurrence matrix from court-order\nsummaries. The cleaned vocabulary has 6,000 words, so the square co-occurrence matrix X\nhas size 6000 \u00d7 6000. The matrix is sparse and high-dimensional. To obtain compact dense\nword representations, the team applies truncated SVD:\nX \u2248Uk\u03a3kV \u22a4\nk ,\nwith k = 200. The rows of Uk\u03a3k are used as dense word vectors for search and clustering. The\nplatform wants related legal terms to be compared through shared context patterns rather\nthan exact word overlap alone, which makes dimensionality reduction useful for retrieval.\n\nQuestion 12: What is the dimension of each reduced word vector when k = 200?",
+    "options": [
+      "6000",
+      "36,000,000",
+      "400",
+      "200"
+    ],
+    "correctAnswerIndex": 3,
+    "answerSource": "PDF",
+    "isApproved": true,
+    "explanation": "The reduced representation has dimension k = 200.",
+    "createdAt": "2026-10-13T13:00:00.000Z"
+  },
+  {
+    "id": "q-dl-w9-13",
+    "courseId": "course-deep-learning-master",
+    "weekNumber": 9,
+    "originalQuestionNumber": 13,
+    "sourcePdfName": "DeepLearning_July_Oct_2026_Week9.pdf",
+    "questionText": "Case Study 3\nLegal Search Term Representation\nA legal search platform builds a word-context co-occurrence matrix from court-order\nsummaries. The cleaned vocabulary has 6,000 words, so the square co-occurrence matrix X\nhas size 6000 \u00d7 6000. The matrix is sparse and high-dimensional. To obtain compact dense\nword representations, the team applies truncated SVD:\nX \u2248Uk\u03a3kV \u22a4\nk ,\nwith k = 200. The rows of Uk\u03a3k are used as dense word vectors for search and clustering. The\nplatform wants related legal terms to be compared through shared context patterns rather\nthan exact word overlap alone, which makes dimensionality reduction useful for retrieval.\n\nQuestion 13: What is the size of Uk in this case?",
+    "options": [
+      "6000 \u00d7 200",
+      "200 \u00d7 200",
+      "200 \u00d7 6000",
+      "6000 \u00d7 6000"
+    ],
+    "correctAnswerIndex": 0,
+    "answerSource": "PDF",
+    "isApproved": true,
+    "explanation": "Uk has one row per word and k columns, so its size is 6000\u00d7200.",
+    "createdAt": "2026-10-13T13:00:00.000Z"
+  },
+  {
+    "id": "q-dl-w9-14",
+    "courseId": "course-deep-learning-master",
+    "weekNumber": 9,
+    "originalQuestionNumber": 14,
+    "sourcePdfName": "DeepLearning_July_Oct_2026_Week9.pdf",
+    "questionText": "Case Study 3\nLegal Search Term Representation\nA legal search platform builds a word-context co-occurrence matrix from court-order\nsummaries. The cleaned vocabulary has 6,000 words, so the square co-occurrence matrix X\nhas size 6000 \u00d7 6000. The matrix is sparse and high-dimensional. To obtain compact dense\nword representations, the team applies truncated SVD:\nX \u2248Uk\u03a3kV \u22a4\nk ,\nwith k = 200. The rows of Uk\u03a3k are used as dense word vectors for search and clustering. The\nplatform wants related legal terms to be compared through shared context patterns rather\nthan exact word overlap alone, which makes dimensionality reduction useful for retrieval.\n\nQuestion 14: Which advantage does the reduced representation provide?",
+    "options": [
+      "It makes all unrelated words identical under the given conditions.",
+      "It can make similarity computation more efficient.",
+      "It prevents any word from appearing in context.",
+      "It removes all latent semantic structure."
+    ],
+    "correctAnswerIndex": 1,
+    "answerSource": "PDF",
+    "isApproved": true,
+    "explanation": "Comparing 200-dimensional dense vectors is more efficient than using full 6000-dimensional sparse rows.",
+    "createdAt": "2026-10-13T13:00:00.000Z"
+  },
+  {
+    "id": "q-dl-w9-15",
+    "courseId": "course-deep-learning-master",
+    "weekNumber": 9,
+    "originalQuestionNumber": 15,
+    "sourcePdfName": "DeepLearning_July_Oct_2026_Week9.pdf",
+    "questionText": "Case Study 3\nLegal Search Term Representation\nA legal search platform builds a word-context co-occurrence matrix from court-order\nsummaries. The cleaned vocabulary has 6,000 words, so the square co-occurrence matrix X\nhas size 6000 \u00d7 6000. The matrix is sparse and high-dimensional. To obtain compact dense\nword representations, the team applies truncated SVD:\nX \u2248Uk\u03a3kV \u22a4\nk ,\nwith k = 200. The rows of Uk\u03a3k are used as dense word vectors for search and clustering. The\nplatform wants related legal terms to be compared through shared context patterns rather\nthan exact word overlap alone, which makes dimensionality reduction useful for retrieval.\n\nQuestion 15: What kind of information can SVD help uncover?",
+    "options": [
+      "The number of documents in chronological order.",
+      "The exact spelling of every rare word.",
+      "The chronological order of every document.",
+      "Latent patterns in word-context usage."
+    ],
+    "correctAnswerIndex": 3,
+    "answerSource": "PDF",
+    "isApproved": true,
+    "explanation": "SVD can expose latent dimensions that summarize word- context usage patterns.",
+    "createdAt": "2026-10-13T13:00:00.000Z"
+  },
+  {
+    "id": "q-dl-w9-16",
+    "courseId": "course-deep-learning-master",
+    "weekNumber": 9,
+    "originalQuestionNumber": 16,
+    "sourcePdfName": "DeepLearning_July_Oct_2026_Week9.pdf",
+    "questionText": "Case Study 4\nSearch Term Similarity Evaluation\nA technical support company compares two word-representation models for query expan-\nsion. For a set of word pairs, human annotators assign relatedness scores. The company\ncomputes cosine similarity between the learned word vectors and then measures how well\nmodel similarities correlate with human scores.\nThe same vectors are also tested on a\nsynonym selection task: given a query word and four candidates, the system chooses the\ncandidate with the highest cosine similarity. For analogy checks of the form a : b :: c :?, the\ncommon search vector is vb \u2212va + vc.\nFor one query word q, cosine similarities to four candidates are:\nA : 0.18,\nB : 0.74,\nC : 0.41,\nD : 0.62.\n\nQuestion 16: Which candidate is selected by the synonym rule?",
+    "options": [
+      "A",
+      "B",
+      "C",
+      "D"
+    ],
+    "correctAnswerIndex": 1,
+    "answerSource": "PDF",
+    "isApproved": true,
+    "explanation": "Candidate B has the largest cosine similarity, 0.74.",
+    "createdAt": "2026-10-13T13:00:00.000Z"
+  },
+  {
+    "id": "q-dl-w9-17",
+    "courseId": "course-deep-learning-master",
+    "weekNumber": 9,
+    "originalQuestionNumber": 17,
+    "sourcePdfName": "DeepLearning_July_Oct_2026_Week9.pdf",
+    "questionText": "Case Study 4\nSearch Term Similarity Evaluation\nA technical support company compares two word-representation models for query expan-\nsion. For a set of word pairs, human annotators assign relatedness scores. The company\ncomputes cosine similarity between the learned word vectors and then measures how well\nmodel similarities correlate with human scores.\nThe same vectors are also tested on a\nsynonym selection task: given a query word and four candidates, the system chooses the\ncandidate with the highest cosine similarity. For analogy checks of the form a : b :: c :?, the\ncommon search vector is vb \u2212va + vc.\nFor one query word q, cosine similarities to four candidates are:\nA : 0.18,\nB : 0.74,\nC : 0.41,\nD : 0.62.\n\nQuestion 17: What does a high correlation with human relatedness scores indicate?",
+    "options": [
+      "The model\u2019s similarity judgments agree well with human judgments.",
+      "The vectors remain one-hot after training.",
+      "The vocabulary has only one word under the given conditions.",
+      "The model ignores cosine similarity during all human-score evaluations."
+    ],
+    "correctAnswerIndex": 0,
+    "answerSource": "PDF",
+    "isApproved": true,
+    "explanation": "Higher correlation means model similarities align better with human relatedness ratings.",
+    "createdAt": "2026-10-13T13:00:00.000Z"
+  },
+  {
+    "id": "q-dl-w9-18",
+    "courseId": "course-deep-learning-master",
+    "weekNumber": 9,
+    "originalQuestionNumber": 18,
+    "sourcePdfName": "DeepLearning_July_Oct_2026_Week9.pdf",
+    "questionText": "Case Study 4\nSearch Term Similarity Evaluation\nA technical support company compares two word-representation models for query expan-\nsion. For a set of word pairs, human annotators assign relatedness scores. The company\ncomputes cosine similarity between the learned word vectors and then measures how well\nmodel similarities correlate with human scores.\nThe same vectors are also tested on a\nsynonym selection task: given a query word and four candidates, the system chooses the\ncandidate with the highest cosine similarity. For analogy checks of the form a : b :: c :?, the\ncommon search vector is vb \u2212va + vc.\nFor one query word q, cosine similarities to four candidates are:\nA : 0.18,\nB : 0.74,\nC : 0.41,\nD : 0.62.\n\nQuestion 18: In an analogy task a : b :: c :?, what vector operation is commonly used?",
+    "options": [
+      "va + vb + vc only",
+      "va \u2212vb \u2212vc",
+      "vb \u2212va + vc",
+      "va/vb"
+    ],
+    "correctAnswerIndex": 2,
+    "answerSource": "PDF",
+    "isApproved": true,
+    "explanation": "A common analogy query searches near vb \u2212va + vc.",
+    "createdAt": "2026-10-13T13:00:00.000Z"
+  },
+  {
+    "id": "q-dl-w9-19",
+    "courseId": "course-deep-learning-master",
+    "weekNumber": 9,
+    "originalQuestionNumber": 19,
+    "sourcePdfName": "DeepLearning_July_Oct_2026_Week9.pdf",
+    "questionText": "Case Study 4\nSearch Term Similarity Evaluation\nA technical support company compares two word-representation models for query expan-\nsion. For a set of word pairs, human annotators assign relatedness scores. The company\ncomputes cosine similarity between the learned word vectors and then measures how well\nmodel similarities correlate with human scores.\nThe same vectors are also tested on a\nsynonym selection task: given a query word and four candidates, the system chooses the\ncandidate with the highest cosine similarity. For analogy checks of the form a : b :: c :?, the\ncommon search vector is vb \u2212va + vc.\nFor one query word q, cosine similarities to four candidates are:\nA : 0.18,\nB : 0.74,\nC : 0.41,\nD : 0.62.\n\nQuestion 19: Why are dense word vectors useful for query expansion?",
+    "options": [
+      "They make every vector a one-hot vector under the given conditions.",
+      "They require no training corpus under the given conditions.",
+      "They make every pair of different words orthogonal.",
+      "They can place related words near each other in vector space."
+    ],
+    "correctAnswerIndex": 3,
+    "answerSource": "PDF",
+    "isApproved": true,
+    "explanation": "Dense embeddings can encode distributional similarity, making related terms closer.",
+    "createdAt": "2026-10-13T13:00:00.000Z"
+  },
+  {
+    "id": "q-dl-w9-20",
+    "courseId": "course-deep-learning-master",
+    "weekNumber": 9,
+    "originalQuestionNumber": 20,
+    "sourcePdfName": "DeepLearning_July_Oct_2026_Week9.pdf",
+    "questionText": "Case Study 4\nSearch Term Similarity Evaluation\nA technical support company compares two word-representation models for query expan-\nsion. For a set of word pairs, human annotators assign relatedness scores. The company\ncomputes cosine similarity between the learned word vectors and then measures how well\nmodel similarities correlate with human scores.\nThe same vectors are also tested on a\nsynonym selection task: given a query word and four candidates, the system chooses the\ncandidate with the highest cosine similarity. For analogy checks of the form a : b :: c :?, the\ncommon search vector is vb \u2212va + vc.\nFor one query word q, cosine similarities to four candidates are:\nA : 0.18,\nB : 0.74,\nC : 0.41,\nD : 0.62.\n\nQuestion 20: What metric is used in the synonym rule described in the case?",
+    "options": [
+      "Training loss under the given conditions",
+      "Matrix rank only",
+      "Cosine similarity",
+      "Vocabulary size"
+    ],
+    "correctAnswerIndex": 2,
+    "answerSource": "PDF",
+    "isApproved": true,
+    "explanation": "The case chooses the candidate with the highest cosine simi- larity.",
+    "createdAt": "2026-10-13T13:00:00.000Z"
+  },
+  {
+    "id": "q-dl-w10-1",
+    "courseId": "course-deep-learning-master",
+    "weekNumber": 10,
+    "originalQuestionNumber": 1,
+    "sourcePdfName": "DeepLearning_July_Oct_2026_Week10.pdf",
+    "questionText": "Case Study 1\nWarehouse Package Image Inspection\nA logistics company uses a CNN to inspect package images for torn labels and damaged\ncorners.\nThe images are captured from a conveyor camera, and small shifts in package\nposition should not change the final inspection decision.\nEach grayscale image has size\n96 \u00d7 96. The first convolution layer applies 3 \u00d7 3 filters with stride 1 and padding 1 so that\nlocal edge and corner evidence can be detected without immediately changing spatial size.\nLater, a 2 \u00d7 2 max-pooling layer with stride 2 is used to reduce spatial size while retaining\nstrong local responses.\n\nQuestion 1: What is the output spatial size after the 3 \u00d7 3 convolution with stride 1 and padding 1?",
+    "options": [
+      "96 \u00d7 96",
+      "94 \u00d7 94",
+      "98 \u00d7 98",
+      "48 \u00d7 48"
+    ],
+    "correctAnswerIndex": 0,
+    "answerSource": "PDF",
+    "isApproved": true,
+    "explanation": "(96 + 2(1) \u22123)/1 + 1 = 96, so the spatial size is preserved.",
+    "createdAt": "2026-10-13T13:00:00.000Z"
+  },
+  {
+    "id": "q-dl-w10-2",
+    "courseId": "course-deep-learning-master",
+    "weekNumber": 10,
+    "originalQuestionNumber": 2,
+    "sourcePdfName": "DeepLearning_July_Oct_2026_Week10.pdf",
+    "questionText": "Case Study 1\nWarehouse Package Image Inspection\nA logistics company uses a CNN to inspect package images for torn labels and damaged\ncorners.\nThe images are captured from a conveyor camera, and small shifts in package\nposition should not change the final inspection decision.\nEach grayscale image has size\n96 \u00d7 96. The first convolution layer applies 3 \u00d7 3 filters with stride 1 and padding 1 so that\nlocal edge and corner evidence can be detected without immediately changing spatial size.\nLater, a 2 \u00d7 2 max-pooling layer with stride 2 is used to reduce spatial size while retaining\nstrong local responses.\n\nQuestion 2: If the convolution layer uses 24 filters, how many output feature maps are produced?",
+    "options": [
+      "3",
+      "1",
+      "24",
+      "96"
+    ],
+    "correctAnswerIndex": 2,
+    "answerSource": "PDF",
+    "isApproved": true,
+    "explanation": "Each convolution filter produces one feature map.",
+    "createdAt": "2026-10-13T13:00:00.000Z"
+  },
+  {
+    "id": "q-dl-w10-3",
+    "courseId": "course-deep-learning-master",
+    "weekNumber": 10,
+    "originalQuestionNumber": 3,
+    "sourcePdfName": "DeepLearning_July_Oct_2026_Week10.pdf",
+    "questionText": "Case Study 1\nWarehouse Package Image Inspection\nA logistics company uses a CNN to inspect package images for torn labels and damaged\ncorners.\nThe images are captured from a conveyor camera, and small shifts in package\nposition should not change the final inspection decision.\nEach grayscale image has size\n96 \u00d7 96. The first convolution layer applies 3 \u00d7 3 filters with stride 1 and padding 1 so that\nlocal edge and corner evidence can be detected without immediately changing spatial size.\nLater, a 2 \u00d7 2 max-pooling layer with stride 2 is used to reduce spatial size while retaining\nstrong local responses.\n\nQuestion 3: What is the output size after applying 2 \u00d7 2 max pooling with stride 2 to a 96 \u00d7 96 feature map?",
+    "options": [
+      "96 \u00d7 96",
+      "24 \u00d7 24",
+      "94 \u00d7 94",
+      "48 \u00d7 48"
+    ],
+    "correctAnswerIndex": 3,
+    "answerSource": "PDF",
+    "isApproved": true,
+    "explanation": "Pooling with size 2 and stride 2 halves both height and width.",
+    "createdAt": "2026-10-13T13:00:00.000Z"
+  },
+  {
+    "id": "q-dl-w10-4",
+    "courseId": "course-deep-learning-master",
+    "weekNumber": 10,
+    "originalQuestionNumber": 4,
+    "sourcePdfName": "DeepLearning_July_Oct_2026_Week10.pdf",
+    "questionText": "Case Study 1\nWarehouse Package Image Inspection\nA logistics company uses a CNN to inspect package images for torn labels and damaged\ncorners.\nThe images are captured from a conveyor camera, and small shifts in package\nposition should not change the final inspection decision.\nEach grayscale image has size\n96 \u00d7 96. The first convolution layer applies 3 \u00d7 3 filters with stride 1 and padding 1 so that\nlocal edge and corner evidence can be detected without immediately changing spatial size.\nLater, a 2 \u00d7 2 max-pooling layer with stride 2 is used to reduce spatial size while retaining\nstrong local responses.\n\nQuestion 4: Why is pooling useful for this inspection task?",
+    "options": [
+      "It removes the need for convolution under the case assumptions.",
+      "It reduces spatial size and gives some robustness to small shifts.",
+      "It increases every image dimension in the stated case setting.",
+      "It converts grayscale images into RGB images in this specific scenario."
+    ],
+    "correctAnswerIndex": 1,
+    "answerSource": "PDF",
+    "isApproved": true,
+    "explanation": "Pooling reduces resolution while preserving strong local evi- dence.",
+    "createdAt": "2026-10-13T13:00:00.000Z"
+  },
+  {
+    "id": "q-dl-w10-5",
+    "courseId": "course-deep-learning-master",
+    "weekNumber": 10,
+    "originalQuestionNumber": 5,
+    "sourcePdfName": "DeepLearning_July_Oct_2026_Week10.pdf",
+    "questionText": "Case Study 1\nWarehouse Package Image Inspection\nA logistics company uses a CNN to inspect package images for torn labels and damaged\ncorners.\nThe images are captured from a conveyor camera, and small shifts in package\nposition should not change the final inspection decision.\nEach grayscale image has size\n96 \u00d7 96. The first convolution layer applies 3 \u00d7 3 filters with stride 1 and padding 1 so that\nlocal edge and corner evidence can be detected without immediately changing spatial size.\nLater, a 2 \u00d7 2 max-pooling layer with stride 2 is used to reduce spatial size while retaining\nstrong local responses.\n\nQuestion 5: What do early convolution filters usually learn in such image tasks?",
+    "options": [
+      "Low-level patterns such as edges and corners",
+      "The final class probability only",
+      "The batch size for the described model",
+      "The optimizer momentum in this specific scenario"
+    ],
+    "correctAnswerIndex": 0,
+    "answerSource": "PDF",
+    "isApproved": true,
+    "explanation": "Early CNN filters commonly detect simple visual patterns such as edges, corners, and textures.",
+    "createdAt": "2026-10-13T13:00:00.000Z"
+  },
+  {
+    "id": "q-dl-w10-6",
+    "courseId": "course-deep-learning-master",
+    "weekNumber": 10,
+    "originalQuestionNumber": 6,
+    "sourcePdfName": "DeepLearning_July_Oct_2026_Week10.pdf",
+    "questionText": "Case Study 2\nCrop Image Disease Detection\nAn agronomy lab trains a CNN to classify crop leaf images as healthy or diseased. Re-\nsearchers need to verify that the network focuses on leaf lesions rather than background soil.\nThey use occlusion analysis by masking small patches and observing the change in disease\nprobability. They also inspect activation maps from early and deeper layers. This review is\nimportant because a high validation score alone would not show whether the model is using\nbiologically meaningful lesion patterns. The lab therefore treats visualization as a diagnostic\ntool for understanding which regions and filters influence the prediction.\n\nQuestion 6: If masking one leaf patch sharply reduces disease probability, what does that suggest?",
+    "options": [
+      "The patch is irrelevant to the prediction and all class evidence.",
+      "The patch contains information important for the prediction.",
+      "The model has no learned filters for the data shown here.",
+      "The image has no disease signal for the data shown here."
+    ],
+    "correctAnswerIndex": 1,
+    "answerSource": "PDF",
+    "isApproved": true,
+    "explanation": "A large confidence drop means the model relied strongly on that region.",
+    "createdAt": "2026-10-13T13:00:00.000Z"
+  },
+  {
+    "id": "q-dl-w10-7",
+    "courseId": "course-deep-learning-master",
+    "weekNumber": 10,
+    "originalQuestionNumber": 7,
+    "sourcePdfName": "DeepLearning_July_Oct_2026_Week10.pdf",
+    "questionText": "Case Study 2\nCrop Image Disease Detection\nAn agronomy lab trains a CNN to classify crop leaf images as healthy or diseased. Re-\nsearchers need to verify that the network focuses on leaf lesions rather than background soil.\nThey use occlusion analysis by masking small patches and observing the change in disease\nprobability. They also inspect activation maps from early and deeper layers. This review is\nimportant because a high validation score alone would not show whether the model is using\nbiologically meaningful lesion patterns. The lab therefore treats visualization as a diagnostic\ntool for understanding which regions and filters influence the prediction.\n\nQuestion 7: What is the name of the technique that masks image regions and observes prediction changes?",
+    "options": [
+      "Batch normalization",
+      "Weight decay",
+      "Dropout",
+      "Occlusion analysis"
+    ],
+    "correctAnswerIndex": 3,
+    "answerSource": "PDF",
+    "isApproved": true,
+    "explanation": "Occlusion analysis studies sensitivity by hiding parts of the input.",
+    "createdAt": "2026-10-13T13:00:00.000Z"
+  },
+  {
+    "id": "q-dl-w10-8",
+    "courseId": "course-deep-learning-master",
+    "weekNumber": 10,
+    "originalQuestionNumber": 8,
+    "sourcePdfName": "DeepLearning_July_Oct_2026_Week10.pdf",
+    "questionText": "Case Study 2\nCrop Image Disease Detection\nAn agronomy lab trains a CNN to classify crop leaf images as healthy or diseased. Re-\nsearchers need to verify that the network focuses on leaf lesions rather than background soil.\nThey use occlusion analysis by masking small patches and observing the change in disease\nprobability. They also inspect activation maps from early and deeper layers. This review is\nimportant because a high validation score alone would not show whether the model is using\nbiologically meaningful lesion patterns. The lab therefore treats visualization as a diagnostic\ntool for understanding which regions and filters influence the prediction.\n\nQuestion 8: Why are first-layer filters usually easier to interpret?",
+    "options": [
+      "They operate directly on local pixel patterns.",
+      "They contain no weights in this specific scenario.",
+      "They always output class labels.",
+      "They are identical across all filters."
+    ],
+    "correctAnswerIndex": 0,
+    "answerSource": "PDF",
+    "isApproved": true,
+    "explanation": "First-layer filters respond to visible pixel-level features such as edges and textures.",
+    "createdAt": "2026-10-13T13:00:00.000Z"
+  },
+  {
+    "id": "q-dl-w10-9",
+    "courseId": "course-deep-learning-master",
+    "weekNumber": 10,
+    "originalQuestionNumber": 9,
+    "sourcePdfName": "DeepLearning_July_Oct_2026_Week10.pdf",
+    "questionText": "Case Study 2\nCrop Image Disease Detection\nAn agronomy lab trains a CNN to classify crop leaf images as healthy or diseased. Re-\nsearchers need to verify that the network focuses on leaf lesions rather than background soil.\nThey use occlusion analysis by masking small patches and observing the change in disease\nprobability. They also inspect activation maps from early and deeper layers. This review is\nimportant because a high validation score alone would not show whether the model is using\nbiologically meaningful lesion patterns. The lab therefore treats visualization as a diagnostic\ntool for understanding which regions and filters influence the prediction.\n\nQuestion 9: A neuron that activates strongly for diseased leaves but weakly for healthy leaves has likely learned what?",
+    "options": [
+      "The file name pattern in this specific scenario",
+      "A disease-related visual feature",
+      "The learning rate schedule",
+      "A fixed image size only"
+    ],
+    "correctAnswerIndex": 1,
+    "answerSource": "PDF",
+    "isApproved": true,
+    "explanation": "Class-selective activation suggests the neuron detects a disease- relevant pattern.",
+    "createdAt": "2026-10-13T13:00:00.000Z"
+  },
+  {
+    "id": "q-dl-w10-10",
+    "courseId": "course-deep-learning-master",
+    "weekNumber": 10,
+    "originalQuestionNumber": 10,
+    "sourcePdfName": "DeepLearning_July_Oct_2026_Week10.pdf",
+    "questionText": "Case Study 2\nCrop Image Disease Detection\nAn agronomy lab trains a CNN to classify crop leaf images as healthy or diseased. Re-\nsearchers need to verify that the network focuses on leaf lesions rather than background soil.\nThey use occlusion analysis by masking small patches and observing the change in disease\nprobability. They also inspect activation maps from early and deeper layers. This review is\nimportant because a high validation score alone would not show whether the model is using\nbiologically meaningful lesion patterns. The lab therefore treats visualization as a diagnostic\ntool for understanding which regions and filters influence the prediction.\n\nQuestion 10: In gradient-based visualization, what does a large gradient magnitude for a pixel indicate?",
+    "options": [
+      "The pixel has no influence for the data shown here.",
+      "The pixel is outside the image.",
+      "The activation is sensitive to that pixel.",
+      "The filter has zero parameters."
+    ],
+    "correctAnswerIndex": 2,
+    "answerSource": "PDF",
+    "isApproved": true,
+    "explanation": "Large gradients indicate that small pixel changes can strongly affect the activation.",
+    "createdAt": "2026-10-13T13:00:00.000Z"
+  },
+  {
+    "id": "q-dl-w10-11",
+    "courseId": "course-deep-learning-master",
+    "weekNumber": 10,
+    "originalQuestionNumber": 11,
+    "sourcePdfName": "DeepLearning_July_Oct_2026_Week10.pdf",
+    "questionText": "Case Study 3\nRoad Surface Image Classification\nA transport analytics team classifies road-surface images into smooth, cracked, pothole,\nand waterlogged categories. They compare VGG-style stacks of 3 \u00d7 3 filters, Inception-style\nparallel filters, and ResNet-style skip connections. The images contain both small cracks\nand larger road patterns, so features at multiple spatial scales are important. The team is\nchoosing an architecture for a field system that must detect fine texture changes without\nlosing larger context such as standing water or pothole boundaries. The comparison focuses\non how different CNN designs build depth, combine filter sizes, and preserve gradient flow\nduring training.\n\nQuestion 11: Why does VGG prefer stacks of small 3 \u00d7 3 filters?",
+    "options": [
+      "To remove nonlinearities in the stated case setting.",
+      "To avoid feature maps throughout the network.",
+      "To force all images to be grayscale before every convolutional layer.",
+      "To build deeper representations with controlled parameter growth."
+    ],
+    "correctAnswerIndex": 3,
+    "answerSource": "PDF",
+    "isApproved": true,
+    "explanation": "Stacked small filters increase effective receptive field while keeping parameters manageable.",
+    "createdAt": "2026-10-13T13:00:00.000Z"
+  },
+  {
+    "id": "q-dl-w10-12",
+    "courseId": "course-deep-learning-master",
+    "weekNumber": 10,
+    "originalQuestionNumber": 12,
+    "sourcePdfName": "DeepLearning_July_Oct_2026_Week10.pdf",
+    "questionText": "Case Study 3\nRoad Surface Image Classification\nA transport analytics team classifies road-surface images into smooth, cracked, pothole,\nand waterlogged categories. They compare VGG-style stacks of 3 \u00d7 3 filters, Inception-style\nparallel filters, and ResNet-style skip connections. The images contain both small cracks\nand larger road patterns, so features at multiple spatial scales are important. The team is\nchoosing an architecture for a field system that must detect fine texture changes without\nlosing larger context such as standing water or pothole boundaries. The comparison focuses\non how different CNN designs build depth, combine filter sizes, and preserve gradient flow\nduring training.\n\nQuestion 12: What is the main purpose of Inception-style parallel filters?",
+    "options": [
+      "To delete pooling layers.",
+      "To use only one spatial scale.",
+      "To capture features at multiple spatial scales.",
+      "To remove convolution in this specific scenario."
+    ],
+    "correctAnswerIndex": 2,
+    "answerSource": "PDF",
+    "isApproved": true,
+    "explanation": "Parallel filters of different sizes detect fine and coarse features in the same module.",
+    "createdAt": "2026-10-13T13:00:00.000Z"
+  },
+  {
+    "id": "q-dl-w10-13",
+    "courseId": "course-deep-learning-master",
+    "weekNumber": 10,
+    "originalQuestionNumber": 13,
+    "sourcePdfName": "DeepLearning_July_Oct_2026_Week10.pdf",
+    "questionText": "Case Study 3\nRoad Surface Image Classification\nA transport analytics team classifies road-surface images into smooth, cracked, pothole,\nand waterlogged categories. They compare VGG-style stacks of 3 \u00d7 3 filters, Inception-style\nparallel filters, and ResNet-style skip connections. The images contain both small cracks\nand larger road patterns, so features at multiple spatial scales are important. The team is\nchoosing an architecture for a field system that must detect fine texture changes without\nlosing larger context such as standing water or pothole boundaries. The comparison focuses\non how different CNN designs build depth, combine filter sizes, and preserve gradient flow\nduring training.\n\nQuestion 13: Why do ResNet skip connections help very deep networks train?",
+    "options": [
+      "They improve information and gradient flow.",
+      "They remove the input image.",
+      "They replace all filters with one scalar.",
+      "They make the output size independent of stride."
+    ],
+    "correctAnswerIndex": 0,
+    "answerSource": "PDF",
+    "isApproved": true,
+    "explanation": "Skip connections provide direct paths that ease optimization in deep networks.",
+    "createdAt": "2026-10-13T13:00:00.000Z"
+  },
+  {
+    "id": "q-dl-w10-14",
+    "courseId": "course-deep-learning-master",
+    "weekNumber": 10,
+    "originalQuestionNumber": 14,
+    "sourcePdfName": "DeepLearning_July_Oct_2026_Week10.pdf",
+    "questionText": "Case Study 3\nRoad Surface Image Classification\nA transport analytics team classifies road-surface images into smooth, cracked, pothole,\nand waterlogged categories. They compare VGG-style stacks of 3 \u00d7 3 filters, Inception-style\nparallel filters, and ResNet-style skip connections. The images contain both small cracks\nand larger road patterns, so features at multiple spatial scales are important. The team is\nchoosing an architecture for a field system that must detect fine texture changes without\nlosing larger context such as standing water or pothole boundaries. The comparison focuses\non how different CNN designs build depth, combine filter sizes, and preserve gradient flow\nduring training.\n\nQuestion 14: A module computes H(x) = F(x) + x. What architecture idea does this represent?",
+    "options": [
+      "Bag-of-words",
+      "Residual learning",
+      "One-hot encoding",
+      "Average pooling only"
+    ],
+    "correctAnswerIndex": 1,
+    "answerSource": "PDF",
+    "isApproved": true,
+    "explanation": "Residual blocks add the input x to the learned residual func- tion F(x).",
+    "createdAt": "2026-10-13T13:00:00.000Z"
+  },
+  {
+    "id": "q-dl-w10-15",
+    "courseId": "course-deep-learning-master",
+    "weekNumber": 10,
+    "originalQuestionNumber": 15,
+    "sourcePdfName": "DeepLearning_July_Oct_2026_Week10.pdf",
+    "questionText": "Case Study 3\nRoad Surface Image Classification\nA transport analytics team classifies road-surface images into smooth, cracked, pothole,\nand waterlogged categories. They compare VGG-style stacks of 3 \u00d7 3 filters, Inception-style\nparallel filters, and ResNet-style skip connections. The images contain both small cracks\nand larger road patterns, so features at multiple spatial scales are important. The team is\nchoosing an architecture for a field system that must detect fine texture changes without\nlosing larger context such as standing water or pothole boundaries. The comparison focuses\non how different CNN designs build depth, combine filter sizes, and preserve gradient flow\nduring training.\n\nQuestion 15: Which architecture is most directly suited to mixing 1 \u00d7 1, 3 \u00d7 3, and 5 \u00d7 5 convolutions in parallel?",
+    "options": [
+      "Inception in this specific scenario",
+      "A single-layer perceptron",
+      "Plain linear regression",
+      "A one-hot encoder for the described model"
+    ],
+    "correctAnswerIndex": 0,
+    "answerSource": "PDF",
+    "isApproved": true,
+    "explanation": "Inception modules use parallel convolution branches with dif- ferent filter sizes.",
+    "createdAt": "2026-10-13T13:00:00.000Z"
+  },
+  {
+    "id": "q-dl-w10-16",
+    "courseId": "course-deep-learning-master",
+    "weekNumber": 10,
+    "originalQuestionNumber": 16,
+    "sourcePdfName": "DeepLearning_July_Oct_2026_Week10.pdf",
+    "questionText": "Case Study 4\nSatellite Land-Cover Image Classification\nA satellite-imaging team classifies 64 \u00d7 64 RGB patches into urban, forest, water, and\nfarmland. One convolution layer uses 32 filters, each of size 5 \u00d7 5, with stride 1 and no\npadding. Another stage uses global average pooling to reduce a final 8 \u00d7 8 \u00d7 128 feature\ntensor into a 128-dimensional vector before classification. The analysts need to estimate\nboth spatial output sizes and parameter counts before scaling the model to many satellite\ntiles. They also want to understand why global average pooling can summarize feature maps\nwithout introducing a very large dense layer.\n\nQuestion 16: What is the output spatial size after the 5\u00d75, stride 1, no-padding convolution on a 64 \u00d7 64 image?",
+    "options": [
+      "64 \u00d7 64",
+      "32 \u00d7 32",
+      "60 \u00d7 60",
+      "68 \u00d7 68"
+    ],
+    "correctAnswerIndex": 2,
+    "answerSource": "PDF",
+    "isApproved": true,
+    "explanation": "(64 \u22125)/1 + 1 = 60.",
+    "createdAt": "2026-10-13T13:00:00.000Z"
+  },
+  {
+    "id": "q-dl-w10-17",
+    "courseId": "course-deep-learning-master",
+    "weekNumber": 10,
+    "originalQuestionNumber": 17,
+    "sourcePdfName": "DeepLearning_July_Oct_2026_Week10.pdf",
+    "questionText": "Case Study 4\nSatellite Land-Cover Image Classification\nA satellite-imaging team classifies 64 \u00d7 64 RGB patches into urban, forest, water, and\nfarmland. One convolution layer uses 32 filters, each of size 5 \u00d7 5, with stride 1 and no\npadding. Another stage uses global average pooling to reduce a final 8 \u00d7 8 \u00d7 128 feature\ntensor into a 128-dimensional vector before classification. The analysts need to estimate\nboth spatial output sizes and parameter counts before scaling the model to many satellite\ntiles. They also want to understand why global average pooling can summarize feature maps\nwithout introducing a very large dense layer.\n\nQuestion 17: How many output channels are produced by 32 filters?",
+    "options": [
+      "5",
+      "32",
+      "64",
+      "128"
+    ],
+    "correctAnswerIndex": 1,
+    "answerSource": "PDF",
+    "isApproved": true,
+    "explanation": "The output depth equals the number of filters.",
+    "createdAt": "2026-10-13T13:00:00.000Z"
+  },
+  {
+    "id": "q-dl-w10-18",
+    "courseId": "course-deep-learning-master",
+    "weekNumber": 10,
+    "originalQuestionNumber": 18,
+    "sourcePdfName": "DeepLearning_July_Oct_2026_Week10.pdf",
+    "questionText": "Case Study 4\nSatellite Land-Cover Image Classification\nA satellite-imaging team classifies 64 \u00d7 64 RGB patches into urban, forest, water, and\nfarmland. One convolution layer uses 32 filters, each of size 5 \u00d7 5, with stride 1 and no\npadding. Another stage uses global average pooling to reduce a final 8 \u00d7 8 \u00d7 128 feature\ntensor into a 128-dimensional vector before classification. The analysts need to estimate\nboth spatial output sizes and parameter counts before scaling the model to many satellite\ntiles. They also want to understand why global average pooling can summarize feature maps\nwithout introducing a very large dense layer.\n\nQuestion 18: How many weight parameters are in one 5 \u00d7 5 RGB filter, ignoring bias?",
+    "options": [
+      "25",
+      "50",
+      "125",
+      "75"
+    ],
+    "correctAnswerIndex": 3,
+    "answerSource": "PDF",
+    "isApproved": true,
+    "explanation": "One filter spans all 3 input channels, so 5 \u00d7 5 \u00d7 3 = 75.",
+    "createdAt": "2026-10-13T13:00:00.000Z"
+  },
+  {
+    "id": "q-dl-w10-19",
+    "courseId": "course-deep-learning-master",
+    "weekNumber": 10,
+    "originalQuestionNumber": 19,
+    "sourcePdfName": "DeepLearning_July_Oct_2026_Week10.pdf",
+    "questionText": "Case Study 4\nSatellite Land-Cover Image Classification\nA satellite-imaging team classifies 64 \u00d7 64 RGB patches into urban, forest, water, and\nfarmland. One convolution layer uses 32 filters, each of size 5 \u00d7 5, with stride 1 and no\npadding. Another stage uses global average pooling to reduce a final 8 \u00d7 8 \u00d7 128 feature\ntensor into a 128-dimensional vector before classification. The analysts need to estimate\nboth spatial output sizes and parameter counts before scaling the model to many satellite\ntiles. They also want to understand why global average pooling can summarize feature maps\nwithout introducing a very large dense layer.\n\nQuestion 19: What is the output dimension after global average pooling of an 8 \u00d7 8 \u00d7 128 tensor?",
+    "options": [
+      "64",
+      "1024",
+      "128",
+      "8192"
+    ],
+    "correctAnswerIndex": 2,
+    "answerSource": "PDF",
+    "isApproved": true,
+    "explanation": "Global average pooling averages each of the 128 feature maps to one value.",
+    "createdAt": "2026-10-13T13:00:00.000Z"
+  },
+  {
+    "id": "q-dl-w10-20",
+    "courseId": "course-deep-learning-master",
+    "weekNumber": 10,
+    "originalQuestionNumber": 20,
+    "sourcePdfName": "DeepLearning_July_Oct_2026_Week10.pdf",
+    "questionText": "Case Study 4\nSatellite Land-Cover Image Classification\nA satellite-imaging team classifies 64 \u00d7 64 RGB patches into urban, forest, water, and\nfarmland. One convolution layer uses 32 filters, each of size 5 \u00d7 5, with stride 1 and no\npadding. Another stage uses global average pooling to reduce a final 8 \u00d7 8 \u00d7 128 feature\ntensor into a 128-dimensional vector before classification. The analysts need to estimate\nboth spatial output sizes and parameter counts before scaling the model to many satellite\ntiles. They also want to understand why global average pooling can summarize feature maps\nwithout introducing a very large dense layer.\n\nQuestion 20: Why can global average pooling reduce parameters compared with flattening followed by a large fully connected layer?",
+    "options": [
+      "It increases the spatial dimensions.",
+      "It removes all learned filters in this specific scenario.",
+      "It increases the number of dense connections.",
+      "It produces one summary value per feature map."
+    ],
+    "correctAnswerIndex": 3,
+    "answerSource": "PDF",
+    "isApproved": true,
+    "explanation": "Global average pooling avoids connecting every spatial position to a large dense layer.",
+    "createdAt": "2026-10-13T13:00:00.000Z"
+  }
+];
+
 export const INITIAL_QUESTIONS: Question[] = [
   ...IIOT_6_WEEKS_QUESTIONS,
   ...IIOT_WEEKS_7_8_9_QUESTIONS,
   ...IIOT_WEEK_10_QUESTIONS,
   ...HRM_QUESTIONS,
+  ...DL_QUESTIONS,
 ];

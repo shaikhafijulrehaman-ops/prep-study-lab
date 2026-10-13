@@ -1,0 +1,362 @@
+[
+  {
+    "id": "q-dl-w6-1",
+    "courseId": "course-deep-learning-master",
+    "weekNumber": 6,
+    "originalQuestionNumber": 1,
+    "sourcePdfName": "DeepLearning_July_Oct_2026_Week6.pdf",
+    "questionText": "Case Study 1\nMachine Reading Compression\nA maintenance team receives pairs of machine readings from an industrial unit and\nwants a compact summary that can still reconstruct the original reading reasonably well.\nTo understand the mechanics of an autoencoder, the team studies one two-feature reading\nx = (4, 2)⊤and compresses it into one latent value using an encoder\nz = 0.5x1 + 0.5x2.\nThe decoder reconstructs\nˆx1 = z,\nˆx2 = z.\nThe reconstruction loss is\nL = (x1 −ˆx1)2 + (x2 −ˆx2)2.\nThis example lets the team separate the encoder, decoder, and reconstruction-loss roles\nbefore moving to higher-dimensional machine logs.\n\nQuestion 1: What is the latent value z?",
+    "options": [
+      "3",
+      "2",
+      "4",
+      "1"
+    ],
+    "correctAnswerIndex": 0,
+    "answerSource": "PDF",
+    "isApproved": true,
+    "explanation": "z = 0.5(4) + 0.5(2) = 3."
+  },
+  {
+    "id": "q-dl-w6-2",
+    "courseId": "course-deep-learning-master",
+    "weekNumber": 6,
+    "originalQuestionNumber": 2,
+    "sourcePdfName": "DeepLearning_July_Oct_2026_Week6.pdf",
+    "questionText": "Case Study 1\nMachine Reading Compression\nA maintenance team receives pairs of machine readings from an industrial unit and\nwants a compact summary that can still reconstruct the original reading reasonably well.\nTo understand the mechanics of an autoencoder, the team studies one two-feature reading\nx = (4, 2)⊤and compresses it into one latent value using an encoder\nz = 0.5x1 + 0.5x2.\nThe decoder reconstructs\nˆx1 = z,\nˆx2 = z.\nThe reconstruction loss is\nL = (x1 −ˆx1)2 + (x2 −ˆx2)2.\nThis example lets the team separate the encoder, decoder, and reconstruction-loss roles\nbefore moving to higher-dimensional machine logs.\n\nQuestion 2: What is the reconstructed vector ˆx?",
+    "options": [
+      "(2, 2)⊤",
+      "(3, 3)⊤",
+      "(4, 4)⊤",
+      "(3, 2)⊤"
+    ],
+    "correctAnswerIndex": 1,
+    "answerSource": "PDF",
+    "isApproved": true,
+    "explanation": "The decoder sets both reconstructed coordinates equal to z = 3."
+  },
+  {
+    "id": "q-dl-w6-3",
+    "courseId": "course-deep-learning-master",
+    "weekNumber": 6,
+    "originalQuestionNumber": 3,
+    "sourcePdfName": "DeepLearning_July_Oct_2026_Week6.pdf",
+    "questionText": "Case Study 1\nMachine Reading Compression\nA maintenance team receives pairs of machine readings from an industrial unit and\nwants a compact summary that can still reconstruct the original reading reasonably well.\nTo understand the mechanics of an autoencoder, the team studies one two-feature reading\nx = (4, 2)⊤and compresses it into one latent value using an encoder\nz = 0.5x1 + 0.5x2.\nThe decoder reconstructs\nˆx1 = z,\nˆx2 = z.\nThe reconstruction loss is\nL = (x1 −ˆx1)2 + (x2 −ˆx2)2.\nThis example lets the team separate the encoder, decoder, and reconstruction-loss roles\nbefore moving to higher-dimensional machine logs.\n\nQuestion 3: What is the reconstruction loss?",
+    "options": [
+      "4",
+      "1",
+      "2",
+      "0"
+    ],
+    "correctAnswerIndex": 2,
+    "answerSource": "PDF",
+    "isApproved": true,
+    "explanation": "L = (4 −3)2 + (2 −3)2 = 1 + 1 = 2."
+  },
+  {
+    "id": "q-dl-w6-4",
+    "courseId": "course-deep-learning-master",
+    "weekNumber": 6,
+    "originalQuestionNumber": 4,
+    "sourcePdfName": "DeepLearning_July_Oct_2026_Week6.pdf",
+    "questionText": "Case Study 1\nMachine Reading Compression\nA maintenance team receives pairs of machine readings from an industrial unit and\nwants a compact summary that can still reconstruct the original reading reasonably well.\nTo understand the mechanics of an autoencoder, the team studies one two-feature reading\nx = (4, 2)⊤and compresses it into one latent value using an encoder\nz = 0.5x1 + 0.5x2.\nThe decoder reconstructs\nˆx1 = z,\nˆx2 = z.\nThe reconstruction loss is\nL = (x1 −ˆx1)2 + (x2 −ˆx2)2.\nThis example lets the team separate the encoder, decoder, and reconstruction-loss roles\nbefore moving to higher-dimensional machine logs.\n\nQuestion 4: Which part of the autoencoder creates the latent representation?",
+    "options": [
+      "The decoder output layer",
+      "The reconstruction loss",
+      "The target label table",
+      "The encoder layer"
+    ],
+    "correctAnswerIndex": 3,
+    "answerSource": "PDF",
+    "isApproved": true,
+    "explanation": "The encoder maps the input x into the latent value z."
+  },
+  {
+    "id": "q-dl-w6-5",
+    "courseId": "course-deep-learning-master",
+    "weekNumber": 6,
+    "originalQuestionNumber": 5,
+    "sourcePdfName": "DeepLearning_July_Oct_2026_Week6.pdf",
+    "questionText": "Case Study 1\nMachine Reading Compression\nA maintenance team receives pairs of machine readings from an industrial unit and\nwants a compact summary that can still reconstruct the original reading reasonably well.\nTo understand the mechanics of an autoencoder, the team studies one two-feature reading\nx = (4, 2)⊤and compresses it into one latent value using an encoder\nz = 0.5x1 + 0.5x2.\nThe decoder reconstructs\nˆx1 = z,\nˆx2 = z.\nThe reconstruction loss is\nL = (x1 −ˆx1)2 + (x2 −ˆx2)2.\nThis example lets the team separate the encoder, decoder, and reconstruction-loss roles\nbefore moving to higher-dimensional machine logs.\n\nQuestion 5: What is the training objective of this autoencoder?",
+    "options": [
+      "To minimize reconstruction error.",
+      "To assign external class labels before any reconstruction is attempted.",
+      "To ignore the input features.",
+      "To make every latent value zero."
+    ],
+    "correctAnswerIndex": 0,
+    "answerSource": "PDF",
+    "isApproved": true,
+    "explanation": "Autoencoders are trained to reconstruct their inputs with small error."
+  },
+  {
+    "id": "q-dl-w6-6",
+    "courseId": "course-deep-learning-master",
+    "weekNumber": 6,
+    "originalQuestionNumber": 6,
+    "sourcePdfName": "DeepLearning_July_Oct_2026_Week6.pdf",
+    "questionText": "Case Study 2\nReport Feature Compression\nA document system summarizes operational reports using five numerical features such\nas length, keyword density, and section-level counts. The team wants a compact represen-\ntation that captures the main structure without storing all five features directly. It uses 5\ninput features and compresses them into a latent representation with 2 hidden units before\nreconstructing the 5 features. The model is undercomplete because the latent dimension is\nsmaller than the input dimension. The setup is used to discuss why compression can force\nthe model to learn useful structure instead of simply copying every input coordinate.\n\nQuestion 6: What is the input dimension?",
+    "options": [
+      "2",
+      "5",
+      "7",
+      "10"
+    ],
+    "correctAnswerIndex": 1,
+    "answerSource": "PDF",
+    "isApproved": true,
+    "explanation": "The case study states that there are 5 input features."
+  },
+  {
+    "id": "q-dl-w6-7",
+    "courseId": "course-deep-learning-master",
+    "weekNumber": 6,
+    "originalQuestionNumber": 7,
+    "sourcePdfName": "DeepLearning_July_Oct_2026_Week6.pdf",
+    "questionText": "Case Study 2\nReport Feature Compression\nA document system summarizes operational reports using five numerical features such\nas length, keyword density, and section-level counts. The team wants a compact represen-\ntation that captures the main structure without storing all five features directly. It uses 5\ninput features and compresses them into a latent representation with 2 hidden units before\nreconstructing the 5 features. The model is undercomplete because the latent dimension is\nsmaller than the input dimension. The setup is used to discuss why compression can force\nthe model to learn useful structure instead of simply copying every input coordinate.\n\nQuestion 7: What is the latent dimension?",
+    "options": [
+      "1",
+      "5",
+      "2",
+      "7"
+    ],
+    "correctAnswerIndex": 2,
+    "answerSource": "PDF",
+    "isApproved": true,
+    "explanation": "The latent layer has 2 hidden units."
+  },
+  {
+    "id": "q-dl-w6-8",
+    "courseId": "course-deep-learning-master",
+    "weekNumber": 6,
+    "originalQuestionNumber": 8,
+    "sourcePdfName": "DeepLearning_July_Oct_2026_Week6.pdf",
+    "questionText": "Case Study 2\nReport Feature Compression\nA document system summarizes operational reports using five numerical features such\nas length, keyword density, and section-level counts. The team wants a compact represen-\ntation that captures the main structure without storing all five features directly. It uses 5\ninput features and compresses them into a latent representation with 2 hidden units before\nreconstructing the 5 features. The model is undercomplete because the latent dimension is\nsmaller than the input dimension. The setup is used to discuss why compression can force\nthe model to learn useful structure instead of simply copying every input coordinate.\n\nQuestion 8: Why is the model undercomplete?",
+    "options": [
+      "The decoder has no reconstruction target.",
+      "The output layer ignores all reconstructed features during training.",
+      "The input has fewer features than the latent layer.",
+      "The latent dimension is smaller than the input dimension."
+    ],
+    "correctAnswerIndex": 3,
+    "answerSource": "PDF",
+    "isApproved": true,
+    "explanation": "An undercomplete autoencoder compresses inputs into a lower- dimensional latent representation."
+  },
+  {
+    "id": "q-dl-w6-9",
+    "courseId": "course-deep-learning-master",
+    "weekNumber": 6,
+    "originalQuestionNumber": 9,
+    "sourcePdfName": "DeepLearning_July_Oct_2026_Week6.pdf",
+    "questionText": "Case Study 2\nReport Feature Compression\nA document system summarizes operational reports using five numerical features such\nas length, keyword density, and section-level counts. The team wants a compact represen-\ntation that captures the main structure without storing all five features directly. It uses 5\ninput features and compresses them into a latent representation with 2 hidden units before\nreconstructing the 5 features. The model is undercomplete because the latent dimension is\nsmaller than the input dimension. The setup is used to discuss why compression can force\nthe model to learn useful structure instead of simply copying every input coordinate.\n\nQuestion 9: Which output dimension is required to reconstruct the original input?",
+    "options": [
+      "5",
+      "1",
+      "2",
+      "3"
+    ],
+    "correctAnswerIndex": 0,
+    "answerSource": "PDF",
+    "isApproved": true,
+    "explanation": "The reconstruction must have the same dimension as the 5- feature input."
+  },
+  {
+    "id": "q-dl-w6-10",
+    "courseId": "course-deep-learning-master",
+    "weekNumber": 6,
+    "originalQuestionNumber": 10,
+    "sourcePdfName": "DeepLearning_July_Oct_2026_Week6.pdf",
+    "questionText": "Case Study 2\nReport Feature Compression\nA document system summarizes operational reports using five numerical features such\nas length, keyword density, and section-level counts. The team wants a compact represen-\ntation that captures the main structure without storing all five features directly. It uses 5\ninput features and compresses them into a latent representation with 2 hidden units before\nreconstructing the 5 features. The model is undercomplete because the latent dimension is\nsmaller than the input dimension. The setup is used to discuss why compression can force\nthe model to learn useful structure instead of simply copying every input coordinate.\n\nQuestion 10: How is this related to PCA in the linear case?",
+    "options": [
+      "It must always produce a one-hot class label.",
+      "It can learn a low-dimensional representation similar to PCA.",
+      "It removes the need for reconstruction in every training example.",
+      "It makes every component have zero variance."
+    ],
+    "correctAnswerIndex": 1,
+    "answerSource": "PDF",
+    "isApproved": true,
+    "explanation": "A linear undercomplete autoencoder can learn a subspace re- lated to PCA."
+  },
+  {
+    "id": "q-dl-w6-11",
+    "courseId": "course-deep-learning-master",
+    "weekNumber": 6,
+    "originalQuestionNumber": 11,
+    "sourcePdfName": "DeepLearning_July_Oct_2026_Week6.pdf",
+    "questionText": "Case Study 3\nMeter Reading Recovery\nA utility company receives meter readings that sometimes lose one coordinate because of\ntemporary communication noise. To make the representation robust, it trains an autoencoder\nusing corrupted inputs but clean targets. For one example, the clean reading is\nx = (5, 1)⊤,\nand the corrupted input is\n˜x = (5, 0)⊤.\nThe model outputs ˆx = (4, 1)⊤, and the loss is\nL = (x1 −ˆx1)2 + (x2 −ˆx2)2.\nDuring training, the encoder sees the corrupted vector, but the loss is measured against the\nclean reading so the model learns to recover stable structure.\n\nQuestion 11: Which vector is given to the encoder during training?",
+    "options": [
+      "x = (5, 1)⊤",
+      "ˆx = (4, 1)⊤",
+      "(0, 0)⊤",
+      "˜x = (5, 0)⊤"
+    ],
+    "correctAnswerIndex": 3,
+    "answerSource": "PDF",
+    "isApproved": true,
+    "explanation": "A denoising autoencoder receives the corrupted input ˜x."
+  },
+  {
+    "id": "q-dl-w6-12",
+    "courseId": "course-deep-learning-master",
+    "weekNumber": 6,
+    "originalQuestionNumber": 12,
+    "sourcePdfName": "DeepLearning_July_Oct_2026_Week6.pdf",
+    "questionText": "Case Study 3\nMeter Reading Recovery\nA utility company receives meter readings that sometimes lose one coordinate because of\ntemporary communication noise. To make the representation robust, it trains an autoencoder\nusing corrupted inputs but clean targets. For one example, the clean reading is\nx = (5, 1)⊤,\nand the corrupted input is\n˜x = (5, 0)⊤.\nThe model outputs ˆx = (4, 1)⊤, and the loss is\nL = (x1 −ˆx1)2 + (x2 −ˆx2)2.\nDuring training, the encoder sees the corrupted vector, but the loss is measured against the\nclean reading so the model learns to recover stable structure.\n\nQuestion 12: Which vector is the clean reconstruction target?",
+    "options": [
+      "(4, 1)⊤",
+      "(5, 0)⊤",
+      "(5, 1)⊤",
+      "(0, 1)⊤"
+    ],
+    "correctAnswerIndex": 2,
+    "answerSource": "PDF",
+    "isApproved": true,
+    "explanation": "The clean target is x = (5, 1)⊤."
+  },
+  {
+    "id": "q-dl-w6-13",
+    "courseId": "course-deep-learning-master",
+    "weekNumber": 6,
+    "originalQuestionNumber": 13,
+    "sourcePdfName": "DeepLearning_July_Oct_2026_Week6.pdf",
+    "questionText": "Case Study 3\nMeter Reading Recovery\nA utility company receives meter readings that sometimes lose one coordinate because of\ntemporary communication noise. To make the representation robust, it trains an autoencoder\nusing corrupted inputs but clean targets. For one example, the clean reading is\nx = (5, 1)⊤,\nand the corrupted input is\n˜x = (5, 0)⊤.\nThe model outputs ˆx = (4, 1)⊤, and the loss is\nL = (x1 −ˆx1)2 + (x2 −ˆx2)2.\nDuring training, the encoder sees the corrupted vector, but the loss is measured against the\nclean reading so the model learns to recover stable structure.\n\nQuestion 13: What is the reconstruction loss?",
+    "options": [
+      "0",
+      "2",
+      "4",
+      "1"
+    ],
+    "correctAnswerIndex": 3,
+    "answerSource": "PDF",
+    "isApproved": true,
+    "explanation": "L = (5 −4)2 + (1 −1)2 = 1."
+  },
+  {
+    "id": "q-dl-w6-14",
+    "courseId": "course-deep-learning-master",
+    "weekNumber": 6,
+    "originalQuestionNumber": 14,
+    "sourcePdfName": "DeepLearning_July_Oct_2026_Week6.pdf",
+    "questionText": "Case Study 3\nMeter Reading Recovery\nA utility company receives meter readings that sometimes lose one coordinate because of\ntemporary communication noise. To make the representation robust, it trains an autoencoder\nusing corrupted inputs but clean targets. For one example, the clean reading is\nx = (5, 1)⊤,\nand the corrupted input is\n˜x = (5, 0)⊤.\nThe model outputs ˆx = (4, 1)⊤, and the loss is\nL = (x1 −ˆx1)2 + (x2 −ˆx2)2.\nDuring training, the encoder sees the corrupted vector, but the loss is measured against the\nclean reading so the model learns to recover stable structure.\n\nQuestion 14: What is the purpose of using corrupted inputs?",
+    "options": [
+      "To train the model to recover clean structure.",
+      "To remove the decoder from the network before training begins.",
+      "To force every output to equal zero.",
+      "To avoid computing any reconstruction loss."
+    ],
+    "correctAnswerIndex": 0,
+    "answerSource": "PDF",
+    "isApproved": true,
+    "explanation": "Denoising autoencoders learn to reconstruct clean inputs from corrupted versions."
+  },
+  {
+    "id": "q-dl-w6-15",
+    "courseId": "course-deep-learning-master",
+    "weekNumber": 6,
+    "originalQuestionNumber": 15,
+    "sourcePdfName": "DeepLearning_July_Oct_2026_Week6.pdf",
+    "questionText": "Case Study 3\nMeter Reading Recovery\nA utility company receives meter readings that sometimes lose one coordinate because of\ntemporary communication noise. To make the representation robust, it trains an autoencoder\nusing corrupted inputs but clean targets. For one example, the clean reading is\nx = (5, 1)⊤,\nand the corrupted input is\n˜x = (5, 0)⊤.\nThe model outputs ˆx = (4, 1)⊤, and the loss is\nL = (x1 −ˆx1)2 + (x2 −ˆx2)2.\nDuring training, the encoder sees the corrupted vector, but the loss is measured against the\nclean reading so the model learns to recover stable structure.\n\nQuestion 15: Which statement best describes this training setup?",
+    "options": [
+      "The model ignores all input values.",
+      "The model maps noisy input toward a clean target.",
+      "The target is the corrupted vector only.",
+      "The encoder output is used as the final label for every noisy example."
+    ],
+    "correctAnswerIndex": 1,
+    "answerSource": "PDF",
+    "isApproved": true,
+    "explanation": "The corrupted vector is input, while the clean vector is the target."
+  },
+  {
+    "id": "q-dl-w6-16",
+    "courseId": "course-deep-learning-master",
+    "weekNumber": 6,
+    "originalQuestionNumber": 16,
+    "sourcePdfName": "DeepLearning_July_Oct_2026_Week6.pdf",
+    "questionText": "Case Study 4\nCompact Representation Control\nA research group trains an autoencoder for compact feature learning, but plain recon-\nstruction alone produces representations that are too active and sensitive for the intended\nanalysis.\nTo shape the latent representation, the group starts with reconstruction loss\nLrec = 0.8. It adds a sparsity penalty of 0.3 with weight λ = 2, so\nLsparse = Lrec + λ(0.3).\nIn a second experiment, the group uses a contractive penalty to make the representation\nless sensitive to small input changes. The two penalties illustrate different regularization\ngoals: sparsity encourages only a few hidden units to respond strongly, while contractive\nregularization encourages stability.\n\nQuestion 16: What is the sparsity penalty contribution?",
+    "options": [
+      "0.3",
+      "0.8",
+      "0.6",
+      "1.1"
+    ],
+    "correctAnswerIndex": 2,
+    "answerSource": "PDF",
+    "isApproved": true,
+    "explanation": "The weighted penalty is λ(0.3) = 2(0.3) = 0.6."
+  },
+  {
+    "id": "q-dl-w6-17",
+    "courseId": "course-deep-learning-master",
+    "weekNumber": 6,
+    "originalQuestionNumber": 17,
+    "sourcePdfName": "DeepLearning_July_Oct_2026_Week6.pdf",
+    "questionText": "Case Study 4\nCompact Representation Control\nA research group trains an autoencoder for compact feature learning, but plain recon-\nstruction alone produces representations that are too active and sensitive for the intended\nanalysis.\nTo shape the latent representation, the group starts with reconstruction loss\nLrec = 0.8. It adds a sparsity penalty of 0.3 with weight λ = 2, so\nLsparse = Lrec + λ(0.3).\nIn a second experiment, the group uses a contractive penalty to make the representation\nless sensitive to small input changes. The two penalties illustrate different regularization\ngoals: sparsity encourages only a few hidden units to respond strongly, while contractive\nregularization encourages stability.\n\nQuestion 17: What is Lsparse?",
+    "options": [
+      "1.4",
+      "1.1",
+      "0.8",
+      "0.6"
+    ],
+    "correctAnswerIndex": 0,
+    "answerSource": "PDF",
+    "isApproved": true,
+    "explanation": "Lsparse = 0.8 + 0.6 = 1.4."
+  },
+  {
+    "id": "q-dl-w6-18",
+    "courseId": "course-deep-learning-master",
+    "weekNumber": 6,
+    "originalQuestionNumber": 18,
+    "sourcePdfName": "DeepLearning_July_Oct_2026_Week6.pdf",
+    "questionText": "Case Study 4\nCompact Representation Control\nA research group trains an autoencoder for compact feature learning, but plain recon-\nstruction alone produces representations that are too active and sensitive for the intended\nanalysis.\nTo shape the latent representation, the group starts with reconstruction loss\nLrec = 0.8. It adds a sparsity penalty of 0.3 with weight λ = 2, so\nLsparse = Lrec + λ(0.3).\nIn a second experiment, the group uses a contractive penalty to make the representation\nless sensitive to small input changes. The two penalties illustrate different regularization\ngoals: sparsity encourages only a few hidden units to respond strongly, while contractive\nregularization encourages stability.\n\nQuestion 18: What does sparse regularization encourage?",
+    "options": [
+      "Every hidden unit must always be active during the full reconstruction process.",
+      "The decoder is removed from the model.",
+      "Only a small number of hidden units should be active.",
+      "The input dimension must equal zero."
+    ],
+    "correctAnswerIndex": 2,
+    "answerSource": "PDF",
+    "isApproved": true,
+    "explanation": "Sparse autoencoders encourage most hidden activations to be small or inactive."
+  },
+  {
+    "id": "q-dl-w6-19",
+    "courseId": "course-deep-learning-master",
+    "weekNumber": 6,
+    "originalQuestionNumber": 19,
+    "sourcePdfName": "DeepLearning_July_Oct_2026_Week6.pdf",
+    "questionText": "Case Study 4\nCompact Representation Control\nA research group trains an autoencoder for compact feature learning, but plain recon-\nstruction alone produces representations that are too active and sensitive for the intended\nanalysis.\nTo shape the latent representation, the group starts with reconstruction loss\nLrec = 0.8. It adds a sparsity penalty of 0.3 with weight λ = 2, so\nLsparse = Lrec + λ(0.3).\nIn a second experiment, the group uses a contractive penalty to make the representation\nless sensitive to small input changes. The two penalties illustrate different regularization\ngoals: sparsity encourages only a few hidden units to respond strongly, while contractive\nregularization encourages stability.\n\nQuestion 19: What is the goal of a contractive penalty?",
+    "options": [
+      "To force reconstruction loss to be ignored throughout all training.",
+      "To make all weights increase without bound after every input change.",
+      "To replace the encoder with class labels.",
+      "To make the representation less sensitive to small input changes."
+    ],
+    "correctAnswerIndex": 3,
+    "answerSource": "PDF",
+    "isApproved": true,
+    "explanation": "Contractive penalties encourage stable representations under small input perturbations."
+  },
+  {
+    "id": "q-dl-w6-20",
+    "courseId": "course-deep-learning-master",
+    "weekNumber": 6,
+    "originalQuestionNumber": 20,
+    "sourcePdfName": "DeepLearning_July_Oct_2026_Week6.pdf",
+    "questionText": "Case Study 4\nCompact Representation Control\nA research group trains an autoencoder for compact feature learning, but plain recon-\nstruction alone produces representations that are too active and sensitive for the intended\nanalysis.\nTo shape the latent representation, the group starts with reconstruction loss\nLrec = 0.8. It adds a sparsity penalty of 0.3 with weight λ = 2, so\nLsparse = Lrec + λ(0.3).\nIn a second experiment, the group uses a contractive penalty to make the representation\nless sensitive to small input changes. The two penalties illustrate different regularization\ngoals: sparsity encourages only a few hidden units to respond strongly, while contractive\nregularization encourages stability.\n\nQuestion 20: Why are such penalties added to the reconstruction loss?",
+    "options": [
+      "To remove all training data from the objective.",
+      "To control the learned representation beyond plain reconstruction.",
+      "To stop the model from producing reconstructions.",
+      "To make every feature identical to every other feature before encoding."
+    ],
+    "correctAnswerIndex": 1,
+    "answerSource": "PDF",
+    "isApproved": true,
+    "explanation": "Regularization shapes what the autoencoder learns in addition to minimizing reconstruction error."
+  }
+]

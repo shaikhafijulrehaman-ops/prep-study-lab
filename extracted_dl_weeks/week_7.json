@@ -1,0 +1,362 @@
+[
+  {
+    "id": "q-dl-w7-1",
+    "courseId": "course-deep-learning-master",
+    "weekNumber": 7,
+    "originalQuestionNumber": 1,
+    "sourcePdfName": "DeepLearning_July_Oct_2026_Week7.pdf",
+    "questionText": "Case Study 1\nWater Demand Forecasting for a Residential Zone\nA municipal analytics team builds models to predict next-day water demand for a res-\nidential zone. Each input contains temperature, weekday indicator, previous-day demand,\nand a local festival indicator. The team compares a simple linear model and a highly flex-\nible neural network. The simple model gives similar predictions when trained on different\nsamples, but its average prediction is far from the true demand. The neural network fits the\ntraining data very closely, but its predictions change substantially when trained on different\nsamples.\nFor one input condition, the neural network predictions from four training subsets are\n41,\n49,\n45,\n53\nthousand liters, while the true demand is 48 thousand liters. The expected test error for this\ncondition is decomposed as\nE\nh\n(y −ˆf(x))2i\n= Bias2 + Variance + σ2.\n\nQuestion 1: Which description best matches the simple linear model?",
+    "options": [
+      "High bias and low variance",
+      "Low bias and high variance",
+      "Low bias and low variance",
+      "High variance and zero bias"
+    ],
+    "correctAnswerIndex": 0,
+    "answerSource": "PDF",
+    "isApproved": true,
+    "explanation": "Similar predictions across samples indicate low variance, while being far from the true demand indicates high bias."
+  },
+  {
+    "id": "q-dl-w7-2",
+    "courseId": "course-deep-learning-master",
+    "weekNumber": 7,
+    "originalQuestionNumber": 2,
+    "sourcePdfName": "DeepLearning_July_Oct_2026_Week7.pdf",
+    "questionText": "Case Study 1\nWater Demand Forecasting for a Residential Zone\nA municipal analytics team builds models to predict next-day water demand for a res-\nidential zone. Each input contains temperature, weekday indicator, previous-day demand,\nand a local festival indicator. The team compares a simple linear model and a highly flex-\nible neural network. The simple model gives similar predictions when trained on different\nsamples, but its average prediction is far from the true demand. The neural network fits the\ntraining data very closely, but its predictions change substantially when trained on different\nsamples.\nFor one input condition, the neural network predictions from four training subsets are\n41,\n49,\n45,\n53\nthousand liters, while the true demand is 48 thousand liters. The expected test error for this\ncondition is decomposed as\nE\nh\n(y −ˆf(x))2i\n= Bias2 + Variance + σ2.\n\nQuestion 2: What is the average neural-network prediction for the given input?",
+    "options": [
+      "46",
+      "48",
+      "47",
+      "50"
+    ],
+    "correctAnswerIndex": 2,
+    "answerSource": "PDF",
+    "isApproved": true,
+    "explanation": "The average is (41 + 49 + 45 + 53)/4 = 188/4 = 47."
+  },
+  {
+    "id": "q-dl-w7-3",
+    "courseId": "course-deep-learning-master",
+    "weekNumber": 7,
+    "originalQuestionNumber": 3,
+    "sourcePdfName": "DeepLearning_July_Oct_2026_Week7.pdf",
+    "questionText": "Case Study 1\nWater Demand Forecasting for a Residential Zone\nA municipal analytics team builds models to predict next-day water demand for a res-\nidential zone. Each input contains temperature, weekday indicator, previous-day demand,\nand a local festival indicator. The team compares a simple linear model and a highly flex-\nible neural network. The simple model gives similar predictions when trained on different\nsamples, but its average prediction is far from the true demand. The neural network fits the\ntraining data very closely, but its predictions change substantially when trained on different\nsamples.\nFor one input condition, the neural network predictions from four training subsets are\n41,\n49,\n45,\n53\nthousand liters, while the true demand is 48 thousand liters. The expected test error for this\ncondition is decomposed as\nE\nh\n(y −ˆf(x))2i\n= Bias2 + Variance + σ2.\n\nQuestion 3: What is the squared bias of the neural-network predictions for this input?",
+    "options": [
+      "4",
+      "9",
+      "0",
+      "1"
+    ],
+    "correctAnswerIndex": 3,
+    "answerSource": "PDF",
+    "isApproved": true,
+    "explanation": "The squared bias is (48 −47)2 = 1."
+  },
+  {
+    "id": "q-dl-w7-4",
+    "courseId": "course-deep-learning-master",
+    "weekNumber": 7,
+    "originalQuestionNumber": 4,
+    "sourcePdfName": "DeepLearning_July_Oct_2026_Week7.pdf",
+    "questionText": "Case Study 1\nWater Demand Forecasting for a Residential Zone\nA municipal analytics team builds models to predict next-day water demand for a res-\nidential zone. Each input contains temperature, weekday indicator, previous-day demand,\nand a local festival indicator. The team compares a simple linear model and a highly flex-\nible neural network. The simple model gives similar predictions when trained on different\nsamples, but its average prediction is far from the true demand. The neural network fits the\ntraining data very closely, but its predictions change substantially when trained on different\nsamples.\nFor one input condition, the neural network predictions from four training subsets are\n41,\n49,\n45,\n53\nthousand liters, while the true demand is 48 thousand liters. The expected test error for this\ncondition is decomposed as\nE\nh\n(y −ˆf(x))2i\n= Bias2 + Variance + σ2.\n\nQuestion 4: What does the large variation among the neural-network predictions indicate?",
+    "options": [
+      "The model has no irreducible error.",
+      "The model has high variance under the case assumptions.",
+      "The output labels are unavailable for the described model.",
+      "The model is too simple for the data."
+    ],
+    "correctAnswerIndex": 1,
+    "answerSource": "PDF",
+    "isApproved": true,
+    "explanation": "Predictions changing strongly across training subsets are a symptom of high variance."
+  },
+  {
+    "id": "q-dl-w7-5",
+    "courseId": "course-deep-learning-master",
+    "weekNumber": 7,
+    "originalQuestionNumber": 5,
+    "sourcePdfName": "DeepLearning_July_Oct_2026_Week7.pdf",
+    "questionText": "Case Study 1\nWater Demand Forecasting for a Residential Zone\nA municipal analytics team builds models to predict next-day water demand for a res-\nidential zone. Each input contains temperature, weekday indicator, previous-day demand,\nand a local festival indicator. The team compares a simple linear model and a highly flex-\nible neural network. The simple model gives similar predictions when trained on different\nsamples, but its average prediction is far from the true demand. The neural network fits the\ntraining data very closely, but its predictions change substantially when trained on different\nsamples.\nFor one input condition, the neural network predictions from four training subsets are\n41,\n49,\n45,\n53\nthousand liters, while the true demand is 48 thousand liters. The expected test error for this\ncondition is decomposed as\nE\nh\n(y −ˆf(x))2i\n= Bias2 + Variance + σ2.\n\nQuestion 5: Which action is most directly aimed at reducing the neural network’s variance?",
+    "options": [
+      "Add a suitable regularization method.",
+      "Remove the validation set entirely.",
+      "Increase model depth without constraints.",
+      "Train until training loss becomes zero."
+    ],
+    "correctAnswerIndex": 0,
+    "answerSource": "PDF",
+    "isApproved": true,
+    "explanation": "Regularization methods constrain the model and help reduce overfitting-related variance."
+  },
+  {
+    "id": "q-dl-w7-6",
+    "courseId": "course-deep-learning-master",
+    "weekNumber": 7,
+    "originalQuestionNumber": 6,
+    "sourcePdfName": "DeepLearning_July_Oct_2026_Week7.pdf",
+    "questionText": "Case Study 2\nSmall-Business Loan Risk Scoring\nA cooperative bank trains a logistic-regression model to predict whether a small-business\nloan application is risky. The model uses standardized features such as debt ratio, monthly\nrevenue, repayment history score, and business age.\nWithout regularization, the model\nreaches very high training accuracy but noticeably lower validation accuracy. Several learned\nweights also have large magnitudes, making the model sensitive to small feature changes.\nThe team adds L2 regularization to the objective:\nJtotal(w) = Jdata(w) + α\nX\ni\nw2\ni .\nFor one parameter, the current value is w = 3. The data-loss gradient for that parameter is\n4, the regularization strength is α = 2, and the learning rate is η = 0.1. For this case, use\nthe regularized gradient\n∂Jtotal\n∂w\n= 4 + 2αw.\n\nQuestion 6: What is the main purpose of adding L2 regularization here?",
+    "options": [
+      "To remove the need for training data for the described model",
+      "To discourage large weights for the described model",
+      "To guarantee perfect validation accuracy",
+      "To convert logistic regression into clustering"
+    ],
+    "correctAnswerIndex": 1,
+    "answerSource": "PDF",
+    "isApproved": true,
+    "explanation": "L2 regularization penalizes large squared weights and reduces model complexity."
+  },
+  {
+    "id": "q-dl-w7-7",
+    "courseId": "course-deep-learning-master",
+    "weekNumber": 7,
+    "originalQuestionNumber": 7,
+    "sourcePdfName": "DeepLearning_July_Oct_2026_Week7.pdf",
+    "questionText": "Case Study 2\nSmall-Business Loan Risk Scoring\nA cooperative bank trains a logistic-regression model to predict whether a small-business\nloan application is risky. The model uses standardized features such as debt ratio, monthly\nrevenue, repayment history score, and business age.\nWithout regularization, the model\nreaches very high training accuracy but noticeably lower validation accuracy. Several learned\nweights also have large magnitudes, making the model sensitive to small feature changes.\nThe team adds L2 regularization to the objective:\nJtotal(w) = Jdata(w) + α\nX\ni\nw2\ni .\nFor one parameter, the current value is w = 3. The data-loss gradient for that parameter is\n4, the regularization strength is α = 2, and the learning rate is η = 0.1. For this case, use\nthe regularized gradient\n∂Jtotal\n∂w\n= 4 + 2αw.\n\nQuestion 7: What is the regularization contribution 2αw to the gradient?",
+    "options": [
+      "10",
+      "6",
+      "8",
+      "12"
+    ],
+    "correctAnswerIndex": 3,
+    "answerSource": "PDF",
+    "isApproved": true,
+    "explanation": "The contribution is 2αw = 2(2)(3) = 12."
+  },
+  {
+    "id": "q-dl-w7-8",
+    "courseId": "course-deep-learning-master",
+    "weekNumber": 7,
+    "originalQuestionNumber": 8,
+    "sourcePdfName": "DeepLearning_July_Oct_2026_Week7.pdf",
+    "questionText": "Case Study 2\nSmall-Business Loan Risk Scoring\nA cooperative bank trains a logistic-regression model to predict whether a small-business\nloan application is risky. The model uses standardized features such as debt ratio, monthly\nrevenue, repayment history score, and business age.\nWithout regularization, the model\nreaches very high training accuracy but noticeably lower validation accuracy. Several learned\nweights also have large magnitudes, making the model sensitive to small feature changes.\nThe team adds L2 regularization to the objective:\nJtotal(w) = Jdata(w) + α\nX\ni\nw2\ni .\nFor one parameter, the current value is w = 3. The data-loss gradient for that parameter is\n4, the regularization strength is α = 2, and the learning rate is η = 0.1. For this case, use\nthe regularized gradient\n∂Jtotal\n∂w\n= 4 + 2αw.\n\nQuestion 8: What is the full regularized gradient for this parameter?",
+    "options": [
+      "16",
+      "12",
+      "10",
+      "14"
+    ],
+    "correctAnswerIndex": 0,
+    "answerSource": "PDF",
+    "isApproved": true,
+    "explanation": "The full gradient is 4 + 12 = 16."
+  },
+  {
+    "id": "q-dl-w7-9",
+    "courseId": "course-deep-learning-master",
+    "weekNumber": 7,
+    "originalQuestionNumber": 9,
+    "sourcePdfName": "DeepLearning_July_Oct_2026_Week7.pdf",
+    "questionText": "Case Study 2\nSmall-Business Loan Risk Scoring\nA cooperative bank trains a logistic-regression model to predict whether a small-business\nloan application is risky. The model uses standardized features such as debt ratio, monthly\nrevenue, repayment history score, and business age.\nWithout regularization, the model\nreaches very high training accuracy but noticeably lower validation accuracy. Several learned\nweights also have large magnitudes, making the model sensitive to small feature changes.\nThe team adds L2 regularization to the objective:\nJtotal(w) = Jdata(w) + α\nX\ni\nw2\ni .\nFor one parameter, the current value is w = 3. The data-loss gradient for that parameter is\n4, the regularization strength is α = 2, and the learning rate is η = 0.1. For this case, use\nthe regularized gradient\n∂Jtotal\n∂w\n= 4 + 2αw.\n\nQuestion 9: What is the updated value of w after one gradient-descent step?",
+    "options": [
+      "2.0",
+      "2.6",
+      "1.4",
+      "3.6"
+    ],
+    "correctAnswerIndex": 2,
+    "answerSource": "PDF",
+    "isApproved": true,
+    "explanation": "wnew = 3 −0.1(16) = 1.4."
+  },
+  {
+    "id": "q-dl-w7-10",
+    "courseId": "course-deep-learning-master",
+    "weekNumber": 7,
+    "originalQuestionNumber": 10,
+    "sourcePdfName": "DeepLearning_July_Oct_2026_Week7.pdf",
+    "questionText": "Case Study 2\nSmall-Business Loan Risk Scoring\nA cooperative bank trains a logistic-regression model to predict whether a small-business\nloan application is risky. The model uses standardized features such as debt ratio, monthly\nrevenue, repayment history score, and business age.\nWithout regularization, the model\nreaches very high training accuracy but noticeably lower validation accuracy. Several learned\nweights also have large magnitudes, making the model sensitive to small feature changes.\nThe team adds L2 regularization to the objective:\nJtotal(w) = Jdata(w) + α\nX\ni\nw2\ni .\nFor one parameter, the current value is w = 3. The data-loss gradient for that parameter is\n4, the regularization strength is α = 2, and the learning rate is η = 0.1. For this case, use\nthe regularized gradient\n∂Jtotal\n∂w\n= 4 + 2αw.\n\nQuestion 10: Which outcome is expected after applying an appropriate L2 penalty?",
+    "options": [
+      "Training accuracy must become zero for the data shown here.",
+      "Validation performance may improve due to reduced overfitting.",
+      "All feature weights must become exactly zero.",
+      "The model stops using gradient descent under the given conditions."
+    ],
+    "correctAnswerIndex": 1,
+    "answerSource": "PDF",
+    "isApproved": true,
+    "explanation": "L2 regularization can reduce overfitting and improve validation performance, even if training accuracy decreases slightly."
+  },
+  {
+    "id": "q-dl-w7-11",
+    "courseId": "course-deep-learning-master",
+    "weekNumber": 7,
+    "originalQuestionNumber": 11,
+    "sourcePdfName": "DeepLearning_July_Oct_2026_Week7.pdf",
+    "questionText": "Case Study 3\nEnergy Consumption Prediction for an Office Campus\nA facility-management company trains a neural network to predict hourly electricity\nconsumption in an office campus.\nInputs include outside temperature, hour of day, day\ntype, and previous-hour load. The model is trained for many epochs, and both training and\nvalidation loss are monitored after every five epochs.\nEpoch\nTraining Loss\nValidation Loss\n5\n0.62\n0.70\n10\n0.44\n0.52\n15\n0.31\n0.43\n20\n0.22\n0.46\n25\n0.16\n0.51\nThe team uses early stopping because the deployed model must generalize to future days,\nnot only memorize historical operating patterns.\n\nQuestion 11: At which epoch is the validation loss minimum?",
+    "options": [
+      "Epoch 10",
+      "Epoch 20",
+      "Epoch 15",
+      "Epoch 25"
+    ],
+    "correctAnswerIndex": 2,
+    "answerSource": "PDF",
+    "isApproved": true,
+    "explanation": "The smallest validation loss is 0.43, which occurs at epoch 15."
+  },
+  {
+    "id": "q-dl-w7-12",
+    "courseId": "course-deep-learning-master",
+    "weekNumber": 7,
+    "originalQuestionNumber": 12,
+    "sourcePdfName": "DeepLearning_July_Oct_2026_Week7.pdf",
+    "questionText": "Case Study 3\nEnergy Consumption Prediction for an Office Campus\nA facility-management company trains a neural network to predict hourly electricity\nconsumption in an office campus.\nInputs include outside temperature, hour of day, day\ntype, and previous-hour load. The model is trained for many epochs, and both training and\nvalidation loss are monitored after every five epochs.\nEpoch\nTraining Loss\nValidation Loss\n5\n0.62\n0.70\n10\n0.44\n0.52\n15\n0.31\n0.43\n20\n0.22\n0.46\n25\n0.16\n0.51\nThe team uses early stopping because the deployed model must generalize to future days,\nnot only memorize historical operating patterns.\n\nQuestion 12: What pattern after epoch 15 suggests overfitting?",
+    "options": [
+      "Both losses increase together.",
+      "Training loss increases while validation loss decreases.",
+      "Training loss becomes exactly zero.",
+      "Training loss decreases while validation loss increases."
+    ],
+    "correctAnswerIndex": 3,
+    "answerSource": "PDF",
+    "isApproved": true,
+    "explanation": "After epoch 15, training loss continues decreasing but valida- tion loss increases, indicating worsening generalization."
+  },
+  {
+    "id": "q-dl-w7-13",
+    "courseId": "course-deep-learning-master",
+    "weekNumber": 7,
+    "originalQuestionNumber": 13,
+    "sourcePdfName": "DeepLearning_July_Oct_2026_Week7.pdf",
+    "questionText": "Case Study 3\nEnergy Consumption Prediction for an Office Campus\nA facility-management company trains a neural network to predict hourly electricity\nconsumption in an office campus.\nInputs include outside temperature, hour of day, day\ntype, and previous-hour load. The model is trained for many epochs, and both training and\nvalidation loss are monitored after every five epochs.\nEpoch\nTraining Loss\nValidation Loss\n5\n0.62\n0.70\n10\n0.44\n0.52\n15\n0.31\n0.43\n20\n0.22\n0.46\n25\n0.16\n0.51\nThe team uses early stopping because the deployed model must generalize to future days,\nnot only memorize historical operating patterns.\n\nQuestion 13: Why should early stopping monitor validation loss rather than only training loss?",
+    "options": [
+      "Validation loss reflects performance on unseen data.",
+      "Training loss is not computed during neural-network training.",
+      "Validation loss is always exactly equal to test loss.",
+      "Training loss cannot decrease across epochs."
+    ],
+    "correctAnswerIndex": 0,
+    "answerSource": "PDF",
+    "isApproved": true,
+    "explanation": "Validation loss is used as a proxy for generalization to data not used for weight updates."
+  },
+  {
+    "id": "q-dl-w7-14",
+    "courseId": "course-deep-learning-master",
+    "weekNumber": 7,
+    "originalQuestionNumber": 14,
+    "sourcePdfName": "DeepLearning_July_Oct_2026_Week7.pdf",
+    "questionText": "Case Study 3\nEnergy Consumption Prediction for an Office Campus\nA facility-management company trains a neural network to predict hourly electricity\nconsumption in an office campus.\nInputs include outside temperature, hour of day, day\ntype, and previous-hour load. The model is trained for many epochs, and both training and\nvalidation loss are monitored after every five epochs.\nEpoch\nTraining Loss\nValidation Loss\n5\n0.62\n0.70\n10\n0.44\n0.52\n15\n0.31\n0.43\n20\n0.22\n0.46\n25\n0.16\n0.51\nThe team uses early stopping because the deployed model must generalize to future days,\nnot only memorize historical operating patterns.\n\nQuestion 14: Which statement about early stopping is correct?",
+    "options": [
+      "It guarantees the globally optimal weights.",
+      "It acts as a regularization method by limiting over-training.",
+      "It prevents all forms of noise in input data.",
+      "It removes the need for a validation set under the case assumptions."
+    ],
+    "correctAnswerIndex": 1,
+    "answerSource": "PDF",
+    "isApproved": true,
+    "explanation": "Early stopping limits over-training and therefore acts as a regularization method."
+  },
+  {
+    "id": "q-dl-w7-15",
+    "courseId": "course-deep-learning-master",
+    "weekNumber": 7,
+    "originalQuestionNumber": 15,
+    "sourcePdfName": "DeepLearning_July_Oct_2026_Week7.pdf",
+    "questionText": "Case Study 3\nEnergy Consumption Prediction for an Office Campus\nA facility-management company trains a neural network to predict hourly electricity\nconsumption in an office campus.\nInputs include outside temperature, hour of day, day\ntype, and previous-hour load. The model is trained for many epochs, and both training and\nvalidation loss are monitored after every five epochs.\nEpoch\nTraining Loss\nValidation Loss\n5\n0.62\n0.70\n10\n0.44\n0.52\n15\n0.31\n0.43\n20\n0.22\n0.46\n25\n0.16\n0.51\nThe team uses early stopping because the deployed model must generalize to future days,\nnot only memorize historical operating patterns.\n\nQuestion 15: If the team keeps the model from epoch 25 instead of epoch 15, what is the main risk?",
+    "options": [
+      "The training set becomes larger automatically.",
+      "The model cannot produce numerical predictions.",
+      "The validation loss is ignored by definition under the case assumptions.",
+      "The model may generalize worse despite lower training loss."
+    ],
+    "correctAnswerIndex": 3,
+    "answerSource": "PDF",
+    "isApproved": true,
+    "explanation": "Selecting epoch 25 may overfit the training data and generalize worse than the epoch with minimum validation loss."
+  },
+  {
+    "id": "q-dl-w7-16",
+    "courseId": "course-deep-learning-master",
+    "weekNumber": 7,
+    "originalQuestionNumber": 16,
+    "sourcePdfName": "DeepLearning_July_Oct_2026_Week7.pdf",
+    "questionText": "Case Study 4\nProduct-Surface Image Quality Inspection\nA quality-control team trains a CNN to classify product-surface images into acceptable\nand defective classes. Only 900 labeled images are available. The training split is 70validation\nsplit is 30validation accuracy. The team applies image augmentation during training using\nsmall rotations, horizontal shifts, brightness changes, and mild zooms. Each original training\nimage generates two additional augmented images.\nThe team also adds dropout to a hidden layer. During training, each hidden unit is kept\nwith probability p = 0.8. At test time, the full network is used with appropriate scaling.\nFinally, three independently trained CNNs are averaged to create an ensemble.\n\nQuestion 16: How many original images are in the training split before augmentation?",
+    "options": [
+      "270",
+      "900",
+      "630",
+      "450"
+    ],
+    "correctAnswerIndex": 2,
+    "answerSource": "PDF",
+    "isApproved": true,
+    "explanation": "The training split contains 0.70 × 900 = 630 images."
+  },
+  {
+    "id": "q-dl-w7-17",
+    "courseId": "course-deep-learning-master",
+    "weekNumber": 7,
+    "originalQuestionNumber": 17,
+    "sourcePdfName": "DeepLearning_July_Oct_2026_Week7.pdf",
+    "questionText": "Case Study 4\nProduct-Surface Image Quality Inspection\nA quality-control team trains a CNN to classify product-surface images into acceptable\nand defective classes. Only 900 labeled images are available. The training split is 70validation\nsplit is 30validation accuracy. The team applies image augmentation during training using\nsmall rotations, horizontal shifts, brightness changes, and mild zooms. Each original training\nimage generates two additional augmented images.\nThe team also adds dropout to a hidden layer. During training, each hidden unit is kept\nwith probability p = 0.8. At test time, the full network is used with appropriate scaling.\nFinally, three independently trained CNNs are averaged to create an ensemble.\n\nQuestion 17: What is the effective training-set size after adding two augmented images per original training image?",
+    "options": [
+      "1890",
+      "1260",
+      "630",
+      "1530"
+    ],
+    "correctAnswerIndex": 0,
+    "answerSource": "PDF",
+    "isApproved": true,
+    "explanation": "Each original contributes one original plus two augmented versions, so 630 × 3 = 1890."
+  },
+  {
+    "id": "q-dl-w7-18",
+    "courseId": "course-deep-learning-master",
+    "weekNumber": 7,
+    "originalQuestionNumber": 18,
+    "sourcePdfName": "DeepLearning_July_Oct_2026_Week7.pdf",
+    "questionText": "Case Study 4\nProduct-Surface Image Quality Inspection\nA quality-control team trains a CNN to classify product-surface images into acceptable\nand defective classes. Only 900 labeled images are available. The training split is 70validation\nsplit is 30validation accuracy. The team applies image augmentation during training using\nsmall rotations, horizontal shifts, brightness changes, and mild zooms. Each original training\nimage generates two additional augmented images.\nThe team also adds dropout to a hidden layer. During training, each hidden unit is kept\nwith probability p = 0.8. At test time, the full network is used with appropriate scaling.\nFinally, three independently trained CNNs are averaged to create an ensemble.\n\nQuestion 18: What is the main reason augmentation can improve validation accuracy?",
+    "options": [
+      "It changes all class labels randomly in the stated case setting.",
+      "It removes the need to learn features.",
+      "It guarantees that training loss is zero.",
+      "It exposes the model to realistic input variations."
+    ],
+    "correctAnswerIndex": 3,
+    "answerSource": "PDF",
+    "isApproved": true,
+    "explanation": "Augmentation improves robustness by exposing the model to realistic transformations of the inputs."
+  },
+  {
+    "id": "q-dl-w7-19",
+    "courseId": "course-deep-learning-master",
+    "weekNumber": 7,
+    "originalQuestionNumber": 19,
+    "sourcePdfName": "DeepLearning_July_Oct_2026_Week7.pdf",
+    "questionText": "Case Study 4\nProduct-Surface Image Quality Inspection\nA quality-control team trains a CNN to classify product-surface images into acceptable\nand defective classes. Only 900 labeled images are available. The training split is 70validation\nsplit is 30validation accuracy. The team applies image augmentation during training using\nsmall rotations, horizontal shifts, brightness changes, and mild zooms. Each original training\nimage generates two additional augmented images.\nThe team also adds dropout to a hidden layer. During training, each hidden unit is kept\nwith probability p = 0.8. At test time, the full network is used with appropriate scaling.\nFinally, three independently trained CNNs are averaged to create an ensemble.\n\nQuestion 19: During dropout training with keep probability p = 0.8, approximately how many units remain active in a layer of 50 hidden units?",
+    "options": [
+      "25",
+      "10",
+      "40",
+      "50"
+    ],
+    "correctAnswerIndex": 2,
+    "answerSource": "PDF",
+    "isApproved": true,
+    "explanation": "The expected active units are 0.8 × 50 = 40."
+  },
+  {
+    "id": "q-dl-w7-20",
+    "courseId": "course-deep-learning-master",
+    "weekNumber": 7,
+    "originalQuestionNumber": 20,
+    "sourcePdfName": "DeepLearning_July_Oct_2026_Week7.pdf",
+    "questionText": "Case Study 4\nProduct-Surface Image Quality Inspection\nA quality-control team trains a CNN to classify product-surface images into acceptable\nand defective classes. Only 900 labeled images are available. The training split is 70validation\nsplit is 30validation accuracy. The team applies image augmentation during training using\nsmall rotations, horizontal shifts, brightness changes, and mild zooms. Each original training\nimage generates two additional augmented images.\nThe team also adds dropout to a hidden layer. During training, each hidden unit is kept\nwith probability p = 0.8. At test time, the full network is used with appropriate scaling.\nFinally, three independently trained CNNs are averaged to create an ensemble.\n\nQuestion 20: Why can averaging three independently trained CNNs improve reliability?",
+    "options": [
+      "It increases the learning rate of each CNN.",
+      "It can reduce variance by combining diverse predictions.",
+      "It removes all bias from every CNN for the data shown here.",
+      "It makes the dataset labels unnecessary."
+    ],
+    "correctAnswerIndex": 1,
+    "answerSource": "PDF",
+    "isApproved": true,
+    "explanation": "Averaging diverse models can cancel some individual errors and reduce prediction variance."
+  }
+]

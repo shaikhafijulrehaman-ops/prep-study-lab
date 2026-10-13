@@ -1,0 +1,362 @@
+[
+  {
+    "id": "q-dl-w10-1",
+    "courseId": "course-deep-learning-master",
+    "weekNumber": 10,
+    "originalQuestionNumber": 1,
+    "sourcePdfName": "DeepLearning_July_Oct_2026_Week10.pdf",
+    "questionText": "Case Study 1\nWarehouse Package Image Inspection\nA logistics company uses a CNN to inspect package images for torn labels and damaged\ncorners.\nThe images are captured from a conveyor camera, and small shifts in package\nposition should not change the final inspection decision.\nEach grayscale image has size\n96 × 96. The first convolution layer applies 3 × 3 filters with stride 1 and padding 1 so that\nlocal edge and corner evidence can be detected without immediately changing spatial size.\nLater, a 2 × 2 max-pooling layer with stride 2 is used to reduce spatial size while retaining\nstrong local responses.\n\nQuestion 1: What is the output spatial size after the 3 × 3 convolution with stride 1 and padding 1?",
+    "options": [
+      "96 × 96",
+      "94 × 94",
+      "98 × 98",
+      "48 × 48"
+    ],
+    "correctAnswerIndex": 0,
+    "answerSource": "PDF",
+    "isApproved": true,
+    "explanation": "(96 + 2(1) −3)/1 + 1 = 96, so the spatial size is preserved."
+  },
+  {
+    "id": "q-dl-w10-2",
+    "courseId": "course-deep-learning-master",
+    "weekNumber": 10,
+    "originalQuestionNumber": 2,
+    "sourcePdfName": "DeepLearning_July_Oct_2026_Week10.pdf",
+    "questionText": "Case Study 1\nWarehouse Package Image Inspection\nA logistics company uses a CNN to inspect package images for torn labels and damaged\ncorners.\nThe images are captured from a conveyor camera, and small shifts in package\nposition should not change the final inspection decision.\nEach grayscale image has size\n96 × 96. The first convolution layer applies 3 × 3 filters with stride 1 and padding 1 so that\nlocal edge and corner evidence can be detected without immediately changing spatial size.\nLater, a 2 × 2 max-pooling layer with stride 2 is used to reduce spatial size while retaining\nstrong local responses.\n\nQuestion 2: If the convolution layer uses 24 filters, how many output feature maps are produced?",
+    "options": [
+      "3",
+      "1",
+      "24",
+      "96"
+    ],
+    "correctAnswerIndex": 2,
+    "answerSource": "PDF",
+    "isApproved": true,
+    "explanation": "Each convolution filter produces one feature map."
+  },
+  {
+    "id": "q-dl-w10-3",
+    "courseId": "course-deep-learning-master",
+    "weekNumber": 10,
+    "originalQuestionNumber": 3,
+    "sourcePdfName": "DeepLearning_July_Oct_2026_Week10.pdf",
+    "questionText": "Case Study 1\nWarehouse Package Image Inspection\nA logistics company uses a CNN to inspect package images for torn labels and damaged\ncorners.\nThe images are captured from a conveyor camera, and small shifts in package\nposition should not change the final inspection decision.\nEach grayscale image has size\n96 × 96. The first convolution layer applies 3 × 3 filters with stride 1 and padding 1 so that\nlocal edge and corner evidence can be detected without immediately changing spatial size.\nLater, a 2 × 2 max-pooling layer with stride 2 is used to reduce spatial size while retaining\nstrong local responses.\n\nQuestion 3: What is the output size after applying 2 × 2 max pooling with stride 2 to a 96 × 96 feature map?",
+    "options": [
+      "96 × 96",
+      "24 × 24",
+      "94 × 94",
+      "48 × 48"
+    ],
+    "correctAnswerIndex": 3,
+    "answerSource": "PDF",
+    "isApproved": true,
+    "explanation": "Pooling with size 2 and stride 2 halves both height and width."
+  },
+  {
+    "id": "q-dl-w10-4",
+    "courseId": "course-deep-learning-master",
+    "weekNumber": 10,
+    "originalQuestionNumber": 4,
+    "sourcePdfName": "DeepLearning_July_Oct_2026_Week10.pdf",
+    "questionText": "Case Study 1\nWarehouse Package Image Inspection\nA logistics company uses a CNN to inspect package images for torn labels and damaged\ncorners.\nThe images are captured from a conveyor camera, and small shifts in package\nposition should not change the final inspection decision.\nEach grayscale image has size\n96 × 96. The first convolution layer applies 3 × 3 filters with stride 1 and padding 1 so that\nlocal edge and corner evidence can be detected without immediately changing spatial size.\nLater, a 2 × 2 max-pooling layer with stride 2 is used to reduce spatial size while retaining\nstrong local responses.\n\nQuestion 4: Why is pooling useful for this inspection task?",
+    "options": [
+      "It removes the need for convolution under the case assumptions.",
+      "It reduces spatial size and gives some robustness to small shifts.",
+      "It increases every image dimension in the stated case setting.",
+      "It converts grayscale images into RGB images in this specific scenario."
+    ],
+    "correctAnswerIndex": 1,
+    "answerSource": "PDF",
+    "isApproved": true,
+    "explanation": "Pooling reduces resolution while preserving strong local evi- dence."
+  },
+  {
+    "id": "q-dl-w10-5",
+    "courseId": "course-deep-learning-master",
+    "weekNumber": 10,
+    "originalQuestionNumber": 5,
+    "sourcePdfName": "DeepLearning_July_Oct_2026_Week10.pdf",
+    "questionText": "Case Study 1\nWarehouse Package Image Inspection\nA logistics company uses a CNN to inspect package images for torn labels and damaged\ncorners.\nThe images are captured from a conveyor camera, and small shifts in package\nposition should not change the final inspection decision.\nEach grayscale image has size\n96 × 96. The first convolution layer applies 3 × 3 filters with stride 1 and padding 1 so that\nlocal edge and corner evidence can be detected without immediately changing spatial size.\nLater, a 2 × 2 max-pooling layer with stride 2 is used to reduce spatial size while retaining\nstrong local responses.\n\nQuestion 5: What do early convolution filters usually learn in such image tasks?",
+    "options": [
+      "Low-level patterns such as edges and corners",
+      "The final class probability only",
+      "The batch size for the described model",
+      "The optimizer momentum in this specific scenario"
+    ],
+    "correctAnswerIndex": 0,
+    "answerSource": "PDF",
+    "isApproved": true,
+    "explanation": "Early CNN filters commonly detect simple visual patterns such as edges, corners, and textures."
+  },
+  {
+    "id": "q-dl-w10-6",
+    "courseId": "course-deep-learning-master",
+    "weekNumber": 10,
+    "originalQuestionNumber": 6,
+    "sourcePdfName": "DeepLearning_July_Oct_2026_Week10.pdf",
+    "questionText": "Case Study 2\nCrop Image Disease Detection\nAn agronomy lab trains a CNN to classify crop leaf images as healthy or diseased. Re-\nsearchers need to verify that the network focuses on leaf lesions rather than background soil.\nThey use occlusion analysis by masking small patches and observing the change in disease\nprobability. They also inspect activation maps from early and deeper layers. This review is\nimportant because a high validation score alone would not show whether the model is using\nbiologically meaningful lesion patterns. The lab therefore treats visualization as a diagnostic\ntool for understanding which regions and filters influence the prediction.\n\nQuestion 6: If masking one leaf patch sharply reduces disease probability, what does that suggest?",
+    "options": [
+      "The patch is irrelevant to the prediction and all class evidence.",
+      "The patch contains information important for the prediction.",
+      "The model has no learned filters for the data shown here.",
+      "The image has no disease signal for the data shown here."
+    ],
+    "correctAnswerIndex": 1,
+    "answerSource": "PDF",
+    "isApproved": true,
+    "explanation": "A large confidence drop means the model relied strongly on that region."
+  },
+  {
+    "id": "q-dl-w10-7",
+    "courseId": "course-deep-learning-master",
+    "weekNumber": 10,
+    "originalQuestionNumber": 7,
+    "sourcePdfName": "DeepLearning_July_Oct_2026_Week10.pdf",
+    "questionText": "Case Study 2\nCrop Image Disease Detection\nAn agronomy lab trains a CNN to classify crop leaf images as healthy or diseased. Re-\nsearchers need to verify that the network focuses on leaf lesions rather than background soil.\nThey use occlusion analysis by masking small patches and observing the change in disease\nprobability. They also inspect activation maps from early and deeper layers. This review is\nimportant because a high validation score alone would not show whether the model is using\nbiologically meaningful lesion patterns. The lab therefore treats visualization as a diagnostic\ntool for understanding which regions and filters influence the prediction.\n\nQuestion 7: What is the name of the technique that masks image regions and observes prediction changes?",
+    "options": [
+      "Batch normalization",
+      "Weight decay",
+      "Dropout",
+      "Occlusion analysis"
+    ],
+    "correctAnswerIndex": 3,
+    "answerSource": "PDF",
+    "isApproved": true,
+    "explanation": "Occlusion analysis studies sensitivity by hiding parts of the input."
+  },
+  {
+    "id": "q-dl-w10-8",
+    "courseId": "course-deep-learning-master",
+    "weekNumber": 10,
+    "originalQuestionNumber": 8,
+    "sourcePdfName": "DeepLearning_July_Oct_2026_Week10.pdf",
+    "questionText": "Case Study 2\nCrop Image Disease Detection\nAn agronomy lab trains a CNN to classify crop leaf images as healthy or diseased. Re-\nsearchers need to verify that the network focuses on leaf lesions rather than background soil.\nThey use occlusion analysis by masking small patches and observing the change in disease\nprobability. They also inspect activation maps from early and deeper layers. This review is\nimportant because a high validation score alone would not show whether the model is using\nbiologically meaningful lesion patterns. The lab therefore treats visualization as a diagnostic\ntool for understanding which regions and filters influence the prediction.\n\nQuestion 8: Why are first-layer filters usually easier to interpret?",
+    "options": [
+      "They operate directly on local pixel patterns.",
+      "They contain no weights in this specific scenario.",
+      "They always output class labels.",
+      "They are identical across all filters."
+    ],
+    "correctAnswerIndex": 0,
+    "answerSource": "PDF",
+    "isApproved": true,
+    "explanation": "First-layer filters respond to visible pixel-level features such as edges and textures."
+  },
+  {
+    "id": "q-dl-w10-9",
+    "courseId": "course-deep-learning-master",
+    "weekNumber": 10,
+    "originalQuestionNumber": 9,
+    "sourcePdfName": "DeepLearning_July_Oct_2026_Week10.pdf",
+    "questionText": "Case Study 2\nCrop Image Disease Detection\nAn agronomy lab trains a CNN to classify crop leaf images as healthy or diseased. Re-\nsearchers need to verify that the network focuses on leaf lesions rather than background soil.\nThey use occlusion analysis by masking small patches and observing the change in disease\nprobability. They also inspect activation maps from early and deeper layers. This review is\nimportant because a high validation score alone would not show whether the model is using\nbiologically meaningful lesion patterns. The lab therefore treats visualization as a diagnostic\ntool for understanding which regions and filters influence the prediction.\n\nQuestion 9: A neuron that activates strongly for diseased leaves but weakly for healthy leaves has likely learned what?",
+    "options": [
+      "The file name pattern in this specific scenario",
+      "A disease-related visual feature",
+      "The learning rate schedule",
+      "A fixed image size only"
+    ],
+    "correctAnswerIndex": 1,
+    "answerSource": "PDF",
+    "isApproved": true,
+    "explanation": "Class-selective activation suggests the neuron detects a disease- relevant pattern."
+  },
+  {
+    "id": "q-dl-w10-10",
+    "courseId": "course-deep-learning-master",
+    "weekNumber": 10,
+    "originalQuestionNumber": 10,
+    "sourcePdfName": "DeepLearning_July_Oct_2026_Week10.pdf",
+    "questionText": "Case Study 2\nCrop Image Disease Detection\nAn agronomy lab trains a CNN to classify crop leaf images as healthy or diseased. Re-\nsearchers need to verify that the network focuses on leaf lesions rather than background soil.\nThey use occlusion analysis by masking small patches and observing the change in disease\nprobability. They also inspect activation maps from early and deeper layers. This review is\nimportant because a high validation score alone would not show whether the model is using\nbiologically meaningful lesion patterns. The lab therefore treats visualization as a diagnostic\ntool for understanding which regions and filters influence the prediction.\n\nQuestion 10: In gradient-based visualization, what does a large gradient magnitude for a pixel indicate?",
+    "options": [
+      "The pixel has no influence for the data shown here.",
+      "The pixel is outside the image.",
+      "The activation is sensitive to that pixel.",
+      "The filter has zero parameters."
+    ],
+    "correctAnswerIndex": 2,
+    "answerSource": "PDF",
+    "isApproved": true,
+    "explanation": "Large gradients indicate that small pixel changes can strongly affect the activation."
+  },
+  {
+    "id": "q-dl-w10-11",
+    "courseId": "course-deep-learning-master",
+    "weekNumber": 10,
+    "originalQuestionNumber": 11,
+    "sourcePdfName": "DeepLearning_July_Oct_2026_Week10.pdf",
+    "questionText": "Case Study 3\nRoad Surface Image Classification\nA transport analytics team classifies road-surface images into smooth, cracked, pothole,\nand waterlogged categories. They compare VGG-style stacks of 3 × 3 filters, Inception-style\nparallel filters, and ResNet-style skip connections. The images contain both small cracks\nand larger road patterns, so features at multiple spatial scales are important. The team is\nchoosing an architecture for a field system that must detect fine texture changes without\nlosing larger context such as standing water or pothole boundaries. The comparison focuses\non how different CNN designs build depth, combine filter sizes, and preserve gradient flow\nduring training.\n\nQuestion 11: Why does VGG prefer stacks of small 3 × 3 filters?",
+    "options": [
+      "To remove nonlinearities in the stated case setting.",
+      "To avoid feature maps throughout the network.",
+      "To force all images to be grayscale before every convolutional layer.",
+      "To build deeper representations with controlled parameter growth."
+    ],
+    "correctAnswerIndex": 3,
+    "answerSource": "PDF",
+    "isApproved": true,
+    "explanation": "Stacked small filters increase effective receptive field while keeping parameters manageable."
+  },
+  {
+    "id": "q-dl-w10-12",
+    "courseId": "course-deep-learning-master",
+    "weekNumber": 10,
+    "originalQuestionNumber": 12,
+    "sourcePdfName": "DeepLearning_July_Oct_2026_Week10.pdf",
+    "questionText": "Case Study 3\nRoad Surface Image Classification\nA transport analytics team classifies road-surface images into smooth, cracked, pothole,\nand waterlogged categories. They compare VGG-style stacks of 3 × 3 filters, Inception-style\nparallel filters, and ResNet-style skip connections. The images contain both small cracks\nand larger road patterns, so features at multiple spatial scales are important. The team is\nchoosing an architecture for a field system that must detect fine texture changes without\nlosing larger context such as standing water or pothole boundaries. The comparison focuses\non how different CNN designs build depth, combine filter sizes, and preserve gradient flow\nduring training.\n\nQuestion 12: What is the main purpose of Inception-style parallel filters?",
+    "options": [
+      "To delete pooling layers.",
+      "To use only one spatial scale.",
+      "To capture features at multiple spatial scales.",
+      "To remove convolution in this specific scenario."
+    ],
+    "correctAnswerIndex": 2,
+    "answerSource": "PDF",
+    "isApproved": true,
+    "explanation": "Parallel filters of different sizes detect fine and coarse features in the same module."
+  },
+  {
+    "id": "q-dl-w10-13",
+    "courseId": "course-deep-learning-master",
+    "weekNumber": 10,
+    "originalQuestionNumber": 13,
+    "sourcePdfName": "DeepLearning_July_Oct_2026_Week10.pdf",
+    "questionText": "Case Study 3\nRoad Surface Image Classification\nA transport analytics team classifies road-surface images into smooth, cracked, pothole,\nand waterlogged categories. They compare VGG-style stacks of 3 × 3 filters, Inception-style\nparallel filters, and ResNet-style skip connections. The images contain both small cracks\nand larger road patterns, so features at multiple spatial scales are important. The team is\nchoosing an architecture for a field system that must detect fine texture changes without\nlosing larger context such as standing water or pothole boundaries. The comparison focuses\non how different CNN designs build depth, combine filter sizes, and preserve gradient flow\nduring training.\n\nQuestion 13: Why do ResNet skip connections help very deep networks train?",
+    "options": [
+      "They improve information and gradient flow.",
+      "They remove the input image.",
+      "They replace all filters with one scalar.",
+      "They make the output size independent of stride."
+    ],
+    "correctAnswerIndex": 0,
+    "answerSource": "PDF",
+    "isApproved": true,
+    "explanation": "Skip connections provide direct paths that ease optimization in deep networks."
+  },
+  {
+    "id": "q-dl-w10-14",
+    "courseId": "course-deep-learning-master",
+    "weekNumber": 10,
+    "originalQuestionNumber": 14,
+    "sourcePdfName": "DeepLearning_July_Oct_2026_Week10.pdf",
+    "questionText": "Case Study 3\nRoad Surface Image Classification\nA transport analytics team classifies road-surface images into smooth, cracked, pothole,\nand waterlogged categories. They compare VGG-style stacks of 3 × 3 filters, Inception-style\nparallel filters, and ResNet-style skip connections. The images contain both small cracks\nand larger road patterns, so features at multiple spatial scales are important. The team is\nchoosing an architecture for a field system that must detect fine texture changes without\nlosing larger context such as standing water or pothole boundaries. The comparison focuses\non how different CNN designs build depth, combine filter sizes, and preserve gradient flow\nduring training.\n\nQuestion 14: A module computes H(x) = F(x) + x. What architecture idea does this represent?",
+    "options": [
+      "Bag-of-words",
+      "Residual learning",
+      "One-hot encoding",
+      "Average pooling only"
+    ],
+    "correctAnswerIndex": 1,
+    "answerSource": "PDF",
+    "isApproved": true,
+    "explanation": "Residual blocks add the input x to the learned residual func- tion F(x)."
+  },
+  {
+    "id": "q-dl-w10-15",
+    "courseId": "course-deep-learning-master",
+    "weekNumber": 10,
+    "originalQuestionNumber": 15,
+    "sourcePdfName": "DeepLearning_July_Oct_2026_Week10.pdf",
+    "questionText": "Case Study 3\nRoad Surface Image Classification\nA transport analytics team classifies road-surface images into smooth, cracked, pothole,\nand waterlogged categories. They compare VGG-style stacks of 3 × 3 filters, Inception-style\nparallel filters, and ResNet-style skip connections. The images contain both small cracks\nand larger road patterns, so features at multiple spatial scales are important. The team is\nchoosing an architecture for a field system that must detect fine texture changes without\nlosing larger context such as standing water or pothole boundaries. The comparison focuses\non how different CNN designs build depth, combine filter sizes, and preserve gradient flow\nduring training.\n\nQuestion 15: Which architecture is most directly suited to mixing 1 × 1, 3 × 3, and 5 × 5 convolutions in parallel?",
+    "options": [
+      "Inception in this specific scenario",
+      "A single-layer perceptron",
+      "Plain linear regression",
+      "A one-hot encoder for the described model"
+    ],
+    "correctAnswerIndex": 0,
+    "answerSource": "PDF",
+    "isApproved": true,
+    "explanation": "Inception modules use parallel convolution branches with dif- ferent filter sizes."
+  },
+  {
+    "id": "q-dl-w10-16",
+    "courseId": "course-deep-learning-master",
+    "weekNumber": 10,
+    "originalQuestionNumber": 16,
+    "sourcePdfName": "DeepLearning_July_Oct_2026_Week10.pdf",
+    "questionText": "Case Study 4\nSatellite Land-Cover Image Classification\nA satellite-imaging team classifies 64 × 64 RGB patches into urban, forest, water, and\nfarmland. One convolution layer uses 32 filters, each of size 5 × 5, with stride 1 and no\npadding. Another stage uses global average pooling to reduce a final 8 × 8 × 128 feature\ntensor into a 128-dimensional vector before classification. The analysts need to estimate\nboth spatial output sizes and parameter counts before scaling the model to many satellite\ntiles. They also want to understand why global average pooling can summarize feature maps\nwithout introducing a very large dense layer.\n\nQuestion 16: What is the output spatial size after the 5×5, stride 1, no-padding convolution on a 64 × 64 image?",
+    "options": [
+      "64 × 64",
+      "32 × 32",
+      "60 × 60",
+      "68 × 68"
+    ],
+    "correctAnswerIndex": 2,
+    "answerSource": "PDF",
+    "isApproved": true,
+    "explanation": "(64 −5)/1 + 1 = 60."
+  },
+  {
+    "id": "q-dl-w10-17",
+    "courseId": "course-deep-learning-master",
+    "weekNumber": 10,
+    "originalQuestionNumber": 17,
+    "sourcePdfName": "DeepLearning_July_Oct_2026_Week10.pdf",
+    "questionText": "Case Study 4\nSatellite Land-Cover Image Classification\nA satellite-imaging team classifies 64 × 64 RGB patches into urban, forest, water, and\nfarmland. One convolution layer uses 32 filters, each of size 5 × 5, with stride 1 and no\npadding. Another stage uses global average pooling to reduce a final 8 × 8 × 128 feature\ntensor into a 128-dimensional vector before classification. The analysts need to estimate\nboth spatial output sizes and parameter counts before scaling the model to many satellite\ntiles. They also want to understand why global average pooling can summarize feature maps\nwithout introducing a very large dense layer.\n\nQuestion 17: How many output channels are produced by 32 filters?",
+    "options": [
+      "5",
+      "32",
+      "64",
+      "128"
+    ],
+    "correctAnswerIndex": 1,
+    "answerSource": "PDF",
+    "isApproved": true,
+    "explanation": "The output depth equals the number of filters."
+  },
+  {
+    "id": "q-dl-w10-18",
+    "courseId": "course-deep-learning-master",
+    "weekNumber": 10,
+    "originalQuestionNumber": 18,
+    "sourcePdfName": "DeepLearning_July_Oct_2026_Week10.pdf",
+    "questionText": "Case Study 4\nSatellite Land-Cover Image Classification\nA satellite-imaging team classifies 64 × 64 RGB patches into urban, forest, water, and\nfarmland. One convolution layer uses 32 filters, each of size 5 × 5, with stride 1 and no\npadding. Another stage uses global average pooling to reduce a final 8 × 8 × 128 feature\ntensor into a 128-dimensional vector before classification. The analysts need to estimate\nboth spatial output sizes and parameter counts before scaling the model to many satellite\ntiles. They also want to understand why global average pooling can summarize feature maps\nwithout introducing a very large dense layer.\n\nQuestion 18: How many weight parameters are in one 5 × 5 RGB filter, ignoring bias?",
+    "options": [
+      "25",
+      "50",
+      "125",
+      "75"
+    ],
+    "correctAnswerIndex": 3,
+    "answerSource": "PDF",
+    "isApproved": true,
+    "explanation": "One filter spans all 3 input channels, so 5 × 5 × 3 = 75."
+  },
+  {
+    "id": "q-dl-w10-19",
+    "courseId": "course-deep-learning-master",
+    "weekNumber": 10,
+    "originalQuestionNumber": 19,
+    "sourcePdfName": "DeepLearning_July_Oct_2026_Week10.pdf",
+    "questionText": "Case Study 4\nSatellite Land-Cover Image Classification\nA satellite-imaging team classifies 64 × 64 RGB patches into urban, forest, water, and\nfarmland. One convolution layer uses 32 filters, each of size 5 × 5, with stride 1 and no\npadding. Another stage uses global average pooling to reduce a final 8 × 8 × 128 feature\ntensor into a 128-dimensional vector before classification. The analysts need to estimate\nboth spatial output sizes and parameter counts before scaling the model to many satellite\ntiles. They also want to understand why global average pooling can summarize feature maps\nwithout introducing a very large dense layer.\n\nQuestion 19: What is the output dimension after global average pooling of an 8 × 8 × 128 tensor?",
+    "options": [
+      "64",
+      "1024",
+      "128",
+      "8192"
+    ],
+    "correctAnswerIndex": 2,
+    "answerSource": "PDF",
+    "isApproved": true,
+    "explanation": "Global average pooling averages each of the 128 feature maps to one value."
+  },
+  {
+    "id": "q-dl-w10-20",
+    "courseId": "course-deep-learning-master",
+    "weekNumber": 10,
+    "originalQuestionNumber": 20,
+    "sourcePdfName": "DeepLearning_July_Oct_2026_Week10.pdf",
+    "questionText": "Case Study 4\nSatellite Land-Cover Image Classification\nA satellite-imaging team classifies 64 × 64 RGB patches into urban, forest, water, and\nfarmland. One convolution layer uses 32 filters, each of size 5 × 5, with stride 1 and no\npadding. Another stage uses global average pooling to reduce a final 8 × 8 × 128 feature\ntensor into a 128-dimensional vector before classification. The analysts need to estimate\nboth spatial output sizes and parameter counts before scaling the model to many satellite\ntiles. They also want to understand why global average pooling can summarize feature maps\nwithout introducing a very large dense layer.\n\nQuestion 20: Why can global average pooling reduce parameters compared with flattening followed by a large fully connected layer?",
+    "options": [
+      "It increases the spatial dimensions.",
+      "It removes all learned filters in this specific scenario.",
+      "It increases the number of dense connections.",
+      "It produces one summary value per feature map."
+    ],
+    "correctAnswerIndex": 3,
+    "answerSource": "PDF",
+    "isApproved": true,
+    "explanation": "Global average pooling avoids connecting every spatial position to a large dense layer."
+  }
+]

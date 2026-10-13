@@ -1,0 +1,362 @@
+[
+  {
+    "id": "q-dl-w2-1",
+    "courseId": "course-deep-learning-master",
+    "weekNumber": 2,
+    "originalQuestionNumber": 1,
+    "sourcePdfName": "DeepLearning_July_Oct_2026_Week2.pdf",
+    "questionText": "Case Study 1\nClinic Follow-up Priority Scoring\nA clinic uses a simple model to assign a follow-up priority score after remote consultation.\nThe model does not make a diagnosis; it only produces a probability-like score for staff review.\nEach patient record is represented by two normalized inputs:\nx1 : symptom persistence score,\nx2 : abnormal reading score.\nThe model computes\nz = 3x1 + 2x2 −2,\nˆp = σ(z) =\n1\n1 + e−z .\nA record is sent for priority follow-up when ˆp ≥0.5. For the sigmoid function, σ(0) = 0.5,\npositive z gives an output above 0.5, and negative z gives an output below 0.5.\n\nQuestion 1: Why is the sigmoid function suitable for this priority score?",
+    "options": [
+      "It maps a real-valued input to a value between 0 and 1.",
+      "It removes the need to compute any weighted input value.",
+      "It always gives a hard class label before thresholding.",
+      "It forces both input features to have identical weights."
+    ],
+    "correctAnswerIndex": 0,
+    "answerSource": "PDF",
+    "isApproved": true,
+    "explanation": "A sigmoid maps any real number to a smooth output in (0, 1), which can be used as a probability-like score."
+  },
+  {
+    "id": "q-dl-w2-2",
+    "courseId": "course-deep-learning-master",
+    "weekNumber": 2,
+    "originalQuestionNumber": 2,
+    "sourcePdfName": "DeepLearning_July_Oct_2026_Week2.pdf",
+    "questionText": "Case Study 1\nClinic Follow-up Priority Scoring\nA clinic uses a simple model to assign a follow-up priority score after remote consultation.\nThe model does not make a diagnosis; it only produces a probability-like score for staff review.\nEach patient record is represented by two normalized inputs:\nx1 : symptom persistence score,\nx2 : abnormal reading score.\nThe model computes\nz = 3x1 + 2x2 −2,\nˆp = σ(z) =\n1\n1 + e−z .\nA record is sent for priority follow-up when ˆp ≥0.5. For the sigmoid function, σ(0) = 0.5,\npositive z gives an output above 0.5, and negative z gives an output below 0.5.\n\nQuestion 2: For x1 = 0.4 and x2 = 0.6, what is the value of z?",
+    "options": [
+      "0.2",
+      "0.6",
+      "0.4",
+      "0.8"
+    ],
+    "correctAnswerIndex": 2,
+    "answerSource": "PDF",
+    "isApproved": true,
+    "explanation": "z = 3(0.4) + 2(0.6) −2 = 1.2 + 1.2 −2 = 0.4."
+  },
+  {
+    "id": "q-dl-w2-3",
+    "courseId": "course-deep-learning-master",
+    "weekNumber": 2,
+    "originalQuestionNumber": 3,
+    "sourcePdfName": "DeepLearning_July_Oct_2026_Week2.pdf",
+    "questionText": "Case Study 1\nClinic Follow-up Priority Scoring\nA clinic uses a simple model to assign a follow-up priority score after remote consultation.\nThe model does not make a diagnosis; it only produces a probability-like score for staff review.\nEach patient record is represented by two normalized inputs:\nx1 : symptom persistence score,\nx2 : abnormal reading score.\nThe model computes\nz = 3x1 + 2x2 −2,\nˆp = σ(z) =\n1\n1 + e−z .\nA record is sent for priority follow-up when ˆp ≥0.5. For the sigmoid function, σ(0) = 0.5,\npositive z gives an output above 0.5, and negative z gives an output below 0.5.\n\nQuestion 3: The rule ˆp ≥0.5 is equivalent to which condition?",
+    "options": [
+      "z < 0",
+      "z ≥0",
+      "z > 1",
+      "z ≤−1"
+    ],
+    "correctAnswerIndex": 1,
+    "answerSource": "PDF",
+    "isApproved": true,
+    "explanation": "Since σ(0) = 0.5 and sigmoid is increasing, ˆp ≥0.5 exactly when z ≥0."
+  },
+  {
+    "id": "q-dl-w2-4",
+    "courseId": "course-deep-learning-master",
+    "weekNumber": 2,
+    "originalQuestionNumber": 4,
+    "sourcePdfName": "DeepLearning_July_Oct_2026_Week2.pdf",
+    "questionText": "Case Study 1\nClinic Follow-up Priority Scoring\nA clinic uses a simple model to assign a follow-up priority score after remote consultation.\nThe model does not make a diagnosis; it only produces a probability-like score for staff review.\nEach patient record is represented by two normalized inputs:\nx1 : symptom persistence score,\nx2 : abnormal reading score.\nThe model computes\nz = 3x1 + 2x2 −2,\nˆp = σ(z) =\n1\n1 + e−z .\nA record is sent for priority follow-up when ˆp ≥0.5. For the sigmoid function, σ(0) = 0.5,\npositive z gives an output above 0.5, and negative z gives an output below 0.5.\n\nQuestion 4: Which input is not sent for priority follow-up?",
+    "options": [
+      "x1 = 0.8, x2 = 0.1",
+      "x1 = 0.2, x2 = 0.8",
+      "x1 = 0.5, x2 = 0.4",
+      "x1 = 0.1, x2 = 0.4"
+    ],
+    "correctAnswerIndex": 3,
+    "answerSource": "PDF",
+    "isApproved": true,
+    "explanation": "For x1 = 0.1, x2 = 0.4, z = 0.3 + 0.8 −2 = −0.9, so ˆp < 0.5."
+  },
+  {
+    "id": "q-dl-w2-5",
+    "courseId": "course-deep-learning-master",
+    "weekNumber": 2,
+    "originalQuestionNumber": 5,
+    "sourcePdfName": "DeepLearning_July_Oct_2026_Week2.pdf",
+    "questionText": "Case Study 1\nClinic Follow-up Priority Scoring\nA clinic uses a simple model to assign a follow-up priority score after remote consultation.\nThe model does not make a diagnosis; it only produces a probability-like score for staff review.\nEach patient record is represented by two normalized inputs:\nx1 : symptom persistence score,\nx2 : abnormal reading score.\nThe model computes\nz = 3x1 + 2x2 −2,\nˆp = σ(z) =\n1\n1 + e−z .\nA record is sent for priority follow-up when ˆp ≥0.5. For the sigmoid function, σ(0) = 0.5,\npositive z gives an output above 0.5, and negative z gives an output below 0.5.\n\nQuestion 5: If the clinic wants fewer records to satisfy ˆp ≥0.5, what should happen to the bias term −2?",
+    "options": [
+      "It should become more negative.",
+      "It should be removed from the model entirely.",
+      "It should be made equal to x1 + x2.",
+      "It should be increased to make every score larger."
+    ],
+    "correctAnswerIndex": 0,
+    "answerSource": "PDF",
+    "isApproved": true,
+    "explanation": "Making the bias more negative lowers z for the same inputs, so fewer records reach the decision threshold."
+  },
+  {
+    "id": "q-dl-w2-6",
+    "courseId": "course-deep-learning-master",
+    "weekNumber": 2,
+    "originalQuestionNumber": 6,
+    "sourcePdfName": "DeepLearning_July_Oct_2026_Week2.pdf",
+    "questionText": "Case Study 2\nDelivery Time Prediction Review\nA logistics team trains a regression model to predict delivery delay in minutes. For four\nvalidation orders, the actual delay y and predicted delay ˆy are:\nOrder\ny\nˆy\n1\n12\n10\n2\n20\n24\n3\n15\n13\n4\n18\n21\nThe team uses squared error\nL = (y −ˆy)2,\nMSE = 1\nn\nn\nX\ni=1\n(yi −ˆyi)2.\nFor gradient-based updates with respect to the prediction,\n∂L\n∂ˆy = 2(ˆy −y).\n\nQuestion 6: What is the squared error for Order 2?",
+    "options": [
+      "4",
+      "16",
+      "9",
+      "25"
+    ],
+    "correctAnswerIndex": 1,
+    "answerSource": "PDF",
+    "isApproved": true,
+    "explanation": "For Order 2, the error is 20 −24 = −4, so the squared error is 16."
+  },
+  {
+    "id": "q-dl-w2-7",
+    "courseId": "course-deep-learning-master",
+    "weekNumber": 2,
+    "originalQuestionNumber": 7,
+    "sourcePdfName": "DeepLearning_July_Oct_2026_Week2.pdf",
+    "questionText": "Case Study 2\nDelivery Time Prediction Review\nA logistics team trains a regression model to predict delivery delay in minutes. For four\nvalidation orders, the actual delay y and predicted delay ˆy are:\nOrder\ny\nˆy\n1\n12\n10\n2\n20\n24\n3\n15\n13\n4\n18\n21\nThe team uses squared error\nL = (y −ˆy)2,\nMSE = 1\nn\nn\nX\ni=1\n(yi −ˆyi)2.\nFor gradient-based updates with respect to the prediction,\n∂L\n∂ˆy = 2(ˆy −y).\n\nQuestion 7: What is the mean squared error over the four orders?",
+    "options": [
+      "7.25",
+      "8.00",
+      "9.50",
+      "8.25"
+    ],
+    "correctAnswerIndex": 3,
+    "answerSource": "PDF",
+    "isApproved": true,
+    "explanation": "The squared errors are 4, 16, 4, 9. Their sum is 33, so the MSE is 33/4 = 8.25."
+  },
+  {
+    "id": "q-dl-w2-8",
+    "courseId": "course-deep-learning-master",
+    "weekNumber": 2,
+    "originalQuestionNumber": 8,
+    "sourcePdfName": "DeepLearning_July_Oct_2026_Week2.pdf",
+    "questionText": "Case Study 2\nDelivery Time Prediction Review\nA logistics team trains a regression model to predict delivery delay in minutes. For four\nvalidation orders, the actual delay y and predicted delay ˆy are:\nOrder\ny\nˆy\n1\n12\n10\n2\n20\n24\n3\n15\n13\n4\n18\n21\nThe team uses squared error\nL = (y −ˆy)2,\nMSE = 1\nn\nn\nX\ni=1\n(yi −ˆyi)2.\nFor gradient-based updates with respect to the prediction,\n∂L\n∂ˆy = 2(ˆy −y).\n\nQuestion 8: Which order contributes the largest squared error?",
+    "options": [
+      "Order 1",
+      "Order 3",
+      "Order 2",
+      "Order 4"
+    ],
+    "correctAnswerIndex": 2,
+    "answerSource": "PDF",
+    "isApproved": true,
+    "explanation": "The largest squared error is 16, which occurs for Order 2."
+  },
+  {
+    "id": "q-dl-w2-9",
+    "courseId": "course-deep-learning-master",
+    "weekNumber": 2,
+    "originalQuestionNumber": 9,
+    "sourcePdfName": "DeepLearning_July_Oct_2026_Week2.pdf",
+    "questionText": "Case Study 2\nDelivery Time Prediction Review\nA logistics team trains a regression model to predict delivery delay in minutes. For four\nvalidation orders, the actual delay y and predicted delay ˆy are:\nOrder\ny\nˆy\n1\n12\n10\n2\n20\n24\n3\n15\n13\n4\n18\n21\nThe team uses squared error\nL = (y −ˆy)2,\nMSE = 1\nn\nn\nX\ni=1\n(yi −ˆyi)2.\nFor gradient-based updates with respect to the prediction,\n∂L\n∂ˆy = 2(ˆy −y).\n\nQuestion 9: If y = 20 and ˆy = 24, what is ∂L ∂ˆy ?",
+    "options": [
+      "8",
+      "−8",
+      "4",
+      "−4"
+    ],
+    "correctAnswerIndex": 0,
+    "answerSource": "PDF",
+    "isApproved": true,
+    "explanation": "∂L ∂ˆy = 2(ˆy −y) = 2(24 −20) = 8."
+  },
+  {
+    "id": "q-dl-w2-10",
+    "courseId": "course-deep-learning-master",
+    "weekNumber": 2,
+    "originalQuestionNumber": 10,
+    "sourcePdfName": "DeepLearning_July_Oct_2026_Week2.pdf",
+    "questionText": "Case Study 2\nDelivery Time Prediction Review\nA logistics team trains a regression model to predict delivery delay in minutes. For four\nvalidation orders, the actual delay y and predicted delay ˆy are:\nOrder\ny\nˆy\n1\n12\n10\n2\n20\n24\n3\n15\n13\n4\n18\n21\nThe team uses squared error\nL = (y −ˆy)2,\nMSE = 1\nn\nn\nX\ni=1\n(yi −ˆyi)2.\nFor gradient-based updates with respect to the prediction,\n∂L\n∂ˆy = 2(ˆy −y).\n\nQuestion 10: A second model predicts 11, 21, 14, 19. Which model has lower MSE?",
+    "options": [
+      "The original model, because its MSE is 8.25.",
+      "The second model, because its MSE is 1.00.",
+      "Both models, because their errors are identical.",
+      "Neither model, because MSE cannot be computed here."
+    ],
+    "correctAnswerIndex": 1,
+    "answerSource": "PDF",
+    "isApproved": true,
+    "explanation": "The second model has squared errors 1, 1, 1, 1, so its MSE is 1.00."
+  },
+  {
+    "id": "q-dl-w2-11",
+    "courseId": "course-deep-learning-master",
+    "weekNumber": 2,
+    "originalQuestionNumber": 11,
+    "sourcePdfName": "DeepLearning_July_Oct_2026_Week2.pdf",
+    "questionText": "Case Study 3\nMachine Energy Use Prediction\nA facilities team monitors configurable machines in a shared workshop where different\noperating choices lead to different electricity usage patterns. Before deploying a larger model,\nthe team studies one small feedforward network so that engineers can trace every intermediate\nvalue by hand. The system uses two real-valued inputs:\nx1 : duration score,\nx2 : load score.\nThe team uses a small feedforward network:\nh1 = σ(x1 + x2 −1),\nh2 = σ(2x1 −x2),\nˆy = σ(3h1 + 2h2 −2).\nThe hidden layer transforms the original features before the final output is computed. This\nlets the team discuss the order of computation, the role of nonlinear hidden units, and why\nthe final sigmoid produces a bounded score rather than an unrestricted energy value.\n\nQuestion 11: Which quantities are computed first in the feedforward direction?",
+    "options": [
+      "The final loss value",
+      "The parameter update",
+      "The hidden units h1 and h2",
+      "The target label chosen by the model"
+    ],
+    "correctAnswerIndex": 2,
+    "answerSource": "PDF",
+    "isApproved": true,
+    "explanation": "In a feedforward network, the input layer is transformed into hidden unit values before computing the output."
+  },
+  {
+    "id": "q-dl-w2-12",
+    "courseId": "course-deep-learning-master",
+    "weekNumber": 2,
+    "originalQuestionNumber": 12,
+    "sourcePdfName": "DeepLearning_July_Oct_2026_Week2.pdf",
+    "questionText": "Case Study 3\nMachine Energy Use Prediction\nA facilities team monitors configurable machines in a shared workshop where different\noperating choices lead to different electricity usage patterns. Before deploying a larger model,\nthe team studies one small feedforward network so that engineers can trace every intermediate\nvalue by hand. The system uses two real-valued inputs:\nx1 : duration score,\nx2 : load score.\nThe team uses a small feedforward network:\nh1 = σ(x1 + x2 −1),\nh2 = σ(2x1 −x2),\nˆy = σ(3h1 + 2h2 −2).\nThe hidden layer transforms the original features before the final output is computed. This\nlets the team discuss the order of computation, the role of nonlinear hidden units, and why\nthe final sigmoid produces a bounded score rather than an unrestricted energy value.\n\nQuestion 12: For x1 = 1 and x2 = 1, what is the input to the sigmoid in h1?",
+    "options": [
+      "1",
+      "0",
+      "2",
+      "3"
+    ],
+    "correctAnswerIndex": 0,
+    "answerSource": "PDF",
+    "isApproved": true,
+    "explanation": "The input to h1 is x1 + x2 −1 = 1 + 1 −1 = 1."
+  },
+  {
+    "id": "q-dl-w2-13",
+    "courseId": "course-deep-learning-master",
+    "weekNumber": 2,
+    "originalQuestionNumber": 13,
+    "sourcePdfName": "DeepLearning_July_Oct_2026_Week2.pdf",
+    "questionText": "Case Study 3\nMachine Energy Use Prediction\nA facilities team monitors configurable machines in a shared workshop where different\noperating choices lead to different electricity usage patterns. Before deploying a larger model,\nthe team studies one small feedforward network so that engineers can trace every intermediate\nvalue by hand. The system uses two real-valued inputs:\nx1 : duration score,\nx2 : load score.\nThe team uses a small feedforward network:\nh1 = σ(x1 + x2 −1),\nh2 = σ(2x1 −x2),\nˆy = σ(3h1 + 2h2 −2).\nThe hidden layer transforms the original features before the final output is computed. This\nlets the team discuss the order of computation, the role of nonlinear hidden units, and why\nthe final sigmoid produces a bounded score rather than an unrestricted energy value.\n\nQuestion 13: For x1 = 1 and x2 = 0, what is the input to the sigmoid in h2?",
+    "options": [
+      "−2",
+      "−1",
+      "1",
+      "2"
+    ],
+    "correctAnswerIndex": 3,
+    "answerSource": "PDF",
+    "isApproved": true,
+    "explanation": "The input to h2 is 2x1 −x2 = 2(1) −0 = 2."
+  },
+  {
+    "id": "q-dl-w2-14",
+    "courseId": "course-deep-learning-master",
+    "weekNumber": 2,
+    "originalQuestionNumber": 14,
+    "sourcePdfName": "DeepLearning_July_Oct_2026_Week2.pdf",
+    "questionText": "Case Study 3\nMachine Energy Use Prediction\nA facilities team monitors configurable machines in a shared workshop where different\noperating choices lead to different electricity usage patterns. Before deploying a larger model,\nthe team studies one small feedforward network so that engineers can trace every intermediate\nvalue by hand. The system uses two real-valued inputs:\nx1 : duration score,\nx2 : load score.\nThe team uses a small feedforward network:\nh1 = σ(x1 + x2 −1),\nh2 = σ(2x1 −x2),\nˆy = σ(3h1 + 2h2 −2).\nThe hidden layer transforms the original features before the final output is computed. This\nlets the team discuss the order of computation, the role of nonlinear hidden units, and why\nthe final sigmoid produces a bounded score rather than an unrestricted energy value.\n\nQuestion 14: Why can sigmoid hidden units introduce nonlinearity?",
+    "options": [
+      "They copy inputs without changing any value.",
+      "They apply a nonlinear function to weighted input combinations.",
+      "They remove all weights from the network.",
+      "They force the output to be exactly linear for all possible inputs."
+    ],
+    "correctAnswerIndex": 1,
+    "answerSource": "PDF",
+    "isApproved": true,
+    "explanation": "A sigmoid is nonlinear, so applying it in hidden units lets the network represent nonlinear transformations."
+  },
+  {
+    "id": "q-dl-w2-15",
+    "courseId": "course-deep-learning-master",
+    "weekNumber": 2,
+    "originalQuestionNumber": 15,
+    "sourcePdfName": "DeepLearning_July_Oct_2026_Week2.pdf",
+    "questionText": "Case Study 3\nMachine Energy Use Prediction\nA facilities team monitors configurable machines in a shared workshop where different\noperating choices lead to different electricity usage patterns. Before deploying a larger model,\nthe team studies one small feedforward network so that engineers can trace every intermediate\nvalue by hand. The system uses two real-valued inputs:\nx1 : duration score,\nx2 : load score.\nThe team uses a small feedforward network:\nh1 = σ(x1 + x2 −1),\nh2 = σ(2x1 −x2),\nˆy = σ(3h1 + 2h2 −2).\nThe hidden layer transforms the original features before the final output is computed. This\nlets the team discuss the order of computation, the role of nonlinear hidden units, and why\nthe final sigmoid produces a bounded score rather than an unrestricted energy value.\n\nQuestion 15: What is the final output range of ˆy?",
+    "options": [
+      "Any real number from −∞to ∞",
+      "Only the two values −1 and 1",
+      "A value between 0 and 1",
+      "A value greater than 1 for all inputs"
+    ],
+    "correctAnswerIndex": 2,
+    "answerSource": "PDF",
+    "isApproved": true,
+    "explanation": "The final output applies a sigmoid, so ˆy lies in (0, 1)."
+  },
+  {
+    "id": "q-dl-w2-16",
+    "courseId": "course-deep-learning-master",
+    "weekNumber": 2,
+    "originalQuestionNumber": 16,
+    "sourcePdfName": "DeepLearning_July_Oct_2026_Week2.pdf",
+    "questionText": "Case Study 4\nWarehouse Routing Time Analysis\nA warehouse studies how a single routing coefficient affects the predicted travel time of\na cart inside a storage aisle. The operations team first analyzes one clean training example\nso that the direction of a gradient descent step is easy to verify before the method is used\non many routes. The one-parameter model is\nˆy = wx.\nFor one training example, x = 3 and y = 15. The squared error loss is\nL(w) = (15 −3w)2.\nThe team studies this loss before using gradient descent on a larger training set. In this\nsimplified setting, the parameter w controls how strongly the route length x affects the\npredicted time, and the squared loss measures how far the prediction is from the observed\nrouting time.\n\nQuestion 16: What is L(w) when w = 4?",
+    "options": [
+      "6",
+      "4",
+      "12",
+      "9"
+    ],
+    "correctAnswerIndex": 3,
+    "answerSource": "PDF",
+    "isApproved": true,
+    "explanation": "When w = 4, ˆy = 3(4) = 12, so L = (15 −12)2 = 9."
+  },
+  {
+    "id": "q-dl-w2-17",
+    "courseId": "course-deep-learning-master",
+    "weekNumber": 2,
+    "originalQuestionNumber": 17,
+    "sourcePdfName": "DeepLearning_July_Oct_2026_Week2.pdf",
+    "questionText": "Case Study 4\nWarehouse Routing Time Analysis\nA warehouse studies how a single routing coefficient affects the predicted travel time of\na cart inside a storage aisle. The operations team first analyzes one clean training example\nso that the direction of a gradient descent step is easy to verify before the method is used\non many routes. The one-parameter model is\nˆy = wx.\nFor one training example, x = 3 and y = 15. The squared error loss is\nL(w) = (15 −3w)2.\nThe team studies this loss before using gradient descent on a larger training set. In this\nsimplified setting, the parameter w controls how strongly the route length x affects the\npredicted time, and the squared loss measures how far the prediction is from the observed\nrouting time.\n\nQuestion 17: Which value of w gives zero loss?",
+    "options": [
+      "w = 4",
+      "w = 5",
+      "w = 6",
+      "w = 3"
+    ],
+    "correctAnswerIndex": 1,
+    "answerSource": "PDF",
+    "isApproved": true,
+    "explanation": "Zero loss requires 15 −3w = 0, so w = 5."
+  },
+  {
+    "id": "q-dl-w2-18",
+    "courseId": "course-deep-learning-master",
+    "weekNumber": 2,
+    "originalQuestionNumber": 18,
+    "sourcePdfName": "DeepLearning_July_Oct_2026_Week2.pdf",
+    "questionText": "Case Study 4\nWarehouse Routing Time Analysis\nA warehouse studies how a single routing coefficient affects the predicted travel time of\na cart inside a storage aisle. The operations team first analyzes one clean training example\nso that the direction of a gradient descent step is easy to verify before the method is used\non many routes. The one-parameter model is\nˆy = wx.\nFor one training example, x = 3 and y = 15. The squared error loss is\nL(w) = (15 −3w)2.\nThe team studies this loss before using gradient descent on a larger training set. In this\nsimplified setting, the parameter w controls how strongly the route length x affects the\npredicted time, and the squared loss measures how far the prediction is from the observed\nrouting time.\n\nQuestion 18: What is dL dw at w = 4?",
+    "options": [
+      "−18",
+      "−6",
+      "18.0",
+      "6"
+    ],
+    "correctAnswerIndex": 0,
+    "answerSource": "PDF",
+    "isApproved": true,
+    "explanation": "L = (15 −3w)2, so dL dw = −6(15 −3w). At w = 4, this is −18."
+  },
+  {
+    "id": "q-dl-w2-19",
+    "courseId": "course-deep-learning-master",
+    "weekNumber": 2,
+    "originalQuestionNumber": 19,
+    "sourcePdfName": "DeepLearning_July_Oct_2026_Week2.pdf",
+    "questionText": "Case Study 4\nWarehouse Routing Time Analysis\nA warehouse studies how a single routing coefficient affects the predicted travel time of\na cart inside a storage aisle. The operations team first analyzes one clean training example\nso that the direction of a gradient descent step is easy to verify before the method is used\non many routes. The one-parameter model is\nˆy = wx.\nFor one training example, x = 3 and y = 15. The squared error loss is\nL(w) = (15 −3w)2.\nThe team studies this loss before using gradient descent on a larger training set. In this\nsimplified setting, the parameter w controls how strongly the route length x affects the\npredicted time, and the squared loss measures how far the prediction is from the observed\nrouting time.\n\nQuestion 19: If gradient descent uses w ←w −η dL dw with η = 0.1, what is the next value from w = 4?",
+    "options": [
+      "3.2",
+      "4.6",
+      "5.8",
+      "2.2"
+    ],
+    "correctAnswerIndex": 2,
+    "answerSource": "PDF",
+    "isApproved": true,
+    "explanation": "The update is w = 4 −0.1(−18) = 5.8."
+  },
+  {
+    "id": "q-dl-w2-20",
+    "courseId": "course-deep-learning-master",
+    "weekNumber": 2,
+    "originalQuestionNumber": 20,
+    "sourcePdfName": "DeepLearning_July_Oct_2026_Week2.pdf",
+    "questionText": "Case Study 4\nWarehouse Routing Time Analysis\nA warehouse studies how a single routing coefficient affects the predicted travel time of\na cart inside a storage aisle. The operations team first analyzes one clean training example\nso that the direction of a gradient descent step is easy to verify before the method is used\non many routes. The one-parameter model is\nˆy = wx.\nFor one training example, x = 3 and y = 15. The squared error loss is\nL(w) = (15 −3w)2.\nThe team studies this loss before using gradient descent on a larger training set. In this\nsimplified setting, the parameter w controls how strongly the route length x affects the\npredicted time, and the squared loss measures how far the prediction is from the observed\nrouting time.\n\nQuestion 20: What does the gradient indicate in this example?",
+    "options": [
+      "It gives the class label directly without a model.",
+      "It removes the input feature from the prediction.",
+      "It makes the squared error impossible to compute.",
+      "It shows how the loss changes as w changes."
+    ],
+    "correctAnswerIndex": 3,
+    "answerSource": "PDF",
+    "isApproved": true,
+    "explanation": "The gradient describes the local rate of change of the loss with respect to the parameter."
+  }
+]

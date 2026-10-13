@@ -1,0 +1,362 @@
+[
+  {
+    "id": "q-dl-w1-1",
+    "courseId": "course-deep-learning-master",
+    "weekNumber": 1,
+    "originalQuestionNumber": 1,
+    "sourcePdfName": "DeepLearning_July_Oct_2026_Week1.pdf",
+    "questionText": "Case Study 1\nSmart Classroom Ventilation Control\nA university building uses a simple automatic ventilation controller for a smart classroom.\nThe controller is intended to be transparent enough for maintenance staff to verify without\nrunning a learning algorithm. At the beginning of every class interval, the controller reads\nfour binary indicators:\nx1 : carbon dioxide level is high,\nx2 : room occupancy is high,\nx3 : indoor temperature is above the comfort limit,\nx4 : outside air quality is acceptable.\nEach indicator is 1 when the condition is true and 0 otherwise.\nThe ventilation fan is\ncontrolled by a McCulloch-Pitts style threshold unit:\ny =\n\n\n\n1,\nif x1 + x2 + x3 + x4 ≥θ,\n0,\notherwise.\nHere, y = 1 means that the fan is switched on. The facilities team wants the fan to switch\non only when at least three of the four indicators are active. Each class interval is evaluated\nindependently.\n\nQuestion 1: Which threshold value implements the desired fan-control rule?",
+    "options": [
+      "θ = 1",
+      "θ = 2",
+      "θ = 3",
+      "θ = 4"
+    ],
+    "correctAnswerIndex": 2,
+    "answerSource": "PDF",
+    "isApproved": true,
+    "explanation": "The fan should switch on when at least three indicators are active, so the threshold must be 3."
+  },
+  {
+    "id": "q-dl-w1-2",
+    "courseId": "course-deep-learning-master",
+    "weekNumber": 1,
+    "originalQuestionNumber": 2,
+    "sourcePdfName": "DeepLearning_July_Oct_2026_Week1.pdf",
+    "questionText": "Case Study 1\nSmart Classroom Ventilation Control\nA university building uses a simple automatic ventilation controller for a smart classroom.\nThe controller is intended to be transparent enough for maintenance staff to verify without\nrunning a learning algorithm. At the beginning of every class interval, the controller reads\nfour binary indicators:\nx1 : carbon dioxide level is high,\nx2 : room occupancy is high,\nx3 : indoor temperature is above the comfort limit,\nx4 : outside air quality is acceptable.\nEach indicator is 1 when the condition is true and 0 otherwise.\nThe ventilation fan is\ncontrolled by a McCulloch-Pitts style threshold unit:\ny =\n\n\n\n1,\nif x1 + x2 + x3 + x4 ≥θ,\n0,\notherwise.\nHere, y = 1 means that the fan is switched on. The facilities team wants the fan to switch\non only when at least three of the four indicators are active. Each class interval is evaluated\nindependently.\n\nQuestion 2: For input (1, 0, 1, 1), what output does the controller produce?",
+    "options": [
+      "y = 0, because only one condition is absent",
+      "y = 1, because three indicators are active",
+      "y = 0, because all four indicators must be active",
+      "y = 1, because the first indicator is active"
+    ],
+    "correctAnswerIndex": 1,
+    "answerSource": "PDF",
+    "isApproved": true,
+    "explanation": "The input contains three 1s. Since 3 ≥θ, the output is y = 1."
+  },
+  {
+    "id": "q-dl-w1-3",
+    "courseId": "course-deep-learning-master",
+    "weekNumber": 1,
+    "originalQuestionNumber": 3,
+    "sourcePdfName": "DeepLearning_July_Oct_2026_Week1.pdf",
+    "questionText": "Case Study 1\nSmart Classroom Ventilation Control\nA university building uses a simple automatic ventilation controller for a smart classroom.\nThe controller is intended to be transparent enough for maintenance staff to verify without\nrunning a learning algorithm. At the beginning of every class interval, the controller reads\nfour binary indicators:\nx1 : carbon dioxide level is high,\nx2 : room occupancy is high,\nx3 : indoor temperature is above the comfort limit,\nx4 : outside air quality is acceptable.\nEach indicator is 1 when the condition is true and 0 otherwise.\nThe ventilation fan is\ncontrolled by a McCulloch-Pitts style threshold unit:\ny =\n\n\n\n1,\nif x1 + x2 + x3 + x4 ≥θ,\n0,\notherwise.\nHere, y = 1 means that the fan is switched on. The facilities team wants the fan to switch\non only when at least three of the four indicators are active. Each class interval is evaluated\nindependently.\n\nQuestion 3: How many binary input patterns switch on the fan?",
+    "options": [
+      "5",
+      "4",
+      "6",
+      "8"
+    ],
+    "correctAnswerIndex": 0,
+    "answerSource": "PDF",
+    "isApproved": true,
+    "explanation": "The fan switches on for exactly three active indicators or four active indicators. The number of patterns is 4 3 \u0001 + 4 4 \u0001 = 4 + 1 = 5."
+  },
+  {
+    "id": "q-dl-w1-4",
+    "courseId": "course-deep-learning-master",
+    "weekNumber": 1,
+    "originalQuestionNumber": 4,
+    "sourcePdfName": "DeepLearning_July_Oct_2026_Week1.pdf",
+    "questionText": "Case Study 1\nSmart Classroom Ventilation Control\nA university building uses a simple automatic ventilation controller for a smart classroom.\nThe controller is intended to be transparent enough for maintenance staff to verify without\nrunning a learning algorithm. At the beginning of every class interval, the controller reads\nfour binary indicators:\nx1 : carbon dioxide level is high,\nx2 : room occupancy is high,\nx3 : indoor temperature is above the comfort limit,\nx4 : outside air quality is acceptable.\nEach indicator is 1 when the condition is true and 0 otherwise.\nThe ventilation fan is\ncontrolled by a McCulloch-Pitts style threshold unit:\ny =\n\n\n\n1,\nif x1 + x2 + x3 + x4 ≥θ,\n0,\notherwise.\nHere, y = 1 means that the fan is switched on. The facilities team wants the fan to switch\non only when at least three of the four indicators are active. Each class interval is evaluated\nindependently.\n\nQuestion 4: If the threshold is accidentally changed to θ = 2, what happens?",
+    "options": [
+      "The fan switches on less often than intended.",
+      "The fan switches on when two or more indicators are active.",
+      "The fan switches on only when all inputs are 1, making activation too strict.",
+      "The fan never switches on."
+    ],
+    "correctAnswerIndex": 1,
+    "answerSource": "PDF",
+    "isApproved": true,
+    "explanation": "With θ = 2, any pattern with two, three, or four active indi- cators produces y = 1, so activation becomes more frequent."
+  },
+  {
+    "id": "q-dl-w1-5",
+    "courseId": "course-deep-learning-master",
+    "weekNumber": 1,
+    "originalQuestionNumber": 5,
+    "sourcePdfName": "DeepLearning_July_Oct_2026_Week1.pdf",
+    "questionText": "Case Study 1\nSmart Classroom Ventilation Control\nA university building uses a simple automatic ventilation controller for a smart classroom.\nThe controller is intended to be transparent enough for maintenance staff to verify without\nrunning a learning algorithm. At the beginning of every class interval, the controller reads\nfour binary indicators:\nx1 : carbon dioxide level is high,\nx2 : room occupancy is high,\nx3 : indoor temperature is above the comfort limit,\nx4 : outside air quality is acceptable.\nEach indicator is 1 when the condition is true and 0 otherwise.\nThe ventilation fan is\ncontrolled by a McCulloch-Pitts style threshold unit:\ny =\n\n\n\n1,\nif x1 + x2 + x3 + x4 ≥θ,\n0,\notherwise.\nHere, y = 1 means that the fan is switched on. The facilities team wants the fan to switch\non only when at least three of the four indicators are active. Each class interval is evaluated\nindependently.\n\nQuestion 5: Which property makes this controller a threshold-logic system?",
+    "options": [
+      "It predicts future classroom occupancy states.",
+      "It updates weights after every incorrect output during a training process.",
+      "It requires a hidden layer to make a decision.",
+      "It compares a summed input value with a fixed threshold."
+    ],
+    "correctAnswerIndex": 3,
+    "answerSource": "PDF",
+    "isApproved": true,
+    "explanation": "A threshold unit computes a weighted or unweighted sum and compares that sum with a threshold."
+  },
+  {
+    "id": "q-dl-w1-6",
+    "courseId": "course-deep-learning-master",
+    "weekNumber": 1,
+    "originalQuestionNumber": 6,
+    "sourcePdfName": "DeepLearning_July_Oct_2026_Week1.pdf",
+    "questionText": "Case Study 2\nScholarship Application Screening\nA scholarship office builds a first-stage screening aid. The aid does not make the final\naward decision; it only flags applications that satisfy a simple rule for immediate review.\nEach application is represented by two binary features:\nx1 : academic score is above the cutoff,\nx2 : financial-need certificate is verified.\nThe office wants the system to flag an application when at least one of these two conditions\nis true. A perceptron with weights w1, w2, bias b, and decision rule\nˆy =\n\n\n\n1,\nif w1x1 + w2x2 + b ≥0,\n0,\notherwise\nis tested for this screening rule.\n\nQuestion 6: Which logical behavior is described by the desired screening rule?",
+    "options": [
+      "AND",
+      "XOR",
+      "OR",
+      "XNOR"
+    ],
+    "correctAnswerIndex": 2,
+    "answerSource": "PDF",
+    "isApproved": true,
+    "explanation": "The output is 1 when x1 = 1, or x2 = 1, or both. This is the OR operation."
+  },
+  {
+    "id": "q-dl-w1-7",
+    "courseId": "course-deep-learning-master",
+    "weekNumber": 1,
+    "originalQuestionNumber": 7,
+    "sourcePdfName": "DeepLearning_July_Oct_2026_Week1.pdf",
+    "questionText": "Case Study 2\nScholarship Application Screening\nA scholarship office builds a first-stage screening aid. The aid does not make the final\naward decision; it only flags applications that satisfy a simple rule for immediate review.\nEach application is represented by two binary features:\nx1 : academic score is above the cutoff,\nx2 : financial-need certificate is verified.\nThe office wants the system to flag an application when at least one of these two conditions\nis true. A perceptron with weights w1, w2, bias b, and decision rule\nˆy =\n\n\n\n1,\nif w1x1 + w2x2 + b ≥0,\n0,\notherwise\nis tested for this screening rule.\n\nQuestion 7: Which parameter setting correctly implements this rule?",
+    "options": [
+      "w1 = 1, w2 = 1, b = −1.5",
+      "w1 = 1, w2 = 1, b = −0.5",
+      "w1 = −1, w2 = −1, b = 0.5",
+      "w1 = 1, w2 = −1, b = 0"
+    ],
+    "correctAnswerIndex": 1,
+    "answerSource": "PDF",
+    "isApproved": true,
+    "explanation": "With w1 = w2 = 1 and b = −0.5, the score is negative only for (0, 0). All other input patterns produce a non-negative score."
+  },
+  {
+    "id": "q-dl-w1-8",
+    "courseId": "course-deep-learning-master",
+    "weekNumber": 1,
+    "originalQuestionNumber": 8,
+    "sourcePdfName": "DeepLearning_July_Oct_2026_Week1.pdf",
+    "questionText": "Case Study 2\nScholarship Application Screening\nA scholarship office builds a first-stage screening aid. The aid does not make the final\naward decision; it only flags applications that satisfy a simple rule for immediate review.\nEach application is represented by two binary features:\nx1 : academic score is above the cutoff,\nx2 : financial-need certificate is verified.\nThe office wants the system to flag an application when at least one of these two conditions\nis true. A perceptron with weights w1, w2, bias b, and decision rule\nˆy =\n\n\n\n1,\nif w1x1 + w2x2 + b ≥0,\n0,\notherwise\nis tested for this screening rule.\n\nQuestion 8: For w1 = 1, w2 = 1, b = −0.5, what is the score for input (0, 1)?",
+    "options": [
+      "0.5",
+      "−0.5",
+      "0",
+      "1.5"
+    ],
+    "correctAnswerIndex": 0,
+    "answerSource": "PDF",
+    "isApproved": true,
+    "explanation": "The score is 1(0) + 1(1) −0.5 = 0.5, so the perceptron outputs 1."
+  },
+  {
+    "id": "q-dl-w1-9",
+    "courseId": "course-deep-learning-master",
+    "weekNumber": 1,
+    "originalQuestionNumber": 9,
+    "sourcePdfName": "DeepLearning_July_Oct_2026_Week1.pdf",
+    "questionText": "Case Study 2\nScholarship Application Screening\nA scholarship office builds a first-stage screening aid. The aid does not make the final\naward decision; it only flags applications that satisfy a simple rule for immediate review.\nEach application is represented by two binary features:\nx1 : academic score is above the cutoff,\nx2 : financial-need certificate is verified.\nThe office wants the system to flag an application when at least one of these two conditions\nis true. A perceptron with weights w1, w2, bias b, and decision rule\nˆy =\n\n\n\n1,\nif w1x1 + w2x2 + b ≥0,\n0,\notherwise\nis tested for this screening rule.\n\nQuestion 9: What is the decision boundary for the parameter setting w1 = 1, w2 = 1, b = −0.5?",
+    "options": [
+      "x1 −x2 −0.5 = 0",
+      "x1 + x2 + 0.5 = 0",
+      "2x1 + x2 = 0",
+      "x1 + x2 −0.5 = 0"
+    ],
+    "correctAnswerIndex": 3,
+    "answerSource": "PDF",
+    "isApproved": true,
+    "explanation": "The boundary is where the perceptron score equals zero: x1 + x2 −0.5 = 0."
+  },
+  {
+    "id": "q-dl-w1-10",
+    "courseId": "course-deep-learning-master",
+    "weekNumber": 1,
+    "originalQuestionNumber": 10,
+    "sourcePdfName": "DeepLearning_July_Oct_2026_Week1.pdf",
+    "questionText": "Case Study 2\nScholarship Application Screening\nA scholarship office builds a first-stage screening aid. The aid does not make the final\naward decision; it only flags applications that satisfy a simple rule for immediate review.\nEach application is represented by two binary features:\nx1 : academic score is above the cutoff,\nx2 : financial-need certificate is verified.\nThe office wants the system to flag an application when at least one of these two conditions\nis true. A perceptron with weights w1, w2, bias b, and decision rule\nˆy =\n\n\n\n1,\nif w1x1 + w2x2 + b ≥0,\n0,\notherwise\nis tested for this screening rule.\n\nQuestion 10: Why can a single perceptron represent this screening rule?",
+    "options": [
+      "The positive and negative cases are linearly separable.",
+      "The rule requires remembering earlier applications before deciding the next output.",
+      "The rule has no decision boundary.",
+      "The output changes randomly for the same input."
+    ],
+    "correctAnswerIndex": 0,
+    "answerSource": "PDF",
+    "isApproved": true,
+    "explanation": "OR is linearly separable because one straight line can separate (0, 0) from the three positive input patterns."
+  },
+  {
+    "id": "q-dl-w1-11",
+    "courseId": "course-deep-learning-master",
+    "weekNumber": 1,
+    "originalQuestionNumber": 11,
+    "sourcePdfName": "DeepLearning_July_Oct_2026_Week1.pdf",
+    "questionText": "Case Study 3\nEquipment Handover Record Review\nAn engineering lab tracks two binary checks before handing over a portable measurement\nkit:\nx1 : battery pack has been returned,\nx2 : sensor module has been returned.\nFor audit purposes, the lab wants to flag a handover record when exactly one of the two\nitems has been returned. If neither item has been returned or both items have been returned,\nthe record is not flagged. The desired output table is:\nx1\nx2\ny\n0\n0\n0\n0\n1\n1\n1\n0\n1\n1\n1\n0\nThe lab initially tries to implement this rule with a single perceptron.\n\nQuestion 11: Which logical behavior does the handover rule represent?",
+    "options": [
+      "AND",
+      "OR",
+      "XOR",
+      "NAND"
+    ],
+    "correctAnswerIndex": 2,
+    "answerSource": "PDF",
+    "isApproved": true,
+    "explanation": "The output is 1 exactly when the two binary inputs are differ- ent, which is the XOR rule."
+  },
+  {
+    "id": "q-dl-w1-12",
+    "courseId": "course-deep-learning-master",
+    "weekNumber": 1,
+    "originalQuestionNumber": 12,
+    "sourcePdfName": "DeepLearning_July_Oct_2026_Week1.pdf",
+    "questionText": "Case Study 3\nEquipment Handover Record Review\nAn engineering lab tracks two binary checks before handing over a portable measurement\nkit:\nx1 : battery pack has been returned,\nx2 : sensor module has been returned.\nFor audit purposes, the lab wants to flag a handover record when exactly one of the two\nitems has been returned. If neither item has been returned or both items have been returned,\nthe record is not flagged. The desired output table is:\nx1\nx2\ny\n0\n0\n0\n0\n1\n1\n1\n0\n1\n1\n1\n0\nThe lab initially tries to implement this rule with a single perceptron.\n\nQuestion 12: What output is assigned to the input pattern (1, 1)?",
+    "options": [
+      "y = 1, because one item has been returned",
+      "y = 0, because exactly one item has not been returned",
+      "y = 1, because both checks are complete",
+      "y = 0, because both values are the same"
+    ],
+    "correctAnswerIndex": 3,
+    "answerSource": "PDF",
+    "isApproved": true,
+    "explanation": "The rule flags only records with exactly one returned item. For (1, 1), both items have been returned, so y = 0."
+  },
+  {
+    "id": "q-dl-w1-13",
+    "courseId": "course-deep-learning-master",
+    "weekNumber": 1,
+    "originalQuestionNumber": 13,
+    "sourcePdfName": "DeepLearning_July_Oct_2026_Week1.pdf",
+    "questionText": "Case Study 3\nEquipment Handover Record Review\nAn engineering lab tracks two binary checks before handing over a portable measurement\nkit:\nx1 : battery pack has been returned,\nx2 : sensor module has been returned.\nFor audit purposes, the lab wants to flag a handover record when exactly one of the two\nitems has been returned. If neither item has been returned or both items have been returned,\nthe record is not flagged. The desired output table is:\nx1\nx2\ny\n0\n0\n0\n0\n1\n1\n1\n0\n1\n1\n1\n0\nThe lab initially tries to implement this rule with a single perceptron.\n\nQuestion 13: Which geometric property prevents a single perceptron from representing this rule?",
+    "options": [
+      "The positive cases lie on opposite corners of the input square.",
+      "The inputs are binary rather than real valued, so the rule cannot use a separator.",
+      "The output has only two possible labels.",
+      "The rule uses two input variables."
+    ],
+    "correctAnswerIndex": 0,
+    "answerSource": "PDF",
+    "isApproved": true,
+    "explanation": "The positive cases (0, 1) and (1, 0) are diagonally opposite, so a single straight line cannot separate them from the two negative cases."
+  },
+  {
+    "id": "q-dl-w1-14",
+    "courseId": "course-deep-learning-master",
+    "weekNumber": 1,
+    "originalQuestionNumber": 14,
+    "sourcePdfName": "DeepLearning_July_Oct_2026_Week1.pdf",
+    "questionText": "Case Study 3\nEquipment Handover Record Review\nAn engineering lab tracks two binary checks before handing over a portable measurement\nkit:\nx1 : battery pack has been returned,\nx2 : sensor module has been returned.\nFor audit purposes, the lab wants to flag a handover record when exactly one of the two\nitems has been returned. If neither item has been returned or both items have been returned,\nthe record is not flagged. The desired output table is:\nx1\nx2\ny\n0\n0\n0\n0\n1\n1\n1\n0\n1\n1\n1\n0\nThe lab initially tries to implement this rule with a single perceptron.\n\nQuestion 14: Which modified lab rule would be linearly separable?",
+    "options": [
+      "Flag exactly one returned item.",
+      "Flag when the two item statuses are different.",
+      "Flag only when both items have been returned.",
+      "Flag when neither or both items have been returned."
+    ],
+    "correctAnswerIndex": 2,
+    "answerSource": "PDF",
+    "isApproved": true,
+    "explanation": "Flagging only (1, 1) is the AND rule, which is linearly separa- ble."
+  },
+  {
+    "id": "q-dl-w1-15",
+    "courseId": "course-deep-learning-master",
+    "weekNumber": 1,
+    "originalQuestionNumber": 15,
+    "sourcePdfName": "DeepLearning_July_Oct_2026_Week1.pdf",
+    "questionText": "Case Study 3\nEquipment Handover Record Review\nAn engineering lab tracks two binary checks before handing over a portable measurement\nkit:\nx1 : battery pack has been returned,\nx2 : sensor module has been returned.\nFor audit purposes, the lab wants to flag a handover record when exactly one of the two\nitems has been returned. If neither item has been returned or both items have been returned,\nthe record is not flagged. The desired output table is:\nx1\nx2\ny\n0\n0\n0\n0\n1\n1\n1\n0\n1\n1\n1\n0\nThe lab initially tries to implement this rule with a single perceptron.\n\nQuestion 15: What does linear separability mean in this setting?",
+    "options": [
+      "Every input must have label 1 before a straight boundary can be checked.",
+      "A line can separate the 1-labeled and 0-labeled inputs.",
+      "The perceptron must avoid using weights.",
+      "The input values must be stored in a sequence."
+    ],
+    "correctAnswerIndex": 1,
+    "answerSource": "PDF",
+    "isApproved": true,
+    "explanation": "Linear separability means that a line can place all positive examples on one side and all negative examples on the other side."
+  },
+  {
+    "id": "q-dl-w1-16",
+    "courseId": "course-deep-learning-master",
+    "weekNumber": 1,
+    "originalQuestionNumber": 16,
+    "sourcePdfName": "DeepLearning_July_Oct_2026_Week1.pdf",
+    "questionText": "Case Study 4\nParcel Routing Decision Review\nA courier service trains a perceptron to classify parcels into “express” and “standard”\nrouting. Each parcel is described by two numerical features:\nx1 : compactness score,\nx2 : priority-label score.\nThe label is y = 1 for express routing and y = −1 for standard routing. The perceptron has\nno bias term and uses the update rule\nw ←w + yx\nwhenever y(w⊤x) ≤0. The training samples are processed in the following order:\nParcel\nx1\nx2\ny\nP1\n2\n1\n1\nP2\n1\n2\n1\nP3\n−1\n−1\n−1\nTraining starts with w = (0, 0).\n\nQuestion 16: What is the weight vector after processing P1 once?",
+    "options": [
+      "w = (2, 1)",
+      "w = (1, 2)",
+      "w = (−1, −1)",
+      "w = (0, 0)"
+    ],
+    "correctAnswerIndex": 0,
+    "answerSource": "PDF",
+    "isApproved": true,
+    "explanation": "Initially w⊤x = 0, so y(w⊤x) = 0 and an update is made. The new vector is w = (0, 0) + 1(2, 1) = (2, 1)."
+  },
+  {
+    "id": "q-dl-w1-17",
+    "courseId": "course-deep-learning-master",
+    "weekNumber": 1,
+    "originalQuestionNumber": 17,
+    "sourcePdfName": "DeepLearning_July_Oct_2026_Week1.pdf",
+    "questionText": "Case Study 4\nParcel Routing Decision Review\nA courier service trains a perceptron to classify parcels into “express” and “standard”\nrouting. Each parcel is described by two numerical features:\nx1 : compactness score,\nx2 : priority-label score.\nThe label is y = 1 for express routing and y = −1 for standard routing. The perceptron has\nno bias term and uses the update rule\nw ←w + yx\nwhenever y(w⊤x) ≤0. The training samples are processed in the following order:\nParcel\nx1\nx2\ny\nP1\n2\n1\n1\nP2\n1\n2\n1\nP3\n−1\n−1\n−1\nTraining starts with w = (0, 0).\n\nQuestion 17: After the update from P1, what is w⊤x for P2?",
+    "options": [
+      "2",
+      "3",
+      "4",
+      "5"
+    ],
+    "correctAnswerIndex": 2,
+    "answerSource": "PDF",
+    "isApproved": true,
+    "explanation": "With w = (2, 1) and x = (1, 2), the score is 2(1) + 1(2) = 4."
+  },
+  {
+    "id": "q-dl-w1-18",
+    "courseId": "course-deep-learning-master",
+    "weekNumber": 1,
+    "originalQuestionNumber": 18,
+    "sourcePdfName": "DeepLearning_July_Oct_2026_Week1.pdf",
+    "questionText": "Case Study 4\nParcel Routing Decision Review\nA courier service trains a perceptron to classify parcels into “express” and “standard”\nrouting. Each parcel is described by two numerical features:\nx1 : compactness score,\nx2 : priority-label score.\nThe label is y = 1 for express routing and y = −1 for standard routing. The perceptron has\nno bias term and uses the update rule\nw ←w + yx\nwhenever y(w⊤x) ≤0. The training samples are processed in the following order:\nParcel\nx1\nx2\ny\nP1\n2\n1\n1\nP2\n1\n2\n1\nP3\n−1\n−1\n−1\nTraining starts with w = (0, 0).\n\nQuestion 18: With w = (2, 1), is P3 correctly classified?",
+    "options": [
+      "No, because the raw score w⊤x is greater than zero.",
+      "No, because y(w⊤x) < 0.",
+      "Yes, because w⊤x = 0.",
+      "Yes, because y(w⊤x) > 0."
+    ],
+    "correctAnswerIndex": 3,
+    "answerSource": "PDF",
+    "isApproved": true,
+    "explanation": "For P3 = (−1, −1), w⊤x = −3. Since y = −1, y(w⊤x) = 3 > 0, so it is correctly classified."
+  },
+  {
+    "id": "q-dl-w1-19",
+    "courseId": "course-deep-learning-master",
+    "weekNumber": 1,
+    "originalQuestionNumber": 19,
+    "sourcePdfName": "DeepLearning_July_Oct_2026_Week1.pdf",
+    "questionText": "Case Study 4\nParcel Routing Decision Review\nA courier service trains a perceptron to classify parcels into “express” and “standard”\nrouting. Each parcel is described by two numerical features:\nx1 : compactness score,\nx2 : priority-label score.\nThe label is y = 1 for express routing and y = −1 for standard routing. The perceptron has\nno bias term and uses the update rule\nw ←w + yx\nwhenever y(w⊤x) ≤0. The training samples are processed in the following order:\nParcel\nx1\nx2\ny\nP1\n2\n1\n1\nP2\n1\n2\n1\nP3\n−1\n−1\n−1\nTraining starts with w = (0, 0).\n\nQuestion 19: Which condition is needed for the perceptron convergence guarantee?",
+    "options": [
+      "Every feature must be binary.",
+      "The data must be linearly separable.",
+      "The learning rate must be zero throughout all training updates.",
+      "All labels must be positive."
+    ],
+    "correctAnswerIndex": 1,
+    "answerSource": "PDF",
+    "isApproved": true,
+    "explanation": "The perceptron convergence theorem applies when the training data is linearly separable."
+  },
+  {
+    "id": "q-dl-w1-20",
+    "courseId": "course-deep-learning-master",
+    "weekNumber": 1,
+    "originalQuestionNumber": 20,
+    "sourcePdfName": "DeepLearning_July_Oct_2026_Week1.pdf",
+    "questionText": "Case Study 4\nParcel Routing Decision Review\nA courier service trains a perceptron to classify parcels into “express” and “standard”\nrouting. Each parcel is described by two numerical features:\nx1 : compactness score,\nx2 : priority-label score.\nThe label is y = 1 for express routing and y = −1 for standard routing. The perceptron has\nno bias term and uses the update rule\nw ←w + yx\nwhenever y(w⊤x) ≤0. The training samples are processed in the following order:\nParcel\nx1\nx2\ny\nP1\n2\n1\n1\nP2\n1\n2\n1\nP3\n−1\n−1\n−1\nTraining starts with w = (0, 0).\n\nQuestion 20: Which vector separates the three listed parcels?",
+    "options": [
+      "w = (−1, 1)",
+      "w = (1, −1)",
+      "w = (−1, −1)",
+      "w = (1, 1)"
+    ],
+    "correctAnswerIndex": 3,
+    "answerSource": "PDF",
+    "isApproved": true,
+    "explanation": "With w = (1, 1), P1 and P2 have positive scores, while P3 has a negative score, matching the labels."
+  }
+]
